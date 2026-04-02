@@ -1,0 +1,69 @@
+% preamble.tex — BTS FED GCF — Cours complet 2 ans
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{geometry}
+\geometry{a4paper, margin=2.5cm}
+
+% Mathématiques et unités
+\usepackage{amsmath, amssymb, mathtools}
+\usepackage{siunitx}
+\sisetup{locale=FR, output-decimal-marker={,}}
+
+% Tableaux et figures
+\usepackage{booktabs, tabularx, multirow}
+\usepackage{graphicx, float}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning}
+
+% Mise en forme
+\usepackage{xcolor}
+\definecolor{btsprimary}{RGB}{0, 82, 147}
+\definecolor{btssecondary}{RGB}{220, 237, 255}
+\definecolor{btsaccent}{RGB}{255, 140, 0}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins}
+
+% Boîtes pédagogiques
+\newtcolorbox{definition}[1][]{
+  colback=btssecondary, colframe=btsprimary,
+  fonttitle=\bfseries, title=Définition,#1
+}
+\newtcolorbox{methode}[1][]{
+  colback=orange!10, colframe=btsaccent,
+  fonttitle=\bfseries, title=Méthode,#1
+}
+\newtcolorbox{attention}[1][]{
+  colback=red!8, colframe=red!60!black,
+  fonttitle=\bfseries, title=Attention,#1
+}
+\newtcolorbox{exemple}[1][]{
+  colback=green!8, colframe=green!50!black,
+  fonttitle=\bfseries, title=Exemple résolu,#1
+}
+
+% En-têtes et pieds de page
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{btsprimary}{BTS FED — Option GCF}}
+\fancyhead[R]{\small\textcolor{btsprimary}{\leftmark}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Liens
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true, linkcolor=btsprimary,
+  urlcolor=btsprimary, citecolor=btsprimary,
+  pdftitle={Cours BTS FED — Option GCF},
+  pdfauthor={Généré par agent Claude Code}
+}
+
+% Numérotation des exercices
+\newcounter{exercice}[chapter]
+\newcommand{\exercice}[1]{%
+  \stepcounter{exercice}%
+  \subsection*{Exercice \theexercice\ — #1}%
+}
