@@ -1,0 +1,872 @@
+% ============================================================
+%  Chapitre 01 — Bases de la thermique
+%  BTS FED option GCF — Cours complet
+%  Généré par agent Claude Code — 2026-04-02
+% ============================================================
+
+\chapter{Bases de la thermique}
+
+% ============================================================
+\section{Objectifs pédagogiques}
+% ============================================================
+
+\subsection*{Compétences GCF mobilisées}
+
+\begin{itemize}
+  \item \textbf{C2-3} — Décrire le fonctionnement d'un système : identifier les paramètres
+        thermiques (températures, puissances, débits).
+  \item \textbf{C3-3} — Dimensionner tout ou partie d'une installation : appliquer les
+        méthodes normalisées de calcul thermique.
+  \item \textbf{C5-1 / C5-2} — Recueillir et extraire les exigences réglementaires (RE2020,
+        DTU, NF EN ISO 6946).
+  \item \textbf{C7-4 / C7-6} — Conduire des mesures et interpréter les résultats
+        (thermomètres, fluxmètres, sonde de surface).
+  \item \textbf{C8-3 / C8-4} — Analyser les performances énergétiques et concevoir des
+        actions correctives.
+\end{itemize}
+
+\subsection*{Savoirs associés GCF}
+
+\begin{itemize}
+  \item \textbf{S4} — Sciences physiques : thermodynamique, états de la matière, échanges
+        d'énergie.
+  \item \textbf{S5.1} — Réglementation thermique RE2020 : exigences sur les parois opaques
+        et le coefficient \(U_{bat}\). (Niveau GCF\,: 3)
+  \item \textbf{A1-1} — Thermique des tubes : flux linéique et isolation. (Niveau GCF\,: 2)
+  \item \textbf{A1-2} — Hygrothermie : condensation en paroi, dispositions constructives.
+        (Niveau GCF\,: 3)
+  \item \textbf{A2-3} — Bilan thermique : déperditions, charges thermiques et hydriques.
+        (Niveau GCF\,: 3)
+  \item \textbf{B1-2} — Émission de chaleur : radiateurs, planchers chauffants,
+        ventilo-convecteurs. (Niveau GCF\,: 3)
+  \item \textbf{S10.1} — Métrologie appliquée à la thermique. (Niveau GCF\,: 3)
+\end{itemize}
+
+% ============================================================
+\section{Introduction}
+% ============================================================
+
+Le génie climatique et fluidique (GCF) a pour mission de concevoir, installer et maintenir les
+installations de chauffage, ventilation, climatisation (CVC) et de production d'eau chaude
+sanitaire (ECS). L'ensemble de ces systèmes repose sur un socle commun : la maîtrise des
+\textbf{transferts thermiques}.
+
+Un technicien supérieur GCF doit être capable de :
+\begin{itemize}
+  \item quantifier les pertes ou les apports de chaleur dans un bâtiment ;
+  \item dimensionner les équipements de production et d'émission de chaleur ou de froid ;
+  \item vérifier la conformité d'une installation vis-à-vis de la réglementation RE2020 ;
+  \item diagnostiquer un dysfonctionnement thermique et proposer une action corrective.
+\end{itemize}
+
+La thermique du bâtiment est au cœur de la transition énergétique. En France, le secteur du
+bâtiment représente environ \SI{45}{\percent} de la consommation finale d'énergie et
+\SI{27}{\percent} des émissions de \(\mathrm{CO_2}\). La réglementation RE2020, en vigueur
+depuis le 1\textsuperscript{er} janvier 2022, exige une réduction drastique des déperditions
+thermiques et un recours accru aux énergies renouvelables.
+
+% ============================================================
+\section{Notions fondamentales de thermique}
+% ============================================================
+
+\subsection{Chaleur, température et énergie thermique}
+
+\begin{definition}
+  \textbf{Température} (\(T\)) : grandeur intensive caractérisant le niveau d'agitation
+  thermique des molécules d'un système. Elle s'exprime en kelvin (\si{\kelvin}) dans le
+  Système International (SI) ou en degré Celsius (\si{\degreeCelsius}) en pratique courante.
+  Relation de conversion : \(T\,[\si{\kelvin}] = \theta\,[\si{\degreeCelsius}] + 273{,}15\).
+\end{definition}
+
+\begin{definition}
+  \textbf{Chaleur} (\(Q\)) : forme d'énergie transférée entre deux systèmes due à une
+  différence de température. S'exprime en joule (\si{\joule}) ou en kilowattheure
+  (\si{\kilo\watt\hour}). Rappel : \(\SI{1}{\kilo\watt\hour} = \SI{3600}{\kilo\joule}\).
+\end{definition}
+
+\begin{definition}
+  \textbf{Puissance thermique} (\(\dot{Q}\) ou \(P_{th}\)) : énergie thermique échangée
+  par unité de temps. S'exprime en watt (\si{\watt}) ou en kilowatt (\si{\kilo\watt}).
+  \[
+    \dot{Q} = \frac{\mathrm{d}Q}{\mathrm{d}t}
+  \]
+\end{definition}
+
+\begin{definition}
+  \textbf{Capacité thermique massique} (\(c_p\)) : quantité d'énergie nécessaire pour élever
+  de \SI{1}{\kelvin} la température d'un kilogramme de matière à pression constante.
+  Unité : \si{\joule\per\kilogram\per\kelvin}. Valeurs courantes :
+  \begin{itemize}
+    \item Eau liquide : \(c_p \approx \SI{4186}{\joule\per\kilogram\per\kelvin}\)
+    \item Air sec : \(c_p \approx \SI{1006}{\joule\per\kilogram\per\kelvin}\)
+    \item Béton : \(c_p \approx \SI{880}{\joule\per\kilogram\per\kelvin}\)
+  \end{itemize}
+\end{definition}
+
+\subsection{Les trois modes de transfert de chaleur}
+
+La chaleur se propage selon trois mécanismes distincts, souvent présents simultanément dans
+une installation CVC :
+
+\begin{itemize}
+  \item \textbf{Conduction} : transfert au sein d'un milieu solide (ou fluide au repos) par
+        contact direct entre molécules. Prépondérant dans les parois de bâtiment.
+  \item \textbf{Convection} : transfert entre un fluide en mouvement et une paroi (ou
+        inversement). Prépondérant dans les émetteurs de chaleur et les échangeurs.
+  \item \textbf{Rayonnement} : transfert par ondes électromagnétiques, sans support matériel.
+        Prépondérant pour les corps à haute température (brûleurs, surfaces chauffantes).
+\end{itemize}
+
+% ============================================================
+\section{Conduction thermique}
+% ============================================================
+
+\subsection{Loi de Fourier}
+
+La conduction thermique est régie par la loi de Fourier. Pour une paroi plane en régime
+permanent, le flux thermique surfacique \(\varphi\) (en \si{\watt\per\meter\squared}) est
+proportionnel au gradient de température :
+
+\begin{equation}
+  \varphi = -\lambda \cdot \frac{\mathrm{d}T}{\mathrm{d}x}
+  \label{eq:fourier_diff}
+\end{equation}
+
+Pour une paroi homogène d'épaisseur \(e\) (\si{\meter}), de conductivité thermique
+\(\lambda\) (\si{\watt\per\meter\per\kelvin}), avec une différence de température
+\(\Delta T = T_1 - T_2\) (\si{\kelvin}), la loi de Fourier s'écrit sous forme intégrée :
+
+\begin{equation}
+  \varphi = \lambda \cdot \frac{\Delta T}{e}
+  \qquad \Rightarrow \qquad
+  \dot{Q} = \lambda \cdot \frac{S \cdot \Delta T}{e}
+  \label{eq:fourier_integre}
+\end{equation}
+
+\textbf{Variables :}
+\begin{itemize}
+  \item \(\lambda\) : conductivité thermique du matériau [\si{\watt\per\meter\per\kelvin}]
+  \item \(e\) : épaisseur de la paroi [\si{\meter}]
+  \item \(\Delta T\) : différence de température entre les deux faces [\si{\kelvin}] ou
+        [\si{\degreeCelsius}]
+  \item \(S\) : surface de la paroi [\si{\meter\squared}]
+  \item \(\dot{Q}\) : flux thermique total [\si{\watt}]
+\end{itemize}
+
+\textbf{Valeurs de conductivité thermique courantes en GCF :}
+
+\begin{center}
+\begin{tabular}{lcc}
+  \toprule
+  Matériau & \(\lambda\) (\si{\watt\per\meter\per\kelvin}) & Usage typique \\
+  \midrule
+  Béton lourd & 1,75 & Structure portante \\
+  Brique pleine & 0,84 & Maçonnerie \\
+  Brique creuse & 0,45 & Paroi légère \\
+  Bois massif & 0,15 & Ossature bois \\
+  Laine de verre & 0,035–0,040 & Isolation thermique \\
+  Laine de roche & 0,035–0,042 & Isolation thermique \\
+  Polystyrène expansé (PSE) & 0,030–0,038 & Isolation extérieure \\
+  Polyuréthane (PUR) & 0,022–0,028 & Isolation haute performance \\
+  Plâtre & 0,35 & Enduit intérieur \\
+  Verre simple & 1,00 & Vitrage \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Résistance thermique}
+
+\begin{definition}
+  La \textbf{résistance thermique} d'une couche de matériau (résistance surfacique, notée
+  \(R\)) est le rapport de l'épaisseur sur la conductivité thermique :
+  \begin{equation}
+    R = \frac{e}{\lambda}
+    \qquad \left[\si{\meter\squared\kelvin\per\watt}\right]
+    \label{eq:resistance_thermique}
+  \end{equation}
+  Elle représente la capacité d'un matériau à s'opposer au passage de la chaleur : plus
+  \(R\) est grand, plus l'isolation est efficace.
+\end{definition}
+
+Pour une paroi multicouche composée de \(n\) couches en série, les résistances s'additionnent :
+
+\begin{equation}
+  R_{tot} = R_{si} + \sum_{i=1}^{n} \frac{e_i}{\lambda_i} + R_{se}
+  \label{eq:resistance_totale}
+\end{equation}
+
+avec :
+\begin{itemize}
+  \item \(R_{si}\) : résistance superficielle intérieure. Valeur standard : \SI{0,13}{\meter\squared\kelvin\per\watt}
+  \item \(R_{se}\) : résistance superficielle extérieure. Valeur standard : \SI{0,04}{\meter\squared\kelvin\per\watt}
+  \item \(e_i / \lambda_i\) : résistance de chaque couche de matériau
+\end{itemize}
+
+\begin{definition}
+  Le \textbf{coefficient de transmission thermique} (ou transmittance) \(U\) est l'inverse
+  de la résistance thermique totale :
+  \begin{equation}
+    U = \frac{1}{R_{tot}}
+    \qquad \left[\si{\watt\per\meter\squared\per\kelvin}\right]
+    \label{eq:coefficient_U}
+  \end{equation}
+  Il caractérise les déperditions thermiques à travers une paroi. La RE2020 fixe des valeurs
+  maximales de \(U\) selon le type de paroi.
+\end{definition}
+
+Le flux thermique total traversant une paroi de surface \(S\) est alors :
+
+\begin{equation}
+  \dot{Q} = U \cdot S \cdot \Delta T = \frac{\Delta T}{R_{tot}} \cdot S
+  \label{eq:flux_total}
+\end{equation}
+
+\begin{methode}[title=Calcul de la résistance thermique d'une paroi multicouche]
+  \begin{enumerate}
+    \item \textbf{Identifier} toutes les couches de la paroi (de l'intérieur vers
+          l'extérieur) et noter leur épaisseur \(e_i\) et leur conductivité \(\lambda_i\).
+    \item \textbf{Calculer} la résistance de chaque couche :
+          \(R_i = e_i / \lambda_i\).
+    \item \textbf{Ajouter} les résistances superficielles :
+          \(R_{si} = \SI{0,13}{\meter\squared\kelvin\per\watt}\) (intérieur) et
+          \(R_{se} = \SI{0,04}{\meter\squared\kelvin\per\watt}\) (extérieur).
+    \item \textbf{Sommer} toutes les résistances pour obtenir \(R_{tot}\).
+    \item \textbf{Calculer} le coefficient \(U = 1/R_{tot}\).
+    \item \textbf{Vérifier} la conformité vis-à-vis de la réglementation (RE2020).
+  \end{enumerate}
+\end{methode}
+
+% ============================================================
+\section{Convection thermique}
+% ============================================================
+
+\subsection{Convection naturelle et forcée}
+
+\begin{definition}
+  La \textbf{convection naturelle} (ou libre) se produit lorsque les mouvements du fluide
+  sont uniquement dus aux différences de masse volumique engendrées par les variations de
+  température. Elle est responsable, par exemple, du panache de chaleur au-dessus d'un
+  radiateur.
+\end{definition}
+
+\begin{definition}
+  La \textbf{convection forcée} se produit lorsqu'un dispositif mécanique (pompe, ventilateur)
+  impose le mouvement du fluide. Elle est caractéristique des ventilo-convecteurs, des
+  échangeurs à plaques et des centrales de traitement d'air (CTA).
+\end{definition}
+
+La convection forcée est nettement plus efficace que la convection naturelle : les coefficients
+d'échange sont en général \num{5} à \num{10} fois plus élevés.
+
+\subsection{Loi de Newton — coefficient d'échange convectif}
+
+Le flux thermique échangé par convection entre un fluide et une paroi est donné par la
+\textbf{loi de Newton} :
+
+\begin{equation}
+  \dot{Q} = h \cdot S \cdot (T_{fluide} - T_{paroi})
+  \label{eq:newton_convection}
+\end{equation}
+
+\textbf{Variables :}
+\begin{itemize}
+  \item \(h\) : coefficient d'échange convectif [\si{\watt\per\meter\squared\per\kelvin}]
+  \item \(S\) : surface d'échange [\si{\meter\squared}]
+  \item \(T_{fluide}\) : température du fluide en écoulement [\si{\degreeCelsius}]
+  \item \(T_{paroi}\) : température de la surface [\si{\degreeCelsius}]
+\end{itemize}
+
+\textbf{Ordres de grandeur du coefficient \(h\) :}
+
+\begin{center}
+\begin{tabular}{lc}
+  \toprule
+  Situation & \(h\) (\si{\watt\per\meter\squared\per\kelvin}) \\
+  \midrule
+  Convection naturelle dans l'air & 2–10 \\
+  Convection forcée dans l'air (ventilation) & 20–100 \\
+  Convection forcée dans l'eau (circuit hydraulique) & 500–10\,000 \\
+  Ébullition de l'eau & 2\,000–50\,000 \\
+  Condensation de vapeur d'eau & 5\,000–100\,000 \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+Les résistances superficielles \(R_{si}\) et \(R_{se}\) de la norme NF EN ISO 6946 sont
+liées aux coefficients d'échange convectif de surface :
+\(R_{si} = 1/h_i = 1/7{,}7 \approx \SI{0,13}{\meter\squared\kelvin\per\watt}\) et
+\(R_{se} = 1/h_e = 1/25 = \SI{0,04}{\meter\squared\kelvin\per\watt}\).
+
+% ============================================================
+\section{Rayonnement thermique}
+% ============================================================
+
+\subsection{Loi de Stefan-Boltzmann}
+
+Tout corps à une température supérieure au zéro absolu émet un rayonnement électromagnétique.
+Pour un corps noir parfait, la puissance rayonnée par unité de surface est donnée par la
+\textbf{loi de Stefan-Boltzmann} :
+
+\begin{equation}
+  M^{\circ} = \sigma \cdot T^4
+  \qquad \left[\si{\watt\per\meter\squared}\right]
+  \label{eq:stefan_boltzmann}
+\end{equation}
+
+avec \(\sigma = \SI{5,67e-8}{\watt\per\meter\squared\per\kelvin\tothe{4}}\) la constante
+de Stefan-Boltzmann et \(T\) la température en \si{\kelvin}.
+
+\begin{definition}
+  \textbf{Corps noir} : corps idéal qui absorbe l'intégralité du rayonnement incident, quelle
+  que soit la longueur d'onde et l'angle d'incidence. Il constitue la référence en matière de
+  rayonnement thermique.
+\end{definition}
+
+\begin{definition}
+  \textbf{Émissivité} (\(\varepsilon\)) : rapport de l'émittance d'un corps réel à celle du
+  corps noir à la même température. Adimensionnel, compris entre 0 et 1.
+  Pour un corps réel (corps gris) : \(M = \varepsilon \cdot \sigma \cdot T^4\).
+\end{definition}
+
+\textbf{Valeurs d'émissivité courantes :}
+\begin{center}
+\begin{tabular}{lc}
+  \toprule
+  Matériau / Surface & Émissivité \(\varepsilon\) \\
+  \midrule
+  Corps noir (référence) & 1,00 \\
+  Peinture blanche mate & 0,90–0,95 \\
+  Béton, plâtre & 0,85–0,95 \\
+  Verre & 0,84–0,90 \\
+  Bois vernis & 0,80–0,90 \\
+  Aluminium anodisé & 0,77–0,84 \\
+  Aluminium poli (film de pare-vapeur) & 0,04–0,06 \\
+  Acier inoxydable poli & 0,10–0,20 \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\begin{attention}
+  La loi de Stefan-Boltzmann utilise la \textbf{température absolue en kelvin}, jamais en
+  degré Celsius. Une erreur de conversion entraîne des résultats faux d'un facteur très
+  important. Vérifier systématiquement : \(T\,[\si{\kelvin}] = \theta\,[\si{\degreeCelsius}]
+  + 273{,}15\).
+
+  De plus, le flux net échangé par rayonnement entre deux surfaces dépend de leurs facteurs
+  de forme et de leurs émissivités respectives. La formule simplifiée \(M = \varepsilon
+  \sigma T^4\) ne donne que l'émittance propre d'une surface, pas le flux net échangé.
+\end{attention}
+
+\subsection{Rayonnement en pratique CVC}
+
+En génie climatique, le rayonnement intervient notamment dans :
+\begin{itemize}
+  \item les \textbf{panneaux rayonnants} et planchers chauffants (part de rayonnement dans
+        le confort thermique) ;
+  \item les \textbf{apports solaires} à travers les vitrages (pris en compte dans les bilans
+        d'été, RE2020) ;
+  \item les \textbf{surfaces basse émissivité} des vitrages doubles ou triples, qui réduisent
+        le rayonnement vers l'extérieur.
+\end{itemize}
+
+% ============================================================
+\section{Bilan thermique et enthalpie}
+% ============================================================
+
+\subsection{Premier principe de la thermodynamique — système ouvert}
+
+En régime permanent, pour un système ouvert (fluide en circulation continue), le premier
+principe s'écrit :
+
+\begin{equation}
+  \dot{Q} - \dot{W} = \dot{m} \cdot (h_{sortie} - h_{entrée})
+  \label{eq:premier_principe_ouvert}
+\end{equation}
+
+En l'absence de travail mécanique (\(\dot{W} = 0\), hypothèse valable pour les circuits
+hydrauliques sans pompage à l'intérieur du volume de contrôle) :
+
+\begin{equation}
+  \dot{Q} = \dot{m} \cdot (h_{sortie} - h_{entrée})
+  \label{eq:bilan_enthalpique}
+\end{equation}
+
+\subsection{Enthalpie spécifique}
+
+\begin{definition}
+  L'\textbf{enthalpie spécifique} \(h\) est une fonction d'état définie par :
+  \begin{equation}
+    h = u + P \cdot v \qquad \left[\si{\joule\per\kilogram}\right]
+    \label{eq:enthalpie}
+  \end{equation}
+  où \(u\) est l'énergie interne massique, \(P\) la pression et \(v\) le volume massique.
+  Pour un liquide ou un gaz parfait, la variation d'enthalpie à pression constante s'écrit :
+  \(\Delta h = c_p \cdot \Delta T\).
+\end{definition}
+
+\subsection{Puissance thermique d'un fluide caloporteur}
+
+Pour un circuit de chauffage ou de climatisation où un fluide (eau, air) transporte de
+l'énergie thermique, la puissance échangée est :
+
+\begin{equation}
+  \boxed{
+    \dot{Q} = \dot{m} \cdot c_p \cdot \Delta T
+  }
+  \label{eq:puissance_fluide}
+\end{equation}
+
+\textbf{Variables et unités :}
+\begin{itemize}
+  \item \(\dot{Q}\) : puissance thermique [\si{\watt}] ou [\si{\kilo\watt}]
+  \item \(\dot{m}\) : débit massique du fluide [\si{\kilogram\per\second}] ou
+        [\si{\kilogram\per\hour}]
+  \item \(c_p\) : capacité thermique massique du fluide [\si{\joule\per\kilogram\per\kelvin}]
+        \\ (eau liquide : \SI{4186}{\joule\per\kilogram\per\kelvin} ;
+           air : \SI{1006}{\joule\per\kilogram\per\kelvin})
+  \item \(\Delta T = T_{sortie} - T_{entrée}\) : écart de température [\si{\kelvin}] ou
+        [\si{\degreeCelsius}]
+\end{itemize}
+
+\begin{attention}
+  Le débit volumique \(\dot{V}\) [\si{\liter\per\hour} ou \si{\meter\cubed\per\hour}] est
+  lié au débit massique par : \(\dot{m} = \rho \cdot \dot{V}\), avec \(\rho\) la masse
+  volumique du fluide. Pour l'eau à \SI{60}{\degreeCelsius} : \(\rho \approx
+  \SI{983}{\kilogram\per\meter\cubed}\). On utilise souvent l'approximation
+  \(\rho \approx \SI{1000}{\kilogram\per\meter\cubed}\) pour les calculs courants.
+  Conversion pratique : \(\SI{1}{\meter\cubed\per\hour} = \SI{1000}{\liter\per\hour}\).
+\end{attention}
+
+La formule pratique avec le débit volumique en \si{\liter\per\hour} et \(c_p\) de l'eau :
+
+\begin{equation}
+  \dot{Q}\,[\si{\watt}] = \frac{\dot{V}\,[\si{\liter\per\hour}]}{3600} \times \rho \times c_p \times \Delta T
+  \approx \dot{V}\,[\si{\liter\per\hour}] \times 1{,}163 \times \Delta T\,[\si{\kelvin}]
+  \label{eq:formule_pratique_eau}
+\end{equation}
+
+Le facteur \num{1,163} est le produit \((\rho \cdot c_p) / 3600\) pour l'eau
+\(= 1000 \times 4186 / 3\,600\,000 \approx \num{1,163}\,\si{\watt\hour\per\liter\per\kelvin}\).
+
+% ============================================================
+\section{Exemples résolus}
+% ============================================================
+
+\begin{exemple}[title=Calcul de perte thermique par une paroi multicouche]
+
+\textbf{Énoncé :} Un mur de façade d'un immeuble de bureau est composé (de l'intérieur vers
+l'extérieur) des couches suivantes :
+\begin{enumerate}
+  \item Enduit plâtre intérieur : \(e_1 = \SI{1,5}{\centi\meter}\), \(\lambda_1 = \SI{0,35}{\watt\per\meter\per\kelvin}\)
+  \item Béton armé : \(e_2 = \SI{20}{\centi\meter}\), \(\lambda_2 = \SI{1,75}{\watt\per\meter\per\kelvin}\)
+  \item Laine de verre (panneaux semi-rigides) : \(e_3 = \SI{10}{\centi\meter}\), \(\lambda_3 = \SI{0,04}{\watt\per\meter\per\kelvin}\)
+  \item Enduit ciment extérieur : \(e_4 = \SI{2}{\centi\meter}\), \(\lambda_4 = \SI{1,15}{\watt\per\meter\per\kelvin}\)
+\end{enumerate}
+
+\textit{Données complémentaires :} \(R_{si} = \SI{0,13}{\meter\squared\kelvin\per\watt}\),
+\(R_{se} = \SI{0,04}{\meter\squared\kelvin\per\watt}\), température intérieure
+\(\theta_i = \SI{20}{\degreeCelsius}\), température extérieure
+\(\theta_e = \SI{0}{\degreeCelsius}\), surface du mur \(S = \SI{50}{\meter\squared}\).
+
+\textbf{Résolution :}
+
+\textit{Étape 1 — Résistance de chaque couche}
+
+\[
+  R_1 = \frac{e_1}{\lambda_1} = \frac{0{,}015}{0{,}35} = \SI{0,043}{\meter\squared\kelvin\per\watt}
+\]
+\[
+  R_2 = \frac{e_2}{\lambda_2} = \frac{0{,}20}{1{,}75} = \SI{0,114}{\meter\squared\kelvin\per\watt}
+\]
+\[
+  R_3 = \frac{e_3}{\lambda_3} = \frac{0{,}10}{0{,}04} = \SI{2,500}{\meter\squared\kelvin\per\watt}
+\]
+\[
+  R_4 = \frac{e_4}{\lambda_4} = \frac{0{,}02}{1{,}15} = \SI{0,017}{\meter\squared\kelvin\per\watt}
+\]
+
+\textit{Étape 2 — Résistance thermique totale (selon NF EN ISO 6946)}
+
+\[
+  R_{tot} = R_{si} + R_1 + R_2 + R_3 + R_4 + R_{se}
+\]
+\[
+  R_{tot} = 0{,}13 + 0{,}043 + 0{,}114 + 2{,}500 + 0{,}017 + 0{,}04
+\]
+\[
+  \boxed{R_{tot} = \SI{2,844}{\meter\squared\kelvin\per\watt}}
+\]
+
+\textit{Étape 3 — Coefficient de transmission thermique}
+
+\[
+  U = \frac{1}{R_{tot}} = \frac{1}{2{,}844} = \SI{0,352}{\watt\per\meter\squared\per\kelvin}
+\]
+
+\textit{Étape 4 — Flux thermique total pour \(\Delta T = \SI{20}{\kelvin}\)}
+
+\[
+  \dot{Q} = U \cdot S \cdot \Delta T = 0{,}352 \times 50 \times 20
+\]
+\[
+  \boxed{\dot{Q} = \SI{352}{\watt}}
+\]
+
+\textbf{Conclusion :} Ce mur perd \SI{352}{\watt} pour une différence de température de
+\SI{20}{\kelvin}. Avec \(U = \SI{0,352}{\watt\per\meter\squared\per\kelvin}\), ce mur
+satisfait l'exigence RE2020 pour les murs donnant sur l'extérieur en zone H1
+(\(U_{max} = \SI{0,40}{\watt\per\meter\squared\per\kelvin}\) pour logements neufs).
+
+\end{exemple}
+
+\begin{exemple}[title=Calcul de puissance d'un radiateur eau chaude]
+
+\textbf{Énoncé :} Un radiateur à eau chaude est alimenté avec un débit volumique de
+\SI{200}{\liter\per\hour}. La température d'entrée est \(\theta_{entrée} = \SI{70}{\degreeCelsius}\)
+et la température de sortie est \(\theta_{sortie} = \SI{55}{\degreeCelsius}\). Calculer la
+puissance thermique émise par ce radiateur.
+
+\textbf{Données :}
+\begin{itemize}
+  \item \(\dot{V} = \SI{200}{\liter\per\hour}\)
+  \item \(\Delta T = \theta_{entrée} - \theta_{sortie} = 70 - 55 = \SI{15}{\kelvin}\)
+  \item \(\rho_{eau} = \SI{980}{\kilogram\per\meter\cubed}\) (eau à environ \SI{62}{\degreeCelsius})
+  \item \(c_p = \SI{4186}{\joule\per\kilogram\per\kelvin}\)
+\end{itemize}
+
+\textbf{Résolution — méthode débit massique :}
+
+\textit{Étape 1 — Conversion du débit volumique en débit massique}
+
+\[
+  \dot{m} = \rho \cdot \dot{V} = 980 \times \frac{200}{3600} = 980 \times 0{,}0556
+  = \SI{54,4}{\kilogram\per\second}
+\]
+
+\textit{Étape 2 — Puissance thermique}
+
+\[
+  \dot{Q} = \dot{m} \cdot c_p \cdot \Delta T = 54{,}4 \times 4186 \times 15
+\]
+
+\begin{attention}
+  Erreur courante : oublier la division par 3600 pour convertir le débit de \si{\liter\per\hour}
+  en \si{\liter\per\second} avant multiplication. Toujours vérifier la cohérence des unités.
+\end{attention}
+
+Correction : \(\dot{m} = 980 \times 200/3600 = \SI{54{,}4}{\kilogram\per\hour}\)
+\(\Rightarrow \dot{m} = 54{,}4/3600 = \SI{0{,}0151}{\kilogram\per\second}\)
+
+\[
+  \dot{Q} = 0{,}0151 \times 4186 \times 15 = \SI{948}{\watt} \approx \SI{0{,}95}{\kilo\watt}
+\]
+
+\textbf{Résolution — méthode pratique (facteur 1,163) :}
+
+\[
+  \dot{Q}\,[\si{\watt}] = \dot{V}\,[\si{\liter\per\hour}] \times 1{,}163 \times \Delta T\,[\si{\kelvin}]
+\]
+\[
+  \dot{Q} = 200 \times 1{,}163 \times 15 = \SI{3489}{\watt} \approx \SI{3{,}5}{\kilo\watt}
+\]
+
+\textbf{Analyse :} Le facteur \num{1,163} utilise \(\rho = \SI{1000}{\kilogram\per\meter\cubed}\).
+Avec la densité réelle de l'eau chaude (\(\rho = \SI{980}{\kilogram\per\meter\cubed}\)), on obtient :
+
+\[
+  \dot{Q} = 200 \times \frac{980}{1000} \times 1{,}163 \times 15
+  = 200 \times 0{,}980 \times 1{,}163 \times 15 = \SI{3419}{\watt} \approx \SI{3{,}4}{\kilo\watt}
+\]
+
+\textbf{Résultat final :} \(\boxed{\dot{Q} \approx \SI{3{,}4}{\kilo\watt}}\)
+
+\textit{Note pratique :} Un débit de \SI{200}{\liter\per\hour} avec un écart de température
+de \SI{15}{\kelvin} correspond à une puissance émise de l'ordre de \SI{3,4}{\kilo\watt}, ce
+qui est cohérent avec un radiateur de taille standard (\SI{1,5}{\meter} de long, double panneau)
+pour une pièce de \num{25} à \SI{30}{\meter\squared}.
+
+\end{exemple}
+
+% ============================================================
+\section{Exercices d'application}
+% ============================================================
+
+\exercice{Paroi multicouche d'un immeuble collectif}
+
+\textbf{Énoncé :}
+
+La façade d'un immeuble collectif BBC (Bâtiment Basse Consommation) est constituée,
+de l'intérieur vers l'extérieur, des couches suivantes :
+\begin{itemize}
+  \item Plaque de plâtre (BA13) : \(e = \SI{13}{\milli\meter}\), \(\lambda = \SI{0,25}{\watt\per\meter\per\kelvin}\)
+  \item Lame d'air ventilée : \textit{résistance fournie} \(R_{air} = \SI{0,18}{\meter\squared\kelvin\per\watt}\)
+  \item Laine de roche (panneau rigide) : \(e = \SI{14}{\centi\meter}\), \(\lambda = \SI{0,038}{\watt\per\meter\per\kelvin}\)
+  \item Béton cellulaire (bloc YTONG) : \(e = \SI{20}{\centi\meter}\), \(\lambda = \SI{0,11}{\watt\per\meter\per\kelvin}\)
+  \item Enduit de façade : \(e = \SI{1,5}{\centi\meter}\), \(\lambda = \SI{0,87}{\watt\per\meter\per\kelvin}\)
+\end{itemize}
+
+Résistances superficielles standard : \(R_{si} = \SI{0,13}{\meter\squared\kelvin\per\watt}\),
+\(R_{se} = \SI{0,13}{\meter\squared\kelvin\per\watt}\) (paroi verticale, flux horizontal).
+
+\textbf{Questions :}
+\begin{enumerate}
+  \item Calculer la résistance thermique de chaque couche.
+  \item Calculer la résistance thermique totale \(R_{tot}\).
+  \item Calculer le coefficient \(U\) de la paroi.
+  \item Vérifier la conformité à la RT2012 (\(U_{max} = \SI{0,36}{\watt\per\meter\squared\per\kelvin}\) pour mur en zone H1b).
+  \item Calculer la perte thermique pour une surface de \SI{80}{\meter\squared} et une
+        différence de température de \SI{25}{\kelvin}\,.
+\end{enumerate}
+
+\textbf{Corrigé :}
+
+\textit{1. Résistances des couches}
+
+\[
+  R_{pl} = \frac{0{,}013}{0{,}25} = \SI{0,052}{\meter\squared\kelvin\per\watt}
+  \qquad
+  R_{lr} = \frac{0{,}14}{0{,}038} = \SI{3,684}{\meter\squared\kelvin\per\watt}
+\]
+\[
+  R_{bc} = \frac{0{,}20}{0{,}11} = \SI{1,818}{\meter\squared\kelvin\per\watt}
+  \qquad
+  R_{end} = \frac{0{,}015}{0{,}87} = \SI{0,017}{\meter\squared\kelvin\per\watt}
+\]
+\[
+  R_{air} = \SI{0,18}{\meter\squared\kelvin\per\watt} \quad \text{(donnée)}
+\]
+
+\textit{2. Résistance totale}
+
+\[
+  R_{tot} = R_{si} + R_{pl} + R_{air} + R_{lr} + R_{bc} + R_{end} + R_{se}
+\]
+\[
+  R_{tot} = 0{,}13 + 0{,}052 + 0{,}18 + 3{,}684 + 1{,}818 + 0{,}017 + 0{,}13
+\]
+\[
+  \boxed{R_{tot} = \SI{6,011}{\meter\squared\kelvin\per\watt}}
+\]
+
+\textit{3. Coefficient U}
+
+\[
+  \boxed{U = \frac{1}{6{,}011} = \SI{0,166}{\watt\per\meter\squared\per\kelvin}}
+\]
+
+\textit{4. Conformité RT2012}
+
+\(U = \SI{0,166}{\watt\per\meter\squared\per\kelvin} < U_{max} = \SI{0,36}{\watt\per\meter\squared\per\kelvin}\)
+\(\Rightarrow\) La paroi est \textbf{conforme} à la RT2012 (et a fortiori à la RE2020 qui est
+encore plus exigeante).
+
+\textit{5. Perte thermique}
+
+\[
+  \dot{Q} = U \cdot S \cdot \Delta T = 0{,}166 \times 80 \times 25 = \SI{332}{\watt}
+\]
+
+Pour une façade de \SI{80}{\meter\squared} avec \(\Delta T = \SI{25}{\kelvin}\), la perte
+thermique est seulement \SI{332}{\watt}, ce qui illustre l'excellente performance de cette
+composition de paroi.
+
+% ----------------------------------------------------------
+
+\exercice{Dimensionnement d'un plancher chauffant hydraulique}
+
+\textbf{Énoncé :}
+
+Un salon de \SI{30}{\meter\squared} doit être chauffé par un plancher chauffant hydraulique.
+La puissance de chauffe nécessaire est estimée à \SI{60}{\watt\per\meter\squared} (déperditions
+calculées selon la méthode RE2020). Le plancher chauffant fonctionne avec des températures
+d'eau de \SI{35}{\degreeCelsius} (aller) et \SI{28}{\degreeCelsius} (retour).
+
+\textbf{Questions :}
+\begin{enumerate}
+  \item Calculer la puissance thermique totale nécessaire pour ce salon.
+  \item Calculer le débit volumique d'eau chaude nécessaire [\si{\liter\per\hour}] en
+        utilisant le facteur pratique \num{1,163}.
+  \item Vérifier que la température de surface du plancher reste inférieure à
+        \SI{28}{\degreeCelsius} (confort et réglementation). Commentaire.
+\end{enumerate}
+
+\textbf{Corrigé :}
+
+\textit{1. Puissance totale nécessaire}
+
+\[
+  \dot{Q}_{tot} = \varphi \cdot S = 60 \times 30 = \SI{1800}{\watt} = \SI{1{,}8}{\kilo\watt}
+\]
+
+\textit{2. Débit volumique d'eau}
+
+On utilise la formule pratique : \(\dot{Q} = \dot{V} \times 1{,}163 \times \Delta T\)
+
+\[
+  \Delta T = 35 - 28 = \SI{7}{\kelvin}
+\]
+\[
+  \dot{V} = \frac{\dot{Q}}{1{,}163 \times \Delta T} = \frac{1800}{1{,}163 \times 7}
+  = \frac{1800}{8{,}141} = \SI{221}{\liter\per\hour}
+\]
+
+\[
+  \boxed{\dot{V} \approx \SI{221}{\liter\per\hour}}
+\]
+
+\textit{3. Température de surface et confort}
+
+La réglementation impose que la température de surface d'un plancher chauffant ne dépasse pas
+\SI{28}{\degreeCelsius} (norme NF EN 1264-2). La température de surface est liée à la
+température moyenne de l'eau : \(T_{moy} = (35+28)/2 = \SI{31{,}5}{\degreeCelsius}\). Avec
+les résistances du plancher (chape, revêtement), la surface sera bien inférieure à
+\SI{28}{\degreeCelsius}. Ce dimensionnement est conforme.
+
+% ----------------------------------------------------------
+
+\exercice{Bilan thermique d'une pièce de bureau}
+
+\textbf{Énoncé :}
+
+Un bureau de \SI{20}{\meter\squared} est situé dans un immeuble tertiaire. Les déperditions
+sont les suivantes :
+\begin{itemize}
+  \item Par le mur extérieur (\(S = \SI{12}{\meter\squared}\), \(U = \SI{0,30}{\watt\per\meter\squared\per\kelvin}\)) ;
+  \item Par la fenêtre double vitrage (\(S = \SI{4}{\meter\squared}\), \(U = \SI{1,40}{\watt\per\meter\squared\per\kelvin}\)) ;
+  \item Par le plancher haut non isolé sur combles (\(S = \SI{20}{\meter\squared}\), \(U = \SI{0,25}{\watt\per\meter\squared\per\kelvin}\)) ;
+  \item Par ponts thermiques linéiques : \(\Psi \cdot L = \SI{0,45}{\watt\per\kelvin}\) (valeur globale).
+\end{itemize}
+
+Les apports internes sont : éclairage \SI{200}{\watt}, occupants (2 personnes × \SI{80}{\watt}),
+équipements informatiques \SI{150}{\watt}.
+
+Conditions de calcul : \(\theta_i = \SI{20}{\degreeCelsius}\), \(\theta_e = \SI{-7}{\degreeCelsius}\)
+(température extérieure de base en zone H1, Paris, selon EN 12831).
+
+\textbf{Questions :}
+\begin{enumerate}
+  \item Calculer le coefficient de déperdition total de la pièce (\(H_T\) en \si{\watt\per\kelvin}).
+  \item Calculer les déperditions thermiques totales.
+  \item Calculer les apports internes totaux.
+  \item Déterminer la puissance de chauffage à installer.
+\end{enumerate}
+
+\textbf{Corrigé :}
+
+\textit{1. Coefficient de déperdition \(H_T\)}
+
+\[
+  H_T = \sum (U_i \cdot S_i) + \Psi \cdot L
+\]
+\[
+  H_T = (0{,}30 \times 12) + (1{,}40 \times 4) + (0{,}25 \times 20) + 0{,}45
+\]
+\[
+  H_T = 3{,}60 + 5{,}60 + 5{,}00 + 0{,}45 = \SI{14{,}65}{\watt\per\kelvin}
+\]
+
+\textit{2. Déperditions thermiques}
+
+\[
+  \Delta T = \theta_i - \theta_e = 20 - (-7) = \SI{27}{\kelvin}
+\]
+\[
+  \dot{Q}_{dep} = H_T \cdot \Delta T = 14{,}65 \times 27 = \SI{395{,}6}{\watt}
+\]
+
+\textit{3. Apports internes}
+
+\[
+  \dot{Q}_{int} = 200 + (2 \times 80) + 150 = 200 + 160 + 150 = \SI{510}{\watt}
+\]
+
+\textit{4. Puissance de chauffage à installer}
+
+En période de chauffage, les apports internes réduisent le besoin en chauffage :
+
+\[
+  \dot{Q}_{chauf} = \dot{Q}_{dep} - \dot{Q}_{int} = 395{,}6 - 510 = \SI{-114{,}4}{\watt}
+\]
+
+Le résultat négatif indique que les apports internes dépassent les déperditions dans ces
+conditions. \textbf{Aucun chauffage n'est nécessaire} dans cette configuration pour \(\theta_e
+= \SI{-7}{\degreeCelsius}\). Cette situation est caractéristique des immeubles tertiaires à
+forte densité d'occupation et d'équipements.
+
+\begin{attention}
+  En pratique, il faut également prévoir le chauffage pour les périodes sans occupation
+  (nuit, week-end) avec apports internes nuls. La puissance à installer devient alors :
+  \(\dot{Q}_{chauf} = \SI{395{,}6}{\watt}\), arrondie à \SI{400}{\watt} après marges de sécurité.
+\end{attention}
+
+% ============================================================
+\section{Éléments de réglementation}
+% ============================================================
+
+\subsection{RE2020 — Réglementation Environnementale 2020}
+
+Entrée en vigueur le 1\textsuperscript{er} janvier 2022 pour les maisons individuelles et les
+logements collectifs neufs, et progressivement étendue aux bâtiments tertiaires, la RE2020
+remplace la RT2012. Ses trois piliers sont :
+\begin{enumerate}
+  \item \textbf{Efficacité énergétique} : réduction de la consommation d'énergie primaire
+        (indicateur \(Ep_{max}\)).
+  \item \textbf{Confort d'été} : limitation de l'inconfort en période chaude (indicateur DH,
+        degrés-heures d'inconfort).
+  \item \textbf{Impact carbone} : prise en compte de l'analyse du cycle de vie (ACV) du
+        bâtiment, indicateur \(IC_{bât}\).
+\end{enumerate}
+
+\textbf{Exigences sur les parois opaques (résidentiels, zone H1) :}
+
+\begin{center}
+\begin{tabular}{lcc}
+  \toprule
+  Type de paroi & \(U_{max}\) RE2020 & \(U_{max}\) RT2012 (référence) \\
+                & [\si{\watt\per\meter\squared\per\kelvin}] & [\si{\watt\per\meter\squared\per\kelvin}] \\
+  \midrule
+  Murs donnant sur l'extérieur & 0,36 & 0,40 \\
+  Plancher bas sur vide sanitaire & 0,27 & 0,36 \\
+  Toiture-terrasse & 0,20 & 0,25 \\
+  Comble aménagé & 0,20 & 0,22 \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{DTU 45.4 — Isolation thermique des bâtiments}
+
+Le DTU 45.4 définit les règles de mise en œuvre des isolants thermiques dans les bâtiments.
+Il précise notamment :
+\begin{itemize}
+  \item les conditions de mise en œuvre (fixation, joints, continuité de l'isolant) ;
+  \item la protection contre l'humidité (pare-vapeur côté chaud en hiver) ;
+  \item les incompatibilités entre matériaux ;
+  \item les règles de sécurité incendie pour les isolants.
+\end{itemize}
+
+\subsection{NF EN ISO 6946 — Résistance thermique des parois}
+
+Cette norme internationale définit la méthode de calcul de la résistance thermique et du
+coefficient de transmission thermique des parois de bâtiment composées de couches
+thermiquement homogènes. Elle fixe notamment :
+\begin{itemize}
+  \item les valeurs des résistances superficielles \(R_{si}\) et \(R_{se}\) selon la direction
+        du flux et la position de la paroi ;
+  \item la méthode de calcul pour les couches non homogènes (ponts thermiques intégrés) ;
+  \item les corrections à apporter pour les fixations métalliques et les lames d'air.
+\end{itemize}
+
+\textbf{Résistances superficielles selon NF EN ISO 6946 :}
+
+\begin{center}
+\begin{tabular}{lccc}
+  \toprule
+  Direction du flux & Position & \(R_{si}\) [\si{\meter\squared\kelvin\per\watt}]
+                    & \(R_{se}\) [\si{\meter\squared\kelvin\per\watt}] \\
+  \midrule
+  Ascendant (paroi horizontale chauffée par le bas) & Plancher chauffant & 0,10 & 0,13 \\
+  Horizontal (paroi verticale) & Mur & 0,13 & 0,04 \\
+  Descendant (paroi horizontale chauffée par le haut) & Toiture & 0,17 & 0,04 \\
+  \bottomrule
+\end{tabular}
+\end{center}

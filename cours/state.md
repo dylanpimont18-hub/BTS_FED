@@ -3,19 +3,17 @@
 Mis à jour automatiquement par l'agent à chaque run.
 
 ## Dernier run
-- Date : (premier run à venir)
-- Action : initialisation
+- Date : 2026-04-02
+- Action : Création chapitre 01 - Bases de la thermique
 
 ## Prochain focus
-Créer le chapitre 01 : Bases de la thermique.
-Fichier cible : `cours/chapitres/01-bases-thermiques.tex`
-Objectif : ébauche complète avec cours, 2 exemples résolus, 3 exercices.
+Créer le chapitre 02 : Hydraulique des circuits. Fichier cible : cours/chapitres/02-hydraulique.tex
 
 ## Chapitres
 
 | # | Fichier | Titre | Statut | Score /5 | Notes |
 |---|---------|-------|--------|----------|-------|
-| 01 | 01-bases-thermiques.tex | Bases de la thermique | absent | — | À créer en priorité |
+| 01 | 01-bases-thermiques.tex | Bases de la thermique | ébauche | 3 | Créé le 2026-04-02 |
 | 02 | 02-hydraulique.tex | Hydraulique des circuits | absent | — | |
 | 03 | 03-aeraulique.tex | Aéraulique | absent | — | |
 | 04 | 04-production-chaleur.tex | Production de chaleur | absent | — | |
