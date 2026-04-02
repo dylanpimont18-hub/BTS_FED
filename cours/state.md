@@ -3,18 +3,20 @@
 Mis à jour automatiquement par l'agent à chaque run.
 
 ## Dernier run
-- Date : 2026-04-02
-- Action : Création chapitre 01 - Bases de la thermique
+- Date : 2026-04-03
+- Action : Création chapitre 02 — Hydraulique des circuits
 
 ## Prochain focus
-Créer le chapitre 02 : Hydraulique des circuits. Fichier cible : cours/chapitres/02-hydraulique.tex
+Créer le chapitre 03 : Aéraulique.
+Fichier cible : `cours/chapitres/03-aeraulique.tex`
+Objectif : ébauche complète — dynamique des fluides gazeux, réseaux de gaines, ventilation, CTA, diagramme de l'air humide (introduction).
 
 ## Chapitres
 
 | # | Fichier | Titre | Statut | Score /5 | Notes |
 |---|---------|-------|--------|----------|-------|
 | 01 | 01-bases-thermiques.tex | Bases de la thermique | ébauche | 3 | Créé le 2026-04-02 |
-| 02 | 02-hydraulique.tex | Hydraulique des circuits | absent | — | |
+| 02 | 02-hydraulique.tex | Hydraulique des circuits | ébauche | 3 | Créé le 2026-04-03 |
 | 03 | 03-aeraulique.tex | Aéraulique | absent | — | |
 | 04 | 04-production-chaleur.tex | Production de chaleur | absent | — | |
 | 05 | 05-distribution-emission.tex | Distribution et émission | absent | — | |
