@@ -394,6 +394,65 @@ où :
 \end{table}
 
 % ============================================================
+\section{Décret tertiaire et audit énergétique}
+% ============================================================
+
+\subsection{Décret tertiaire (décret ELAN — Dispositif Éco-Énergie Tertiaire)}
+
+\begin{definition}[title=Décret tertiaire]
+Le \textbf{décret n°2019-771 du 23 juillet 2019} (dit décret tertiaire) impose aux bâtiments tertiaires de surface $\geq \SI{1000}{\metre\squared}$ une réduction progressive de leur consommation d'énergie finale par rapport à une année de référence.
+\end{definition}
+
+\textbf{Objectifs de réduction :}
+\begin{center}
+\begin{tabular}{cc}
+  \toprule
+  Échéance & Réduction minimale \\
+  \midrule
+  2030 & $-40\,\%$ \\
+  2040 & $-50\,\%$ \\
+  2050 & $-60\,\%$ \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+Ces objectifs peuvent être atteints par rapport à une consommation de référence (année 2010 recommandée) ou par rapport à un seuil de consommation en valeur absolue (exprimé en \si{\kWh_{ef} \per \metre\squared \per \year} selon l'usage).
+
+\textbf{Plateforme OPERAT :} les assujettis déclarent annuellement leurs consommations sur la plateforme numérique de l'ADEME (Observatoire de la Performance Énergétique, de la Rénovation et des Actions du Tertiaire).
+
+\subsection{Aides financières à la rénovation énergétique}
+
+\begin{table}[H]
+  \centering
+  \caption{Principales aides financières pour la rénovation CVC (2024)}
+  \begin{tabular}{p{3.5cm}p{4cm}p{4cm}}
+    \toprule
+    Aide & Bénéficiaire & Dispositif \\
+    \midrule
+    MaPrimeRénov' & Ménages, copropriétés & PAC, VMC, isolation \\
+    CEE (Certificats d'Économies d'Énergie) & Entreprises, collectivités & Tous travaux économies \\
+    Éco-PTZ & Propriétaires occupants & Prêt à taux zéro rénovation \\
+    TVA 5,5\,\% & Travaux sur logements $>$ 2 ans & Rénovation énergétique \\
+    DEEE (Décret Éco-Énergie Tertiaire) & Gestionnaires tertiaires & Accompagnement ADEME \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Méthode de calcul du temps de retour sur investissement}
+
+\begin{methode}[title=Temps de retour sur investissement (TRI simplifié)]
+\begin{equation}
+  TRI = \frac{C_{\text{invest}}}{\Delta C_{\text{énergie,annuel}}}
+\end{equation}
+avec :
+\begin{itemize}
+  \item $C_{\text{invest}}$ : coût d'investissement après déduction des aides [\si{\euro}]
+  \item $\Delta C_{\text{énergie,annuel}}$ : économie annuelle sur la facture énergétique [\si{\euro \per \year}]
+\end{itemize}
+\textbf{Un TRI $\leq$ 10 ans} est généralement accepté pour les projets de rénovation énergétique en tertiaire.
+\end{methode}
+
+% ============================================================
 \section{Labels et certifications énergétiques}
 % ============================================================
 
@@ -510,133 +569,35 @@ P_{\text{récup}} = \dot{m} \times c_p \times (T_{\text{soufflage}} - T_{\text{e
 
 \end{exemple}
 
-% ============================================================
-\section{Exercices d'application}
-% ============================================================
+\begin{exemple}[title=Calcul du besoin de chauffage et impact du double flux]
 
-\exercice{Vérification de conformité RE2020 d'un bâtiment de bureaux}
+\textbf{Données :} Bâtiment résidentiel collectif de \SI{800}{\m^2} (zone H1b, Lyon). Ventilation simple flux hygro B avec débit $\dot{V} = \SI{3\,200}{\m^3 \per \hour}$. On envisage de le remplacer par un système double flux ($\eta_r = 85\,\%$). Coût du kWh gaz : \SI{0{,}10}{\euro}. Surcoût investissement double flux : \SI{18\,000}{\euro}.
 
-\textbf{Énoncé :}
-
-Un bureau de \SI{500}{\m^2} (zone H2b — Nantes) est équipé d'un système de climatisation réversible VRV avec CTA double flux ($\eta_r = 80\,\%$). Les données de la simulation thermique donnent :
-\begin{itemize}
-  \item Besoin chauffage : $Q_{\text{ch}} = \SI{28\,000}{\kWh \per \year}$
-  \item Besoin refroidissement : $Q_{\text{fr}} = \SI{15\,000}{\kWh \per \year}$
-  \item Besoin éclairage : $Q_{\text{écl}} = \SI{8\,000}{\kWh \per \year}$
-  \item Auxiliaires (pompes, ventilateurs) : $C_{\text{aux}} = \SI{4\,500}{\kWh \per \year}$
-\end{itemize}
-Données systèmes : SCOP chauffage = 3,8 ; EER refroidissement = 3,2 ; rendements distribution = 0,97.
-
-\medskip
-\textbf{Questions :}
-\begin{enumerate}
-  \item Calculer la consommation en énergie finale pour chaque usage.
-  \item Calculer le Cep en \si{\kWh_{ep} \per \m^2 \per \year} (fep électricité = 2,3).
-  \item Calculer le Cep,nr (\text{fep,nr} électricité VRV = 2,3 ; fraction non renouvelable éclairage = 1,0).
-  \item Comparer au seuil indicatif RE2020 bureaux (\SI{90}{\kWh_{ep,nr} \per \m^2 \per \year}) et conclure.
-\end{enumerate}
-
-\medskip
-\textbf{Corrigé détaillé :}
-
-\textbf{1. Consommation en énergie finale par usage :}
-
-Chauffage :
-\[
-C_{\text{ef,ch}} = \frac{28\,000}{3{,}8 \times 0{,}97} = \frac{28\,000}{3{,}686} = \SI{7\,596}{\kWh \per \year}
-\]
-
-Refroidissement :
-\[
-C_{\text{ef,fr}} = \frac{15\,000}{3{,}2 \times 0{,}97} = \frac{15\,000}{3{,}104} = \SI{4\,833}{\kWh \per \year}
-\]
-
-Éclairage (consommation directe) : $C_{\text{ef,écl}} = \SI{8\,000}{\kWh \per \year}$
-
-Auxiliaires : $C_{\text{aux}} = \SI{4\,500}{\kWh \per \year}$
-
-Total énergie finale : $C_{\text{ef,total}} = 7\,596 + 4\,833 + 8\,000 + 4\,500 = \SI{24\,929}{\kWh \per \year}$
-
-\medskip
-\textbf{2. Cep (toute l'électricité, fep = 2,3) :}
-\[
-\text{Cep} = \frac{24\,929 \times 2{,}3}{500} = \frac{57\,337}{500} = \SI{114{,}7}{\kWh_{ep} \per \m^2 \per \year}
-\]
-
-\medskip
-\textbf{3. Cep,nr :}
-
-En première approche simplifiée (tout en électricité) :
-\[
-\text{Cep,nr} = \frac{(7\,596 + 4\,833) \times 2{,}3 \times 0{,}55 + (8\,000 + 4\,500) \times 2{,}3 \times 1{,}0}{500}
-\]
-\[
-= \frac{12\,429 \times 1{,}265 + 12\,500 \times 2{,}3}{500} = \frac{15\,722 + 28\,750}{500} = \frac{44\,472}{500} = \SI{88{,}9}{\kWh_{ep,nr} \per \m^2 \per \year}
-\]
-
-\medskip
-\textbf{4. Conclusion :}
-
-$\text{Cep,nr} = \SI{88{,}9}{\kWh_{ep,nr} \per \m^2 \per \year} < \SI{90}{\kWh_{ep,nr} \per \m^2 \per \year}$ : le bâtiment est \textbf{conforme à la RE2020} sur l'indicateur Cep,nr avec une marge de 1,2~\%. Il conviendra toutefois de vérifier également les indicateurs Bbio, DH et IC avant de valider la conformité globale.
-
-\bigskip
-\exercice{Comparaison énergétique — simple flux vs double flux}
-
-\textbf{Énoncé :}
-
-Un bâtiment résidentiel collectif de \SI{800}{\m^2} est ventilé par extraction simple flux hygro B. On envisage de le remplacer par un système double flux avec récupération ($\eta_r = 85\,\%$). Données :
-\begin{itemize}
-  \item Débit d'air total : $\dot{V} = \SI{3\,200}{\m^3 \per \hour}$
-  \item DJU chauffage (Lyon H1b) : 2\,130 K.j
-  \item Température intérieure conventionnelle : \SI{19}{\degreeCelsius}
-  \item Coût du kWh chauffage gaz condensation : \SI{0{,}10}{\euro}
-\end{itemize}
-
-\begin{enumerate}
-  \item Calculer le besoin de chauffage annuel lié à la ventilation en simple flux.
-  \item Calculer l'économie de chauffage apportée par le double flux.
-  \item En déduire le temps de retour sur investissement si le surcoût du double flux est de \SI{18\,000}{\euro}.
-\end{enumerate}
-
-\medskip
-\textbf{Corrigé :}
-
-\textbf{1. Besoin de chauffage annuel — ventilation simple flux :}
-
-La puissance de chauffage liée à la ventilation (simple flux) :
+\textbf{Besoin de chauffage annuel — ventilation simple flux :}
 \[
 \dot{m}_{\text{air}} = \frac{3\,200}{3\,600} \times 1{,}2 = \SI{1{,}067}{\kg \per \s}
 \]
-
-Le besoin annuel (méthode DJU) :
 \[
-Q_{\text{vent,SF}} = \dot{m}_{\text{air}} \times c_p \times \text{DJU} \times 86\,400 \times \frac{1}{3\,600\,000}
-\]
-\[
-= 1{,}067 \times 1\,006 \times 2\,130 \times 86\,400 / 3\,600\,000 = \SI{55\,285}{\kWh \per \year}
+Q_{\text{vent,SF}} = \dot{m}_{\text{air}} \times c_p \times \text{DJU} \times 24 \times 3{,}6^{-1}
+= 1{,}067 \times 1\,006 \times (2\,130 \times 24) / 1\,000 = \SI{54\,852}{\kWh \per \year}
 \]
 
-Ou de manière équivalente avec $\text{DJU} \times 24$ en K.h :
+\textbf{Économie apportée par le double flux :}
 \[
-Q_{\text{vent,SF}} = 1{,}067 \times 1\,006 \times (2\,130 \times 24) / 1\,000 = 1{,}073 \times 51\,120 / 1\,000 = \SI{54\,852}{\kWh \per \year}
+\Delta Q = 0{,}85 \times 54\,852 = \SI{46\,624}{\kWh \per \year}
+\]
+Économie financière avec $\eta_{\text{syst,gaz}} = 0{,}95$ :
+\[
+\Delta E = \frac{46\,624}{0{,}95} \times 0{,}10 = \SI{4\,908}{\euro \per \year}
 \]
 
-\textbf{2. Économie par double flux :}
+\textbf{Temps de retour :}
 \[
-\Delta Q = \eta_r \times Q_{\text{vent,SF}} = 0{,}85 \times 54\,852 = \SI{46\,624}{\kWh \per \year}
+T_{\text{retour}} = \frac{18\,000}{4\,908} \approx \mathbf{3{,}7\,\text{ans}}
 \]
 
-Économie financière (chauffage gaz, $\eta_{\text{syst}} = 0{,}95$) :
-\[
-\Delta E = \frac{46\,624}{0{,}95} \times 0{,}10 = \frac{46\,624}{0{,}95} \times 0{,}10 = \SI{4\,908}{\euro \per \year}
-\]
-
-\textbf{3. Temps de retour sur investissement :}
-\[
-T_{\text{retour}} = \frac{18\,000}{4\,908} \approx \textbf{3{,}7 ans}
-\]
-
-Ce temps de retour est excellent (inférieur à 5 ans), ce qui justifie pleinement l'investissement dans le double flux avec récupération.
+\textbf{Conclusion :} Le retour sur investissement en moins de 4 ans justifie pleinement le passage au double flux. De plus, la RE2020 exige $\eta_r \geq 75\,\%$ pour les systèmes double flux collectifs, ce qui est satisfait ($85\,\% > 75\,\%$).
+\end{exemple}
 
 % ============================================================
 \section{Éléments de réglementation}
