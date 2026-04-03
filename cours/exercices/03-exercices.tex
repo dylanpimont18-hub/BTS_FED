@@ -1,0 +1,164 @@
+\chapter*{Chapitre 3 — Aéraulique}
+\addcontentsline{toc}{chapter}{Chapitre 3 — Aéraulique}
+
+% ============================================================
+\section*{Énoncés}
+% ============================================================
+
+\exercice{Calcul de débit d'air neuf réglementaire}
+
+Un plateau de bureaux de \SI{800}{\square\metre} accueille 60 personnes en occupation nominale. En dehors des heures de bureau, le plateau est inoccupé. Utiliser la catégorie II de la NF EN 16798-1 : 10 \si{\litre\per\second} par personne + 1 \si{\litre\per\second\per\square\metre}.
+
+\begin{enumerate}
+  \item Calculer le débit d'air neuf minimal en occupation nominale (en m³/h).
+  \item Calculer le débit réduit hors occupation (10\,\% du nominal, exigence minimale réglementaire de balayage).
+  \item Un système VAV (débit variable) réduit le débit à 30\,\% en heures creuses (20\,h/sem) par rapport aux heures pleines (40\,h/sem). Le ventilateur absorbe \SI{2{,}2}{\kilo\watt} en plein débit. Estimer la consommation hebdomadaire en kWh avec et sans variation de vitesse.
+\end{enumerate}
+
+% ----------------------------------------------------------
+
+\exercice{Équilibrage d'un réseau de soufflage}
+
+Un réseau de soufflage dessert 5 salles. Après calcul des pertes de charge de chaque branche (du ventilateur à la bouche), on obtient :
+
+\begin{center}
+\begin{tabular}{lcc}
+  \toprule
+  Salle & $\Delta P$ branche (Pa) & Débit nominal (m³/h) \\
+  \midrule
+  S1 (proche) & 180 & 300 \\
+  S2 & 220 & 250 \\
+  S3 & 310 & 200 \\
+  S4 & 410 & 180 \\
+  S5 (index) & 520 & 160 \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\begin{enumerate}
+  \item Identifier la branche index et la pression totale que doit fournir le ventilateur.
+  \item Calculer la perte de charge supplémentaire à créer par le registre d'équilibrage de chaque salle.
+  \item Quel type d'organe d'équilibrage recommander pour une installation tertiaire avec variation d'occupation ?
+\end{enumerate}
+
+% ----------------------------------------------------------
+
+\exercice{Évolution de l'air dans une CTA — diagramme de Mollier}
+
+Une CTA traite de l'air extérieur dans les conditions suivantes :
+\begin{itemize}
+  \item Air extérieur hiver : $T_1 = \SI{2}{\celsius}$, $HR_1 = 70\,\%$, $w_1 = \SI{3{,}5}{\gram\per\kilogram}$, $h_1 = \SI{10{,}8}{\kilo\joule\per\kilogram}$
+  \item Conditions de soufflage souhaitées : $T_s = \SI{22}{\celsius}$, $HR_s = 45\,\%$, $w_s = \SI{7{,}4}{\gram\per\kilogram}$, $h_s = \SI{41{,}0}{\kilo\joule\per\kilogram}$
+  \item Débit massique : $\dot{m} = \SI{2500}{\kilogram\per\hour}$
+\end{itemize}
+
+\begin{enumerate}
+  \item Identifier les évolutions successives de l'air dans la CTA.
+  \item Calculer la puissance de la batterie chaude (chauffage sensible de 2\,°C à 15\,°C, $w$ constant).
+  \item Calculer la puissance de l'humidificateur (de 15\,°C à 22\,°C avec humidification, $h_{s,humid} = \SI{41{,}0}{\kilo\joule\per\kilogram}$, $h_{avant\_humid} = \SI{26{,}2}{\kilo\joule\per\kilogram}$).
+\end{enumerate}
+
+\newpage
+% ============================================================
+\section*{Corrigés}
+% ============================================================
+
+\subsection*{Corrigé — Exercice 1}
+
+\textit{Question 1 — Débit nominal :}
+\[
+  q_{v,pers} = 60 \times 10 = \SI{600}{\litre\per\second}
+\]
+\[
+  q_{v,surf} = 800 \times 1 = \SI{800}{\litre\per\second}
+\]
+\[
+  q_{v,total} = (600 + 800) \times 3{,}6 = 1400 \times 3{,}6 = \SI{5040}{\cubic\metre\per\hour}
+\]
+
+\[
+  \boxed{q_{v,total} = \SI{5040}{\cubic\metre\per\hour}}
+\]
+
+\textit{Question 2 — Débit hors occupation :}
+\[
+  q_{v,vide} = 0{,}10 \times 5040 = \SI{504}{\cubic\metre\per\hour}
+\]
+
+\[
+  \boxed{q_{v,vide} = \SI{504}{\cubic\metre\per\hour}}
+\]
+
+\textit{Question 3 — Consommation avec/sans variation de vitesse :}
+
+\begin{methode}[title=Loi des similitudes — ventilateur]
+La puissance d'un ventilateur varie avec le cube du rapport de vitesse (ou de débit) :
+$P_2 = P_1 \times (q_{v2}/q_{v1})^3$
+\end{methode}
+
+\textit{Sans variation (plein débit permanent) :}
+\[
+  W = 2{,}2 \times (40 + 20) = \SI{132}{\kilo\watt\heure\per semaine}
+\]
+
+\textit{Avec variation (30\,\% en heures creuses) :}
+\[
+  P_{hc} = 2{,}2 \times (0{,}30)^3 = 2{,}2 \times 0{,}027 = \SI{0{,}059}{\kilo\watt}
+\]
+\[
+  W = 2{,}2 \times 40 + 0{,}059 \times 20 = 88 + 1{,}18 = \SI{89{,}2}{\kilo\watt\heure\per semaine}
+\]
+
+\[
+  \boxed{\text{Économie} = 132 - 89{,}2 = \SI{42{,}8}{\kilo\watt\heure\per semaine} \text{ soit } 32\,\%}
+\]
+
+% ----------------------------------------------------------
+
+\subsection*{Corrigé — Exercice 2}
+
+\textit{Question 1 :} La branche index est S5 avec $\Delta P = \SI{520}{\pascal}$. Le ventilateur doit fournir au minimum \SI{520}{\pascal}.
+
+\[
+  \boxed{\Delta P_{ventilateur} \geq \SI{520}{\pascal}}
+\]
+
+\textit{Question 2 :}
+\begin{itemize}
+  \item S1 : registre $= 520 - 180 = \SI{340}{\pascal}$
+  \item S2 : registre $= 520 - 220 = \SI{300}{\pascal}$
+  \item S3 : registre $= 520 - 310 = \SI{210}{\pascal}$
+  \item S4 : registre $= 520 - 410 = \SI{110}{\pascal}$
+  \item S5 : registre $= \SI{0}{\pascal}$ (branche index, pas de réglage)
+\end{itemize}
+
+\textit{Question 3 :} Pour un tertiaire avec variation d'occupation, recommander des \textbf{boîtes à débit variable (VAV)} pilotées par sonde CO\textsubscript{2} ou capteur de présence, couplées à un ventilateur à vitesse variable. Le ventilateur adapte sa pression différentielle à la demande (régulation de pression constante sur la gaine principale).
+
+% ----------------------------------------------------------
+
+\subsection*{Corrigé — Exercice 3}
+
+\textit{Question 1 — Évolutions :}
+\begin{enumerate}
+  \item Préchauffage par récupérateur (2\,°C → 8\,°C, $w$ constant)
+  \item Chauffage batterie chaude (8\,°C → 15\,°C, $w$ constant)
+  \item Humidification adiabatique ou vapeur (15\,°C → 22\,°C, $w$ augmente)
+\end{enumerate}
+
+\textit{Question 2 — Puissance batterie chaude :}
+\[
+  \dot{Q}_{BC} = \dot{m} \cdot c_{p,a} \cdot \Delta T = \frac{2500}{3600} \times 1006 \times (15 - 8) = \SI{4902}{\watt} \approx \SI{4{,}9}{\kilo\watt}
+\]
+
+\[
+  \boxed{\dot{Q}_{BC} \approx \SI{4{,}9}{\kilo\watt}}
+\]
+
+\textit{Question 3 — Puissance humidificateur :}
+\[
+  \dot{Q}_{hum} = \dot{m} \cdot (h_s - h_{av}) = \frac{2500}{3600} \times (41{,}0 - 26{,}2) \times 1000 = \SI{10\,278}{\watt} \approx \SI{10{,}3}{\kilo\watt}
+\]
+
+\[
+  \boxed{\dot{Q}_{hum} \approx \SI{10{,}3}{\kilo\watt}}
+\]
