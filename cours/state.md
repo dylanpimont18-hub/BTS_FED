@@ -4,7 +4,7 @@ Mis à jour automatiquement par l'agent à chaque run.
 
 ## Dernier run
 - Date : 2026-04-03
-- Action : Création chapitres 07 — Régulation et GTB + 08 — Efficacité énergétique et RE2020 (agents parallèles)
+- Action : Création chapitre 10 — Électrotechnique appliquée CVC
 
 ## Prochain focus
 Créer le chapitre 09 : Acoustique du bâtiment.
@@ -24,7 +24,7 @@ Objectif : ébauche complète — niveaux sonores, atténuation, isolement acous
 | 07 | 07-regulation-gtb.tex | Régulation et GTB | ébauche | 4 | Créé le 2026-04-03 |
 | 08 | 08-efficacite-energetique.tex | Efficacité énergétique et RE2020 | ébauche | 4 | Créé le 2026-04-03 |
 | 09 | 09-acoustique.tex | Acoustique du bâtiment | absent | — | |
-| 10 | 10-electrotechnique.tex | Électrotechnique appliquée CVC | absent | — | |
+| 10 | 10-electrotechnique.tex | Électrotechnique appliquée CVC | ébauche | 4 | Créé le 2026-04-03 |
 | 11 | 11-etudes-de-cas.tex | Études de cas et dimensionnement | absent | — | |
 
 ## Légende des statuts
