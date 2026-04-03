@@ -4,7 +4,7 @@ Mis à jour automatiquement par l'agent à chaque run.
 
 ## Dernier run
 - Date : 2026-04-03
-- Action : Création chapitre 06 — Climatisation et traitement d'air
+- Action : Création chapitre 08 — Efficacité énergétique et RE2020
 
 ## Prochain focus
 Créer le chapitre 07 : Régulation et GTB.
@@ -22,7 +22,7 @@ Objectif : ébauche complète — boucles de régulation (PID, TOR), régulation
 | 05 | 05-distribution-emission.tex | Distribution et émission | ébauche | 3 | Créé le 2026-04-03 |
 | 06 | 06-climatisation.tex | Climatisation et traitement d'air | ébauche | 3 | Créé le 2026-04-03 |
 | 07 | 07-regulation-gtb.tex | Régulation et GTB | absent | — | |
-| 08 | 08-efficacite-energetique.tex | Efficacité énergétique et RE2020 | absent | — | |
+| 08 | 08-efficacite-energetique.tex | Efficacité énergétique et RE2020 | ébauche | 4 | Créé le 2026-04-03 |
 | 09 | 09-acoustique.tex | Acoustique du bâtiment | absent | — | |
 | 10 | 10-electrotechnique.tex | Électrotechnique appliquée CVC | absent | — | |
 | 11 | 11-etudes-de-cas.tex | Études de cas et dimensionnement | absent | — | |
