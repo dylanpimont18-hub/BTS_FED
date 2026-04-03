@@ -4,12 +4,12 @@ Mis à jour automatiquement par l'agent à chaque run.
 
 ## Dernier run
 - Date : 2026-04-03
-- Action : Création chapitre 04 — Production de chaleur
+- Action : Création chapitre 05 — Distribution et émission de chaleur
 
 ## Prochain focus
-Créer le chapitre 05 : Distribution et émission de chaleur.
-Fichier cible : `cours/chapitres/05-distribution-emission.tex`
-Objectif : ébauche complète — radiateurs (sélection, puissance, courbes), planchers chauffants (conception, calcul pas/tube), ventilo-convecteurs, réseaux bitubes/monotube.
+Créer le chapitre 06 : Climatisation et traitement d'air.
+Fichier cible : `cours/chapitres/06-climatisation.tex`
+Objectif : ébauche complète — systèmes thermodynamiques (split, VRV/VRF), climatisation à eau glacée (groupes froids, CTA), cycle frigorifique complet, COP/EER, sélection des équipements.
 
 ## Chapitres
 
@@ -19,7 +19,7 @@ Objectif : ébauche complète — radiateurs (sélection, puissance, courbes), p
 | 02 | 02-hydraulique.tex | Hydraulique des circuits | ébauche | 3 | Créé le 2026-04-03 |
 | 03 | 03-aeraulique.tex | Aéraulique | ébauche | 3 | Créé le 2026-04-03 |
 | 04 | 04-production-chaleur.tex | Production de chaleur | ébauche | 3 | Créé le 2026-04-03 |
-| 05 | 05-distribution-emission.tex | Distribution et émission | absent | — | |
+| 05 | 05-distribution-emission.tex | Distribution et émission | ébauche | 3 | Créé le 2026-04-03 |
 | 06 | 06-climatisation.tex | Climatisation et traitement d'air | absent | — | |
 | 07 | 07-regulation-gtb.tex | Régulation et GTB | absent | — | |
 | 08 | 08-efficacite-energetique.tex | Efficacité énergétique et RE2020 | absent | — | |
