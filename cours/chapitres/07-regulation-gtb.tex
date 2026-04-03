@@ -1,0 +1,586 @@
+% ============================================================
+%  Chapitre 07 — Régulation et GTB
+%  BTS FED — Option GCF
+%  Savoirs mobilisés : B11 (niveau 3), B8-1 (niveau 3),
+%                      D1-2 (niveau 2), C6, C2, C8
+% ============================================================
+
+\chapter{Régulation et GTB}
+
+% ------------------------------------------------------------
+\section{Objectifs pédagogiques}
+% ------------------------------------------------------------
+
+À l'issue de ce chapitre, l'étudiant sera capable de :
+
+\begin{itemize}
+  \item Expliquer le principe d'une boucle de régulation en boucle fermée (savoir B11, niveau 3).
+  \item Distinguer les actions TOR, proportionnelle, intégrale et dérivée (PID) et choisir la loi adaptée à une application CVC.
+  \item Analyser et paramétrer une régulation par loi d'eau ou par cascade sur une installation de chauffage.
+  \item Décrire l'architecture d'une GTB/GTC, identifier les niveaux (terrain, automatisme, supervision).
+  \item Identifier les protocoles de communication BACnet/IP et KNX utilisés dans le bâtiment tertiaire (savoir D1-2, niveau 2).
+  \item Mettre en œuvre les outils de pilotage d'un système CVC (compétence C6).
+  \item Vérifier et adapter les performances d'un système régulé (compétence C8).
+\end{itemize}
+
+\textbf{Savoirs associés du référentiel :}
+\begin{itemize}
+  \item B11 — Régulation (boucles, TOR, proportionnel, optimisation) — niveau 3
+  \item B8-1 — Architecture systèmes centralisés (capteurs, actionneurs, supervision, protocoles) — niveau 3
+  \item D1-2 — Standards de communication (protocoles, compatibilités) — niveau 2
+  \item C2-2 — Identifier les chaînes d'énergie et d'information — niveau 3
+\end{itemize}
+
+% ------------------------------------------------------------
+\section{Introduction}
+% ------------------------------------------------------------
+
+Dans une installation CVC (Chauffage, Ventilation, Climatisation), maintenir le confort des occupants tout en minimisant la consommation d'énergie exige un pilotage dynamique et précis des équipements. La \textbf{régulation} assure en temps réel l'ajustement automatique des grandeurs physiques (température, débit, pression, hygrométrie) autour de valeurs consignes, en réponse aux perturbations extérieures (température extérieure, apports solaires, occupation variable). La \textbf{gestion technique du bâtiment (GTB)}, également appelée GTC (gestion technique centralisée), fédère l'ensemble des régulations locales, des comptages énergétiques et des alarmes au sein d'une infrastructure numérique unifiée. Elle constitue aujourd'hui un levier incontournable pour atteindre les objectifs de performance énergétique fixés par la RE2020, et pour satisfaire les exigences de reporting et de commissionnement des bâtiments tertiaires soumis au décret BACS (Building Automation and Control Systems, 2020).
+
+% ------------------------------------------------------------
+\section{Bases de la régulation automatique}
+% ------------------------------------------------------------
+
+\subsection{Grandeurs fondamentales d'une boucle}
+
+\begin{definition}
+  Une \textbf{boucle de régulation} est un système automatique qui compare en permanence la valeur mesurée d'une grandeur physique (\textbf{mesure} $y$) à une valeur de référence (\textbf{consigne} $w$), puis agit sur un \textbf{actionneur} pour réduire l'\textbf{écart} (erreur) $e = w - y$.
+\end{definition}
+
+Les composants types d'une boucle fermée sont :
+
+\begin{center}
+\begin{tabular}{ll}
+  \toprule
+  Composant & Rôle \\
+  \midrule
+  Capteur / sonde & Mesure la grandeur réglée ($y$) \\
+  Régulateur (ou automate) & Calcule la commande à partir de $e$ \\
+  Actionneur & Agit sur le processus (vanne, variateur\ldots) \\
+  Processus & Installation physique à réguler \\
+  Perturbations & Variations non maîtrisées (température ext., occupation\ldots) \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Régulation Tout-ou-Rien (TOR)}
+
+\begin{definition}
+  La \textbf{régulation TOR} (Tout-Ou-Rien) ne connaît que deux états : \textit{marche} ou \textit{arrêt}. Un \textbf{hystérésis} $\Delta w$ est introduit pour éviter les commutations trop fréquentes (pompage).
+\end{definition}
+
+Si la consigne est $w = \SI{20}{\celsius}$ avec une bande d'hystérésis $\Delta w = \SI{1}{\kelvin}$ :
+\begin{itemize}
+  \item Le chauffage s'enclenche quand $y < \SI{19.5}{\celsius}$.
+  \item Le chauffage s'arrête quand $y > \SI{20.5}{\celsius}$.
+\end{itemize}
+
+\begin{attention}
+  La régulation TOR génère des oscillations permanentes autour de la consigne. Elle convient aux applications peu exigeantes (résistances électriques, petits chaudières domestiques) mais est inadaptée aux processus thermiques à forte inertie ou aux exigences de précision élevées.
+\end{attention}
+
+\subsection{Régulation proportionnelle (P)}
+
+L'action proportionnelle produit une commande proportionnelle à l'erreur :
+
+\begin{equation}
+  u(t) = K_P \cdot e(t) + u_0
+\end{equation}
+
+où :
+\begin{itemize}
+  \item $u(t)$ : signal de commande [$\%$ ou signal 0–10 V]
+  \item $K_P$ : gain proportionnel [sans dimension ou \%/K]
+  \item $e(t) = w - y(t)$ : erreur à l'instant $t$ [\si{\kelvin}]
+  \item $u_0$ : point de fonctionnement nominal [\%]
+\end{itemize}
+
+\begin{definition}
+  La \textbf{bande proportionnelle} $X_P$ (ou \textit{proportional band} en anglais) est l'écart sur la grandeur mesurée qui correspond à une variation de $100\,\%$ du signal de sortie. On a :
+  \begin{equation}
+    X_P = \frac{1}{K_P} \times 100 \quad [\si{\kelvin}]
+  \end{equation}
+  Une bande proportionnelle étroite ($X_P$ faible, $K_P$ élevé) améliore la rapidité mais peut provoquer des instabilités.
+\end{definition}
+
+L'action P seule laisse subsister un \textbf{écart statique résiduel} en régime permanent.
+
+\subsection{Régulation proportionnelle-intégrale (PI)}
+
+L'ajout d'une action intégrale annule l'écart statique :
+
+\begin{equation}
+  u(t) = K_P \left[ e(t) + \frac{1}{T_i} \int_0^t e(\tau)\,\mathrm{d}\tau \right]
+\end{equation}
+
+où $T_i$ est le \textbf{temps d'intégration} [\si{\second}] (ou constante d'action intégrale).
+
+\begin{itemize}
+  \item $T_i$ petit $\Rightarrow$ action intégrale rapide, risque de dépassement et d'oscillations.
+  \item $T_i$ grand $\Rightarrow$ action intégrale lente, retour lent à la consigne.
+\end{itemize}
+
+Le régulateur PI est le \textbf{standard de l'industrie CVC} : il assure précision et stabilité sur la majorité des boucles thermiques et hydrauliques.
+
+\subsection{Régulation proportionnelle-intégrale-dérivée (PID)}
+
+\begin{equation}
+  u(t) = K_P \left[ e(t) + \frac{1}{T_i} \int_0^t e(\tau)\,\mathrm{d}\tau + T_d \frac{\mathrm{d}e}{\mathrm{d}t} \right]
+\end{equation}
+
+où $T_d$ est le \textbf{temps dérivé} [\si{\second}] (anticipation sur la vitesse de variation de l'erreur).
+
+\begin{tabular}{lll}
+  \toprule
+  Action & Effet & Inconvénient \\
+  \midrule
+  P & Rapidité proportionnelle à $K_P$ & Écart statique résiduel \\
+  I & Annule l'écart statique & Risque de dépassement \\
+  D & Amortit les oscillations, anticipe & Amplifie le bruit de mesure \\
+  \bottomrule
+\end{tabular}
+
+\vspace{0.5em}
+\begin{attention}
+  En CVC, l'action dérivée est rarement utilisée sur les boucles de température ambiante (signal bruité, inertie thermique importante). Elle peut être utile sur les boucles de pression d'eau rapides.
+\end{attention}
+
+\subsection{Réglage des paramètres PID — méthode pratique}
+
+\begin{methode}
+  \textbf{Méthode par essais successifs (méthode de Ziegler-Nichols simplifiée en CVC) :}
+  \begin{enumerate}
+    \item Mettre l'installation en régime stable (charge thermique constante).
+    \item Partir avec $T_i = \infty$ (intégrale désactivée) et $T_d = 0$.
+    \item Augmenter $K_P$ jusqu'à obtenir des oscillations entretenues : noter le gain critique $K_{Pc}$ et la période d'oscillation $T_{osc}$.
+    \item Appliquer les valeurs recommandées pour un régulateur PI :
+      $K_P \approx 0{,}45 \cdot K_{Pc}$ et $T_i \approx 0{,}83 \cdot T_{osc}$.
+    \item Affiner empiriquement sur site (réponse à un échelon de consigne).
+  \end{enumerate}
+\end{methode}
+
+% ------------------------------------------------------------
+\section{Applications en installations CVC}
+% ------------------------------------------------------------
+
+\subsection{Régulation de la température ambiante}
+
+La boucle de base d'une zone chauffée met en jeu :
+\begin{itemize}
+  \item \textbf{Capteur :} sonde de température ambiante (NTC ou PT1000), précision typique $\pm\SI{0.3}{\kelvin}$.
+  \item \textbf{Consigne :} température de confort (ex. $w = \SI{20}{\celsius}$) ou de réduit ($w = \SI{16}{\celsius}$).
+  \item \textbf{Actionneur :} vanne 3 voies motorisée ou vanne 2 voies sur émetteur, variateur de fréquence sur pompe.
+  \item \textbf{Perturbation principale :} température extérieure $T_{ext}$, apports internes.
+\end{itemize}
+
+\subsection{Régulation par loi d'eau (régulation climatique)}
+
+\begin{definition}
+  La \textbf{loi d'eau} (ou courbe de chauffe) est une relation linéaire entre la température de départ du réseau de chauffage $T_{dep}$ et la température extérieure $T_{ext}$. Elle anticipe les besoins thermiques sans attendre qu'une erreur de confort se manifeste — c'est une \textbf{régulation en boucle ouverte} sur $T_{ext}$, corrigée en boucle fermée sur $T_{dep}$.
+\end{definition}
+
+La loi d'eau s'exprime par :
+\begin{equation}
+  T_{dep} = T_{dep,base} + K_{loi} \cdot (T_{ext,base} - T_{ext})
+\end{equation}
+
+où :
+\begin{itemize}
+  \item $T_{dep,base}$ : température de départ à la température extérieure de base [\si{\celsius}]
+  \item $T_{ext,base}$ : température extérieure de base de dimensionnement [\si{\celsius}]
+  \item $K_{loi}$ : pente de la loi d'eau [K/K, sans dimension]
+\end{itemize}
+
+\begin{exemple}
+  \textbf{Paramétrage d'une loi d'eau pour un réseau de radiateurs :}
+
+  Données du projet :
+  \begin{itemize}
+    \item Température extérieure de base : $T_{ext,base} = \SI{-7}{\celsius}$ (Paris, zone H1b)
+    \item Température de départ à la base : $T_{dep,base} = \SI{75}{\celsius}$ (radiateurs acier)
+    \item Température de départ minimale souhaitée (à $T_{ext} = \SI{15}{\celsius}$) : $T_{dep,min} = \SI{30}{\celsius}$
+  \end{itemize}
+
+  Calcul de la pente :
+  \begin{equation}
+    K_{loi} = \frac{T_{dep,base} - T_{dep,min}}{T_{ext,min} - T_{ext,base}} = \frac{75 - 30}{15 - (-7)} = \frac{45}{22} \approx 2{,}05
+  \end{equation}
+
+  À $T_{ext} = \SI{0}{\celsius}$ :
+  \begin{equation}
+    T_{dep} = 30 + 2{,}05 \times (15 - 0) = 30 + 30{,}75 \approx \SI{60{,}8}{\celsius}
+  \end{equation}
+
+  Le régulateur climatique fixe la consigne de départ à $\SI{60{,}8}{\celsius}$ lorsque la température extérieure est nulle.
+\end{exemple}
+
+\begin{attention}
+  La loi d'eau doit être \textbf{adaptée à chaque émetteur} : les planchers chauffants (émetteurs basse température, $T_{dep} \leq \SI{45}{\celsius}$) nécessitent une pente bien plus faible que des radiateurs haute température.
+\end{attention}
+
+\subsection{Régulation en cascade (maître-esclave)}
+
+\begin{definition}
+  La \textbf{régulation en cascade} utilise deux boucles imbriquées : une boucle \textbf{maître} lente calcule la consigne de la boucle \textbf{esclave} rapide. La boucle esclave corrige les perturbations rapides avant qu'elles n'atteignent la grandeur principale.
+\end{definition}
+
+Exemple typique : régulation de la température ambiante (maître) $\rightarrow$ régulation de la température de départ réseau (esclave).
+
+\begin{itemize}
+  \item \textbf{Boucle maître :} mesure $T_{ambiance}$, compare à $w_{ambiance} = \SI{20}{\celsius}$, corrige la consigne de départ $w_{dep}$.
+  \item \textbf{Boucle esclave :} mesure $T_{dep}$, compare à $w_{dep}$, agit sur la vanne mélangeuse 3 voies.
+\end{itemize}
+
+La cascade offre une meilleure immunité aux perturbations hydrauliques (variations de débit) que la boucle simple.
+
+\subsection{Régulation de la pression différentielle hydraulique}
+
+Sur un réseau hydraulique à débit variable (vannes 2 voies sur les émetteurs), la pression différentielle aux bornes des émetteurs doit rester dans une plage acceptable pour maintenir le débit nominal de chaque zone.
+
+\begin{equation}
+  \Delta P_{regulé} = \text{constante} \quad \Rightarrow \quad \text{variateur de fréquence sur pompe}
+\end{equation}
+
+La consigne de pression différentielle est typiquement fixée à \SI{30}{\percent} à \SI{50}{\percent} de la pression différentielle maximale. Le variateur adapte la vitesse de la pompe par une action PI.
+
+\subsection{Régulation hygrométrique}
+
+En traitement d'air, la boucle de régulation de l'humidité relative agit sur :
+\begin{itemize}
+  \item \textbf{Humidification :} vapeur d'eau électrique ou à gaz, buse haute pression.
+  \item \textbf{Déshumidification :} batterie froide (en dessous du point de rosée).
+\end{itemize}
+
+Le régulateur compare la consigne d'humidité relative $HR_c$ à la mesure $HR_m$ et pilote le modulant du système correspondant.
+
+% ------------------------------------------------------------
+\section{Gestion Technique du Bâtiment (GTB)}
+% ------------------------------------------------------------
+
+\subsection{Définitions et périmètre}
+
+\begin{definition}
+  La \textbf{Gestion Technique du Bâtiment (GTB)}, ou \textit{Building Management System (BMS)} en anglais, est un système informatique centralisé qui supervise, contrôle et optimise l'ensemble des équipements techniques d'un bâtiment : CVC, éclairage, sécurité, comptage énergétique, contrôle d'accès.
+
+  La \textbf{Gestion Technique Centralisée (GTC)} est une appellation synonyme, historiquement utilisée en France pour les bâtiments industriels.
+\end{definition}
+
+Le \textbf{décret BACS} (2020, transposition de la directive EPBD 2018) rend obligatoire l'installation d'une GTB pour les bâtiments tertiaires neufs dès \SI{290}{\kilo\watt} de puissance nominale CVC, et pour les bâtiments existants au-delà de \SI{290}{\kilo\watt} lors de rénovations, à partir de 2025.
+
+\subsection{Architecture en trois niveaux}
+
+La GTB est structurée selon trois niveaux fonctionnels :
+
+\begin{center}
+\begin{tabular}{lll}
+  \toprule
+  Niveau & Nom & Fonctions \\
+  \midrule
+  1 & \textbf{Terrain} & Capteurs, actionneurs, équipements CVC \\
+  2 & \textbf{Automatisme} & Automates programmables (UTA, régulateurs) \\
+  3 & \textbf{Supervision} & Interface homme-machine (IHM), serveur, reporting \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\begin{description}
+  \item[Niveau 1 — Terrain :] sonde de température, hygromètre, débitmètre, vanne motorisée, variateur de fréquence, chaudière, groupe froid. Les signaux sont analogiques (0–10 V, 4–20 mA, PT100, NTC) ou numériques (TOR, bus de terrain).
+  \item[Niveau 2 — Automatisme :] régulateur de zone, automate programmable industriel (API), unité de traitement d'air (UTA) intégrée. Ce niveau implémente les boucles de régulation et les séquences de démarrage/arrêt. Il communique avec le niveau 1 (câblage direct ou bus) et avec le niveau 3 (réseau IP).
+  \item[Niveau 3 — Supervision :] logiciel SCADA (Supervisory Control And Data Acquisition) ou interface web. Fonctions : visualisation synoptique, historisation des données, gestion des alarmes, édition des rapports, optimisation des programmes horaires.
+\end{description}
+
+\subsection{Protocoles de communication}
+
+\subsubsection{BACnet (Building Automation and Control Networks)}
+
+\begin{definition}
+  \textbf{BACnet} (norme ASHRAE/ISO 16484-5) est le protocole ouvert de référence pour la communication entre équipements GTB de fabricants différents. Il définit des \textbf{objets} (points de données) standard : Analog Input, Binary Output, Schedule, Trend Log, etc.
+\end{definition}
+
+\begin{itemize}
+  \item \textbf{BACnet/IP :} transport sur réseau Ethernet/TCP-IP — utilisé entre régulateurs et serveur de supervision.
+  \item \textbf{BACnet MS/TP :} transport sur liaison série RS-485 — utilisé au niveau terrain (coût réduit).
+  \item \textbf{BACnet/MSTP} permet d'atteindre des débits jusqu'à \SI{76.8}{\kilo bit\per\second}.
+  \item Interopérabilité garantie par les \textbf{profils de conformité (BTL)} délivrés par BACnet Testing Laboratories.
+\end{itemize}
+
+\subsubsection{KNX}
+
+\begin{definition}
+  \textbf{KNX} (norme EN 50090 / ISO 14543) est un protocole de bus décentralisé, conçu initialement pour la domotique et les bâtiments tertiaires. Il couvre l'éclairage, les stores, le CVC et la sécurité.
+\end{definition}
+
+\begin{itemize}
+  \item \textbf{Support physique :} câble bus KNX 2 fils (alimentation + données à \SI{9.6}{\kilo bit\per\second}), RF, IP.
+  \item \textbf{Topologie :} lignes, zones, domaines — jusqu'à $57\,375$ adresses individuelles.
+  \item \textbf{Programmation :} logiciel ETS (Engineering Tool Software), paramétrage de chaque composant.
+  \item \textbf{Avantage CVC :} pilotage des thermostats de zone, actionneurs de vanne, centrales de mesure, avec priorité de sécurité intégrée.
+\end{itemize}
+
+\subsubsection{Autres protocoles rencontrés en CVC}
+
+\begin{center}
+\begin{tabular}{lll}
+  \toprule
+  Protocole & Domaine & Caractéristiques \\
+  \midrule
+  Modbus RTU/TCP & CVC industriel & Simple, robuste, RS-485 ou Ethernet \\
+  LonWorks & Bâtiment tertiaire & Bus neurone, interopérable \\
+  M-Bus & Comptage énergie & EN 13757, relevé à distance \\
+  DALI & Éclairage & Bus numérique 2 fils, 64 adresses \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Fonctions de la supervision}
+
+Le logiciel de supervision offre, à minima, les fonctions suivantes :
+
+\begin{enumerate}
+  \item \textbf{Visualisation synoptique :} schémas animés des installations (état des équipements, valeurs mesurées en temps réel).
+  \item \textbf{Gestion des alarmes :} détection des dépassements de seuil, des défauts équipements — journalisation et envoi de notifications (email, SMS).
+  \item \textbf{Historisation (trending) :} enregistrement des variables à pas de temps paramétrable (ex. toutes les 15 min) pour analyse des dérives et suivi des consommations.
+  \item \textbf{Programmation horaire :} calendriers de fonctionnement (jours ouvrés, week-end, jours fériés), confort/réduit/hors gel.
+  \item \textbf{Optimisation du démarrage :} calcul de l'heure de relance optimale en fonction de la température extérieure et de la température ambiante — économie d'énergie en évitant le démarrage trop précoce.
+  \item \textbf{Suivi énergétique :} index de compteurs, calcul des indices de performance (IPE, kWh/m²), tableaux de bord conformes au décret tertiaire.
+\end{enumerate}
+
+\subsection{Classes de performance GTB selon EN 15232}
+
+La norme NF EN 15232 (2012, remplacée en partie par EN 52120-1) définit quatre classes d'efficacité de la GTB :
+
+\begin{center}
+\begin{tabular}{cll}
+  \toprule
+  Classe & Niveau & Description \\
+  \midrule
+  D & Non automatisé & Installations sans régulation automatique \\
+  C & Automatisation standard & Régulation de base (TOR, P) \\
+  B & Automatisation avancée & Régulation PI, loi d'eau, optimisation démarrage \\
+  A & Haute performance & GTB intégrée, optimisation multi-énergie, reporting \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+Le passage de la classe D à la classe B permet de réduire la consommation d'énergie de \textbf{30 à 40\,\%} pour un bâtiment de bureaux (données EN 15232, facteur de pondération).
+
+% ------------------------------------------------------------
+\section{Exemples résolus}
+% ------------------------------------------------------------
+
+\begin{exemple}[title={Calcul de la loi d'eau pour plancher chauffant}]
+  \textbf{Données :}
+  \begin{itemize}
+    \item Bâtiment de bureaux à Strasbourg — zone H1c, $T_{ext,base} = \SI{-12}{\celsius}$
+    \item Plancher chauffant : température de départ maximale $T_{dep,max} = \SI{45}{\celsius}$, température de départ minimale $T_{dep,min} = \SI{28}{\celsius}$ (limite de confort)
+    \item Coupure chauffage à $T_{ext} = \SI{18}{\celsius}$
+  \end{itemize}
+
+  \textbf{Calcul de la pente :}
+  \begin{equation}
+    K_{loi} = \frac{T_{dep,max} - T_{dep,min}}{T_{ext,coupure} - T_{ext,base}} = \frac{45 - 28}{18 - (-12)} = \frac{17}{30} \approx 0{,}57
+  \end{equation}
+
+  \textbf{Loi d'eau :}
+  \begin{equation}
+    T_{dep}(T_{ext}) = 28 + 0{,}57 \times (18 - T_{ext})
+  \end{equation}
+
+  \textbf{Application numérique} à $T_{ext} = \SI{-5}{\celsius}$ :
+  \begin{equation}
+    T_{dep} = 28 + 0{,}57 \times (18 - (-5)) = 28 + 0{,}57 \times 23 = 28 + 13{,}1 = \SI{41{,}1}{\celsius}
+  \end{equation}
+
+  \textbf{Conclusion :} La loi d'eau fixe $T_{dep} \approx \SI{41}{\celsius}$ pour une température extérieure de $\SI{-5}{\celsius}$. Ce réglage respecte les limites du plancher chauffant et optimise le COP de la pompe à chaleur associée (plus $T_{dep}$ est basse, meilleur est le COP).
+\end{exemple}
+
+\begin{exemple}[title={Dimensionnement d'un réseau GTB BACnet/IP}]
+  \textbf{Contexte :} bâtiment tertiaire de $\SI{5000}{\metre\squared}$ comportant :
+  \begin{itemize}
+    \item 8 régulateurs de zone (1 par plateau, régulation température + CO$_2$)
+    \item 2 unités de traitement d'air (UTA) avec régulation CVC intégrée
+    \item 1 groupe froid + 1 chaudière à condensation — gestion centralisée
+    \item 1 serveur de supervision BACnet/IP
+  \end{itemize}
+
+  \textbf{Architecture retenue :}
+  \begin{itemize}
+    \item \textbf{Niveau terrain} : sondes PT1000 câblées en direct sur les régulateurs, vannes motorisées avec retour de position 0–10 V.
+    \item \textbf{Niveau automatisme} : 8 régulateurs de zone + 2 automates UTA + 2 automates production — tous adressés en BACnet/IP sur un réseau Ethernet dédié.
+    \item \textbf{Niveau supervision} : serveur Windows avec logiciel SCADA BACnet/IP. Interface web accessible depuis smartphone pour l'exploitant.
+  \end{itemize}
+
+  \textbf{Points de données estimés :}
+  \begin{center}
+  \begin{tabular}{lr}
+    \toprule
+    Sous-système & Nombre de points \\
+    \midrule
+    Régulateurs de zone ($8 \times 15$ points) & 120 \\
+    UTA ($2 \times 40$ points) & 80 \\
+    Production ($2 \times 25$ points) & 50 \\
+    Comptage énergie ($\times 6$) & 6 \\
+    \textbf{Total} & \textbf{256 points} \\
+    \bottomrule
+  \end{tabular}
+  \end{center}
+
+  \textbf{Conclusion :} Le réseau BACnet/IP avec switch dédié offre l'interopérabilité nécessaire entre les équipements de fabricants différents. La classe GTB visée est la \textbf{classe B} (EN 15232), permettant une économie d'énergie estimée à \textbf{25\,\%} par rapport à une installation sans GTB (classe C).
+\end{exemple}
+
+% ------------------------------------------------------------
+\section{Exercices d'application}
+% ------------------------------------------------------------
+
+\exercice{Choix de la loi de régulation}
+
+\textbf{Énoncé :}
+
+Une chaudière à condensation dessert un réseau de radiateurs en acier. La consigne de température ambiante est $w = \SI{19}{\celsius}$. Après un arrêt de nuit, la mesure de température ambiante est $y = \SI{14}{\celsius}$.
+
+\begin{enumerate}
+  \item Calculer l'erreur initiale $e_0$.
+  \item Avec un régulateur proportionnel de gain $K_P = \SI{5}{\percent\per\kelvin}$, calculer le signal de commande initial $u(t=0)$ sachant que $u_0 = 50\,\%$.
+  \item La commande calculée est-elle physiquement réalisable ? Conclure sur la saturation de l'actionneur.
+  \item Justifier l'intérêt d'ajouter une action intégrale (régulateur PI) pour atteindre exactement $\SI{19}{\celsius}$ en régime permanent.
+\end{enumerate}
+
+\textbf{Corrigé :}
+
+\begin{enumerate}
+  \item $e_0 = w - y = 19 - 14 = \SI{5}{\kelvin}$
+
+  \item Signal de commande :
+  \begin{equation}
+    u = K_P \cdot e_0 + u_0 = 5 \times 5 + 50 = 75\,\%
+  \end{equation}
+  La vanne s'ouvre à $75\,\%$ de sa course maximale.
+
+  \item La commande $75\,\%$ est physiquement réalisable (comprise entre 0 et 100\,\%). La saturation n'est pas atteinte dans ce cas. En revanche, pour $e > \SI{10}{\kelvin}$ : $u = 5 \times 10 + 50 = 100\,\%$ — saturation atteinte, la vanne est pleinement ouverte.
+
+  \item En régime permanent, si un actionneur P pur maintient la chauffe, l'erreur résiduelle $e_{stat} = u_{nécessaire}/K_P - u_0/K_P$ est non nulle sauf si $u_0$ est exactement calibré. L'action intégrale accumule l'erreur dans le temps et ajuste progressivement $u$ jusqu'à ce que $e = 0$, garantissant ainsi $y = w = \SI{19}{\celsius}$ en régime établi, quelle que soit la charge thermique.
+\end{enumerate}
+
+\exercice{Paramétrage de la loi d'eau d'une installation}
+
+\textbf{Énoncé :}
+
+Un immeuble de logements à Lyon (zone H2a, $T_{ext,base} = \SI{-9}{\celsius}$) est chauffé par des radiateurs à basse température ($T_{dep,max} = \SI{55}{\celsius}$ à $T_{ext,base}$). Le chauffage se coupe à $T_{ext} = \SI{16}{\celsius}$ ($T_{dep,min} = \SI{30}{\celsius}$).
+
+\begin{enumerate}
+  \item Calculer la pente de la loi d'eau $K_{loi}$.
+  \item Déterminer la température de départ programmée pour $T_{ext} = \SI{2}{\celsius}$.
+  \item Un correcteur de confort ajoute $+\SI{3}{\kelvin}$ à la consigne de départ lorsque les occupants signalent une sensation de froid. Quelle est la nouvelle température de départ pour $T_{ext} = \SI{2}{\celsius}$ ?
+  \item Quel est l'impact de cette correction sur la consommation de la chaudière ? (réponse qualitative)
+\end{enumerate}
+
+\textbf{Corrigé :}
+
+\begin{enumerate}
+  \item Pente :
+  \begin{equation}
+    K_{loi} = \frac{55 - 30}{16 - (-9)} = \frac{25}{25} = 1{,}0
+  \end{equation}
+
+  \item Température de départ à $T_{ext} = \SI{2}{\celsius}$ :
+  \begin{equation}
+    T_{dep} = 30 + 1{,}0 \times (16 - 2) = 30 + 14 = \SI{44}{\celsius}
+  \end{equation}
+
+  \item Avec correcteur de confort $+\SI{3}{\kelvin}$ :
+  \begin{equation}
+    T_{dep,corrected} = 44 + 3 = \SI{47}{\celsius}
+  \end{equation}
+
+  \item Une hausse de $\SI{3}{\kelvin}$ sur la température de départ augmente les pertes thermiques du réseau de distribution et réduit le rendement de condensation de la chaudière (la température de retour augmente). On estime une surconsommation de l'ordre de 6 à 10\,\% selon l'isolation du réseau. Le correcteur doit donc être utilisé avec modération et remis à zéro dès retour à l'état de confort.
+\end{enumerate}
+
+\exercice{Identification des composants GTB}
+
+\textbf{Énoncé :}
+
+Un bâtiment tertiaire est équipé d'une GTB structurée en trois niveaux. Le technicien relève les équipements suivants :
+
+\begin{enumerate}[label=\alph*)]
+  \item Sonde de température ambiante PT1000 installée dans le bureau
+  \item Logiciel SCADA affichant les synoptiques sur écran tactile au poste de garde
+  \item Régulateur de zone Siemens Synco 700 gérant la vanne de la batterie chaude
+  \item Vanne 2 voies motorisée DN15 sur circuit eau chaude
+  \item Switch Ethernet administrable reliant les automates et le serveur
+  \item Variateur de fréquence Schneider sur moteur pompe de circulation
+\end{enumerate}
+
+Classer chacun de ces équipements dans le niveau GTB correspondant (niveau 1, 2 ou 3) et préciser son rôle dans la chaîne de régulation.
+
+\textbf{Corrigé :}
+
+\begin{center}
+\begin{tabular}{clll}
+  \toprule
+  Équipement & Niveau & Rôle & Nature \\
+  \midrule
+  a) Sonde PT1000 & 1 — Terrain & Mesure grandeur réglée ($T_{amb}$) & Capteur \\
+  b) Logiciel SCADA & 3 — Supervision & Visualisation, historique, alarmes & IHM \\
+  c) Régulateur Synco 700 & 2 — Automatisme & Calcule la commande (boucle PI) & Contrôleur \\
+  d) Vanne motorisée & 1 — Terrain & Agit sur le débit d'eau chaude & Actionneur \\
+  e) Switch Ethernet & 3 — Supervision & Infrastructure réseau IP & Communication \\
+  f) Variateur de fréquence & 1/2 — Terrain/Auto. & Adapte la vitesse de la pompe & Actionneur piloté \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+Note : le variateur de fréquence est physiquement au niveau terrain mais intègre souvent une intelligence locale (boucle PID de pression) — il peut donc être considéré comme niveau 1 ou niveau 2 selon le contexte.
+
+% ------------------------------------------------------------
+\section{Éléments de réglementation}
+% ------------------------------------------------------------
+
+\subsection{Décret BACS (2020)}
+
+Le \textbf{décret n°2020-658 du 29 mai 2020} (transposition de la directive européenne EPBD 2018/844) impose l'installation de systèmes d'automatisation et de contrôle des bâtiments (BACS) dans les bâtiments tertiaires :
+
+\begin{itemize}
+  \item \textbf{Bâtiments neufs} : dès \SI{290}{\kilo\watt} de puissance nominale de chauffage ou de climatisation — obligation depuis le 1\textsuperscript{er} janvier 2021.
+  \item \textbf{Bâtiments existants} : au-delà de \SI{290}{\kilo\watt}, lors du renouvellement du système de chauffage ou de climatisation — obligation depuis le 1\textsuperscript{er} janvier 2025.
+  \item Le BACS doit permettre la surveillance, la journalisation et le contrôle de l'efficacité énergétique de l'installation.
+\end{itemize}
+
+\subsection{RE2020}
+
+La \textbf{Réglementation Environnementale 2020} (RE2020), entrée en vigueur le 1\textsuperscript{er} janvier 2022 pour les logements neufs, intègre la GTB comme levier d'atteinte des objectifs de performance :
+\begin{itemize}
+  \item La GTB contribue à la réduction du Bbio (besoin bioclimatique) et du Cep (consommation d'énergie primaire) par l'optimisation des programmes horaires et la récupération de chaleur.
+  \item Les calculs réglementaires (moteur de calcul Th-BCE) intègrent les classes GTB selon EN 52120.
+\end{itemize}
+
+\subsection{Norme NF EN 15232-1 / EN 52120-1}
+
+\begin{itemize}
+  \item \textbf{NF EN 15232-1 (2017)} : Efficacité énergétique des bâtiments — Impact de l'automatisation, de la régulation et de la gestion technique. Définit les classes A à D et les facteurs de pondération par type de bâtiment.
+  \item \textbf{EN 52120-1 (2021)} : Révision harmonisée à l'échelle européenne, intégrant les nouvelles exigences BACS.
+\end{itemize}
+
+\subsection{Normes de protocoles et d'installation}
+
+\begin{itemize}
+  \item \textbf{ASHRAE 135 / ISO 16484-5} : Norme BACnet — spécification complète du protocole, des objets et des services.
+  \item \textbf{EN 50090 / ISO 14543} : Norme KNX — systèmes électroniques pour les habitations et les bâtiments (HBES).
+  \item \textbf{NF EN 13757} : Communication des compteurs d'eau, de gaz et d'énergie thermique — inclut le M-Bus.
+  \item \textbf{DTU 65.11} (NF P52-305) : Règles d'installation des régulations pour les systèmes de chauffage. Prescrit les emplacements des sondes, les sections de câblage et les distances minimales par rapport aux sources de perturbations électromagnétiques.
+  \item \textbf{NF C 15-100} : Installations électriques basse tension — applicable au câblage des automates et des actionneurs.
+\end{itemize}
+
+\subsection{Bonnes pratiques de mise en service}
+
+\begin{methode}
+  \textbf{Procédure de commissionnement d'une GTB (selon FG BIM / COSTIC) :}
+  \begin{enumerate}
+    \item Vérifier le câblage de chaque point de mesure et d'action (test E/S).
+    \item Calibrer les capteurs (comparaison à un instrument de référence étalonné).
+    \item Vérifier le sens d'action des actionneurs (ouverture/fermeture des vannes).
+    \item Paramétrer les boucles de régulation (consignes, gains, plages horaires).
+    \item Réaliser des tests de réponse à un échelon sur chaque boucle.
+    \item Valider les alarmes : simuler un défaut et vérifier la remontée au superviseur.
+    \item Rédiger le procès-verbal de mise en service (PV de recette GTB).
+  \end{enumerate}
+\end{methode}
