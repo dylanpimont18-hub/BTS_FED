@@ -1,0 +1,627 @@
+% ============================================================
+%  Chapitre 09 — Acoustique du bâtiment
+%  BTS FED — Option GCF
+%  Savoir associé : S5.2 (niveau 3) et A7 (niveau 3)
+% ============================================================
+
+\chapter{Acoustique du bâtiment}
+
+% ------------------------------------------------------------
+\section{Objectifs pédagogiques}
+% ------------------------------------------------------------
+
+À l'issue de ce chapitre, l'étudiant sera capable de :
+
+\begin{itemize}
+  \item Maîtriser les grandeurs acoustiques fondamentales : niveau de pression sonore $L_p$, niveau de puissance sonore $L_w$, pondération A.
+  \item Calculer la propagation et l'affaiblissement du son dans un local et en champ libre.
+  \item Appliquer la loi de masse pour l'isolement acoustique des parois et interpréter les indices $R_w$ et $D_{nT,w}$.
+  \item Identifier les sources de bruit des installations CVC (ventilateurs, gaines, terminaux, pompes) et quantifier leurs niveaux.
+  \item Appliquer la réglementation acoustique en vigueur (arrêté du 30/06/1999, NF EN ISO 10140, RE2020 / NRA).
+  \item Dimensionner des solutions de traitement acoustique : silencieux à baffles, plénums, caissons insonorisés.
+\end{itemize}
+
+\textbf{Compétences mobilisées :} C3-3 (dimensionner), C5-1 à C5-3 (réglementation), C7-4 à C7-6 (mesures), C8-4 (action corrective).
+
+% ------------------------------------------------------------
+\section{Introduction}
+% ------------------------------------------------------------
+
+Le bruit constitue l'une des principales sources de nuisances dans les bâtiments. Les installations de génie climatique et fluidique (CVC) — ventilateurs, pompes, gaines, diffuseurs, groupes frigorifiques — sont des sources de bruit à part entière. Le technicien supérieur GCF doit intégrer l'acoustique dès la phase de conception pour garantir le confort des occupants et respecter les exigences réglementaires.
+
+\textbf{Domaines d'application en GCF :}
+\begin{itemize}
+  \item Choix et implantation des équipements (niveaux de puissance sonore $L_w$ des constructeurs).
+  \item Dimensionnement des réseaux aérauliques pour limiter les vitesses génératrices de bruit.
+  \item Traitement acoustique des locaux techniques et des gaines.
+  \item Vérification réglementaire lors de la réception.
+\end{itemize}
+
+% ------------------------------------------------------------
+\section{Grandeurs acoustiques fondamentales}
+% ------------------------------------------------------------
+
+\subsection{Le son — nature physique}
+
+\begin{definition}
+Le son est une onde de pression mécanique qui se propage dans un milieu élastique (air, eau, solide) sous forme de variations de pression autour de la pression atmosphérique. Sa vitesse de propagation dans l'air est :
+\[
+  c = 331 + 0{,}6 \cdot \theta \quad [\si{\metre\per\second}]
+\]
+où $\theta$ est la température de l'air en \si{\degreeCelsius}. À 20~\si{\degreeCelsius}, $c \approx 343$~\si{\metre\per\second}.
+\end{definition}
+
+\textbf{Domaine fréquentiel audible :} de 20~\si{\hertz} à 20~000~\si{\hertz}. Les tiers d'octave normalisés vont de 100~\si{\hertz} à 3\,150~\si{\hertz} pour les applications courantes du bâtiment.
+
+\subsection{Niveau de pression sonore \texorpdfstring{$L_p$}{Lp}}
+
+\begin{definition}
+Le \textbf{niveau de pression sonore} $L_p$ est défini par :
+\[
+  L_p = 10 \cdot \log_{10}\!\left(\frac{p^2}{p_0^2}\right) = 20 \cdot \log_{10}\!\left(\frac{p}{p_0}\right) \quad [\si{\decibel}]
+\]
+avec :
+\begin{itemize}
+  \item $p$ : pression acoustique efficace [\si{\pascal}]
+  \item $p_0 = 20~\si{\micro\pascal}$ : pression de référence (seuil d'audibilité à 1~\si{\kilo\hertz})
+\end{itemize}
+\end{definition}
+
+\begin{attention}
+L'échelle en décibels est \textbf{logarithmique}. Doubler la pression acoustique n'augmente $L_p$ que de 6~\si{\decibel}. Additionner deux sources identiques n'augmente $L_p$ que de 3~\si{\decibel}.
+\end{attention}
+
+\textbf{Ordres de grandeur courants :}
+
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+Situation & $L_p$ (dB) & Ressenti \\
+\midrule
+Seuil d'audibilité & 0 & Silence total \\
+Chambre calme & 30 & Très calme \\
+Bureau ouvert & 50--60 & Normal \\
+Salle de classe & 40--50 & Acceptable \\
+Local technique CVC & 70--90 & Bruyant \\
+Ventilateur industriel & 85--100 & Très bruyant \\
+Seuil de douleur & 120 & Dangereux \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Addition de sources sonores}
+
+\begin{methode}
+Pour additionner $n$ sources de niveaux $L_1, L_2, \ldots, L_n$ (en \si{\decibel}), on utilise :
+\[
+  L_{\text{total}} = 10 \cdot \log_{10}\!\left(\sum_{i=1}^{n} 10^{L_i/10}\right) \quad [\si{\decibel}]
+\]
+\textbf{Cas particulier :} $n$ sources identiques de niveau $L_0$ :
+\[
+  L_{\text{total}} = L_0 + 10 \cdot \log_{10}(n) \quad [\si{\decibel}]
+\]
+\end{methode}
+
+\begin{exemple}
+Deux ventilateurs installés dans un local technique émettent chacun $L = 75$~\si{\decibel}. Quel est le niveau résultant ?
+\[
+  L_{\text{total}} = 10 \cdot \log_{10}(10^{75/10} + 10^{75/10}) = 10 \cdot \log_{10}(2 \times 10^{7{,}5}) = 75 + 10 \cdot \log_{10}(2) \approx 75 + 3 = 78~\si{\decibel}
+\]
+\end{exemple}
+
+\subsection{Niveau de puissance sonore \texorpdfstring{$L_w$}{Lw}}
+
+\begin{definition}
+Le \textbf{niveau de puissance sonore} $L_w$ caractérise la source de bruit indépendamment de son environnement :
+\[
+  L_w = 10 \cdot \log_{10}\!\left(\frac{W}{W_0}\right) \quad [\si{\decibel}]
+\]
+avec :
+\begin{itemize}
+  \item $W$ : puissance acoustique émise par la source [\si{\watt}]
+  \item $W_0 = 10^{-12}$~\si{\watt} : puissance de référence
+\end{itemize}
+$L_w$ est une caractéristique intrinsèque de l'équipement, fournie par le constructeur (données de la fiche technique).
+\end{definition}
+
+\begin{attention}
+$L_w$ (puissance sonore) $\neq$ $L_p$ (pression sonore). La pression dépend de la distance à la source et de l'acoustique du local. $L_w$ est toujours $>$ $L_p$ mesuré à une distance usuelle.
+\end{attention}
+
+\subsection{Pondération A — décibels A \texorpdfstring{dB(A)}{dB(A)}}
+
+\begin{definition}
+La \textbf{pondération A} est un filtre fréquentiel qui reproduit la sensibilité de l'oreille humaine. Elle atténue fortement les basses fréquences et les très hautes fréquences.
+
+La correction A à appliquer à chaque bande de tiers d'octave est (valeurs normalisées) :
+
+\begin{center}
+\begin{tabular}{lcccccc}
+\toprule
+Fréquence (Hz) & 125 & 250 & 500 & 1\,000 & 2\,000 & 4\,000 \\
+\midrule
+Correction A (dB) & $-16{,}1$ & $-8{,}6$ & $-3{,}2$ & $0$ & $+1{,}2$ & $+1{,}0$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Le niveau global pondéré A est ensuite calculé par addition logarithmique des bandes corrigées.
+\end{definition}
+
+La réglementation acoustique du bâtiment utilise systématiquement le dB(A) pour les exigences de niveaux de bruit résiduel.
+
+\subsection{Propagation en champ libre — loi en distance}
+
+En espace libre (source ponctuelle), le niveau de pression sonore décroît avec la distance $r$ :
+\[
+  L_p = L_w - 20 \cdot \log_{10}(r) - 11 \quad [\si{\decibel}]
+\]
+
+Pour une source rayonnant en demi-espace (sur un plan réfléchissant) :
+\[
+  L_p = L_w - 20 \cdot \log_{10}(r) - 8 \quad [\si{\decibel}]
+\]
+
+\begin{methode}
+\textbf{Règle pratique :} chaque doublement de la distance réduit $L_p$ de 6~\si{\decibel} pour une source ponctuelle.
+\end{methode}
+
+\subsection{Niveau de pression dans un local — formule de Sabine}
+
+Dans un local, la pression sonore résultante combine le champ direct et le champ réverbéré :
+\[
+  L_p = L_w + 10 \cdot \log_{10}\!\left(\frac{Q}{4\pi r^2} + \frac{4}{R}\right) \quad [\si{\decibel}]
+\]
+avec :
+\begin{itemize}
+  \item $Q$ : facteur de directivité de la source (sphère $= 1$, demi-sphère $= 2$, coin $= 8$)
+  \item $r$ : distance source--récepteur [\si{\metre}]
+  \item $R = \dfrac{S \cdot \bar{\alpha}}{1 - \bar{\alpha}}$ : constante du local [\si{\metre\squared}]
+  \item $S$ : surface totale des parois du local [\si{\metre\squared}]
+  \item $\bar{\alpha}$ : coefficient d'absorption moyen (sans unité, $0 < \bar{\alpha} < 1$)
+\end{itemize}
+
+\textbf{Absorption acoustique :} $A = S \cdot \bar{\alpha}$ exprimée en sabins [\si{\metre\squared}].
+
+% ------------------------------------------------------------
+\section{Isolement acoustique des parois}
+% ------------------------------------------------------------
+
+\subsection{Transmission du son à travers une paroi}
+
+Lorsqu'une onde sonore frappe une paroi, une partie est réfléchie, une partie est absorbée et une partie est transmise. L'isolement caractérise la résistance de la paroi à cette transmission.
+
+\begin{definition}
+\textbf{Indice d'affaiblissement acoustique $R$} (ou \textit{Schalldämm-Maß} en allemand, mesuré en laboratoire) :
+\[
+  R = L_1 - L_2 + 10 \cdot \log_{10}\!\left(\frac{S}{A}\right) \quad [\si{\decibel}]
+\]
+avec :
+\begin{itemize}
+  \item $L_1$ : niveau de pression en salle d'émission [\si{\decibel}]
+  \item $L_2$ : niveau de pression en salle de réception [\si{\decibel}]
+  \item $S$ : surface de la paroi [\si{\metre\squared}]
+  \item $A$ : absorption de la salle de réception [sabins]
+\end{itemize}
+\end{definition}
+
+\subsection{Loi de masse}
+
+\begin{definition}
+La \textbf{loi de masse} établit que l'affaiblissement acoustique d'une paroi homogène croît avec sa masse surfacique $m_s$ [\si{\kilogram\per\metre\squared}] et avec la fréquence :
+\[
+  R \approx 20 \cdot \log_{10}(m_s \cdot f) - 48 \quad [\si{\decibel}]
+\]
+avec $f$ la fréquence en \si{\hertz}.
+\end{definition}
+
+\textbf{Conséquences pratiques :}
+\begin{itemize}
+  \item Doubler la masse surfacique apporte environ $+6$~\si{\decibel} d'isolement.
+  \item Doubler la fréquence apporte également $+6$~\si{\decibel}.
+  \item Les basses fréquences (100--250~\si{\hertz}), typiques des ventilateurs et des vibreurs, sont les plus difficiles à traiter.
+\end{itemize}
+
+\subsection{Indice d'affaiblissement pondéré \texorpdfstring{$R_w$}{Rw}}
+
+L'indice $R_w$ est la valeur unique (en dB) représentant la performance globale d'une paroi, déterminée en laboratoire selon NF EN ISO 10140. Il est accompagné de deux termes d'adaptation spectraux :
+\begin{itemize}
+  \item $C$ : terme pour le bruit rose et le bruit de circulation (fréquences moyennes).
+  \item $C_{tr}$ : terme pour le bruit de trafic routier et ferroviaire (basses fréquences dominantes).
+\end{itemize}
+
+\begin{center}
+\begin{tabular}{lc}
+\toprule
+Type de paroi & $R_w$ (dB) \\
+\midrule
+Cloison légère plaque de plâtre 72 mm & 38 \\
+Mur béton 15 cm & 48 \\
+Mur béton 20 cm & 52 \\
+Porte acoustique renforcée & 42--47 \\
+Vitrage simple 6 mm & 30 \\
+Double vitrage 4/16/4 mm & 32 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Isolement normalisé \texorpdfstring{$D_{nT,w}$}{DnTw}}
+
+\begin{definition}
+$D_{nT,w}$ est l'isolement acoustique mesuré \textit{in situ} entre deux locaux, normalisé par rapport au temps de réverbération de référence $T_0 = 0{,}5$~\si{\second} :
+\[
+  D_{nT,w} = R_w - 10 \cdot \log_{10}\!\left(\frac{S}{0{,}16 \cdot V / T_0}\right) \quad [\si{\decibel}]
+\]
+C'est cet indice qui est directement comparé aux exigences de l'arrêté du 30/06/1999.
+\end{definition}
+
+\begin{attention}
+$D_{nT,w}$ peut être inférieur à $R_w$ si le local de réception est grand et peu absorbant, ou supérieur si le local est petit et très absorbant. La mesure in situ est toujours requise pour la réception réglementaire.
+\end{attention}
+
+% ------------------------------------------------------------
+\section{Bruit des installations CVC}
+% ------------------------------------------------------------
+
+\subsection{Sources de bruit en CVC}
+
+Les installations de chauffage, ventilation et climatisation génèrent plusieurs types de bruit :
+
+\begin{itemize}
+  \item \textbf{Bruit aéraulique :} turbulence dans les ventilateurs, les gaines, les singularités (coudes, piquages, registres), les diffuseurs.
+  \item \textbf{Bruit mécanique :} vibrations des moteurs, des compresseurs, des pompes — transmis par rayonnement direct et par voie solidienne.
+  \item \textbf{Bruit de régulation :} vannes motorisées en chasse, robinets thermostatiques, détendeurs.
+\end{itemize}
+
+\subsection{Bruit des ventilateurs}
+
+Le niveau de puissance sonore d'un ventilateur est lié à son débit $q_v$ [\si{\metre\cubed\per\second}] et à sa pression totale $\Delta P_t$ [\si{\pascal}] :
+
+\begin{methode}
+\textbf{Formule empirique de Regenscheit (indicative) :}
+\[
+  L_w \approx K_v + 10 \cdot \log_{10}(q_v) + 20 \cdot \log_{10}(\Delta P_t) \quad [\si{\decibel}]
+\]
+avec $K_v \approx 31$ pour un ventilateur à aubes rétroverses de bonne qualité (valeur constructeur à préférer).
+
+\textbf{Pratiquement :} toujours utiliser la valeur $L_w$ par bande d'octave fournie par le constructeur.
+\end{methode}
+
+\textbf{Niveaux de puissance sonore typiques (ventilateurs CVC) :}
+
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+Type de ventilateur & $L_w$ global (dB) & Application \\
+\midrule
+CTA résidentielle (200 m³/h, 80 Pa) & 60--70 & Logement VMC \\
+CTA tertiaire (3\,000 m³/h, 200 Pa) & 75--85 & Bureau, commerce \\
+Extracteur de toiture & 65--80 & Parking, cuisine \\
+Ventilateur axial (grand débit) & 80--95 & Local technique \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Bruit aéraulique dans les gaines}
+
+La vitesse de l'air dans les gaines génère un bruit auto-induit proportionnel à la puissance 5 à 6 de la vitesse.
+
+\begin{methode}
+\textbf{Vitesses recommandées pour limiter le bruit :}
+
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+Zone du réseau & Vitesse max. (m/s) & Commentaire \\
+\midrule
+Gaine principale (tertiaire) & 6--8 & \\
+Gaine principale (logement) & 3--5 & VMC double flux \\
+Gaine secondaire & 4--6 & \\
+Terminal (bouche, grille) & 2--3 & Critère confort \\
+Diffuseur basse vitesse & 1,5--2,5 & Locaux calmes \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{methode}
+
+\begin{attention}
+Chaque réduction de vitesse de 20~\% dans une gaine réduit le bruit auto-induit de environ 6~dB. Le surdimensionnement des gaines est la première mesure acoustique à adopter.
+\end{attention}
+
+\subsection{Bruit des terminaux et diffuseurs}
+
+Les terminaux (bouches, grilles, diffuseurs, inducteurs) ont une courbe NC (\textit{Noise Criteria}) ou NR (\textit{Noise Rating}) fournie par le constructeur en fonction du débit. Le dimensionnement acoustique consiste à choisir le terminal pour que son niveau NC soit inférieur à l'exigence du local :
+
+\begin{center}
+\begin{tabular}{lc}
+\toprule
+Type de local & Niveau NC recommandé \\
+\midrule
+Studio d'enregistrement & NC 15--20 \\
+Salle de réunion & NC 25--30 \\
+Bureau individuel & NC 30--35 \\
+Open space, commerce & NC 35--40 \\
+Cuisine industrielle & NC 45--50 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Bruit des pompes et équipements hydrauliques}
+
+Les pompes centrifuges transmettent leurs vibrations aux canalisations par voie solidienne. Les niveaux de puissance sonore des pompes CVC sont généralement de 50 à 75~dB(A) selon la puissance. Les mesures constructives à adopter :
+
+\begin{itemize}
+  \item Supports anti-vibratiles (ressorts ou plots silentblocs) entre la pompe et sa semelle.
+  \item Manchons souples sur les raccordements hydrauliques.
+  \item Passage des canalisations dans des fourreaux avec garnissage souple au franchissement des parois.
+\end{itemize}
+
+% ------------------------------------------------------------
+\section{Traitement acoustique}
+% ------------------------------------------------------------
+
+\subsection{Absorption acoustique des matériaux}
+
+\begin{definition}
+Le \textbf{coefficient d'absorption} $\alpha$ d'un matériau représente la fraction d'énergie acoustique absorbée ($\alpha = 1$ : absorption totale, $\alpha = 0$ : réflexion totale).
+
+\begin{center}
+\begin{tabular}{lcccc}
+\toprule
+Matériau & \multicolumn{4}{c}{Coefficient $\alpha$ par fréquence} \\
+ & 250 Hz & 500 Hz & 1\,000 Hz & 2\,000 Hz \\
+\midrule
+Béton nu & 0,02 & 0,03 & 0,04 & 0,05 \\
+Plaque de plâtre & 0,05 & 0,06 & 0,07 & 0,09 \\
+Laine minérale 50 mm & 0,30 & 0,70 & 0,90 & 0,95 \\
+Mousse mélamine 50 mm & 0,20 & 0,55 & 0,85 & 0,95 \\
+Dalle de faux plafond & 0,40 & 0,65 & 0,75 & 0,80 \\
+Moquette épaisse & 0,10 & 0,25 & 0,45 & 0,60 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{definition}
+
+\subsection{Silencieux à baffles}
+
+\begin{definition}
+Un \textbf{silencieux à baffles} est un dispositif intercalé dans la gaine aéraulique, constitué de lames absorbantes parallèles au sens d'écoulement. Il atténue le bruit en forçant l'onde sonore à traverser un chemin tortueux garni de matériaux absorbants (laine de verre, mousse).
+\end{definition}
+
+\textbf{Paramètres de dimensionnement :}
+\begin{itemize}
+  \item \textbf{Longueur active} $L$ : plus elle est grande, plus l'atténuation est élevée.
+  \item \textbf{Largeur des canaux libres} $d$ : plus $d$ est faible, plus l'atténuation en basses fréquences est efficace.
+  \item \textbf{Perte de charge} : toujours vérifier que la perte de charge du silencieux est compatible avec le réseau ($\Delta P$ typique : 20--80~Pa).
+\end{itemize}
+
+\textbf{Atténuations typiques (silencieux 1 m, canaux de 100 mm) :}
+
+\begin{center}
+\begin{tabular}{lcccccc}
+\toprule
+Fréquence (Hz) & 125 & 250 & 500 & 1\,000 & 2\,000 & 4\,000 \\
+\midrule
+Atténuation (dB) & 5 & 12 & 20 & 25 & 22 & 18 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Plénum acoustique}
+
+\begin{definition}
+Un \textbf{plénum acoustique} est une boîte de connexion entre le ventilateur et la gaine principale, dont les parois intérieures sont recouvertes de matériaux absorbants. Il offre une atténuation importante sur toutes les fréquences grâce à l'expansion du flux et à l'absorption.
+\end{definition}
+
+Son atténuation peut être estimée par :
+\[
+  \text{Att} = 10 \cdot \log_{10}\!\left(\frac{S_{\text{sortie}}}{S_{\text{plénum}} \cdot \bar{\alpha}}\right) \quad [\si{\decibel}]
+\]
+Un plénum bien garni (laine de verre 50 mm) peut atténuer de 10 à 20~dB selon la fréquence.
+
+\subsection{Caissons insonorisés}
+
+Les groupes de ventilation, compresseurs et pompes peuvent être placés dans des \textbf{caissons insonorisés} (ou capots acoustiques) constitués :
+\begin{itemize}
+  \item D'une paroi extérieure lourde (acier galvanisé, béton projeté) assurant l'isolement ($R_w \geq 25$~dB).
+  \item D'un garnissage intérieur absorbant limitant la réverbération.
+  \item De bouches de ventilation du caisson équipées de silencieux.
+  \item De passages de gaines avec joints acoustiques.
+\end{itemize}
+
+\subsection{Isolement solidien — découplage vibratoire}
+
+\begin{methode}
+\textbf{Découplage des équipements vibrants :}
+\begin{enumerate}
+  \item Interposer des \textbf{plots anti-vibratiles} ou \textbf{ressorts} entre l'équipement et son support (choisir la raideur selon la fréquence d'excitation).
+  \item Monter le groupe sur une \textbf{dalle flottante} (dalle béton sur plots silentblocs).
+  \item Raccorder les canalisations par des \textbf{manchons souples} (caoutchouc ou EPDM).
+  \item Passer les canalisations dans des fourreaux avec garnissage souple.
+\end{enumerate}
+La fréquence propre du système masse-ressort doit être inférieure à $0{,}5 \times f_{\text{excitation}}$ pour une isolation efficace.
+\end{methode}
+
+% ------------------------------------------------------------
+\section{Exemples résolus}
+% ------------------------------------------------------------
+
+\begin{exemple}[title={Calcul du niveau de pression dans un local technique}]
+\textbf{Données :}
+\begin{itemize}
+  \item CTA double flux : $L_w = 82$~dB (valeur globale constructeur)
+  \item Local technique : $V = 80$~\si{\metre\cubed}, $S = 100$~\si{\metre\squared}, $\bar{\alpha} = 0{,}10$
+  \item Distance d'évaluation : $r = 2$~\si{\metre}, source au sol ($Q = 2$)
+\end{itemize}
+
+\textbf{Calcul de la constante du local :}
+\[
+  R = \frac{S \cdot \bar{\alpha}}{1 - \bar{\alpha}} = \frac{100 \times 0{,}10}{1 - 0{,}10} = \frac{10}{0{,}90} \approx 11{,}1~\si{\metre\squared}
+\]
+
+\textbf{Niveau de pression à 2 m :}
+\[
+  L_p = 82 + 10 \cdot \log_{10}\!\left(\frac{2}{4\pi \times 4} + \frac{4}{11{,}1}\right) = 82 + 10 \cdot \log_{10}(0{,}0398 + 0{,}360)
+\]
+\[
+  L_p = 82 + 10 \cdot \log_{10}(0{,}400) = 82 - 4{,}0 \approx 78~\si{\decibel}
+\]
+\textbf{Conclusion :} le niveau de 78~dB est acceptable pour un local technique non occupé en permanence.
+\end{exemple}
+
+\begin{exemple}[title={Dimensionnement d'un silencieux}]
+\textbf{Situation :} une CTA (bureau open space, exigence NC 35) émet un bruit de 72~dB(A) en sortie de ventilateur. L'atténuation naturelle du réseau est estimée à 12~dB(A). Quelle atténuation doit apporter le silencieux ?
+
+\textbf{Niveau NC 35 $\approx$ 42~dB(A) en réception.}
+
+Atténuation nécessaire du silencieux :
+\[
+  \text{Att}_{\text{silencieux}} = (72 - 12) - 42 = 18~\si{\decibel(A)}
+\]
+
+Un silencieux à baffles de 1~m avec canaux de 100~mm (atténuation 20~dB(A) en moyenne) convient. On vérifie que la perte de charge ajoutée ($\approx 35$~Pa) est compatible avec le ventilateur choisi.
+\end{exemple}
+
+\begin{exemple}[title={Vérification réglementaire isolement logement}]
+\textbf{Données :}
+\begin{itemize}
+  \item Paroi séparative entre deux logements : mur béton 20~cm, $R_w = 52$~dB.
+  \item Logement réception : $V = 60$~\si{\metre\cubed}, $T = 0{,}6$~\si{\second}, $S_{\text{paroi}} = 12$~\si{\metre\squared}.
+\end{itemize}
+
+\textbf{Isolement normalisé :}
+\[
+  D_{nT,w} = R_w + 10 \cdot \log_{10}(T) - 10 \cdot \log_{10}(T_0) - 10 \cdot \log_{10}\!\left(\frac{S}{0{,}16 \cdot V / T_0}\right)
+\]
+
+Formule simplifiée :
+\[
+  D_{nT,w} = R_w + 10 \cdot \log_{10}\!\left(\frac{T}{T_0}\right) - 10 \cdot \log_{10}\!\left(\frac{S \cdot T_0}{0{,}16 \cdot V}\right)
+\]
+\[
+  D_{nT,w} = 52 + 10 \cdot \log_{10}\!\left(\frac{0{,}6}{0{,}5}\right) - 10 \cdot \log_{10}\!\left(\frac{12 \times 0{,}5}{0{,}16 \times 60}\right)
+  = 52 + 0{,}8 - 10 \cdot \log_{10}(0{,}625)
+  \approx 52 + 0{,}8 + 2{,}0 = 54{,}8~\si{\decibel}
+\]
+
+\textbf{Exigence arrêté 1999 :} $D_{nT,w} \geq 53$~dB pour les bruits aériens entre logements.
+
+\textbf{Conclusion :} la paroi est conforme ($54{,}8 > 53$~dB).
+\end{exemple}
+
+% ------------------------------------------------------------
+\section{Exercices d'application}
+% ------------------------------------------------------------
+
+\exercice{Calcul de niveaux acoustiques}
+
+Un extracteur de cuisine collective est caractérisé par un niveau de puissance sonore $L_w = 88$~dB. Il est installé au centre d'un local de dimensions $8 \times 6 \times 3$~m (coefficient d'absorption moyen $\bar{\alpha} = 0{,}15$, source au plafond $Q = 2$).
+
+\begin{enumerate}
+  \item Calculer la constante du local $R$.
+  \item Calculer le niveau de pression sonore $L_p$ à 1,5~m de l'extracteur.
+  \item Quel serait $L_p$ si l'on passait à $\bar{\alpha} = 0{,}40$ grâce à un traitement acoustique des parois ?
+  \item Deux extracteurs identiques sont mis en service simultanément. Quel est le niveau $L_p$ résultant à 1,5~m (avec $\bar{\alpha} = 0{,}15$) ?
+\end{enumerate}
+
+\exercice{Isolement acoustique — choix de paroi}
+
+Un local de compresseurs (niveau de pression mesuré $L_1 = 92$~dB(A)) jouxte un bureau ouvert (exigence $L_2 \leq 45$~dB(A)). La salle de réception a une absorption $A = 25$~sabins et la paroi séparative mesure $S = 20$~\si{\metre\squared}.
+
+\begin{enumerate}
+  \item Calculer l'affaiblissement acoustique $R$ minimum de la paroi séparative.
+  \item En déduire la masse surfacique minimale $m_s$ à 500~Hz (loi de masse).
+  \item Proposer une solution constructive et vérifier sa conformité à partir du tableau de $R_w$.
+  \item Citer deux mesures complémentaires pour limiter la transmission solidienne.
+\end{enumerate}
+
+\exercice{Dimensionnement acoustique d'une installation VMC double flux}
+
+Une CTA double flux dessert 8 bureaux individuels (exigence NC 30). Les données constructeur de la CTA sont : $L_w = 78$~dB (global) ; le réseau aéraulique assure une atténuation de 15~dB ; les bouches de soufflage ont un niveau NC 28 pour le débit nominal.
+
+\begin{enumerate}
+  \item Calculer l'atténuation totale nécessaire entre la CTA et les locaux.
+  \item Déterminer si un silencieux est nécessaire et quelle atténuation il doit apporter.
+  \item La vitesse dans la gaine principale est de 5~m/s pour un débit de 800~m³/h. Calculer la section de gaine rectangulaire ($a \times b$ avec $a = 400$~mm). Cette vitesse est-elle conforme aux recommandations ?
+  \item Citer deux réglages opérationnels permettant de réduire le bruit sans modifier l'installation.
+\end{enumerate}
+
+% ------------------------------------------------------------
+\section{Éléments de réglementation}
+% ------------------------------------------------------------
+
+\subsection{Arrêté du 30 juin 1999 — Bâtiments d'habitation}
+
+L'arrêté du 30 juin 1999 fixe les exigences acoustiques minimales pour les logements neufs :
+
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+Exigence & Indicateur & Valeur minimale \\
+\midrule
+Isolement bruit aérien entre logements & $D_{nT,w}$ & $\geq 53$~dB \\
+Isolement bruit aérien façade & $D_{nT,w}$ & $\geq 30$ à 45~dB (selon zone) \\
+Bruit de choc entre logements & $L'_{nT,w}$ & $\leq 58$~dB \\
+Bruit d'équipements individuels & $L_{\text{nA}}$ & $\leq 35$~dB(A) \\
+Bruit d'équipements collectifs & $L_{\text{nA}}$ & $\leq 30$~dB(A) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{attention}
+Les équipements CVC (ventilateurs, pompes, extracteurs, groupes de production) sont classés parmi les \textbf{équipements collectifs}. L'exigence de 30~dB(A) en pièces principales de nuit est contraignante et nécessite un soin particulier dans le choix et l'installation des équipements.
+\end{attention}
+
+\subsection{NF EN ISO 10140 — Mesures en laboratoire}
+
+La norme NF EN ISO 10140 (série de 5 parties) définit les méthodes de mesure en laboratoire des performances acoustiques des éléments de construction :
+\begin{itemize}
+  \item \textbf{Partie 1 :} Règles d'application pour des produits spécifiques.
+  \item \textbf{Partie 2 :} Mesure de l'isolation aux bruits aériens.
+  \item \textbf{Partie 3 :} Mesure de l'isolation aux bruits de choc.
+  \item \textbf{Partie 4 :} Procédures et exigences de mesure.
+  \item \textbf{Partie 5 :} Exigences pour les installations d'essai et d'équipement.
+\end{itemize}
+
+Les valeurs $R_w$ et $L_{n,w}$ sont obtenues selon cette norme et reportées sur les fiches techniques des produits.
+
+\subsection{NF EN ISO 16032 — Bruit des équipements dans les bâtiments}
+
+Cette norme définit la méthode de mesure du niveau de bruit des équipements techniques dans les bâtiments (pompes, ventilateurs, ascenseurs). Elle est complémentaire de l'arrêté du 30/06/1999.
+
+\subsection{NRA — Nouvelle Réglementation Acoustique (2000)}
+
+La NRA est issue de l'arrêté du 30/06/1999 et de ses textes d'application. Elle définit :
+\begin{itemize}
+  \item Les niveaux d'isolement exigés selon la zone de bruit (I à V) pour la façade.
+  \item Les procédures de réception acoustique (contrôle par mesures).
+  \item Les dispositions particulières pour les bâtiments autres que les logements (bureaux, établissements d'enseignement, hôtels).
+\end{itemize}
+
+Pour les \textbf{établissements d'enseignement} (arrêté du 25/04/2003) :
+\begin{itemize}
+  \item Isolement entre locaux d'enseignement : $D_{nT,w} \geq 43$~dB.
+  \item Durée de réverbération en salles de classe : $T \leq 0{,}7$~\si{\second} (volume $< 250$~\si{\metre\cubed}).
+\end{itemize}
+
+\subsection{RE2020 et acoustique}
+
+La Réglementation Environnementale 2020 (RE2020), en vigueur depuis le 1\textsuperscript{er} janvier 2022 pour les logements neufs, traite principalement de la performance énergétique et de l'empreinte carbone. Elle n'introduit pas d'exigences acoustiques nouvelles par rapport à l'arrêté de 1999, mais :
+
+\begin{itemize}
+  \item La RE2020 encourage le recours à la ventilation naturelle et double flux. Ces systèmes doivent être compatibles avec les exigences acoustiques existantes.
+  \item Les objectifs de compacité et d'isolation thermique renforcée (triple vitrage, murs à forte inertie) bénéficient souvent aussi aux performances acoustiques.
+  \item L'analyse de cycle de vie (ACV) intégrée à la RE2020 peut prendre en compte les matériaux d'isolation acoustique et leur empreinte carbone.
+\end{itemize}
+
+\begin{methode}
+\textbf{Démarche de vérification acoustique en projet GCF :}
+\begin{enumerate}
+  \item Identifier le type de bâtiment et la réglementation applicable (arrêté 1999, arrêté 2003, etc.).
+  \item Déterminer les exigences ($D_{nT,w}$, $L'_{nT,w}$, niveaux d'équipements).
+  \item Choisir les parois séparatives ($R_w$ catalogue) et vérifier $D_{nT,w}$ calculé.
+  \item Sélectionner les équipements CVC sur critères acoustiques ($L_w$, courbe NC).
+  \item Dimensionner les silencieux, plénums et solutions de découplage.
+  \item Prévoir la réception acoustique par mesures (contrôle $D_{nT,w}$ in situ).
+\end{enumerate}
+\end{methode}
