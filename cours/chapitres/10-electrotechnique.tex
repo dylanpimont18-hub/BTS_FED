@@ -348,6 +348,45 @@ Les paramètres essentiels à configurer lors de la mise en service d'un VFD :
 \end{methode}
 
 % ============================================================
+\section{Compensation du facteur de puissance}
+% ============================================================
+
+\subsection{Problématique du courant réactif en CVC}
+
+Les moteurs asynchrones des pompes et ventilateurs consomment une puissance réactive importante ($\cos\varphi$ typique : 0,75--0,85). Un faible $\cos\varphi$ entraîne :
+\begin{itemize}
+  \item Un surcourant dans les câbles : pour la même puissance active, $I = P / (\sqrt{3} \times U \times \cos\varphi)$ augmente quand $\cos\varphi$ diminue.
+  \item Des pertes Joule supplémentaires : $P_{Joule} = R \times I^2$.
+  \item Une pénalisation tarifaire du fournisseur d'énergie (tarif HTA, seuil $\cos\varphi < 0{,}93$).
+\end{itemize}
+
+\subsection{Correction par condensateurs}
+
+La puissance réactive capacitive $Q_C$ à installer pour relever $\cos\varphi$ de $\cos\varphi_1$ à $\cos\varphi_2$ :
+
+\begin{equation}
+  Q_C = P \times \left(\tan\varphi_1 - \tan\varphi_2\right) \quad [\text{kvar}]
+\end{equation}
+
+\begin{exemple}[title={Compensation du facteur de puissance — ventilateur CTA}]
+  Ventilateur triphasé 400\,V, $P = \SI{7{,}5}{\kilo\watt}$, $\cos\varphi_1 = 0{,}78$.\\
+  On souhaite atteindre $\cos\varphi_2 = 0{,}92$.
+
+  \[
+    \tan\varphi_1 = \tan(\arccos 0{,}78) = 0{,}802 \qquad \tan\varphi_2 = \tan(\arccos 0{,}92) = 0{,}426
+  \]
+  \[
+    Q_C = 7{,}5 \times (0{,}802 - 0{,}426) = 7{,}5 \times 0{,}376 = \SI{2{,}82}{\text{kvar}}
+  \]
+
+  On installe un condensateur de \textbf{3\,kvar} (valeur normalisée au-dessus). Le courant absorbé passe de :
+  \[
+    I_1 = \frac{7\,500}{\sqrt{3} \times 400 \times 0{,}78} = \SI{13{,}9}{\ampere} \rightarrow I_2 = \frac{7\,500}{\sqrt{3} \times 400 \times 0{,}92} = \SI{11{,}8}{\ampere}
+  \]
+  Réduction de courant de $15\,\%$, soit une économie sur les pertes câbles de $(1 - 0{,}85^2) = 28\,\%$.
+\end{exemple}
+
+% ============================================================
 \section{Protection et appareillage électrique}
 % ============================================================
 
@@ -604,46 +643,53 @@ En CVC moderne, la commande locale (boutons-poussoirs) est souvent remplacée ou
   Au prix de 0,18\,€/kWh : économie $\approx \textbf{670\,€/an}$ par pompe.
 \end{exemple}
 
-% ============================================================
-\section{Exercices d'application}
-% ============================================================
+\begin{exemple}[title={Dimensionnement complet d'une armoire CVC — triphasé 400\,V}]
+  \textbf{Données de l'installation :} armoire CVC d'une centrale de traitement d'air (tertiaire) comprenant :
+  \begin{center}
+    \begin{tabular}{lccc}
+      \toprule
+      Équipement & $P_n$ (kW) & $\cos\varphi$ & $I_n$ calc. (A) \\
+      \midrule
+      Ventilateur soufflage (1 unité) & 5{,}5 & 0{,}84 & $\frac{5500}{\sqrt{3}\times400\times0{,}84} = 9{,}45$ \\
+      Ventilateur reprise (1 unité)   & 3{,}0 & 0{,}82 & $\frac{3000}{\sqrt{3}\times400\times0{,}82} = 5{,}29$ \\
+      Pompe batterie chaude            & 1{,}5 & 0{,}80 & $\frac{1500}{\sqrt{3}\times400\times0{,}80} = 2{,}71$ \\
+      Pompe batterie froide            & 1{,}5 & 0{,}80 & $2{,}71$ \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
 
-\exercice{Calcul de puissances — moteur de compresseur VRV}
-Un compresseur de système VRV est alimenté en triphasé 400\,V. Sa plaque indique : $P_n = 11\,\text{kW}$, $I_n = 23\,\text{A}$, $\cos\varphi = 0{,}88$, rendement $\eta = 91\,\%$.
-\begin{enumerate}
-  \item Calculer la puissance apparente $S$ et la puissance réactive $Q$ absorbées par le moteur.
-  \item Vérifier la cohérence avec la puissance active $P_n$ (tenir compte du rendement).
-  \item Quelle valeur de condensateur (en kvar) permettrait de relever le $\cos\varphi$ à 0,95\,?
-\end{enumerate}
+  \textbf{Puissance active totale :}
+  \[
+    P_{tot} = 5{,}5 + 3{,}0 + 1{,}5 + 1{,}5 = \SI{11{,}5}{\kilo\watt}
+  \]
 
-\exercice{Démarrage étoile-triangle — ventilateur de désenfumage}
-Un ventilateur de désenfumage est équipé d'un moteur 15\,kW, 400\,V, $I_n = 29\,\text{A}$, courant de démarrage en triangle $I_{d,\triangle} = 7 \times I_n$.
-\begin{enumerate}
-  \item Calculer le courant de démarrage direct et le courant de démarrage en étoile.
-  \item Justifier l'intérêt du démarrage étoile-triangle pour ce type d'application.
-  \item Quel dispositif de protection choisir (disjoncteur ou fusible aM) et quel calibre\,?
-\end{enumerate}
+  \textbf{Avec coefficient de foisonnement $k_f = 0{,}85$ :}
+  \[
+    P_{bilan} = 11{,}5 \times 0{,}85 = \SI{9{,}775}{\kilo\watt}
+  \]
 
-\exercice{Lois de similitude — économies par variateur}
-Un ventilateur de CTA a les caractéristiques nominales : $Q_1 = 15\,000\,\text{m}^3/\text{h}$, $\Delta p_1 = 1\,200\,\text{Pa}$, $P_1 = 8\,\text{kW}$ à $n_1 = 1\,450\,\text{tr/min}$.
-\begin{enumerate}
-  \item Calculer $Q_2$, $\Delta p_2$ et $P_2$ si la vitesse est réduite à 75\,\%.
-  \item Exprimer l'économie en \% sur la puissance absorbée.
-  \item Sur une année de fonctionnement (4\,000\,h à 100\,\% + 4\,000\,h à 75\,\%), calculer l'économie d'énergie annuelle en kWh et en euros (tarif 0,18\,€/kWh).
-\end{enumerate}
+  \textbf{Puissance apparente totale} (cos$\varphi$ moyen pondéré $\approx 0{,}82$) :
+  \[
+    S_{tot} = \frac{9{,}775}{0{,}82} = \SI{11{,}92}{\text{kVA}}
+  \]
 
-\exercice{Dimensionnement d'armoire CVC}
-Une armoire électrique CVC doit alimenter les équipements suivants (triphasé 400\,V) :
-\begin{itemize}
-  \item 2 pompes : $P = 2{,}2\,\text{kW}$ chacune, $\cos\varphi = 0{,}80$
-  \item 1 ventilateur : $P = 5{,}5\,\text{kW}$, $\cos\varphi = 0{,}83$
-  \item 1 groupe de froid : $P = 18\,\text{kW}$, $\cos\varphi = 0{,}86$
-\end{itemize}
-\begin{enumerate}
-  \item Calculer la puissance active totale et la puissance apparente totale (coefficient de foisonnement : 0,85).
-  \item Déduire le courant total absorbé et calibrer le disjoncteur général.
-  \item Vérifier si une batterie de condensateurs de 10\,kvar améliore significativement le $\cos\varphi$ global.
-\end{enumerate}
+  \textbf{Courant général absorbé :}
+  \[
+    I_{tot} = \frac{S_{tot}}{\sqrt{3} \times U} = \frac{11\,920}{\sqrt{3} \times 400} = \frac{11\,920}{693} = \SI{17{,}2}{\ampere}
+  \]
+
+  \textbf{Choix du disjoncteur général :} calibre normalisé au-dessus de 17,2\,A → \textbf{disjoncteur 20\,A courbe D} (charge moteurs, pouvoir de coupure 10\,kA minimum en BT tertiaire).
+
+  \textbf{Vérification chute de tension} (câble d'alimentation 25\,m, section 4\,mm², cuivre) :
+  \[
+    \Delta U = \frac{\sqrt{3} \times 0{,}0225 \times 25 \times 17{,}2}{4} = \frac{16{,}75}{4} = \SI{4{,}19}{\volt}
+  \]
+  \[
+    \Delta U\,\% = \frac{4{,}19}{400} \times 100 = 1{,}05\,\% \leq 3\,\% \quad \checkmark
+  \]
+
+  \textbf{Conclusion :} L'armoire CVC est dimensionnée avec un disjoncteur général 20\,A, des disjoncteurs moteurs individuels réglés au courant nominal de chaque équipement, et un câble 4\,mm² Cu conforme NF C 15-100.
+\end{exemple}
 
 % ============================================================
 \section{Éléments de réglementation}

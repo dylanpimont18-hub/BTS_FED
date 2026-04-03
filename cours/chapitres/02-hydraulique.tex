@@ -57,8 +57,24 @@ En pratique, on utilise souvent le débit en \si{\litre\per\hour} ou \si{\cubic\
 \begin{itemize}
   \item $\rho$ : masse volumique du fluide (\si{\kilogram\per\cubic\metre})
 \end{itemize}
-Pour l'eau à 70\,°C : $\rho \approx \SI{978}{\kilogram\per\cubic\metre}$. Pour l'eau à 20\,°C : $\rho \approx \SI{998}{\kilogram\per\cubic\metre}$.
 \end{definition}
+
+\begin{table}[H]
+  \centering
+  \caption{Masse volumique et viscosité cinématique de l'eau selon la température}
+  \begin{tabular}{lcccc}
+    \toprule
+    $T$ (°C) & $\rho$ (kg/m³) & $c_p$ (J/kg·K) & $\nu \times 10^{6}$ (m²/s) & Facteur $\rho c_p / 3600$ \\
+    \midrule
+    10 & 999,7 & 4192 & 1,307 & 1,164 \\
+    20 & 998,2 & 4182 & 1,004 & 1,163 \\
+    40 & 992,2 & 4175 & 0,658 & 1,153 \\
+    60 & 983,2 & 4184 & 0,475 & 1,145 \\
+    70 & 977,8 & 4190 & 0,415 & 1,139 \\
+    80 & 971,8 & 4196 & 0,365 & 1,133 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
 \begin{definition}[title=Pression]
 La pression $P$ est la force exercée par le fluide par unité de surface. Elle s'exprime en pascal (\si{\pascal}) ou en bar (\SI{1}{bar} = \SI{100000}{\pascal}).
@@ -120,6 +136,8 @@ L'équation de Bernoulli relie les différentes formes d'énergie du fluide entr
   \item $g = \SI{9{,}81}{\metre\per\square\second}$
 \end{itemize}
 
+Pour un circuit fermé bouclé (chauffage, climatisation), les termes géométriques et de pression statique se compensent. Seules les pertes de charge et la HMT de la pompe subsistent.
+
 % ============================================================
 \section{Pertes de charge}
 % ============================================================
@@ -142,6 +160,15 @@ Les pertes de charge régulières sont dues aux frottements le long de la condui
   \item $v$ : vitesse du fluide (\si{\metre\per\second})
 \end{itemize}
 
+\begin{definition}[title=Coefficient de frottement $\lambda$ — diagramme de Moody]
+En régime turbulent rugueux, $\lambda$ dépend du nombre de Reynolds $Re$ et de la rugosité relative $\varepsilon/D$. Pour les tubes acier courants ($\varepsilon \approx 0{,}046$\,mm) en CVC :
+\begin{itemize}
+  \item DN 20 à DN 50 : $\lambda \approx 0{,}022$ à $0{,}028$
+  \item DN 80 à DN 200 : $\lambda \approx 0{,}018$ à $0{,}022$
+\end{itemize}
+Pour les tubes en cuivre ou PER (très lisses, $\varepsilon \approx 0{,}001$\,mm) : $\lambda$ légèrement plus faible.
+\end{definition}
+
 \begin{methode}[title=Utilisation des abaques de pertes de charge]
 En pratique, on utilise des abaques ou des logiciels de calcul qui donnent directement la perte de charge linéique $R$ en \si{\pascal\per\metre} en fonction du débit et du diamètre.
 
@@ -155,6 +182,7 @@ La perte de charge régulière est alors :
   \item Vitesse recommandée : entre \SI{0{,}5}{} et \SI{1{,}5}{\metre\per\second} (pour limiter bruit et érosion)
   \item Perte de charge linéique cible : entre \SI{100}{} et \SI{300}{\pascal\per\metre}
   \item Pour les colonnes montantes d'immeuble : \SI{100}{\pascal\per\metre} maximum
+  \item Pour les réseaux eau glacée (tertiaire) : \SI{200}{} à \SI{400}{\pascal\per\metre}
 \end{itemize}
 \end{methode}
 
@@ -179,12 +207,15 @@ Les pertes de charge singulières sont dues aux perturbations locales de l'écou
     \midrule
     Coude 90° & $R/D = 1$ & 1{,}5 \\
     Coude 90° & $R/D = 2$ & 0{,}9 \\
+    Coude 45° & $R/D = 1$ & 0{,}5 \\
     Té passage direct & — & 0{,}5 \\
     Té passage en dérivation & — & 1{,}5 \\
     Vanne à soupape ouverte & — & 10 \\
     Robinet d'arrêt à boisseau sphérique & ouvert & 0{,}1 \\
     Clapet anti-retour & — & 3 à 5 \\
     Filtre en Y & propre & 2 \\
+    Réducteur concentrique & — & 0{,}1 à 0{,}3 \\
+    Entrée brusque de tuyauterie & — & 0{,}5 \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -198,6 +229,21 @@ Une méthode simplifiée consiste à remplacer chaque singularité par une longu
 \end{equation}
 
 En pratique, on majore souvent la longueur développée d'un forfait de 30 à 50\,\% pour tenir compte des singularités dans les réseaux courants.
+
+\begin{table}[H]
+  \centering
+  \caption{Longueurs équivalentes typiques (tube acier, eau à 70°C) — extrait abaque}
+  \begin{tabular}{lccc}
+    \toprule
+    Accessoire & DN 20 & DN 32 & DN 50 \\
+    \midrule
+    Coude 90° ($R/D=1$) & 0,9 m & 1,4 m & 2,2 m \\
+    Té dérivation & 0,8 m & 1,3 m & 2,1 m \\
+    Robinet d'arrêt & 5,5 m & 9,0 m & 14,0 m \\
+    Clapet anti-retour & 1,9 m & 3,0 m & 4,8 m \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
 % ============================================================
 \section{Les pompes de circulation}
@@ -226,6 +272,10 @@ Pour un circuit bouclé (chauffage, climatisation), les différences de hauteur 
 Le rendement global d'une pompe en circulateur CVC est typiquement compris entre 30 et 70\,\% selon la qualité de la machine et son point de fonctionnement.
 \end{definition}
 
+\begin{definition}[title=Indice d'efficacité énergétique (IEE)]
+Le règlement européen 547/2012 impose un $IEE \leq 0{,}23$ pour les circulateurs de chauffage mis sur le marché depuis 2015. Les circulateurs à vitesse variable (moteur EC) atteignent des $IEE \approx 0{,}15$ à $0{,}20$.
+\end{definition}
+
 \subsection{Courbe caractéristique de pompe}
 
 La courbe caractéristique d'une pompe donne la HMT en fonction du débit $q_v$. Elle est fournie par le fabricant. La courbe du réseau représente la perte de charge totale en fonction du débit :
@@ -237,6 +287,26 @@ La courbe caractéristique d'une pompe donne la HMT en fonction du débit $q_v$.
 \begin{definition}[title=Point de fonctionnement]
 Le point de fonctionnement est l'intersection entre la courbe caractéristique de la pompe et la courbe du réseau. C'est le seul point d'équilibre stable du système.
 \end{definition}
+
+\begin{attention}
+Une pompe trop puissante fonctionne à débit excessif, loin de son rendement optimal. Une pompe sous-dimensionnée ne peut pas vaincre les pertes de charge de la branche défavorisée. Le choix doit être précis, avec une légère marge de sécurité (10\,\% sur HMT et débit).
+\end{attention}
+
+\subsection{Régulation de la pompe}
+
+\begin{table}[H]
+  \centering
+  \caption{Modes de régulation des circulateurs à vitesse variable}
+  \begin{tabular}{p{3.5cm}p{4cm}p{4.5cm}}
+    \toprule
+    Mode & Principe & Usage recommandé \\
+    \midrule
+    Pression différentielle constante & La HMT est maintenue fixe quelle que soit la demande & Petits réseaux, radiateurs sans robinets thermostatiques \\
+    Pression différentielle proportionnelle & La HMT varie proportionnellement au débit ($\Delta P \propto q_v$) & Réseaux avec robinets thermostatiques — économies jusqu'à 50\,\% \\
+    Température constante & Le débit est ajusté pour maintenir $\Delta T$ & Grands réseaux, variation de charge importante \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
 \subsection{Association de pompes}
 
@@ -254,7 +324,7 @@ Le point de fonctionnement est l'intersection entre la courbe caractéristique d
 \end{table}
 
 \begin{attention}
-Le doublement du débit ou de la HMT n'est valable que pour des pompes identiques sur un réseau idéal. En pratique, l'augmentation réelle est moindre à cause de la courbe de réseau.
+Le doublement du débit ou de la HMT n'est valable que pour des pompes identiques sur un réseau idéal. En pratique, l'augmentation réelle est moindre à cause de la courbe de réseau. Le montage en parallèle est utilisé pour la redondance (secours) et les périodes de pointe.
 \end{attention}
 
 % ============================================================
@@ -280,13 +350,14 @@ Dans un réseau ramifié, certains émetteurs reçoivent plus d'eau que prévu (
     Organe & Principe & Application \\
     \midrule
     Robinet d'équilibrage manuel & Crée une perte de charge réglable. Nécessite une mesure de débit. & Tout réseau statique \\
-    Régulateur de débit automatique & Maintient un débit constant indépendamment de la pression différentielle & Réseau à débit variable (robinets thermostatiques) \\
+    Régulateur de débit automatique (PIC) & Maintient un débit constant indépendamment de la pression différentielle & Réseau à débit variable (robinets thermostatiques) \\
     Vanne de régulation pression différentielle & Maintient une $\Delta P$ constante sur un circuit & Réseaux de distribution \\
+    Vanne motorisée 2 voies & Ouverture proportionnelle ou TOR commandée par régulateur & Émetteur avec régulation locale \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-\begin{methode}[title=Équilibrage par la méthode de la résistance équivalente]
+\begin{methode}[title=Équilibrage par la méthode de la résistance équivalente (branche index)]
 \begin{enumerate}
   \item Calculer les pertes de charge de chaque branche du réseau (du départ au retour)
   \item Identifier la branche la plus défavorisée (pertes de charge les plus élevées) — c'est la branche \textbf{index}
@@ -295,8 +366,27 @@ Dans un réseau ramifié, certains émetteurs reçoivent plus d'eau que prévu (
       \Delta P_{excédent} = \Delta P_{index} - \Delta P_{branche}
     \]
   \item Régler les organes d'équilibrage pour créer une perte de charge supplémentaire égale à $\Delta P_{excédent}$ sur chaque branche
+  \item Vérifier les débits après réglage (débitmètre, mesure différentielle)
 \end{enumerate}
 \end{methode}
+
+\subsection{Sécurités hydrauliques}
+
+\begin{table}[H]
+  \centering
+  \caption{Dispositifs de sécurité des installations hydrauliques (DTU 65.11)}
+  \begin{tabular}{p{3.5cm}p{4.5cm}p{4.5cm}}
+    \toprule
+    Dispositif & Rôle & Réglage typique \\
+    \midrule
+    Vase d'expansion & Absorbe la dilatation de l'eau en chauffe (eau : $+4\,\%$ de 10 à 90°C) & Pression de gonflage : $P_{stat} + 0{,}3$\,bar \\
+    Soupape de sécurité & Limite la pression max en cas de surpression & 3 bar (chaudière murale) \\
+    Pressostat de sécurité & Coupe le brûleur si pression anormale & Bas : 0,5 bar / Haut : 3 bar \\
+    Clapet anti-retour & Empêche la circulation inverse dans les circuits en parallèle & — \\
+    Purgeur automatique & Élimine l'air dissous pouvant créer des bouchons & Point haut de chaque circuit \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
 % ============================================================
 \section{Exemples résolus}
@@ -314,13 +404,13 @@ Dans un réseau ramifié, certains émetteurs reçoivent plus d'eau que prévu (
 
 \textbf{Étape 2 : Vitesse du fluide}
 \[
-  S = \frac{\pi \times D^2}{4} = \frac{\pi \times (0{,}0272)^2}{4} = \SI{5{,}81e-4}{\square\metre}
+  S = \frac{\pi \times (0{,}0272)^2}{4} = \SI{5{,}81e-4}{\square\metre}
 \]
 \[
   q_v = \frac{800}{3600 \times 1000} = \SI{2{,}22e-4}{\cubic\metre\per\second}
 \]
 \[
-  v = \frac{q_v}{S} = \frac{2{,}22 \times 10^{-4}}{5{,}81 \times 10^{-4}} = \SI{0{,}38}{\metre\per\second}
+  v = \frac{2{,}22 \times 10^{-4}}{5{,}81 \times 10^{-4}} = \SI{0{,}38}{\metre\per\second}
 \]
 
 \textbf{Étape 3 : Pression dynamique}
@@ -335,8 +425,10 @@ Dans un réseau ramifié, certains émetteurs reçoivent plus d'eau que prévu (
 
 \textbf{Étape 5 : Perte de charge totale}
 \[
-  \Delta P_{total} = 3750 + 430 = \SI{4180}{\pascal} \approx \SI{0{,}42}{\bar}
+  \Delta P_{total} = 3750 + 430 = \SI{4180}{\pascal} \approx \SI{0{,}042}{\bar}
 \]
+
+\textbf{Vérification de la vitesse :} $v = 0{,}38$\,m/s — légèrement en dessous de la plage 0,5–1,5\,m/s, acceptable pour une colonne montante (critère acoustique prioritaire).
 \end{exemple}
 
 \begin{exemple}[title=Dimensionnement d'une pompe de chauffage]
@@ -344,138 +436,62 @@ Dans un réseau ramifié, certains émetteurs reçoivent plus d'eau que prévu (
 
 \textbf{Étape 1 : Calcul du débit}
 \[
-  \dot{Q} = \dot{m} \cdot c_p \cdot \Delta T \quad \Rightarrow \quad \dot{m} = \frac{\dot{Q}}{c_p \cdot \Delta T}
+  \dot{m} = \frac{\dot{Q}}{c_p \cdot \Delta T} = \frac{45\,000}{4186 \times (70 - 55)} = \SI{0{,}717}{\kilogram\per\second}
 \]
 \[
-  \dot{m} = \frac{45\,000}{4186 \times (70 - 55)} = \frac{45\,000}{62\,790} = \SI{0{,}717}{\kilogram\per\second}
-\]
-\[
-  q_v = \frac{\dot{m}}{\rho} = \frac{0{,}717}{978} = \SI{7{,}33e-4}{\cubic\metre\per\second} = \SI{2{,}64}{\cubic\metre\per\hour}
+  q_v = \frac{0{,}717}{978} = \SI{7{,}33e-4}{\cubic\metre\per\second} = \SI{2{,}64}{\cubic\metre\per\hour}
 \]
 
 \textbf{Étape 2 : HMT requise}
 \[
-  HMT = \frac{\Delta P_{réseau}}{\rho \cdot g} = \frac{18\,000}{978 \times 9{,}81} = \SI{1{,}88}{\metre} \approx \SI{1{,}9}{\mCE}
+  HMT = \frac{\Delta P_{réseau}}{\rho \cdot g} = \frac{18\,000}{978 \times 9{,}81} = \SI{1{,}88}{\mCE} \approx \SI{1{,}9}{\mCE}
 \]
 
-\textbf{Étape 3 : Sélection pompe}
-Rechercher dans les catalogues fabricants (Grundfos, Wilo, Armstrong) un circulateur délivrant au minimum $q_v = \SI{2{,}65}{\cubic\metre\per\hour}$ à $HMT = \SI{2}{\mCE}$ (majoration de sécurité 10\,\%).
+\textbf{Étape 3 : Sélection pompe (avec marge 10\,\%)}
+\begin{itemize}
+  \item Débit de sélection : $2{,}64 \times 1{,}10 \approx \SI{2{,}9}{\cubic\metre\per\hour}$
+  \item HMT de sélection : $1{,}9 \times 1{,}10 \approx \SI{2{,}1}{\mCE}$
+\end{itemize}
+Rechercher dans les catalogues fabricants (Grundfos, Wilo, Armstrong) un circulateur délivrant au minimum $q_v = \SI{2{,}9}{\cubic\metre\per\hour}$ à $HMT = \SI{2{,}1}{\mCE}$.
 
-\textbf{Résultat :} Un circulateur de type Grundfos ALPHA2 25-40 ou équivalent convient (plage : 0 à 3\,m³/h, HMT max 4\,mCE), avec régulation de vitesse intégrée pour l'efficacité énergétique.
+\textbf{Résultat :} Un circulateur de type Grundfos ALPHA2 25-40 ou équivalent convient (plage : 0 à 3\,m³/h, HMT max 4\,mCE), avec régulation de vitesse intégrée pour l'efficacité énergétique ($IEE \leq 0{,}20$).
 \end{exemple}
 
-% ============================================================
-\section{Exercices d'application}
-% ============================================================
-
-\exercice{Pertes de charge d'un réseau bitubes}
-
-Un réseau bitubes de chauffage alimente 3 radiateurs en dérivation. Le tronçon commun (départ chaudière → nœud de distribution) est en tube acier DN 32 (diamètre intérieur \SI{35{,}9}{\milli\metre}), longueur \SI{20}{\metre}. Il débite \SI{1500}{\litre\per\hour}. La perte de charge linéique pour ce tronçon est $R = \SI{180}{\pascal\per\metre}$. On majore de 40\,\% pour les singularités.
-
-\begin{enumerate}
-  \item Calculer la perte de charge du tronçon commun.
-  \item Calculer la vitesse du fluide. Vérifier qu'elle est dans la plage recommandée.
-  \item La branche la plus défavorisée (radiateur le plus éloigné) présente une perte de charge de \SI{9000}{\pascal}. Les deux autres branches ont respectivement \SI{4500}{\pascal} et \SI{6000}{\pascal}. Calculer la perte de charge supplémentaire à créer sur chaque robinet d'équilibrage.
-\end{enumerate}
-
-\textbf{Corrigé :}
-
-\textit{Question 1 — Perte de charge tronçon commun :}
-\[
-  \Delta P = R \times L \times (1 + 0{,}40) = 180 \times 20 \times 1{,}40 = \SI{5040}{\pascal}
-\]
-
-\textit{Question 2 — Vitesse du fluide :}
-\[
-  S = \frac{\pi \times (0{,}0359)^2}{4} = \SI{1{,}012e-3}{\square\metre}
-\]
-\[
-  q_v = \frac{1500}{3600 \times 1000} = \SI{4{,}17e-4}{\cubic\metre\per\second}
-\]
-\[
-  v = \frac{4{,}17 \times 10^{-4}}{1{,}012 \times 10^{-3}} = \SI{0{,}41}{\metre\per\second}
-\]
-Vitesse dans la plage recommandée (0,5 à 1,5 m/s) — légèrement en dessous, acceptable pour une colonne montante.
-
-\textit{Question 3 — Équilibrage :}
-Branche index = \SI{9000}{\pascal}
+\begin{exemple}[title=Équilibrage d'un réseau bitubes — 3 radiateurs]
+\textbf{Énoncé :} Un réseau bitubes alimente 3 radiateurs depuis une nourrice commune. Les pertes de charge calculées de la nourrice jusqu'à chaque radiateur sont :
 \begin{itemize}
-  \item Branche 2 : excédent = $9000 - 6000 = \SI{3000}{\pascal}$ → régler le robinet à +3000\,Pa
-  \item Branche 3 : excédent = $9000 - 4500 = \SI{4500}{\pascal}$ → régler le robinet à +4500\,Pa
+  \item Radiateur R1 (proche) : $\Delta P_{R1} = \SI{2800}{\pascal}$
+  \item Radiateur R2 (intermédiaire) : $\Delta P_{R2} = \SI{5100}{\pascal}$
+  \item Radiateur R3 (éloigné, branche index) : $\Delta P_{R3} = \SI{7600}{\pascal}$
 \end{itemize}
 
-\exercice{Dimensionnement d'une installation de climatisation eau glacée}
-
-Un bâtiment tertiaire nécessite une puissance de froid de \SI{120}{\kilo\watt}. Le groupe froid produit de l'eau glacée à 7\,°C retournant à 12\,°C ($\Delta T = 5$\,°C, $\rho = \SI{999}{\kilogram\per\cubic\metre}$, $c_p = \SI{4182}{\joule\per\kilogram\per\kelvin}$). La perte de charge de la boucle la plus défavorisée est estimée à \SI{35000}{\pascal}.
-
-\begin{enumerate}
-  \item Calculer le débit volumique nécessaire en m³/h.
-  \item Calculer la HMT de la pompe en mCE.
-  \item Calculer la puissance hydraulique absorbée (en supposant $\eta_{pompe} = 55\,\%$).
-\end{enumerate}
-
-\textbf{Corrigé :}
-
-\textit{Question 1 — Débit :}
-\[
-  \dot{m} = \frac{120\,000}{4182 \times 5} = \SI{5{,}74}{\kilogram\per\second}
-\]
-\[
-  q_v = \frac{5{,}74}{999} = \SI{5{,}74e-3}{\cubic\metre\per\second} = \SI{20{,}67}{\cubic\metre\per\hour}
-\]
-
-\textit{Question 2 — HMT :}
-\[
-  HMT = \frac{35\,000}{999 \times 9{,}81} = \SI{3{,}57}{\mCE}
-\]
-
-\textit{Question 3 — Puissance absorbée :}
-\[
-  P_{hyd} = \rho \cdot g \cdot q_v \cdot HMT = 999 \times 9{,}81 \times 5{,}74 \times 10^{-3} \times 3{,}57 = \SI{201}{\watt}
-\]
-\[
-  P_{abs} = \frac{P_{hyd}}{\eta} = \frac{201}{0{,}55} = \SI{365}{\watt} \approx \SI{0{,}37}{\kilo\watt}
-\]
-
-\exercice{Analyse d'un dysfonctionnement hydraulique}
-
-Lors de la réception d'une installation de chauffage, un technicien mesure les débits suivants sur 3 radiateurs d'un même niveau :
-
-\begin{center}
-\begin{tabular}{lccc}
-  \toprule
-  Radiateur & Débit mesuré (L/h) & Débit nominal (L/h) & Écart \\
-  \midrule
-  R1 (proche pompe) & 280 & 180 & +56\,\% \\
-  R2 (intermédiaire) & 195 & 180 & +8\,\% \\
-  R3 (éloigné) & 120 & 180 & -33\,\% \\
-  \bottomrule
-\end{tabular}
-\end{center}
-
-\begin{enumerate}
-  \item Identifier le problème et sa cause probable.
-  \item Proposer les actions correctives à mettre en œuvre.
-  \item Calculer la perte de charge supplémentaire à créer sur R1 sachant que R3 est la branche index avec une $\Delta P$ mesurée de \SI{7200}{\pascal}, et que la $\Delta P$ sur R1 est de \SI{4100}{\pascal}.
-\end{enumerate}
-
-\textbf{Corrigé :}
-
-\textit{Question 1 :} Le réseau est clairement déséquilibré : R1 reçoit trop de débit (surchauffe), R3 est sous-alimenté (inconfort froid). Cause : absence d'équilibrage hydraulique ou robinets d'équilibrage non réglés.
-
-\textit{Question 2 :} Actions correctives :
+\textbf{Perte de charge à créer sur chaque robinet d'équilibrage :}
 \begin{itemize}
-  \item Identifier et vérifier les robinets d'équilibrage sur chaque branche
-  \item Utiliser une pince de mesure de débit ou un débitmètre ultrasonique
-  \item Régler les robinets d'équilibrage selon la méthode de la branche index (R3)
-  \item Re-mesurer les débits après réglage et valider
+  \item R1 : $\Delta P_{rob,R1} = 7600 - 2800 = \SI{4800}{\pascal}$ → régler le robinet
+  \item R2 : $\Delta P_{rob,R2} = 7600 - 5100 = \SI{2500}{\pascal}$ → régler le robinet
+  \item R3 : $\Delta P_{rob,R3} = \SI{0}{\pascal}$ → robinet grand ouvert (branche index)
 \end{itemize}
 
-\textit{Question 3 :}
+\textbf{La pompe doit fournir} au minimum $\SI{7600}{\pascal}$ (pertes de la branche index) plus les pertes du tronçon commun.
+
+\textbf{Vérification :} Après réglage, les 3 radiateurs ont la même résistance hydraulique vue depuis la nourrice → même pression disponible → débits nominaux respectés.
+\end{exemple}
+
+\begin{exemple}[title=Dimensionnement d'un vase d'expansion]
+\textbf{Énoncé :} Une installation de chauffage contient un volume d'eau total $V_{eau} = \SI{150}{\litre}$ (chaudière + réseau). La pression statique de remplissage est $P_{stat} = \SI{1{,}5}{\bar}$. La pression max de la soupape est $P_{soupape} = \SI{3}{\bar}$. La température passe de 10\,°C (remplissage) à 80\,°C (chauffe). Calculer le volume du vase.
+
+\textbf{Dilatation de l'eau :} $\rho_{10°C} = 999{,}7$\,kg/m³, $\rho_{80°C} = 971{,}8$\,kg/m³.
 \[
-  \Delta P_{excédent} = \Delta P_{R3} - \Delta P_{R1} = 7200 - 4100 = \SI{3100}{\pascal}
+  \Delta V_{eau} = V_{eau} \times \left(\frac{\rho_{10}}{\rho_{80}} - 1\right) = 150 \times \left(\frac{999{,}7}{971{,}8} - 1\right) = 150 \times 0{,}0287 = \SI{4{,}3}{\litre}
 \]
-Le robinet d'équilibrage de R1 doit être réglé pour créer une perte de charge supplémentaire de \SI{3100}{\pascal}.
+
+\textbf{Volume utile du vase :}
+Le vase à membrane est gonflé à $P_{gonflage} = P_{stat} = \SI{1{,}5}{\bar}$.
+\[
+  V_{vase} = \Delta V_{eau} \times \frac{P_{soupape} + 1}{P_{soupape} - P_{stat}} = 4{,}3 \times \frac{3 + 1}{3 - 1{,}5} = 4{,}3 \times \frac{4}{1{,}5} = \SI{11{,}5}{\litre}
+\]
+Choisir un vase de \SI{12}{\litre} (première taille standard supérieure).
+\end{exemple}
 
 % ============================================================
 \section{Éléments de réglementation}
@@ -486,6 +502,7 @@ Le robinet d'équilibrage de R1 doit être réglé pour créer une perte de char
   \item[DTU 60.1 (NF P40-201)] Plomberie sanitaire — règles de calcul et installation. Dimensionnement des réseaux d'eau froide et chaude sanitaire.
   \item[NF EN 12828] Installations de chauffage dans les bâtiments — conception des systèmes de chauffage à eau chaude. Prescrit notamment les pressions de service, températures maximales et dispositifs de sécurité.
   \item[NF EN 14336] Mise en service des installations de chauffage à eau chaude. Procédures d'essais d'étanchéité, rinçage, remplissage et équilibrage.
+  \item[NF EN 12831] Méthode de calcul des besoins en chaleur — débit à distribuer par émetteur (base du dimensionnement des tuyauteries).
   \item[RE 2020] Impose une approche de calcul de la consommation d'énergie primaire incluant les auxiliaires (pompes). Favorise les circulateurs à haut rendement (classe ErP 2015 minimum).
   \item[Règlement EU 547/2012] Définit les exigences d'écoconception des pompes à eau. Les circulateurs de chauffage doivent satisfaire l'indice d'efficacité énergétique $IEE \leq 0{,}23$.
 \end{description}

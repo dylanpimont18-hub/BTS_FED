@@ -254,6 +254,61 @@ En traitement d'air, la boucle de régulation de l'humidité relative agit sur :
 Le régulateur compare la consigne d'humidité relative $HR_c$ à la mesure $HR_m$ et pilote le modulant du système correspondant.
 
 % ------------------------------------------------------------
+\section{Optimisation énergétique par la régulation}
+% ------------------------------------------------------------
+
+\subsection{Optimisation du démarrage (relance optimale)}
+
+\begin{definition}
+  La \textbf{relance optimale} (ou \textit{optimal start}) est un algorithme de régulation qui calcule dynamiquement l'heure de démarrage du chauffage afin d'atteindre la consigne de confort exactement au début de l'occupation, sans chauffer inutilement pendant la nuit.
+\end{definition}
+
+L'heure de démarrage optimale $t_{start}$ est calculée par :
+\begin{equation}
+  t_{start} = t_{occupation} - \frac{w - T_{amb,nuit}}{K_{bâtiment} \times (T_{dep,max} - w)}
+\end{equation}
+
+où $K_{bâtiment}$ est une constante d'apprentissage ajustée par l'automate en fonction des relances précédentes.
+
+\textbf{Économie typique :} 5 à 15\,\% de la consommation de chauffage sur un bâtiment de bureaux (EN 15232, passage de classe C à classe B).
+
+\subsection{Discontinuité de chauffage et hors-gel}
+
+\begin{table}[H]
+  \centering
+  \caption{Modes de fonctionnement types d'une installation CVC}
+  \begin{tabular}{p{3cm}p{3cm}p{4.5cm}}
+    \toprule
+    Mode & Consigne typique & Déclenchement \\
+    \midrule
+    Confort & $w = 20$--21\,°C & Heures d'occupation \\
+    Réduit & $w = 16$--17\,°C & Nuit, week-end \\
+    Hors-gel & $w = 7$--8\,°C & Arrêt total (vacances) \\
+    Arrêt & — & Moteur arrêté, chaufferie en veille \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{attention}
+  Le mode hors-gel ne doit jamais être désactivé sur les réseaux hydrauliques exposés au gel (chaufferies mal isolées, réseaux extérieurs). La gelée des canalisations est responsable de sinistres importants sur les installations CVC non gardiennées.
+\end{attention}
+
+\subsection{Régulation en cascade PAC + chaufferie appoint}
+
+Dans les installations combinant une PAC et une chaudière d'appoint :
+\begin{enumerate}
+  \item La PAC est prioritaire : elle couvre la charge jusqu'à sa puissance maximale.
+  \item La chaudière prend le relais (\textbf{appoint}) quand la PAC ne suffit plus ($T_{ext}$ très basse) ou quand la puissance demandée dépasse la PAC.
+  \item Le \textbf{point de bivalence} est la température extérieure en dessous de laquelle l'appoint s'enclenche (typiquement $T_{biv} = -3$\,à\,$+2$\,°C selon le dimensionnement).
+\end{enumerate}
+
+\begin{equation}
+  \dot{Q}_{PAC}(T_{ext}) = \dot{Q}_{PAC,max} \times \frac{T_{ext} - T_{min}}{T_{max} - T_{min}}
+\end{equation}
+
+Le dimensionnement de la PAC au point de bivalence (couverture 70--80\,\% des besoins) minimise l'investissement tout en maintenant un SCOP élevé.
+
+% ------------------------------------------------------------
 \section{Gestion Technique du Bâtiment (GTB)}
 % ------------------------------------------------------------
 
@@ -428,108 +483,33 @@ Le passage de la classe D à la classe B permet de réduire la consommation d'é
   \textbf{Conclusion :} Le réseau BACnet/IP avec switch dédié offre l'interopérabilité nécessaire entre les équipements de fabricants différents. La classe GTB visée est la \textbf{classe B} (EN 15232), permettant une économie d'énergie estimée à \textbf{25\,\%} par rapport à une installation sans GTB (classe C).
 \end{exemple}
 
-% ------------------------------------------------------------
-\section{Exercices d'application}
-% ------------------------------------------------------------
+\begin{exemple}[title={Paramétrage d'un régulateur PI sur boucle de pression différentielle}]
+  \textbf{Contexte :} Un réseau hydraulique à débit variable (vannes 2 voies sur 8 zones) est équipé d'une pompe à vitesse variable. On souhaite réguler la pression différentielle $\Delta P$ à la valeur consigne $w_{\Delta P} = \SI{80}{\kilo\pascal}$.
 
-\exercice{Choix de la loi de régulation}
+  \textbf{Données mesurées lors du réglage :}
+  \begin{itemize}
+    \item Gain critique $K_{Pc} = 0{,}6\,\%/\text{kPa}$ (gain de bande proportionnelle à l'apparition d'oscillations).
+    \item Période d'oscillation critique : $T_{osc} = \SI{12}{\second}$.
+  \end{itemize}
 
-\textbf{Énoncé :}
+  \textbf{Application Ziegler-Nichols pour un régulateur PI :}
+  \begin{align}
+    K_P &= 0{,}45 \times K_{Pc} = 0{,}45 \times 0{,}6 = 0{,}27\,\%/\text{kPa}\\
+    T_i  &= 0{,}83 \times T_{osc} = 0{,}83 \times 12 = \SI{10}{\second}
+  \end{align}
 
-Une chaudière à condensation dessert un réseau de radiateurs en acier. La consigne de température ambiante est $w = \SI{19}{\celsius}$. Après un arrêt de nuit, la mesure de température ambiante est $y = \SI{14}{\celsius}$.
+  \textbf{Vérification du comportement en régime :} Si toutes les vannes sont ouvertes (pleine charge), $\Delta P$ chute à $\SI{60}{\kilo\pascal}$. L'erreur est $e = 80 - 60 = \SI{20}{\kilo\pascal}$.
+  \begin{itemize}
+    \item Action P : $\Delta u_P = 0{,}27 \times 20 = 5{,}4\,\%$ (augmentation de consigne VFD).
+    \item Après stabilisation PI : erreur nulle, $\Delta P = \SI{80}{\kilo\pascal}$.
+  \end{itemize}
 
-\begin{enumerate}
-  \item Calculer l'erreur initiale $e_0$.
-  \item Avec un régulateur proportionnel de gain $K_P = \SI{5}{\percent\per\kelvin}$, calculer le signal de commande initial $u(t=0)$ sachant que $u_0 = 50\,\%$.
-  \item La commande calculée est-elle physiquement réalisable ? Conclure sur la saturation de l'actionneur.
-  \item Justifier l'intérêt d'ajouter une action intégrale (régulateur PI) pour atteindre exactement $\SI{19}{\celsius}$ en régime permanent.
-\end{enumerate}
-
-\textbf{Corrigé :}
-
-\begin{enumerate}
-  \item $e_0 = w - y = 19 - 14 = \SI{5}{\kelvin}$
-
-  \item Signal de commande :
-  \begin{equation}
-    u = K_P \cdot e_0 + u_0 = 5 \times 5 + 50 = 75\,\%
-  \end{equation}
-  La vanne s'ouvre à $75\,\%$ de sa course maximale.
-
-  \item La commande $75\,\%$ est physiquement réalisable (comprise entre 0 et 100\,\%). La saturation n'est pas atteinte dans ce cas. En revanche, pour $e > \SI{10}{\kelvin}$ : $u = 5 \times 10 + 50 = 100\,\%$ — saturation atteinte, la vanne est pleinement ouverte.
-
-  \item En régime permanent, si un actionneur P pur maintient la chauffe, l'erreur résiduelle $e_{stat} = u_{nécessaire}/K_P - u_0/K_P$ est non nulle sauf si $u_0$ est exactement calibré. L'action intégrale accumule l'erreur dans le temps et ajuste progressivement $u$ jusqu'à ce que $e = 0$, garantissant ainsi $y = w = \SI{19}{\celsius}$ en régime établi, quelle que soit la charge thermique.
-\end{enumerate}
-
-\exercice{Paramétrage de la loi d'eau d'une installation}
-
-\textbf{Énoncé :}
-
-Un immeuble de logements à Lyon (zone H2a, $T_{ext,base} = \SI{-9}{\celsius}$) est chauffé par des radiateurs à basse température ($T_{dep,max} = \SI{55}{\celsius}$ à $T_{ext,base}$). Le chauffage se coupe à $T_{ext} = \SI{16}{\celsius}$ ($T_{dep,min} = \SI{30}{\celsius}$).
-
-\begin{enumerate}
-  \item Calculer la pente de la loi d'eau $K_{loi}$.
-  \item Déterminer la température de départ programmée pour $T_{ext} = \SI{2}{\celsius}$.
-  \item Un correcteur de confort ajoute $+\SI{3}{\kelvin}$ à la consigne de départ lorsque les occupants signalent une sensation de froid. Quelle est la nouvelle température de départ pour $T_{ext} = \SI{2}{\celsius}$ ?
-  \item Quel est l'impact de cette correction sur la consommation de la chaudière ? (réponse qualitative)
-\end{enumerate}
-
-\textbf{Corrigé :}
-
-\begin{enumerate}
-  \item Pente :
-  \begin{equation}
-    K_{loi} = \frac{55 - 30}{16 - (-9)} = \frac{25}{25} = 1{,}0
-  \end{equation}
-
-  \item Température de départ à $T_{ext} = \SI{2}{\celsius}$ :
-  \begin{equation}
-    T_{dep} = 30 + 1{,}0 \times (16 - 2) = 30 + 14 = \SI{44}{\celsius}
-  \end{equation}
-
-  \item Avec correcteur de confort $+\SI{3}{\kelvin}$ :
-  \begin{equation}
-    T_{dep,corrected} = 44 + 3 = \SI{47}{\celsius}
-  \end{equation}
-
-  \item Une hausse de $\SI{3}{\kelvin}$ sur la température de départ augmente les pertes thermiques du réseau de distribution et réduit le rendement de condensation de la chaudière (la température de retour augmente). On estime une surconsommation de l'ordre de 6 à 10\,\% selon l'isolation du réseau. Le correcteur doit donc être utilisé avec modération et remis à zéro dès retour à l'état de confort.
-\end{enumerate}
-
-\exercice{Identification des composants GTB}
-
-\textbf{Énoncé :}
-
-Un bâtiment tertiaire est équipé d'une GTB structurée en trois niveaux. Le technicien relève les équipements suivants :
-
-\begin{enumerate}[label=\alph*)]
-  \item Sonde de température ambiante PT1000 installée dans le bureau
-  \item Logiciel SCADA affichant les synoptiques sur écran tactile au poste de garde
-  \item Régulateur de zone Siemens Synco 700 gérant la vanne de la batterie chaude
-  \item Vanne 2 voies motorisée DN15 sur circuit eau chaude
-  \item Switch Ethernet administrable reliant les automates et le serveur
-  \item Variateur de fréquence Schneider sur moteur pompe de circulation
-\end{enumerate}
-
-Classer chacun de ces équipements dans le niveau GTB correspondant (niveau 1, 2 ou 3) et préciser son rôle dans la chaîne de régulation.
-
-\textbf{Corrigé :}
-
-\begin{center}
-\begin{tabular}{clll}
-  \toprule
-  Équipement & Niveau & Rôle & Nature \\
-  \midrule
-  a) Sonde PT1000 & 1 — Terrain & Mesure grandeur réglée ($T_{amb}$) & Capteur \\
-  b) Logiciel SCADA & 3 — Supervision & Visualisation, historique, alarmes & IHM \\
-  c) Régulateur Synco 700 & 2 — Automatisme & Calcule la commande (boucle PI) & Contrôleur \\
-  d) Vanne motorisée & 1 — Terrain & Agit sur le débit d'eau chaude & Actionneur \\
-  e) Switch Ethernet & 3 — Supervision & Infrastructure réseau IP & Communication \\
-  f) Variateur de fréquence & 1/2 — Terrain/Auto. & Adapte la vitesse de la pompe & Actionneur piloté \\
-  \bottomrule
-\end{tabular}
-\end{center}
-
-Note : le variateur de fréquence est physiquement au niveau terrain mais intègre souvent une intelligence locale (boucle PID de pression) — il peut donc être considéré comme niveau 1 ou niveau 2 selon le contexte.
+  \textbf{Économie d'énergie en mi-charge :} Avec 4 zones sur 8 ouvertes, la pompe opère à $n_2 = 0{,}75 \times n_1$. Par les lois de similitude :
+  \[
+    P_2 = (0{,}75)^3 \times P_1 = 0{,}422 \times P_1
+  \]
+  La puissance est réduite de \textbf{58\,\%} par rapport au fonctionnement à pleine charge. La régulation de pression différentielle par VFD permet donc des économies d'énergie considérables en bâtiment tertiaire à occupation variable.
+\end{exemple}
 
 % ------------------------------------------------------------
 \section{Éléments de réglementation}
