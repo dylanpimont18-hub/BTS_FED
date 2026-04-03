@@ -1,0 +1,517 @@
+\chapter{Climatisation et traitement d'air}
+
+% ============================================================
+\section{Objectifs pédagogiques}
+% ============================================================
+
+\subsection*{Compétences GCF mobilisées}
+\begin{itemize}
+  \item \textbf{C2-1 à C2-3} — Analyser un système de climatisation : cycle frigorifique, architecture, paramètres de fonctionnement
+  \item \textbf{C3-2 et C3-3} — Comparer et sélectionner un système de climatisation selon les critères technico-économiques et environnementaux ; dimensionner la puissance frigorifique
+  \item \textbf{C5-1 à C5-3} — Appliquer les réglementations fluides frigorigènes et les normes de sécurité
+  \item \textbf{C7-4 à C7-6} — Mesurer les performances en mise en service (EER, COP), interpréter les écarts
+  \item \textbf{C8-1 à C8-4} — Vérifier les performances saisonnières, diagnostiquer les dérives
+\end{itemize}
+
+\subsection*{Savoirs associés mobilisés}
+\begin{itemize}
+  \item \textbf{A5} — Thermodynamique appliquée — machine frigorifique : fonctionnel, COP, impact environnemental (niveau 2–3)
+  \item \textbf{A4} — Traitement d'air : diagramme air humide, évolutions (niveau 3)
+  \item \textbf{B2-2} — Climatisation : systèmes thermodynamiques, eau, air — CTA, VRV (niveau 3)
+  \item \textbf{B5-5} — Systèmes de rejet de chaleur : condenseur air/eau, tour aéroréfrigérante (niveau 3)
+  \item \textbf{S5.5} — Réglementations fluides frigorigènes (niveau 2)
+  \item \textbf{S10.5 et S10.6} — Mise en service et critères de bon fonctionnement (niveau 3)
+\end{itemize}
+
+% ============================================================
+\section{Introduction}
+% ============================================================
+
+La climatisation désigne l'ensemble des techniques permettant de maintenir les conditions de température et d'humidité dans un local, quelle que soit la saison. En été, il s'agit de refroidir et souvent de déshumidifier ; en hiver, dans les bâtiments à fort apport interne (bureaux, commerces, data centers), de refroidir malgré les basses températures extérieures.
+
+En France, la consommation liée à la climatisation représente environ 10\,\% de la consommation électrique des bâtiments tertiaires et croît régulièrement avec le réchauffement climatique. Le technicien supérieur GCF dimensionne les systèmes, sélectionne les fluides frigorigènes compatibles avec la réglementation F-Gaz, et vérifie les performances à la mise en service.
+
+% ============================================================
+\section{Cycle frigorifique à compression de vapeur}
+% ============================================================
+
+\subsection{Les quatre composants du cycle}
+
+Le cycle frigorifique à compression de vapeur est le fondement de tous les systèmes de climatisation. Il repose sur quatre composants principaux :
+
+\begin{table}[H]
+  \centering
+  \caption{Composants du cycle frigorifique et leur rôle}
+  \begin{tabular}{p{3cm}p{4.5cm}p{4cm}}
+    \toprule
+    Composant & Transformation & Effet sur le fluide \\
+    \midrule
+    Évaporateur & Échange à basse pression & Vaporisation : absorbe chaleur (effet froid) \\
+    Compresseur & Compression adiabatique & Pression et température augmentent \\
+    Condenseur & Échange à haute pression & Condensation : cède chaleur (rejet) \\
+    Détendeur & Détente isenthalpique & Pression et température chutent \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Diagramme enthalpique (diagramme de Mollier frigorifique)}
+
+Le diagramme pression-enthalpie ($\log P$ / $h$) représente le cycle frigorifique. Il permet de calculer tous les bilans énergétiques du cycle.
+
+\begin{definition}[title=Effet frigorifique]
+\begin{equation}
+  q_0 = h_1 - h_4 \qquad \left[\si{\kilo\joule\per\kilogram}\right]
+  \label{eq:effet_frigo}
+\end{equation}
+\begin{itemize}
+  \item $h_1$ : enthalpie à la sortie de l'évaporateur (vapeur saturée sèche)
+  \item $h_4$ : enthalpie à l'entrée de l'évaporateur (liquide sous-refroidi après détente)
+\end{itemize}
+\end{definition}
+
+\begin{definition}[title=Travail de compression]
+\begin{equation}
+  w_c = h_2 - h_1 \qquad \left[\si{\kilo\joule\per\kilogram}\right]
+  \label{eq:travail_compresseur}
+\end{equation}
+\begin{itemize}
+  \item $h_2$ : enthalpie à la sortie du compresseur (vapeur surchauffée)
+\end{itemize}
+\end{definition}
+
+\begin{definition}[title=Effet de condensation]
+\begin{equation}
+  q_c = h_2 - h_3 \qquad \left[\si{\kilo\joule\per\kilogram}\right]
+  \label{eq:effet_condenseur}
+\end{equation}
+\begin{itemize}
+  \item $h_3$ : enthalpie à la sortie du condenseur (liquide sous-refroidi)
+\end{itemize}
+\end{definition}
+
+\begin{definition}[title=Bilan énergétique du cycle]
+Le premier principe appliqué au cycle donne :
+\begin{equation}
+  q_c = q_0 + w_c
+  \label{eq:bilan_cycle}
+\end{equation}
+Le condenseur rejette la somme de l'effet frigorifique et du travail de compression.
+\end{definition}
+
+\subsection{Coefficient de performance en froid (EER)}
+
+\begin{definition}[title=EER — Energy Efficiency Ratio]
+\begin{equation}
+  EER = \frac{\dot{Q}_0}{P_{élec}} = \frac{q_0}{w_c} \qquad \left[\text{sans dimension}\right]
+  \label{eq:eer}
+\end{equation}
+\begin{itemize}
+  \item $\dot{Q}_0$ : puissance frigorifique (\si{\kilo\watt})
+  \item $P_{élec}$ : puissance électrique absorbée par le compresseur (\si{\kilo\watt})
+\end{itemize}
+
+\textbf{Valeurs typiques :}
+\begin{itemize}
+  \item Split-system résidentiel : EER = 2,5 à 4,5
+  \item Groupe froid à eau glacée haute efficacité : EER = 4 à 7
+  \item EER de Carnot (limite théorique) : $EER_{Carnot} = T_{froid}/(T_{chaud}-T_{froid})$
+\end{itemize}
+\end{definition}
+
+\begin{definition}[title=SEER — Seasonal EER]
+Le SEER est l'EER moyen calculé sur toute la saison de refroidissement (norme EN 14825). Il est obligatoirement affiché sur l'étiquette énergie EU 206/2012.
+
+\textbf{Valeurs de référence RE2020 :} SEER $\geq$ 3,5 recommandé pour les bâtiments tertiaires.
+\end{definition}
+
+\subsection{Les fluides frigorigènes}
+
+\begin{table}[H]
+  \centering
+  \caption{Fluides frigorigènes courants en climatisation}
+  \begin{tabular}{p{2cm}p{2.5cm}p{1.5cm}p{1.5cm}p{4cm}}
+    \toprule
+    Fluide & Famille & GWP & ODP & Statut réglementaire \\
+    \midrule
+    R410A & HFC & 2088 & 0 & Phase-out F-Gaz 2025 (neuf) \\
+    R32 & HFC & 675 & 0 & Autorisé, transition \\
+    R290 (propane) & HC & 3 & 0 & Autorisé, charges limitées \\
+    R744 (CO\textsubscript{2}) & naturel & 1 & 0 & Autorisé, haute pression \\
+    R1234yf & HFO & 4 & 0 & Remplaçant R134a \\
+    R454B & HFO/HFC & 466 & 0 & Remplaçant R410A \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{attention}
+Le règlement F-Gaz EU 517/2014 (révisé 2024) prévoit un calendrier de réduction des HFC à fort GWP. Depuis 2025, les nouveaux équipements de climatisation résidentielle ne peuvent utiliser de fluides avec GWP $>$ 750 dans l'UE. Le technicien GCF doit impérativement vérifier la conformité du fluide avant toute installation neuve.
+
+\textbf{GWP} = Global Warming Potential (potentiel de réchauffement global, référence CO\textsubscript{2} = 1).\\
+\textbf{ODP} = Ozone Depleting Potential (potentiel de destruction de l'ozone, référence R11 = 1).
+\end{attention}
+
+% ============================================================
+\section{Systèmes de climatisation}
+% ============================================================
+
+\subsection{Systèmes split et multi-split}
+
+\begin{definition}[title=Système split]
+Un système split comporte une unité extérieure (condenseur + compresseur) et une unité intérieure (évaporateur + ventilateur), reliées par des liaisons frigorifiques (cuivre). Il est destiné au confort d'un seul local.
+\end{definition}
+
+\begin{table}[H]
+  \centering
+  \caption{Types d'unités intérieures split}
+  \begin{tabular}{p{3cm}p{5cm}p{4cm}}
+    \toprule
+    Type & Installation & Usage \\
+    \midrule
+    Mural (high-wall) & Fixé en hauteur sur un mur & Résidentiel, petit bureau \\
+    Cassette plafonnière & Encastrée dans le faux-plafond, soufflage 4 voies & Tertiaire \\
+    Console (floor) & Posée au sol ou en allège & Salles de réunion, hôtels \\
+    Gainable & Dans le plénum, réseau de gaines & Grande surface, discrétion \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{definition}[title=Système multi-split]
+Un multi-split connecte plusieurs unités intérieures à une seule unité extérieure. Les unités fonctionnent indépendamment (régulation individuelle) mais partagent le même circuit frigorifique.
+
+\textbf{Limite :} toutes les unités fonctionnent en chaud ou en froid simultanément (pas de simultanéité chaud/froid). Pour la simultanéité, il faut un système VRV/VRF.
+\end{definition}
+
+\subsection{Systèmes VRV / VRF}
+
+\begin{definition}[title=VRV / VRF (Volume de Réfrigérant Variable)]
+Un système VRV (marque Daikin) ou VRF est une évolution du multi-split qui permet de faire varier le débit de fluide frigorigène vers chaque unité intérieure, et d'assurer du \textbf{chauffage et du refroidissement simultanés} grâce à un module de récupération de chaleur (Heat Recovery).
+\end{definition}
+
+\textbf{Architecture typique :}
+\begin{itemize}
+  \item 1 à 3 unités extérieures (compresseurs à vitesse variable INVERTER)
+  \item Jusqu'à 64 unités intérieures par système
+  \item Module BS (Branch Selector) pour la récupération de chaleur simultanée
+  \item Réseau de cuivre de petit diamètre (pas besoin de réseau eau)
+\end{itemize}
+
+\textbf{Avantages :} flexibilité, SEER élevé (4 à 8), pas de réseau eau, contrôle individuel par local.\\
+\textbf{Inconvénients :} maintenance frigoriste qualifiée obligatoire, longueur des liaisons limitée (100–200\,m), charge en fluide frigorigène élevée (enjeu F-Gaz).
+
+\subsection{Climatisation à eau glacée}
+
+\begin{definition}[title=Système à eau glacée (Chilled Water)]
+Dans un système à eau glacée, un groupe froid produit de l'eau refroidie (typiquement 6–7\,°C, retour 12\,°C) distribuée par un réseau hydraulique vers des unités terminales (ventilo-convecteurs, CTA à batterie froide, poutres froides).
+\end{definition}
+
+\textbf{Composants principaux :}
+\begin{itemize}
+  \item \textbf{Groupe froid (chiller)} : compresseur(s) + évaporateur (côté eau) + condenseur (air ou eau)
+  \item \textbf{Réseau de distribution eau glacée} : pompes, équilibrage, isolation thermique
+  \item \textbf{Unités terminales} : ventilo-convecteurs 4 tubes, CTA, poutres froides actives
+  \item \textbf{Tour aéroréfrigérante ou condenseur à air} : rejet de chaleur vers l'extérieur
+\end{itemize}
+
+\begin{table}[H]
+  \centering
+  \caption{Comparatif groupes froids selon type de condenseur}
+  \begin{tabular}{p{3.5cm}p{4cm}p{4cm}}
+    \toprule
+    Type condenseur & EER typique & Contraintes \\
+    \midrule
+    Air (aircooled) & 2,8 à 4,5 & Simple, pas d'eau, bruit \\
+    Eau (watercooled) & 4,5 à 7,0 & Meilleur EER, tour aéroréfrig. ou puits \\
+    Eau à condensation géothermique & 5,0 à 8,0 & Très haut EER, contrainte hydrogéologique \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Rejet de chaleur}
+
+\begin{definition}[title=Tour aéroréfrigérante (TAR)]
+La tour aéroréfrigérante refroidit l'eau de condensation par évaporation partielle. L'eau chaude (condenseur) ruisselle sur un garnissage, un ventilateur force le passage d'air. Une partie de l'eau s'évapore, refroidissant le reste.
+
+\textbf{Avantage :} température de condensation proche de la température humide extérieure (plus basse que la température sèche) → meilleur EER.\\
+\textbf{Contrainte majeure :} risque Légionella — entretien et traitement de l'eau réglementés (arrêté du 14 décembre 2013, plan de gestion du risque légionelle).
+\end{definition}
+
+% ============================================================
+\section{Calcul des charges thermiques de refroidissement}
+% ============================================================
+
+\begin{definition}[title=Charge thermique de refroidissement]
+La charge thermique de refroidissement $\dot{Q}_{froid}$ est la puissance que le système de climatisation doit extraire pour maintenir la température de consigne. Elle comprend :
+\begin{itemize}
+  \item \textbf{Apports solaires} par les vitrages ($Q_{sol}$)
+  \item \textbf{Apports internes} : éclairage, équipements, personnes ($Q_{int}$)
+  \item \textbf{Apports par transmission} des parois extérieures ($Q_{trans}$)
+  \item \textbf{Apports par renouvellement d'air} (air neuf chaud en été) ($Q_{air}$)
+\end{itemize}
+\end{definition}
+
+\begin{methode}[title=Calcul simplifié des apports internes]
+\begin{align}
+  Q_{personnes} &= n_{pers} \times q_{pers} & q_{pers} &\approx \SI{70}{\watt} \text{ (bureau)} \\
+  Q_{éclairage} &= P_{inst} \times S_{local} & P_{inst} &\approx \SI{10}{\watt\per\square\metre} \text{ (LED)} \\
+  Q_{informatique} &= P_{PC} \times n_{PC} & P_{PC} &\approx \SI{150}{\watt\per\poste}
+\end{align}
+\end{methode}
+
+\begin{definition}[title=Apport solaire par vitrage]
+\begin{equation}
+  Q_{sol} = S_{vit} \times G_{sol} \times g \times F_{ombr}
+\end{equation}
+\begin{itemize}
+  \item $S_{vit}$ : surface vitrée (\si{\square\metre})
+  \item $G_{sol}$ : irradiance solaire sur la paroi (\si{\watt\per\square\metre}) — dépend de l'orientation et de la saison
+  \item $g$ : facteur solaire du vitrage (sans dimension) — typiquement 0,2 à 0,6
+  \item $F_{ombr}$ : facteur d'ombrage (stores, débords, etc.) — 0,3 à 1,0
+\end{itemize}
+\end{definition}
+
+% ============================================================
+\section{Exemples résolus}
+% ============================================================
+
+\begin{exemple}[title=Calcul de l'EER d'un groupe froid sur diagramme enthalpique]
+\textbf{Énoncé :} Un groupe froid au R32 fonctionne dans les conditions suivantes (lues sur le diagramme enthalpique R32) :
+\begin{itemize}
+  \item $h_1 = \SI{503}{\kilo\joule\per\kilogram}$ (sortie évaporateur)
+  \item $h_2 = \SI{550}{\kilo\joule\per\kilogram}$ (sortie compresseur)
+  \item $h_3 = \SI{280}{\kilo\joule\per\kilogram}$ (sortie condenseur)
+  \item $h_4 = h_3 = \SI{280}{\kilo\joule\per\kilogram}$ (sortie détendeur, isenthalpique)
+\end{itemize}
+Le débit massique de fluide est $\dot{m} = \SI{0{,}12}{\kilogram\per\second}$.
+
+\textbf{Effet frigorifique massique :}
+\[
+  q_0 = h_1 - h_4 = 503 - 280 = \SI{223}{\kilo\joule\per\kilogram}
+\]
+
+\textbf{Travail de compression massique :}
+\[
+  w_c = h_2 - h_1 = 550 - 503 = \SI{47}{\kilo\joule\per\kilogram}
+\]
+
+\textbf{Vérification du bilan :}
+\[
+  q_c = h_2 - h_3 = 550 - 280 = \SI{270}{\kilo\joule\per\kilogram} = q_0 + w_c = 223 + 47 ✓
+\]
+
+\textbf{Puissances :}
+\[
+  \dot{Q}_0 = \dot{m} \times q_0 = 0{,}12 \times 223 = \SI{26{,}76}{\kilo\watt}
+\]
+\[
+  P_{élec} = \dot{m} \times w_c = 0{,}12 \times 47 = \SI{5{,}64}{\kilo\watt}
+\]
+\[
+  \dot{Q}_c = \dot{m} \times q_c = 0{,}12 \times 270 = \SI{32{,}4}{\kilo\watt}
+\]
+
+\textbf{EER :}
+\[
+  EER = \frac{\dot{Q}_0}{P_{élec}} = \frac{26{,}76}{5{,}64} = \mathbf{4{,}75}
+\]
+
+\textbf{EER de Carnot} (évaporation à 5\,°C, condensation à 40\,°C) :
+\[
+  EER_{Carnot} = \frac{278}{313 - 278} = \frac{278}{35} = 7{,}94
+\]
+\[
+  \eta_{ex} = \frac{4{,}75}{7{,}94} = 0{,}598 = \mathbf{59{,}8\,\%}
+\]
+\end{exemple}
+
+\begin{exemple}[title=Dimensionnement d'une climatisation de salle de réunion]
+\textbf{Énoncé :} Une salle de réunion de 40\,m² (hauteur 2,7\,m) est orientée sud. Elle accueille 20 personnes. Données :
+\begin{itemize}
+  \item Vitrage sud : 8\,m², $g = 0{,}35$, $F_{ombr} = 0{,}5$, $G_{sol} = \SI{500}{\watt\per\square\metre}$
+  \item Éclairage LED : 10\,W/m²
+  \item Ordinateurs : 10 postes à 150\,W chacun
+  \item Personnes : 80\,W/pers (réunion, activité modérée)
+  \item Apports par transmission et ventilation : \SI{1200}{\watt} (estimé)
+\end{itemize}
+Calculer la puissance frigorifique nécessaire et sélectionner un système.
+
+\textbf{Apports solaires :}
+\[
+  Q_{sol} = 8 \times 500 \times 0{,}35 \times 0{,}5 = \SI{700}{\watt}
+\]
+
+\textbf{Apports internes :}
+\[
+  Q_{pers} = 20 \times 80 = \SI{1600}{\watt}
+\]
+\[
+  Q_{écl} = 10 \times 40 = \SI{400}{\watt}
+\]
+\[
+  Q_{info} = 10 \times 150 = \SI{1500}{\watt}
+\]
+
+\textbf{Total des charges :}
+\[
+  \dot{Q}_{froid} = 700 + 1600 + 400 + 1500 + 1200 = \SI{5400}{\watt} = \SI{5{,}4}{\kilo\watt}
+\]
+
+\textbf{Sélection :} Système split mural ou cassette 4 voies de 6\,kW nominal (arrondi au calibre supérieur disponible, ex. : Daikin FTXM60R ou équivalent). Vérifier le SEER $\geq$ 3,5 pour conformité RE2020 tertiaire.
+\end{exemple}
+
+% ============================================================
+\section{Exercices d'application}
+% ============================================================
+
+\exercice{Analyse du cycle frigorifique R454B}
+
+Un climatiseur au R454B présente les enthalpies suivantes mesurées au banc d'essai :
+$h_1 = \SI{490}{\kilo\joule\per\kilogram}$, $h_2 = \SI{535}{\kilo\joule\per\kilogram}$, $h_3 = \SI{270}{\kilo\joule\per\kilogram}$, $h_4 = h_3$.
+
+Le débit massique mesuré est $\dot{m} = \SI{0{,}08}{\kilogram\per\second}$.
+
+\begin{enumerate}
+  \item Calculer les puissances frigorifique, de compression et de condensation.
+  \item Vérifier le bilan énergétique.
+  \item Calculer l'EER. Comparer avec l'EER de Carnot ($T_{0} = 7$\,°C, $T_{c} = 45$\,°C).
+  \item Le fabricant annonce EER = 4,1 dans ces conditions. Analyser l'écart.
+\end{enumerate}
+
+\textbf{Corrigé :}
+
+\textit{Question 1 — Puissances :}
+\[
+  q_0 = 490 - 270 = \SI{220}{\kilo\joule\per\kilogram}
+\]
+\[
+  w_c = 535 - 490 = \SI{45}{\kilo\joule\per\kilogram}
+\]
+\[
+  q_c = 535 - 270 = \SI{265}{\kilo\joule\per\kilogram}
+\]
+\[
+  \dot{Q}_0 = 0{,}08 \times 220 = \SI{17{,}6}{\kilo\watt}, \quad P_{élec} = 0{,}08 \times 45 = \SI{3{,}6}{\kilo\watt}, \quad \dot{Q}_c = 0{,}08 \times 265 = \SI{21{,}2}{\kilo\watt}
+\]
+
+\textit{Question 2 — Bilan :} $q_0 + w_c = 220 + 45 = 265 = q_c$ ✓
+
+\textit{Question 3 — EER :}
+\[
+  EER_{mes} = \frac{17{,}6}{3{,}6} = 4{,}89
+\]
+\[
+  EER_{Carnot} = \frac{280}{318 - 280} = \frac{280}{38} = 7{,}37
+\]
+\[
+  \eta_{ex} = \frac{4{,}89}{7{,}37} = 66{,}4\,\%
+\]
+
+\textit{Question 4 — Écart EER :} EER mesuré (4,89) > EER annoncé (4,1). L'écart peut s'expliquer par : conditions d'essai différentes des conditions normalisées EN 14825, instrumentation de mesure du débit massique, incertitudes de mesure des enthalpies. L'EER annoncé intègre les pertes auxiliaires (ventilateurs, régulation) que le calcul enthalpique n'inclut pas.
+
+\exercice{Charges thermiques d'un open-space et sélection d'un système}
+
+Un open-space de 200\,m² est situé en façade ouest. Données estivales :
+\begin{itemize}
+  \item Vitrage ouest : 30\,m², $g = 0{,}25$ (vitrage solaire), $F_{ombr} = 0{,}6$, $G_{sol,ouest} = \SI{450}{\watt\per\square\metre}$
+  \item 40 personnes, 80\,W/pers
+  \item Éclairage : 8\,W/m²
+  \item Informatique : 40 postes à 120\,W
+  \item Transmission et ventilation : \SI{3000}{\watt}
+\end{itemize}
+
+\begin{enumerate}
+  \item Calculer chaque type d'apport et la puissance frigorifique totale.
+  \item Proposer deux solutions techniques (une à fluide frigorigène, une à eau glacée) en justifiant le choix.
+  \item Calculer la consommation électrique mensuelle du système à eau glacée si EER = 4,0 et si le système fonctionne 8\,h/jour, 22\,jours/mois à plein régime.
+\end{enumerate}
+
+\textbf{Corrigé :}
+
+\textit{Question 1 — Apports :}
+\[
+  Q_{sol} = 30 \times 450 \times 0{,}25 \times 0{,}6 = \SI{2025}{\watt}
+\]
+\[
+  Q_{pers} = 40 \times 80 = \SI{3200}{\watt}
+\]
+\[
+  Q_{écl} = 8 \times 200 = \SI{1600}{\watt}
+\]
+\[
+  Q_{info} = 40 \times 120 = \SI{4800}{\watt}
+\]
+\[
+  \dot{Q}_{froid} = 2025 + 3200 + 1600 + 4800 + 3000 = \SI{14\,625}{\watt} \approx \SI{14{,}6}{\kilo\watt}
+\]
+
+\textit{Question 2 — Solutions :}
+\begin{itemize}
+  \item \textbf{VRV/VRF (fluide frigorigène)} : adapté si bâtiment multi-zones, flexibilité élevée, pas besoin de réseau eau glacée. Recommandé pour réhabilitation ou bâtiment de taille moyenne.
+  \item \textbf{Eau glacée + ventilo-convecteurs 4 tubes} : adapté si bâtiment neuf de grande taille avec besoins chaud et froid simultanés, meilleur EER, maintenance centralisée. Recommandé pour immeuble tertiaire neuf.
+\end{itemize}
+
+\textit{Question 3 — Consommation électrique mensuelle :}
+\[
+  P_{élec} = \frac{\dot{Q}_{froid}}{EER} = \frac{14{,}6}{4{,}0} = \SI{3{,}65}{\kilo\watt}
+\]
+\[
+  E_{mensuelle} = 3{,}65 \times 8 \times 22 = \SI{642}{\kilo\watt\heure}
+\]
+
+\exercice{Diagnostic d'un groupe froid sous-performant}
+
+Un groupe froid à eau glacée de 80\,kW nominal présente les mesures suivantes lors de la mise en service :
+\begin{itemize}
+  \item Puissance électrique mesurée : \SI{28}{\kilo\watt}
+  \item Température eau glacée départ : 9\,°C (consigne : 7\,°C)
+  \item Température eau glacée retour : 13\,°C
+  \item Débit eau glacée : \SI{30}{\cubic\metre\per\hour}, $\rho = \SI{999}{\kilogram\per\cubic\metre}$, $c_p = \SI{4182}{\joule\per\kilogram\per\kelvin}$
+  \item Température extérieure : 28\,°C
+\end{itemize}
+
+\begin{enumerate}
+  \item Calculer la puissance frigorifique produite.
+  \item Calculer l'EER mesuré.
+  \item Identifier les anomalies et les causes probables.
+\end{enumerate}
+
+\textbf{Corrigé :}
+
+\textit{Question 1 — Puissance frigorifique :}
+\[
+  \dot{m} = \frac{30 \times 999}{3600} = \SI{8{,}33}{\kilogram\per\second}
+\]
+\[
+  \dot{Q}_0 = 8{,}33 \times 4182 \times (13 - 9) = \SI{139\,333}{\watt} \approx \SI{139}{\kilo\watt}
+\]
+
+\textit{Question 2 — EER mesuré :}
+\[
+  EER = \frac{139}{28} = \mathbf{4{,}96}
+\]
+
+\textit{Question 3 — Anomalies :}
+\begin{itemize}
+  \item La puissance produite (139\,kW) est \textbf{supérieure} à la puissance nominale (80\,kW) → le groupe est en surcharge ou les conditions sont plus favorables que prévues (température extérieure plus basse, ou nominal mesuré à des conditions défavorables)
+  \item La température de départ (9\,°C) est \textbf{au-dessus} de la consigne (7\,°C) → vérifier la régulation, le sous-refroidissement insuffisant, ou un débit trop élevé
+  \item Piste : recalibrer la vanne de régulation du débit ; vérifier la charge en fluide frigorigène ; vérifier la consigne du thermostat de départ
+\end{itemize}
+
+% ============================================================
+\section{Éléments de réglementation}
+% ============================================================
+
+\begin{description}
+  \item[Règlement F-Gaz EU 517/2014 (révisé 2024)] Calendrier de réduction des HFC. Depuis 2025 : interdiction des fluides GWP $>$ 750 dans les nouvelles unités de climatisation résidentielle divisée. Obligations de contrôle d'étanchéité selon la charge en CO\textsubscript{2} équivalent.
+
+  \item[Arrêté du 14 décembre 2013 (tours aéroréfrigérantes)] Prescriptions techniques relatives aux systèmes de refroidissement par dispersion d'eau dans un flux d'air. Plan de gestion du risque légionelles, analyses bactériologiques périodiques, traitement chimique de l'eau.
+
+  \item[Attestation de capacité (décret 2015-1790)] Toute entreprise qui installe, entretient ou répare des équipements contenant des fluides frigorigènes HFC doit disposer d'une attestation de capacité délivrée par un organisme agréé.
+
+  \item[NF EN 14825] Méthode de calcul du SEER et SCOP des climatiseurs et pompes à chaleur — conditions d'essai normalisées pour la comparaison des équipements.
+
+  \item[Règlement EU 206/2012 (écoconception et étiquetage)] Exigences de rendement minimal et étiquetage énergie pour les climatiseurs résidentiels. Classes de A+++ à D.
+
+  \item[RE 2020] Fixe un seuil de consommation en énergie primaire incluant la climatisation. Impose une réflexion sur les protections solaires passives (casquettes, stores) avant de dimensionner la climatisation.
+
+  \item[NF EN 15251] Critères d'ambiance intérieure été : température opérative maximale selon catégorie (I : 25\,°C, II : 26\,°C, III : 27\,°C) pour les bâtiments non refroidis mécaniquement.
+\end{description}
