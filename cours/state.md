@@ -4,12 +4,12 @@ Mis à jour automatiquement par l'agent à chaque run.
 
 ## Dernier run
 - Date : 2026-04-03
-- Action : Création chapitre 09 — Acoustique du bâtiment (grandeurs acoustiques, isolement parois, bruit CVC, traitement acoustique, réglementation arrêté 1999 / NF EN ISO 10140 / RE2020)
+- Action : Création chapitres 09 — Acoustique du bâtiment + 10 — Électrotechnique appliquée CVC (agents parallèles)
 
 ## Prochain focus
-Créer le chapitre 10 : Électrotechnique appliquée CVC.
-Fichier cible : `cours/chapitres/10-electrotechnique.tex`
-Objectif : ébauche complète — distribution BT, moteurs asynchrones, variateurs de fréquence, habilitations électriques.
+Créer le chapitre 11 : Études de cas et dimensionnement.
+Fichier cible : `cours/chapitres/11-etudes-de-cas.tex`
+Objectif : ébauche complète — études de cas intégrées, dimensionnement complet d'une installation CVC.
 
 ## Chapitres
 
@@ -24,7 +24,7 @@ Objectif : ébauche complète — distribution BT, moteurs asynchrones, variateu
 | 07 | 07-regulation-gtb.tex | Régulation et GTB | ébauche | 4 | Créé le 2026-04-03 |
 | 08 | 08-efficacite-energetique.tex | Efficacité énergétique et RE2020 | ébauche | 4 | Créé le 2026-04-03 |
 | 09 | 09-acoustique.tex | Acoustique du bâtiment | ébauche | 4 | Créé le 2026-04-03 |
-| 10 | 10-electrotechnique.tex | Électrotechnique appliquée CVC | absent | — | |
+| 10 | 10-electrotechnique.tex | Électrotechnique appliquée CVC | ébauche | 4 | Créé le 2026-04-03 |
 | 11 | 11-etudes-de-cas.tex | Études de cas et dimensionnement | absent | — | |
 
 ## Légende des statuts

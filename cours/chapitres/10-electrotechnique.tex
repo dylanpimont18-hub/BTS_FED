@@ -1,0 +1,705 @@
+\chapter{Électrotechnique appliquée CVC}
+
+% ============================================================
+\section{Objectifs pédagogiques}
+% ============================================================
+
+À l'issue de ce chapitre, l'étudiant sera capable de :
+\begin{itemize}
+  \item Maîtriser les grandeurs électriques fondamentales (tension, courant, puissance active, réactive, apparente, facteur de puissance) et les calculer dans des circuits CVC monophasés et triphasés.
+  \item Identifier les moteurs asynchrones triphasés utilisés en CVC (pompes, ventilateurs, compresseurs), lire leur plaque signalétique et choisir leur mode de démarrage.
+  \item Dimensionner et justifier le choix d'un variateur de vitesse (VFD), en appliquant les lois de similitude (débit, HMT, puissance).
+  \item Sélectionner les organes de protection adaptés (disjoncteurs, fusibles, relais thermiques, différentiels) selon la norme NF C 15-100.
+  \item Lire et produire des schémas électriques CVC (puissance et commande) conformes à la norme NF EN 60617.
+  \item Établir un bilan de puissance d'une installation CVC complète.
+\end{itemize}
+
+\textbf{Savoirs référentiel mobilisés :} S4 (électricité), S5.4 (réglementation électrique), S8-C1 (distribution BT), S8-C2 (moteurs, variateurs).
+
+% ============================================================
+\section{Introduction}
+% ============================================================
+
+Les installations de chauffage, ventilation et climatisation (CVC) sont fortement consommatrices d'énergie électrique : pompes de circulation, ventilateurs, compresseurs, résistances électriques, régulateurs, actionneurs\dots{} Selon l'Agence Internationale de l'Énergie, les moteurs électriques représentent environ 45\,\% de la consommation mondiale d'électricité, dont une grande part est imputable aux systèmes CVC.
+
+La maîtrise de l'électrotechnique appliquée est donc indispensable pour le technicien GCF, tant pour le dimensionnement correct des équipements que pour la sécurité des personnes et des biens, et pour l'optimisation des consommations énergétiques.
+
+Ce chapitre couvre les fondamentaux électriques, les moteurs, les variateurs de vitesse, la protection des circuits, la lecture des schémas, et se conclut par un bilan de puissance global d'installation CVC.
+
+% ============================================================
+\section{Rappels d'électrotechnique}
+% ============================================================
+
+\subsection{Grandeurs électriques fondamentales}
+
+\begin{definition}
+  \textbf{Tension} $U$ (en volts, V) : différence de potentiel électrique entre deux points d'un circuit. En France, la distribution BT résidentielle est \textbf{230\,V monophasé} (phase--neutre) et \textbf{400\,V triphasé} (entre phases). Fréquence : $f = 50\,\text{Hz}$.
+
+  \textbf{Courant} $I$ (en ampères, A) : débit de charges électriques dans un conducteur.
+
+  \textbf{Résistance} $R$ (en ohms, $\Omega$) : opposition d'un conducteur au passage du courant.
+\end{definition}
+
+\subsubsection{Loi d'Ohm}
+
+\begin{equation}
+  U = R \cdot I
+\end{equation}
+avec $U$ en V, $R$ en $\Omega$, $I$ en A.
+
+\subsection{Puissances en courant alternatif}
+
+En courant alternatif, on distingue trois puissances :
+
+\begin{definition}
+  \begin{itemize}
+    \item \textbf{Puissance active} $P$ (watts, W) : énergie effectivement convertie en travail mécanique ou thermique. C'est la puissance « utile ».
+    \item \textbf{Puissance réactive} $Q$ (volt-ampères réactifs, var) : énergie échangée entre le réseau et les éléments inductifs (bobines de moteurs) ou capacitifs. Elle ne produit pas de travail mais circule dans les câbles.
+    \item \textbf{Puissance apparente} $S$ (volt-ampères, VA) : puissance totale fournie par le réseau, combinaison de $P$ et $Q$.
+  \end{itemize}
+\end{definition}
+
+\subsubsection{Circuit monophasé}
+
+\begin{equation}
+  S = U \cdot I \quad [\text{VA}]
+\end{equation}
+\begin{equation}
+  P = U \cdot I \cdot \cos\varphi \quad [\text{W}]
+\end{equation}
+\begin{equation}
+  Q = U \cdot I \cdot \sin\varphi \quad [\text{var}]
+\end{equation}
+\begin{equation}
+  S^2 = P^2 + Q^2
+\end{equation}
+
+avec $\varphi$ : déphasage entre la tension et le courant (rad ou degrés).
+
+\subsubsection{Circuit triphasé équilibré}
+
+\begin{equation}
+  S = \sqrt{3} \cdot U \cdot I \quad [\text{VA}]
+\end{equation}
+\begin{equation}
+  P = \sqrt{3} \cdot U \cdot I \cdot \cos\varphi \quad [\text{W}]
+\end{equation}
+\begin{equation}
+  Q = \sqrt{3} \cdot U \cdot I \cdot \sin\varphi \quad [\text{var}]
+\end{equation}
+
+où $U$ est la tension entre phases (V) et $I$ le courant de ligne (A).
+
+\subsection{Facteur de puissance}
+
+\begin{definition}
+  Le \textbf{facteur de puissance} (ou $\cos\varphi$) est le rapport entre la puissance active et la puissance apparente :
+  \begin{equation}
+    \cos\varphi = \frac{P}{S}
+  \end{equation}
+  Il est sans dimension, compris entre 0 et 1. Un $\cos\varphi$ proche de 1 indique que l'énergie est quasi intégralement utilisée. Un $\cos\varphi$ faible (moteur en charge partielle, éclairage fluo non compensé) signifie un transit inutile de courant réactif qui chauffe les câbles et dégrade la tension.
+\end{definition}
+
+\begin{attention}
+  Les fournisseurs d'énergie pénalisent les installations dont le $\cos\varphi < 0{,}93$ (tarif HTA). En BTS CVC, on visera $\cos\varphi \geq 0{,}85$ en conception. La compensation est réalisée par des batteries de condensateurs.
+\end{attention}
+
+\begin{exemple}[title={Calcul de puissance — pompe de chauffage triphasée}]
+  Une pompe de circuit primaire est alimentée en triphasé 400\,V. Son courant absorbé est $I = 8{,}5\,\text{A}$ avec $\cos\varphi = 0{,}82$.
+
+  \textbf{Puissance apparente :}
+  \[
+    S = \sqrt{3} \times 400 \times 8{,}5 = 5{,}887\,\text{kVA}
+  \]
+  \textbf{Puissance active :}
+  \[
+    P = S \times \cos\varphi = 5{,}887 \times 0{,}82 = 4{,}83\,\text{kW}
+  \]
+  \textbf{Puissance réactive :}
+  \[
+    Q = \sqrt{S^2 - P^2} = \sqrt{5{,}887^2 - 4{,}83^2} = 3{,}35\,\text{kvar}
+  \]
+\end{exemple}
+
+% ============================================================
+\section{Moteurs électriques en CVC}
+% ============================================================
+
+\subsection{Généralités — le moteur asynchrone triphasé}
+
+Le \textbf{moteur asynchrone triphasé} (MAT) est le moteur le plus utilisé en CVC pour entraîner pompes, ventilateurs et compresseurs.
+
+\begin{definition}
+  \textbf{Principe :} Le stator (partie fixe) crée un champ magnétique tournant à la \textbf{vitesse de synchronisme} $n_s$. Le rotor (partie tournante) tourne à une vitesse légèrement inférieure $n$ : c'est le \textbf{glissement} $g$.
+
+  \begin{equation}
+    n_s = \frac{60 \cdot f}{p} \quad [\text{tr/min}]
+  \end{equation}
+  avec $f$ la fréquence (Hz) et $p$ le nombre de paires de pôles.
+
+  \begin{equation}
+    g = \frac{n_s - n}{n_s} \quad [\text{sans unité, typiquement } 2\,\text{à}\,5\,\%]
+  \end{equation}
+\end{definition}
+
+\subsubsection{Vitesses de synchronisme à 50\,Hz}
+
+\begin{center}
+  \begin{tabular}{cccc}
+    \toprule
+    Paires de pôles $p$ & Pôles totaux & $n_s$ (tr/min) & $n$ typique (tr/min) \\
+    \midrule
+    1 & 2 & 3000 & 2900 \\
+    2 & 4 & 1500 & 1450 \\
+    3 & 6 & 1000 & 960 \\
+    4 & 8 & 750  & 720 \\
+    \bottomrule
+  \end{tabular}
+\end{center}
+
+\subsubsection{Plaque signalétique — données essentielles}
+
+\begin{center}
+  \begin{tabular}{ll}
+    \toprule
+    Grandeur & Exemple \\
+    \midrule
+    Puissance nominale & $P_n = 4\,\text{kW}$ \\
+    Tension d'alimentation & 230/400\,V (couplage $\triangle$/$Y$) \\
+    Courant nominal & $I_n = 9{,}7\,\text{A}$ (400\,V $Y$) \\
+    Fréquence & 50\,Hz \\
+    Vitesse nominale & 1450\,tr/min \\
+    Facteur de puissance & $\cos\varphi = 0{,}82$ \\
+    Rendement & $\eta = 87\,\%$ (classe IE3) \\
+    Classe d'isolation & F (155\,$^\circ$C) \\
+    Degré de protection & IP55 \\
+    \bottomrule
+  \end{tabular}
+\end{center}
+
+\subsection{Classes d'efficacité énergétique (IE)}
+
+Depuis le règlement UE 640/2009 et ses révisions, les moteurs électriques sont classés selon leur rendement :
+
+\begin{center}
+  \begin{tabular}{clll}
+    \toprule
+    Classe & Dénomination & Rendement typique (4\,kW) & Obligation \\
+    \midrule
+    IE1 & Standard           & $\approx 84\,\%$ & Interdit depuis 2011 \\
+    IE2 & Haut rendement     & $\approx 87\,\%$ & Minimum depuis 2011 \\
+    IE3 & Premium            & $\approx 89\,\%$ & Obligatoire $\geq 0{,}75\,\text{kW}$ depuis 2015 \\
+    IE4 & Super premium      & $\approx 91\,\%$ & Recommandé, moteurs EC \\
+    \bottomrule
+  \end{tabular}
+\end{center}
+
+\textbf{Référence normative :} NF EN 60034-30-1 (classes IE) et règlement UE 2019/1781.
+
+\begin{attention}
+  Depuis le 1\textsuperscript{er} juillet 2021, les moteurs de 0,75 à 1000\,kW doivent atteindre la classe IE3. Les moteurs avec variateur de vitesse associé doivent satisfaire IE2 au minimum (règlement UE 2019/1781).
+\end{attention}
+
+\subsection{Démarrage des moteurs}
+
+Le courant de démarrage d'un moteur asynchrone peut atteindre \textbf{5 à 8 fois} le courant nominal, ce qui provoque des chutes de tension sur le réseau et sollicite mécaniquement les organes entraînés.
+
+\subsubsection{Démarrage direct (DOL — Direct On Line)}
+
+\begin{definition}
+  Le moteur est connecté directement au réseau. Courant de démarrage : $I_d = 5$ à $8 \times I_n$. Simple et économique, mais choc mécanique élevé et perturbations réseau importantes. \textbf{Réservé aux moteurs de faible puissance ($\leq 5{,}5\,\text{kW}$) ou aux applications non sensibles.}
+\end{definition}
+
+\subsubsection{Démarrage étoile-triangle (Y/$\triangle$)}
+
+\begin{definition}
+  Au démarrage, les enroulements sont couplés en \textbf{étoile} (tension par enroulement réduite d'un facteur $\sqrt{3}$). Après quelques secondes ($\approx 5$ à 10\,s), la commutation en \textbf{triangle} s'effectue pour le régime normal.
+
+  \begin{itemize}
+    \item Courant de démarrage : $I_{d,Y} = \dfrac{I_{d,\triangle}}{3}$ (divisé par 3)
+    \item Couple de démarrage : $C_{d,Y} = \dfrac{C_{d,\triangle}}{3}$ (divisé par 3)
+  \end{itemize}
+
+  \textbf{Condition d'emploi :} le moteur doit être câblé pour 230/400\,V ($\triangle$/$Y$) et la tension de ligne est 400\,V. La charge doit accepter un faible couple au démarrage (pompes centrifuges, ventilateurs).
+\end{definition}
+
+\begin{methode}
+  \textbf{Séquence de commande étoile-triangle :}
+  \begin{enumerate}
+    \item Fermeture du contacteur principal $Q1$ + contacteur étoile $Q3$ : moteur alimenté en Y.
+    \item Temporisation (5 à 10\,s selon application).
+    \item Ouverture de $Q3$ (étoile), puis fermeture du contacteur triangle $Q2$ avec interverrouillage.
+    \item Moteur en fonctionnement normal en $\triangle$.
+  \end{enumerate}
+  \textbf{Interverrouillage électrique et mécanique entre Q2 et Q3 est obligatoire.}
+\end{methode}
+
+\subsubsection{Démarreur progressif (soft-starter)}
+
+\begin{definition}
+  Un démarreur progressif pilote la tension appliquée au moteur par des thyristors, réduisant progressivement la tension de 0 à $U_n$ sur une rampe réglable (2 à 30\,s). Le courant de démarrage est limité à \textbf{2 à 4 $\times$ $I_n$} selon le réglage.
+
+  \textbf{Avantages :} démarrage très doux, réduction des à-coups hydrauliques (coup de bélier), peu d'usure mécanique. Idéal pour les pompes de réseau hydraulique.
+
+  \textbf{Inconvénient :} génère des harmoniques ; n'économise pas l'énergie en fonctionnement.
+\end{definition}
+
+\subsubsection{Variateur de vitesse (VFD / VSV)}
+
+Le variateur de fréquence (Variable Frequency Drive, ou Variateur de Vitesse) est traité en détail à la section suivante.
+
+% ============================================================
+\section{Variation de vitesse et économies d'énergie}
+% ============================================================
+
+\subsection{Principe du variateur de fréquence (VFD)}
+
+\begin{definition}
+  Un \textbf{variateur de fréquence} (VFD, également appelé variateur de vitesse ou VSV) convertit la tension alternative du réseau (400\,V, 50\,Hz) en une tension alternative de fréquence et d'amplitude variables, permettant de faire varier la vitesse de rotation du moteur.
+
+  \textbf{Composition :}
+  \begin{enumerate}
+    \item \textbf{Redresseur} : convertit l'AC réseau en DC.
+    \item \textbf{Bus DC} (condensateurs de filtrage) : stocke l'énergie.
+    \item \textbf{Onduleur MLI} (Modulation de Largeur d'Impulsion) : reconstitue un AC de fréquence variable.
+  \end{enumerate}
+  La vitesse du moteur est proportionnelle à la fréquence de sortie : $n \propto f_{sortie}$.
+\end{definition}
+
+\begin{attention}
+  Un VFD génère des \textbf{harmoniques} courants qui perturbent le réseau et peuvent échauffer les câbles et les transformateurs. Des filtres d'entrée (inductances de ligne) sont souvent nécessaires, ainsi qu'un câblage blindé entre VFD et moteur pour limiter les perturbations CEM.
+\end{attention}
+
+\subsection{Lois de similitude (affinité des turbomachines)}
+
+Les lois de similitude (ou lois de Rateau) relient les performances d'une pompe ou d'un ventilateur centrifuge à sa vitesse de rotation.
+
+\begin{definition}[\textbf{Lois de similitude}]
+  Pour une turbomachine (pompe, ventilateur) fonctionnant à deux vitesses $n_1$ et $n_2$ :
+  \begin{align}
+    \frac{Q_2}{Q_1} &= \frac{n_2}{n_1} \label{eq:loi1} \tag{Débit} \\[6pt]
+    \frac{H_2}{H_1} &= \left(\frac{n_2}{n_1}\right)^2 \label{eq:loi2} \tag{HMT / pression} \\[6pt]
+    \frac{P_2}{P_1} &= \left(\frac{n_2}{n_1}\right)^3 \label{eq:loi3} \tag{Puissance absorbée}
+  \end{align}
+  avec :
+  \begin{itemize}
+    \item $Q$ : débit volumique ($\text{m}^3/\text{h}$ ou $\text{m}^3/\text{s}$)
+    \item $H$ : hauteur manométrique totale (HMT en m) ou pression ($\Delta p$ en Pa)
+    \item $P$ : puissance absorbée (W)
+    \item $n$ : vitesse de rotation (tr/min)
+  \end{itemize}
+\end{definition}
+
+\subsection{Économies d'énergie par variation de vitesse}
+
+La loi en \textbf{cube} sur la puissance est la conséquence majeure pour l'économie d'énergie :
+
+\begin{center}
+  \begin{tabular}{cccc}
+    \toprule
+    Vitesse relative $n_2/n_1$ & Débit relatif $Q_2/Q_1$ & Pression relative $H_2/H_1$ & Puissance relative $P_2/P_1$ \\
+    \midrule
+    100\,\% & 100\,\% & 100\,\% & 100\,\% \\
+    80\,\%  & 80\,\%  & 64\,\%  & 51\,\% \\
+    60\,\%  & 60\,\%  & 36\,\%  & 22\,\% \\
+    50\,\%  & 50\,\%  & 25\,\%  & 12{,}5\,\% \\
+    \bottomrule
+  \end{tabular}
+\end{center}
+
+\textbf{Conclusion :} Une réduction de 20\,\% de la vitesse divise la puissance consommée par près de 2. C'est l'intérêt majeur des VFD sur les ventilateurs de CTA et les pompes à débit variable.
+
+\begin{exemple}[title={VFD sur ventilateur de centrale de traitement d'air (CTA)}]
+  Un ventilateur de CTA fonctionne initialement à pleine vitesse :
+  \begin{itemize}
+    \item Débit nominal : $Q_1 = 10\,000\,\text{m}^3/\text{h}$
+    \item Pression nominale : $\Delta p_1 = 800\,\text{Pa}$
+    \item Puissance absorbée : $P_1 = 4{,}0\,\text{kW}$
+    \item Vitesse : $n_1 = 1450\,\text{tr/min}$
+  \end{itemize}
+  En régulation de débit (nuit), la consigne est réduite à 60\,\% du débit. La vitesse est abaissée par le VFD à $n_2 = 0{,}6 \times 1450 = 870\,\text{tr/min}$.
+
+  \textbf{Application des lois de similitude :}
+  \[
+    Q_2 = 0{,}6 \times 10\,000 = 6\,000\,\text{m}^3/\text{h}
+  \]
+  \[
+    \Delta p_2 = 0{,}6^2 \times 800 = 0{,}36 \times 800 = 288\,\text{Pa}
+  \]
+  \[
+    P_2 = 0{,}6^3 \times 4{,}0 = 0{,}216 \times 4{,}0 = 0{,}864\,\text{kW}
+  \]
+  \textbf{Économie :} $\Delta P = 4{,}0 - 0{,}864 = 3{,}136\,\text{kW}$, soit une réduction de \textbf{78\,\%} de la consommation pour 40\,\% de débit en moins.
+\end{exemple}
+
+\subsection{Paramétrage d'un VFD en CVC}
+
+Les paramètres essentiels à configurer lors de la mise en service d'un VFD :
+
+\begin{methode}
+  \begin{enumerate}
+    \item \textbf{Données moteur :} fréquence nominale (50\,Hz), tension nominale (400\,V), courant nominal ($I_n$), puissance nominale.
+    \item \textbf{Rampes d'accélération/décélération :} typiquement 10 à 30\,s pour les pompes (éviter les coups de bélier).
+    \item \textbf{Fréquence minimale :} généralement 15 à 25\,Hz (en dessous, refroidissement insuffisant des moteurs à ventilation propre).
+    \item \textbf{Fréquence maximale :} 50\,Hz (ou 60\,Hz si surboosting ponctuel autorisé).
+    \item \textbf{Source de consigne :} 0–10\,V ou 4–20\,mA depuis le régulateur GTB.
+    \item \textbf{Protection moteur intégrée :} seuil de courant maximum, protection thermique électronique.
+  \end{enumerate}
+\end{methode}
+
+% ============================================================
+\section{Protection et appareillage électrique}
+% ============================================================
+
+\subsection{Principes de protection}
+
+\begin{definition}
+  La protection électrique des circuits CVC vise à protéger :
+  \begin{itemize}
+    \item Les \textbf{câbles et canalisations} : contre les courts-circuits et les surcharges (échauffement, incendie).
+    \item Les \textbf{personnes} : contre les contacts directs et indirects (norme NF C 15-100, IEC 60364).
+    \item Les \textbf{matériels} : contre les surtensions, défauts de phase, déséquilibres.
+  \end{itemize}
+\end{definition}
+
+\subsection{Fusibles}
+
+\begin{definition}
+  Les \textbf{fusibles} protègent uniquement contre les \textbf{courts-circuits}. Leur calibre ($I_n$) est choisi selon le courant admissible de la canalisation. Ils sont classés selon leur pouvoir de coupure et leur type (gG pour usage général, aM pour protection moteur).
+
+  \textbf{Type gG} (usage général) : protège câbles et circuits.\\
+  \textbf{Type aM} (accompagnement moteur) : laisse passer la pointe de courant au démarrage.
+
+  \textbf{Référence normative :} IEC 60269 / NF EN 60269.
+\end{definition}
+
+\subsection{Disjoncteurs}
+
+\begin{definition}
+  Un \textbf{disjoncteur} assure la protection contre les \textbf{surcharges} (déclencheur thermique) et les \textbf{courts-circuits} (déclencheur magnétique). Il est réarmable manuellement après déclenchement.
+
+  \begin{itemize}
+    \item \textbf{Déclencheur thermique :} bimétallique, protège en cas de surcharge durable ($I > I_n$).
+    \item \textbf{Déclencheur magnétique :} à action instantanée, déclenche pour les forts courts-circuits ($I \gg I_n$).
+  \end{itemize}
+
+  En CVC, on utilise les \textbf{disjoncteurs moteurs} (type GV de Schneider ou MS de ABB) réglables selon le courant nominal du moteur.
+
+  \textbf{Référence normative :} IEC 60947-2 (disjoncteurs industriels), IEC 60947-4-1 (démarreurs moteur).
+\end{definition}
+
+\subsection{Relais thermiques}
+
+\begin{definition}
+  Le \textbf{relais thermique} est associé à un contacteur pour protéger un moteur contre les \textbf{surcharges prolongées}. Il mesure le courant par effet thermique (bimétallique) et ouvre un contact auxiliaire qui coupera la bobine du contacteur.
+
+  Son réglage est effectué à $I_n$ du moteur (courant nominal de la plaque signalétique).
+
+  \textbf{Attention :} le relais thermique seul ne protège pas contre les courts-circuits — il doit être associé à des fusibles ou un disjoncteur.
+\end{definition}
+
+\subsection{Dispositifs différentiels}
+
+\begin{definition}
+  Un \textbf{dispositif différentiel} (DDR — Dispositif Différentiel Résiduel) détecte le courant de fuite vers la terre (contact avec une masse ou un conducteur actif). Il déclenche si le courant de fuite dépasse le seuil $I_{\Delta n}$.
+
+  \begin{itemize}
+    \item \textbf{30\,mA} : protection des personnes (obligatoire pour les circuits prises et circuits alimentant des équipements en zone humide — locaux CVC souvent concernés).
+    \item \textbf{300\,mA ou 500\,mA} : protection incendie.
+    \item \textbf{1\,A et au-delà} : protection de tête de tableau (sélectivité).
+  \end{itemize}
+
+  \textbf{Référence normative :} IEC 60755, NF EN 61008 (interrupteurs différentiels), NF C 15-100.
+\end{definition}
+
+\subsection{Choix des sections de câbles (NF C 15-100)}
+
+\begin{methode}
+  \textbf{Procédure simplifiée de choix de section :}
+  \begin{enumerate}
+    \item Calculer le courant d'emploi $I_B$ (courant en service normal).
+    \item Choisir le courant nominal du dispositif de protection $I_n \geq I_B$.
+    \item Choisir une section de câble telle que le courant admissible $I_z \geq I_n$.
+    \item Appliquer les \textbf{facteurs de correction} $k$ selon le mode de pose (chemins de câbles, fourreaux, etc.) et la température ambiante.
+    \item Vérifier la \textbf{chute de tension} : $\leq 3\,\%$ pour les circuits terminaux (NF C 15-100).
+  \end{enumerate}
+
+  \textbf{Formule de chute de tension (circuit triphasé) :}
+  \begin{equation}
+    \Delta U = \frac{\sqrt{3} \cdot \rho \cdot L \cdot I}{S} \quad [\text{V}]
+  \end{equation}
+  avec $\rho$ : résistivité du cuivre ($\approx 0{,}0225\,\Omega\cdot\text{mm}^2/\text{m}$ à 20\,$^\circ$C), $L$ : longueur du câble (m), $I$ : courant (A), $S$ : section (mm$^2$).
+\end{methode}
+
+\begin{exemple}[title={Choix de la section de câble — moteur pompe 4\,kW}]
+  Données : moteur 4\,kW, 400\,V triphasé, $\cos\varphi = 0{,}82$, $\eta = 87\,\%$, longueur de câble $L = 25\,\text{m}$, pose sur chemin de câbles (facteur de correction $k = 1$).
+
+  \textbf{Courant d'emploi :}
+  \[
+    I_B = \frac{P}{\sqrt{3} \cdot U \cdot \cos\varphi \cdot \eta} = \frac{4\,000}{\sqrt{3} \times 400 \times 0{,}82 \times 0{,}87} = \frac{4\,000}{494{,}5} \approx 8{,}1\,\text{A}
+  \]
+
+  \textbf{Choix du disjoncteur moteur :} calibré à $I_n = 10\,\text{A}$ (cran normalisé au-dessus de $I_B$).
+
+  \textbf{Section minimale :} $I_z \geq 10\,\text{A}$ sur câble 3G2,5\,mm$^2$ Cu ($I_z = 21\,\text{A}$ — suffisant).
+
+  \textbf{Vérification chute de tension :}
+  \[
+    \Delta U = \frac{\sqrt{3} \times 0{,}0225 \times 25 \times 8{,}1}{2{,}5} = \frac{7{,}90}{2{,}5} = 3{,}16\,\text{V}
+  \]
+  \[
+    \Delta U\,\% = \frac{3{,}16}{400} \times 100 = 0{,}79\,\% \leq 3\,\% \quad \checkmark
+  \]
+\end{exemple}
+
+% ============================================================
+\section{Schémas électriques CVC}
+% ============================================================
+
+\subsection{Normalisation des schémas — NF EN 60617}
+
+\begin{definition}
+  Les schémas électriques industriels et CVC sont réalisés selon la norme \textbf{NF EN 60617} (symboles graphiques pour schémas électriques). Les principaux symboles utilisés en CVC sont :
+
+  \begin{center}
+    \begin{tabular}{ll}
+      \toprule
+      Symbole & Désignation \\
+      \midrule
+      Rectangle (3 traits verticaux) & Moteur triphasé asynchrone \\
+      Contact fermé en repos & Contact normalement fermé (NF) \\
+      Contact ouvert en repos & Contact normalement ouvert (NO) \\
+      Cercle avec A & Bobine de contacteur \\
+      Zigzag & Résistance / relais thermique \\
+      Carré barré en diagonale & Fusible \\
+      $\Delta U$ avec trait & Disjoncteur \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+\end{definition}
+
+\subsection{Schéma de puissance}
+
+Le \textbf{schéma de puissance} représente le circuit principal d'alimentation du moteur : réseau triphasé, disjoncteur/fusibles, contacteur(s), relais thermique, bornes moteur.
+
+\begin{definition}
+  Composants types d'un schéma de puissance pompe CVC (démarrage direct) :
+  \begin{enumerate}
+    \item Jeu de barres triphasé L1, L2, L3
+    \item Disjoncteur moteur $Q1$ (réglé à $I_n$ moteur)
+    \item Contacteur $KM1$ (3 pôles principaux)
+    \item Relais thermique $F1$ (réglé à $I_n$ moteur)
+    \item Bornes moteur U1, V1, W1
+  \end{enumerate}
+\end{definition}
+
+\subsection{Schéma de commande}
+
+Le \textbf{schéma de commande} représente le circuit basse tension (souvent 24\,V AC ou DC, ou 230\,V AC) qui pilote les bobines des contacteurs et les signalisations.
+
+\begin{definition}
+  Éléments types d'un schéma de commande (marche/arrêt pompe) :
+  \begin{enumerate}
+    \item Alimentation commande (ex. 24\,V DC depuis alimentation TBTS)
+    \item Contact NF du relais thermique $F1$ (protection thermique)
+    \item Contact NF de l'arrêt d'urgence $S0$ (bouton coup de poing)
+    \item Bouton-poussoir \textbf{MARCHE} $S1$ (contact NO)
+    \item Bouton-poussoir \textbf{ARRÊT} $S2$ (contact NF)
+    \item Contact d'auto-maintien du contacteur $KM1$ (contact NO en parallèle de $S1$)
+    \item Bobine du contacteur $KM1$
+    \item Voyant de signalisation \textbf{EN MARCHE}
+  \end{enumerate}
+\end{definition}
+
+\begin{methode}
+  \textbf{Logique de commande — séquence de marche/arrêt :}
+  \begin{enumerate}
+    \item Appui sur $S1$ (MARCHE) : courant dans la bobine $KM1$ si $F1$ NF et $S0$ NF.
+    \item $KM1$ s'excite : contacts principaux ferment (puissance) + contact d'auto-maintien ferme.
+    \item Relâcher $S1$ : le courant continue par l'auto-maintien.
+    \item Appui sur $S2$ (ARRÊT) : coupure de l'auto-maintien, $KM1$ retombe.
+    \item En cas de surcharge : $F1$ déclenche (contact NF s'ouvre), $KM1$ retombe automatiquement.
+  \end{enumerate}
+\end{methode}
+
+\subsection{Commande par GTB/GTC}
+
+En CVC moderne, la commande locale (boutons-poussoirs) est souvent remplacée ou supervisée par un automate ou une GTB. Le contacteur est alors commandé par un \textbf{contact sec} issu d'un automate (sortie TOR 24\,V DC) ou directement par un \textbf{variateur de vitesse} qui intègre les fonctions de protection.
+
+% ============================================================
+\section{Exemples résolus}
+% ============================================================
+
+\begin{exemple}[title={Bilan de puissance électrique d'une installation CVC complète}]
+  \textbf{Données de l'installation :} immeuble de bureaux, 2000\,m$^2$, système CVC comprenant :
+
+  \begin{center}
+    \begin{tabular}{lcccc}
+      \toprule
+      Équipement & Nb. & $P_n$ unit. (kW) & $\cos\varphi$ & $P_{abs}$ totale (kW) \\
+      \midrule
+      Pompe circuit primaire & 2 & 4{,}0 & 0{,}82 & 8{,}0 \\
+      Pompe circuit secondaire & 4 & 1{,}5 & 0{,}80 & 6{,}0 \\
+      Ventilateur CTA soufflage & 2 & 7{,}5 & 0{,}84 & 15{,}0 \\
+      Ventilateur CTA reprise & 2 & 5{,}5 & 0{,}83 & 11{,}0 \\
+      Extracteur WC & 6 & 0{,}18 & 0{,}75 & 1{,}08 \\
+      Régulateurs/GTB & — & — & — & 0{,}5 \\
+      \midrule
+      \textbf{Total} & & & & \textbf{41{,}58} \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+
+  \textbf{Note :} cette puissance est la somme des puissances absorbées nominales. En pratique, un coefficient de foisonnement de 0,75 à 0,85 est appliqué (tous les équipements ne fonctionnent pas simultanément à pleine charge).
+
+  \textbf{Puissance de bilan avec foisonnement ($k_f = 0{,}80$) :}
+  \[
+    P_{bilan} = 41{,}58 \times 0{,}80 = 33{,}3\,\text{kW}
+  \]
+
+  \textbf{Puissance réactive totale estimée} (avec $\cos\varphi$ moyen $\approx 0{,}82$) :
+  \[
+    Q = P \cdot \tan\varphi = 33{,}3 \times \tan(\arccos 0{,}82) = 33{,}3 \times 0{,}698 = 23{,}2\,\text{kvar}
+  \]
+
+  \textbf{Puissance apparente totale :}
+  \[
+    S = \frac{P}{\cos\varphi} = \frac{33{,}3}{0{,}82} = 40{,}6\,\text{kVA}
+  \]
+
+  \textbf{Courant total absorbé (triphasé 400\,V) :}
+  \[
+    I_{total} = \frac{S}{\sqrt{3} \cdot U} = \frac{40\,600}{\sqrt{3} \times 400} = \frac{40\,600}{693} = 58{,}6\,\text{A}
+  \]
+
+  Cela permet de dimensionner le disjoncteur général de l'armoire CVC et la section du câble d'alimentation depuis le TGBT.
+\end{exemple}
+
+\begin{exemple}[title={Choix et économie d'un VFD sur pompe secondaire}]
+  Une pompe de circuit secondaire de chauffage est équipée d'un VFD. Elle fonctionne :
+  \begin{itemize}
+    \item 8\,h/j à 100\,\% (pleine charge hivernale) : $P_1 = 1{,}5\,\text{kW}$
+    \item 10\,h/j à 70\,\% de vitesse (mi-saison) : $P_2 = 1{,}5 \times (0{,}7)^3 = 0{,}515\,\text{kW}$
+    \item 6\,h/j à 50\,\% de vitesse (nuit) : $P_3 = 1{,}5 \times (0{,}5)^3 = 0{,}188\,\text{kW}$
+  \end{itemize}
+
+  \textbf{Consommation journalière avec VFD :}
+  \[
+    W_{jour} = (1{,}5 \times 8) + (0{,}515 \times 10) + (0{,}188 \times 6) = 12 + 5{,}15 + 1{,}13 = 18{,}28\,\text{kWh}
+  \]
+
+  \textbf{Sans VFD (vitesse fixe toute la journée) :}
+  \[
+    W_{jour,ref} = 1{,}5 \times (8 + 10 + 6) = 1{,}5 \times 24 = 36\,\text{kWh}
+  \]
+
+  \textbf{Économie journalière :}
+  \[
+    \Delta W = 36 - 18{,}28 = 17{,}72\,\text{kWh/jour}
+  \]
+  soit une réduction de \textbf{49\,\%} de la consommation de la pompe, sur 7 mois de chauffe ($\approx 210$ jours) :
+  \[
+    \Delta W_{annuel} = 17{,}72 \times 210 \approx 3\,721\,\text{kWh/an}
+  \]
+  Au prix de 0,18\,€/kWh : économie $\approx \textbf{670\,€/an}$ par pompe.
+\end{exemple}
+
+% ============================================================
+\section{Exercices d'application}
+% ============================================================
+
+\exercice{Calcul de puissances — moteur de compresseur VRV}
+Un compresseur de système VRV est alimenté en triphasé 400\,V. Sa plaque indique : $P_n = 11\,\text{kW}$, $I_n = 23\,\text{A}$, $\cos\varphi = 0{,}88$, rendement $\eta = 91\,\%$.
+\begin{enumerate}
+  \item Calculer la puissance apparente $S$ et la puissance réactive $Q$ absorbées par le moteur.
+  \item Vérifier la cohérence avec la puissance active $P_n$ (tenir compte du rendement).
+  \item Quelle valeur de condensateur (en kvar) permettrait de relever le $\cos\varphi$ à 0,95\,?
+\end{enumerate}
+
+\exercice{Démarrage étoile-triangle — ventilateur de désenfumage}
+Un ventilateur de désenfumage est équipé d'un moteur 15\,kW, 400\,V, $I_n = 29\,\text{A}$, courant de démarrage en triangle $I_{d,\triangle} = 7 \times I_n$.
+\begin{enumerate}
+  \item Calculer le courant de démarrage direct et le courant de démarrage en étoile.
+  \item Justifier l'intérêt du démarrage étoile-triangle pour ce type d'application.
+  \item Quel dispositif de protection choisir (disjoncteur ou fusible aM) et quel calibre\,?
+\end{enumerate}
+
+\exercice{Lois de similitude — économies par variateur}
+Un ventilateur de CTA a les caractéristiques nominales : $Q_1 = 15\,000\,\text{m}^3/\text{h}$, $\Delta p_1 = 1\,200\,\text{Pa}$, $P_1 = 8\,\text{kW}$ à $n_1 = 1\,450\,\text{tr/min}$.
+\begin{enumerate}
+  \item Calculer $Q_2$, $\Delta p_2$ et $P_2$ si la vitesse est réduite à 75\,\%.
+  \item Exprimer l'économie en \% sur la puissance absorbée.
+  \item Sur une année de fonctionnement (4\,000\,h à 100\,\% + 4\,000\,h à 75\,\%), calculer l'économie d'énergie annuelle en kWh et en euros (tarif 0,18\,€/kWh).
+\end{enumerate}
+
+\exercice{Dimensionnement d'armoire CVC}
+Une armoire électrique CVC doit alimenter les équipements suivants (triphasé 400\,V) :
+\begin{itemize}
+  \item 2 pompes : $P = 2{,}2\,\text{kW}$ chacune, $\cos\varphi = 0{,}80$
+  \item 1 ventilateur : $P = 5{,}5\,\text{kW}$, $\cos\varphi = 0{,}83$
+  \item 1 groupe de froid : $P = 18\,\text{kW}$, $\cos\varphi = 0{,}86$
+\end{itemize}
+\begin{enumerate}
+  \item Calculer la puissance active totale et la puissance apparente totale (coefficient de foisonnement : 0,85).
+  \item Déduire le courant total absorbé et calibrer le disjoncteur général.
+  \item Vérifier si une batterie de condensateurs de 10\,kvar améliore significativement le $\cos\varphi$ global.
+\end{enumerate}
+
+% ============================================================
+\section{Éléments de réglementation}
+% ============================================================
+
+\subsection{NF C 15-100 — Installations électriques BT}
+
+La norme \textbf{NF C 15-100} (transposition française de la norme IEC 60364) fixe les règles de conception, réalisation et vérification des installations électriques basse tension. Elle s'applique à toutes les installations CVC raccordées au réseau BT.
+
+Points clés pour le technicien CVC :
+\begin{itemize}
+  \item \textbf{Schémas de liaison à la terre (SLT) :} TT (résidentiel, neutre mis à la terre — disjoncteur + DDR 30\,mA), TN-S (industriel, conducteur PE séparé), IT (hôpitaux, salles propres).
+  \item \textbf{Sections minimales} des conducteurs selon le courant admissible et le mode de pose.
+  \item \textbf{Chute de tension maximale} : 3\,\% pour les circuits terminaux d'éclairage et de force motrice.
+  \item \textbf{Degrés de protection IP} des matériels selon l'environnement (locaux techniques CVC : IP55 minimum pour les matériels exposés).
+  \item \textbf{Protection différentielle} : DDR 30\,mA obligatoire pour tous les circuits alimentant des équipements en locaux humides (chaufferies, locaux de traitement d'air avec buées, etc.).
+\end{itemize}
+
+\subsection{IEC 60947 — Appareillage industriel}
+
+La famille de normes \textbf{IEC 60947} couvre les dispositifs de protection et de commande industriels :
+\begin{itemize}
+  \item \textbf{IEC 60947-1} : règles générales.
+  \item \textbf{IEC 60947-2} : disjoncteurs industriels.
+  \item \textbf{IEC 60947-4-1} : contacteurs et démarreurs moteur (y compris relais thermiques).
+  \item \textbf{IEC 60947-4-2} : démarreurs progressifs (soft-starters).
+  \item \textbf{IEC 60947-7} : variateurs de vitesse (VFD).
+\end{itemize}
+
+\subsection{NF EN 60034 — Machines électriques tournantes}
+
+La norme \textbf{NF EN 60034} (IEC 60034) définit les caractéristiques des moteurs électriques :
+\begin{itemize}
+  \item \textbf{NF EN 60034-1} : valeurs nominales et caractéristiques.
+  \item \textbf{NF EN 60034-5} : degrés de protection (IP).
+  \item \textbf{NF EN 60034-30-1} : classes d'efficacité (IE1 à IE4).
+\end{itemize}
+
+\subsection{Règlement UE 2019/1781 — Écoconception des moteurs}
+
+Ce règlement européen d'application directe en France impose :
+\begin{itemize}
+  \item Depuis juillet 2021 : moteurs 0,75–1000\,kW $\rightarrow$ classe IE3 minimum (ou IE2 avec VFD obligatoirement associé).
+  \item Depuis juillet 2023 : extension à 0,12–0,75\,kW.
+  \item Les moteurs à vitesse variable (avec VFD intégré) doivent satisfaire IE2 au minimum.
+\end{itemize}
+
+\begin{attention}
+  \textbf{Habilitation électrique (NF C 18-510) :} tout travail ou intervention sur une installation électrique nécessite une habilitation adaptée. En CVC, le technicien effectuant des travaux sur les armoires électriques doit au minimum disposer d'une habilitation \textbf{B1V} (travaux hors tension, voisinage de pièces nues sous tension). Les habilitations sont délivrées par l'employeur après formation.
+\end{attention}
+
+\subsection{Marquage CE et conformité}
+
+Tout équipement électrique mis sur le marché européen doit porter le \textbf{marquage CE}, attestant la conformité aux directives applicables :
+\begin{itemize}
+  \item \textbf{Directive Basse Tension} (2014/35/UE) : sécurité électrique des matériels.
+  \item \textbf{Directive CEM} (2014/30/UE) : compatibilité électromagnétique (particulièrement critique pour les VFD).
+  \item \textbf{Directive Écoconception} (2009/125/CE) et règlements associés pour les moteurs.
+\end{itemize}
