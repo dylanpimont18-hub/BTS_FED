@@ -236,6 +236,51 @@ La tour aéroréfrigérante refroidit l'eau de condensation par évaporation par
 \end{definition}
 
 % ============================================================
+\section{Free-cooling et récupération de chaleur sur condenseur}
+% ============================================================
+
+\subsection{Free-cooling}
+
+\begin{definition}[title=Free-cooling]
+Le \textbf{free-cooling} (rafraîchissement gratuit) consiste à utiliser directement l'air extérieur froid pour rafraîchir un bâtiment ou refroidir un réseau d'eau glacée, sans solliciter le cycle frigorifique. Il est applicable dès que la température extérieure est inférieure à la consigne de refroidissement (typiquement $T_{ext} < \SI{14}{\degreeCelsius}$ pour un réseau eau glacée 6/12\,°C).
+\end{definition}
+
+\textbf{Types de free-cooling :}
+\begin{itemize}
+  \item \textbf{Aéraulique (Direct Free-Cooling)} : mélange d'air extérieur froid directement dans la CTA. Economiseur sur registres motorisés. Contrainte : qualité de l'air extérieur, pas de déshumidification.
+  \item \textbf{Hydraulique (Chiller Free-Cooling)} : échangeur eau/air côté condenseur du groupe froid, en mode by-pass du cycle frigorifique. Applicable quand $T_{ext} < T_{eau glacée,consigne}$.
+\end{itemize}
+
+\begin{table}[H]
+  \centering
+  \caption{Nombre d'heures de free-cooling hydraulique disponibles en France}
+  \begin{tabular}{lcc}
+    \toprule
+    Ville & $T_{ext} < 14$\,°C (h/an) & Part refroidissement sans compresseur \\
+    \midrule
+    Lille (H1b) & $\approx 6\,500$ & 74\,\% \\
+    Paris (H1a) & $\approx 6\,000$ & 68\,\% \\
+    Lyon (H1b) & $\approx 5\,800$ & 66\,\% \\
+    Bordeaux (H2a) & $\approx 5\,200$ & 59\,\% \\
+    Marseille (H3) & $\approx 4\,500$ & 51\,\% \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Récupération de chaleur sur condenseur}
+
+En climatisation, le condenseur rejette la chaleur de condensation :
+\[
+  \dot{Q}_c = \dot{Q}_0 + P_{élec} = \dot{Q}_0 \left(1 + \frac{1}{EER}\right)
+\]
+
+Cette énergie peut être valorisée pour la production d'ECS ou de chauffage. On parle de \textbf{désurchauffeur} (récupération sur la vapeur surchauffée, $T \approx 60$--80\,°C) ou de \textbf{condenseur de récupération totale} ($T \approx 50$--60\,°C, en remplacement du condenseur principal).
+
+\begin{attention}
+La récupération de chaleur sur condenseur améliore le COP global du système mais abaisse la température de condensation de référence, ce qui peut perturber la régulation de la haute pression. Elle doit être intégrée dès la conception.
+\end{attention}
+
+% ============================================================
 \section{Calcul des charges thermiques de refroidissement}
 % ============================================================
 
@@ -358,143 +403,88 @@ Calculer la puissance frigorifique nécessaire et sélectionner un système.
 \textbf{Sélection :} Système split mural ou cassette 4 voies de 6\,kW nominal (arrondi au calibre supérieur disponible, ex. : Daikin FTXM60R ou équivalent). Vérifier le SEER $\geq$ 3,5 pour conformité RE2020 tertiaire.
 \end{exemple}
 
-% ============================================================
-\section{Exercices d'application}
-% ============================================================
+\begin{exemple}[title=Diagnostic d'un groupe froid eau glacée et analyse d'écart EER]
+\textbf{Données de la mise en service :} Groupe froid à eau glacée, puissance nominale $\dot{Q}_{0,nom} = \SI{80}{\kilo\watt}$.
+\begin{itemize}
+  \item Puissance électrique mesurée : $P_{élec} = \SI{22}{\kilo\watt}$
+  \item Température eau glacée départ : $T_{dep} = \SI{7}{\degreeCelsius}$ (conforme consigne)
+  \item Température eau glacée retour : $T_{ret} = \SI{12}{\degreeCelsius}$
+  \item Débit eau glacée : $\dot{V} = \SI{14}{\cubic\metre\per\hour}$, $\rho = \SI{999}{\kilogram\per\cubic\metre}$, $c_p = \SI{4180}{\joule\per\kilogram\per\kelvin}$
+  \item Température extérieure (condenseur à air) : $T_{ext} = \SI{25}{\degreeCelsius}$
+\end{itemize}
 
-\exercice{Analyse du cycle frigorifique R454B}
-
-Un climatiseur au R454B présente les enthalpies suivantes mesurées au banc d'essai :
-$h_1 = \SI{490}{\kilo\joule\per\kilogram}$, $h_2 = \SI{535}{\kilo\joule\per\kilogram}$, $h_3 = \SI{270}{\kilo\joule\per\kilogram}$, $h_4 = h_3$.
-
-Le débit massique mesuré est $\dot{m} = \SI{0{,}08}{\kilogram\per\second}$.
-
-\begin{enumerate}
-  \item Calculer les puissances frigorifique, de compression et de condensation.
-  \item Vérifier le bilan énergétique.
-  \item Calculer l'EER. Comparer avec l'EER de Carnot ($T_{0} = 7$\,°C, $T_{c} = 45$\,°C).
-  \item Le fabricant annonce EER = 4,1 dans ces conditions. Analyser l'écart.
-\end{enumerate}
-
-\textbf{Corrigé :}
-
-\textit{Question 1 — Puissances :}
+\textbf{Débit massique :}
 \[
-  q_0 = 490 - 270 = \SI{220}{\kilo\joule\per\kilogram}
-\]
-\[
-  w_c = 535 - 490 = \SI{45}{\kilo\joule\per\kilogram}
-\]
-\[
-  q_c = 535 - 270 = \SI{265}{\kilo\joule\per\kilogram}
-\]
-\[
-  \dot{Q}_0 = 0{,}08 \times 220 = \SI{17{,}6}{\kilo\watt}, \quad P_{élec} = 0{,}08 \times 45 = \SI{3{,}6}{\kilo\watt}, \quad \dot{Q}_c = 0{,}08 \times 265 = \SI{21{,}2}{\kilo\watt}
+  \dot{m} = \frac{14 \times 999}{3600} = \SI{3{,}886}{\kilogram\per\second}
 \]
 
-\textit{Question 2 — Bilan :} $q_0 + w_c = 220 + 45 = 265 = q_c$ ✓
-
-\textit{Question 3 — EER :}
+\textbf{Puissance frigorifique produite :}
 \[
-  EER_{mes} = \frac{17{,}6}{3{,}6} = 4{,}89
+  \dot{Q}_0 = \dot{m} \times c_p \times (T_{ret} - T_{dep}) = 3{,}886 \times 4180 \times (12 - 7) = \SI{81\,226}{\watt} \approx \SI{81{,}2}{\kilo\watt}
 \]
+La puissance produite est conforme à la puissance nominale ($+1{,}5\,\%$, écart acceptable).
+
+\textbf{EER mesuré :}
+\[
+  EER_{mes} = \frac{81{,}2}{22} = \mathbf{3{,}69}
+\]
+
+\textbf{EER de Carnot} ($T_0 = 7$\,°C = 280\,K, condensation estimée à $T_c = 45$\,°C = 318\,K) :
 \[
   EER_{Carnot} = \frac{280}{318 - 280} = \frac{280}{38} = 7{,}37
 \]
 \[
-  \eta_{ex} = \frac{4{,}89}{7{,}37} = 66{,}4\,\%
+  \eta_{exergétique} = \frac{3{,}69}{7{,}37} = 50{,}1\,\%
 \]
 
-\textit{Question 4 — Écart EER :} EER mesuré (4,89) > EER annoncé (4,1). L'écart peut s'expliquer par : conditions d'essai différentes des conditions normalisées EN 14825, instrumentation de mesure du débit massique, incertitudes de mesure des enthalpies. L'EER annoncé intègre les pertes auxiliaires (ventilateurs, régulation) que le calcul enthalpique n'inclut pas.
+\textbf{Analyse :} Le groupe délivre la puissance nominale. L'EER de 3,69 est typique d'un groupe à condensation par air à 25\,°C (EER nominal constructeur souvent mesuré à $T_{ext} = 35$\,°C, conditions moins favorables). Le rendement exergétique de 50\,\% est cohérent avec les pertes irréversibles réelles du cycle (surchauffe, sous-refroidissement, glissement). Si l'EER est inférieur aux données constructeur dans les mêmes conditions, suspecter : encrassement du condenseur à air, charge en fluide insuffisante, économiseur défectueux.
+\end{exemple}
 
-\exercice{Charges thermiques d'un open-space et sélection d'un système}
+\begin{exemple}[title=Comparaison VRV et eau glacée pour un immeuble tertiaire]
+\textbf{Contexte :} Immeuble de bureaux de 500\,m², besoins frigorifiques totaux $\dot{Q}_{froid} = \SI{60}{\kilo\watt}$. Durée d'utilisation estivale : 1\,500\,h/an. Tarif électricité : 0,18\,€/kWh.
 
-Un open-space de 200\,m² est situé en façade ouest. Données estivales :
-\begin{itemize}
-  \item Vitrage ouest : 30\,m², $g = 0{,}25$ (vitrage solaire), $F_{ombr} = 0{,}6$, $G_{sol,ouest} = \SI{450}{\watt\per\square\metre}$
-  \item 40 personnes, 80\,W/pers
-  \item Éclairage : 8\,W/m²
-  \item Informatique : 40 postes à 120\,W
-  \item Transmission et ventilation : \SI{3000}{\watt}
-\end{itemize}
-
-\begin{enumerate}
-  \item Calculer chaque type d'apport et la puissance frigorifique totale.
-  \item Proposer deux solutions techniques (une à fluide frigorigène, une à eau glacée) en justifiant le choix.
-  \item Calculer la consommation électrique mensuelle du système à eau glacée si EER = 4,0 et si le système fonctionne 8\,h/jour, 22\,jours/mois à plein régime.
-\end{enumerate}
-
-\textbf{Corrigé :}
-
-\textit{Question 1 — Apports :}
+\textbf{Option A — VRV :} EER moyen annuel = 3,8 (système INVERTER).
 \[
-  Q_{sol} = 30 \times 450 \times 0{,}25 \times 0{,}6 = \SI{2025}{\watt}
+  P_{élec,A} = \frac{60}{3{,}8} = \SI{15{,}8}{\kilo\watt}
 \]
 \[
-  Q_{pers} = 40 \times 80 = \SI{3200}{\watt}
+  E_{annuelle,A} = 15{,}8 \times 1\,500 = \SI{23\,700}{\kilo\watt\heure}
 \]
 \[
-  Q_{écl} = 8 \times 200 = \SI{1600}{\watt}
+  \text{Coût}_{A} = 23\,700 \times 0{,}18 = \SI{4\,266}{\euro\per\year}
+\]
+
+\textbf{Option B — Eau glacée + chiller aircooled :} EER chiller = 3,2 (condenseur à air, à 35\,°C).
+\[
+  P_{élec,B} = \frac{60}{3{,}2} = \SI{18{,}75}{\kilo\watt} \quad \text{(chiller seul)}
+\]
+Pompes de distribution : $P_{pompes} = \SI{2{,}0}{\kilo\watt}$ (deux pompes en parallèle, dont une de secours).
+\[
+  E_{annuelle,B} = (18{,}75 + 2{,}0) \times 1\,500 = \SI{31\,125}{\kilo\watt\heure}
 \]
 \[
-  Q_{info} = 40 \times 120 = \SI{4800}{\watt}
-\]
-\[
-  \dot{Q}_{froid} = 2025 + 3200 + 1600 + 4800 + 3000 = \SI{14\,625}{\watt} \approx \SI{14{,}6}{\kilo\watt}
+  \text{Coût}_{B} = 31\,125 \times 0{,}18 = \SI{5\,603}{\euro\per\year}
 \]
 
-\textit{Question 2 — Solutions :}
-\begin{itemize}
-  \item \textbf{VRV/VRF (fluide frigorigène)} : adapté si bâtiment multi-zones, flexibilité élevée, pas besoin de réseau eau glacée. Recommandé pour réhabilitation ou bâtiment de taille moyenne.
-  \item \textbf{Eau glacée + ventilo-convecteurs 4 tubes} : adapté si bâtiment neuf de grande taille avec besoins chaud et froid simultanés, meilleur EER, maintenance centralisée. Recommandé pour immeuble tertiaire neuf.
-\end{itemize}
+\textbf{Tableau comparatif :}
 
-\textit{Question 3 — Consommation électrique mensuelle :}
-\[
-  P_{élec} = \frac{\dot{Q}_{froid}}{EER} = \frac{14{,}6}{4{,}0} = \SI{3{,}65}{\kilo\watt}
-\]
-\[
-  E_{mensuelle} = 3{,}65 \times 8 \times 22 = \SI{642}{\kilo\watt\heure}
-\]
+\begin{center}
+\begin{tabular}{lcc}
+  \toprule
+  Critère & VRV & Eau glacée \\
+  \midrule
+  Puissance électrique (kW) & 15,8 & 20,75 \\
+  Consommation annuelle (kWh) & 23\,700 & 31\,125 \\
+  Coût annuel (€) & 4\,266 & 5\,603 \\
+  Investissement estimé (€) & 45\,000 & 38\,000 \\
+  Fluide frigorigène circulant & Long (risque F-Gaz) & Court (dans le chiller) \\
+  Simultanéité chaud/froid & Possible (HR) & Oui (4 tubes) \\
+  \bottomrule
+\end{tabular}
+\end{center}
 
-\exercice{Diagnostic d'un groupe froid sous-performant}
-
-Un groupe froid à eau glacée de 80\,kW nominal présente les mesures suivantes lors de la mise en service :
-\begin{itemize}
-  \item Puissance électrique mesurée : \SI{28}{\kilo\watt}
-  \item Température eau glacée départ : 9\,°C (consigne : 7\,°C)
-  \item Température eau glacée retour : 13\,°C
-  \item Débit eau glacée : \SI{30}{\cubic\metre\per\hour}, $\rho = \SI{999}{\kilogram\per\cubic\metre}$, $c_p = \SI{4182}{\joule\per\kilogram\per\kelvin}$
-  \item Température extérieure : 28\,°C
-\end{itemize}
-
-\begin{enumerate}
-  \item Calculer la puissance frigorifique produite.
-  \item Calculer l'EER mesuré.
-  \item Identifier les anomalies et les causes probables.
-\end{enumerate}
-
-\textbf{Corrigé :}
-
-\textit{Question 1 — Puissance frigorifique :}
-\[
-  \dot{m} = \frac{30 \times 999}{3600} = \SI{8{,}33}{\kilogram\per\second}
-\]
-\[
-  \dot{Q}_0 = 8{,}33 \times 4182 \times (13 - 9) = \SI{139\,333}{\watt} \approx \SI{139}{\kilo\watt}
-\]
-
-\textit{Question 2 — EER mesuré :}
-\[
-  EER = \frac{139}{28} = \mathbf{4{,}96}
-\]
-
-\textit{Question 3 — Anomalies :}
-\begin{itemize}
-  \item La puissance produite (139\,kW) est \textbf{supérieure} à la puissance nominale (80\,kW) → le groupe est en surcharge ou les conditions sont plus favorables que prévues (température extérieure plus basse, ou nominal mesuré à des conditions défavorables)
-  \item La température de départ (9\,°C) est \textbf{au-dessus} de la consigne (7\,°C) → vérifier la régulation, le sous-refroidissement insuffisant, ou un débit trop élevé
-  \item Piste : recalibrer la vanne de régulation du débit ; vérifier la charge en fluide frigorigène ; vérifier la consigne du thermostat de départ
-\end{itemize}
+\textbf{Conclusion :} Le VRV est plus efficace énergétiquement et moins coûteux en exploitation mais plus onéreux à l'investissement. L'eau glacée offre une meilleure maîtrise du fluide frigorigène (charge limitée au chiller, conforme F-Gaz) et convient mieux aux grands bâtiments avec sous-stations multiples.
+\end{exemple}
 
 % ============================================================
 \section{Éléments de réglementation}

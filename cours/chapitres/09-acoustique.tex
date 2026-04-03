@@ -357,6 +357,75 @@ Les pompes centrifuges transmettent leurs vibrations aux canalisations par voie 
 \end{itemize}
 
 % ------------------------------------------------------------
+\section{Chaîne acoustique en installation CVC}
+% ------------------------------------------------------------
+
+\subsection{Bilan acoustique sur réseau aéraulique}
+
+Le niveau sonore en bout de réseau résulte d'une somme algébrique de contributions et d'atténuations successives :
+
+\begin{equation}
+  L_p(\text{local}) = L_w(\text{ventilateur}) - \text{Att}_{\text{réseau}} - \text{Att}_{\text{silencieux}} + DI(\text{diffuseur})
+\end{equation}
+
+où :
+\begin{itemize}
+  \item $\text{Att}_{\text{réseau}}$ : atténuation naturelle du réseau (gaines droites, coudes, piquages, expansions) [\si{\decibel}]
+  \item $\text{Att}_{\text{silencieux}}$ : atténuation du (des) silencieux [\si{\decibel}]
+  \item $DI(\text{diffuseur})$ : indice directivité du diffuseur terminal [\si{\decibel}]
+\end{itemize}
+
+\begin{table}[H]
+  \centering
+  \caption{Atténuations naturelles indicatives des éléments aérauliques (par bande d'octave)}
+  \begin{tabular}{lcccc}
+    \toprule
+    Élément & 125\,Hz & 500\,Hz & 1\,000\,Hz & 2\,000\,Hz \\
+    \midrule
+    Gaine rectiligne (acier, 1\,m) & 0,1 & 0,1 & 0,1 & 0,1 \\
+    Gaine flex isolée (1\,m) & 0,5 & 1,0 & 1,5 & 2,0 \\
+    Coude 90° sans directeur & 0 & 3 & 4 & 4 \\
+    Piquage droit ($75\,\%$ / $25\,\%$) & — & 6 & 6 & 6 \\
+    Réduction de section ($\times$ 2) & 3 & 3 & 3 & 3 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{methode}
+\textbf{Démarche de dimensionnement acoustique d'un réseau CVC :}
+\begin{enumerate}
+  \item Relever $L_w$ du ventilateur par bande d'octave (données constructeur).
+  \item Appliquer les atténuations naturelles du réseau pour chaque bande.
+  \item Calculer l'atténuation résiduelle nécessaire pour satisfaire l'exigence du local (niveau NC ou dB(A) cible).
+  \item Dimensionner le(s) silencieux en conséquence (longueur, espacement des baffles).
+  \item Vérifier que la perte de charge du silencieux est compatible avec le ventilateur.
+  \item Vérifier que la vitesse dans le silencieux est $\leq 6$\,m/s (risque de bruit auto-induit).
+\end{enumerate}
+\end{methode}
+
+\subsection{Niveaux admissibles par type de local (référence NC/NR)}
+
+\begin{table}[H]
+  \centering
+  \caption{Niveaux de bruit de fond recommandés selon l'usage du local}
+  \begin{tabular}{lcc}
+    \toprule
+    Type de local & Niveau NC recommandé & Niveau $L_p$ dB(A) approx. \\
+    \midrule
+    Studio radio, salle de concert & NC 15--20 & 25--30 \\
+    Salle de réunion, conférence & NC 25--30 & 33--38 \\
+    Bureau individuel calme & NC 30--35 & 38--43 \\
+    Salle de classe & NC 30--35 & 38--43 \\
+    Open space, bureau collectif & NC 35--40 & 43--48 \\
+    Hôtel — chambre & NC 30--35 & 38--43 \\
+    Restaurant & NC 40--45 & 48--53 \\
+    Cuisine professionnelle & NC 45--50 & 53--58 \\
+    Local technique CVC & NC 50--60 & 58--68 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% ------------------------------------------------------------
 \section{Traitement acoustique}
 % ------------------------------------------------------------
 
@@ -509,42 +578,30 @@ Formule simplifiée :
 \textbf{Conclusion :} la paroi est conforme ($54{,}8 > 53$~dB).
 \end{exemple}
 
-% ------------------------------------------------------------
-\section{Exercices d'application}
-% ------------------------------------------------------------
+\begin{exemple}[title={Dimensionnement acoustique d'une installation VRV — local technique}]
+\textbf{Situation :} Un groupe condenseur VRV extérieur ($L_w = 90$~dB) est installé en terrasse, au-dessus d'un bureau dont la façade est à $r = 5$~m du condenseur. La source est posée sur un plan réfléchissant (dalle terrasse), donc $Q = 2$.
 
-\exercice{Calcul de niveaux acoustiques}
+\textbf{Niveau en façade bureau (champ libre, demi-espace) :}
+\[
+  L_p = L_w - 20 \cdot \log_{10}(r) - 8 = 90 - 20 \cdot \log_{10}(5) - 8 = 90 - 14{,}0 - 8 = 68~\text{dB}
+\]
 
-Un extracteur de cuisine collective est caractérisé par un niveau de puissance sonore $L_w = 88$~dB. Il est installé au centre d'un local de dimensions $8 \times 6 \times 3$~m (coefficient d'absorption moyen $\bar{\alpha} = 0{,}15$, source au plafond $Q = 2$).
+\textbf{Exigence réglementaire (logement ou bureau) :} $L_{nA} \leq 30$~dB(A) à l'intérieur — soit, compte tenu d'une façade avec $R_w = 30$~dB (vitrage double standard) :
+\[
+  L_{intérieur} \approx L_p - R_{façade} = 68 - 30 = 38~\text{dB(A)}
+\]
 
+\textbf{L'exigence de 30~dB(A) n'est pas atteinte} — écart de 8~dB(A).
+
+\textbf{Solutions envisagées :}
 \begin{enumerate}
-  \item Calculer la constante du local $R$.
-  \item Calculer le niveau de pression sonore $L_p$ à 1,5~m de l'extracteur.
-  \item Quel serait $L_p$ si l'on passait à $\bar{\alpha} = 0{,}40$ grâce à un traitement acoustique des parois ?
-  \item Deux extracteurs identiques sont mis en service simultanément. Quel est le niveau $L_p$ résultant à 1,5~m (avec $\bar{\alpha} = 0{,}15$) ?
+  \item Augmenter la distance : déplacer le groupe à $r = 12$~m → $L_p = 90 - 21{,}6 - 8 = 60{,}4$~dB → $L_{int} = 30{,}4$~dB(A) (limite acceptable).
+  \item Capot acoustique sur le groupe : atténuation de 8~dB(A) → $L_p = 60$~dB → $L_{int} = 30$~dB(A).
+  \item Améliorer la façade : passer à $R_w = 38$~dB (double vitrage renforcé 6/16/6) → $L_{int} = 68 - 38 = 30$~dB(A).
 \end{enumerate}
 
-\exercice{Isolement acoustique — choix de paroi}
-
-Un local de compresseurs (niveau de pression mesuré $L_1 = 92$~dB(A)) jouxte un bureau ouvert (exigence $L_2 \leq 45$~dB(A)). La salle de réception a une absorption $A = 25$~sabins et la paroi séparative mesure $S = 20$~\si{\metre\squared}.
-
-\begin{enumerate}
-  \item Calculer l'affaiblissement acoustique $R$ minimum de la paroi séparative.
-  \item En déduire la masse surfacique minimale $m_s$ à 500~Hz (loi de masse).
-  \item Proposer une solution constructive et vérifier sa conformité à partir du tableau de $R_w$.
-  \item Citer deux mesures complémentaires pour limiter la transmission solidienne.
-\end{enumerate}
-
-\exercice{Dimensionnement acoustique d'une installation VMC double flux}
-
-Une CTA double flux dessert 8 bureaux individuels (exigence NC 30). Les données constructeur de la CTA sont : $L_w = 78$~dB (global) ; le réseau aéraulique assure une atténuation de 15~dB ; les bouches de soufflage ont un niveau NC 28 pour le débit nominal.
-
-\begin{enumerate}
-  \item Calculer l'atténuation totale nécessaire entre la CTA et les locaux.
-  \item Déterminer si un silencieux est nécessaire et quelle atténuation il doit apporter.
-  \item La vitesse dans la gaine principale est de 5~m/s pour un débit de 800~m³/h. Calculer la section de gaine rectangulaire ($a \times b$ avec $a = 400$~mm). Cette vitesse est-elle conforme aux recommandations ?
-  \item Citer deux réglages opérationnels permettant de réduire le bruit sans modifier l'installation.
-\end{enumerate}
+\textbf{Conclusion :} On préférera la solution 3 (amélioration de la façade) si le déplacement de l'unité extérieure est impossible. Elle est souvent moins coûteuse qu'un capot acoustique sur le groupe VRV.
+\end{exemple}
 
 % ------------------------------------------------------------
 \section{Éléments de réglementation}
