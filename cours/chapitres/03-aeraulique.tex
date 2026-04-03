@@ -1,0 +1,529 @@
+\chapter{Aéraulique}
+
+% ============================================================
+\section{Objectifs pédagogiques}
+% ============================================================
+
+\subsection*{Compétences GCF mobilisées}
+\begin{itemize}
+  \item \textbf{C2-1 à C2-3} — Analyser un réseau aéraulique : identifier composants, chaînes d'énergie, modes de fonctionnement
+  \item \textbf{C3-3} — Dimensionner un réseau de gaines et sélectionner les équipements (ventilateurs, diffuseurs)
+  \item \textbf{C7-4 à C7-6} — Mesurer débits d'air et pressions, interpréter les résultats en mise en service
+  \item \textbf{C8-1 à C8-4} — Vérifier l'équilibrage aéraulique, diagnostiquer les dérives, proposer des actions correctives
+\end{itemize}
+
+\subsection*{Savoirs associés mobilisés}
+\begin{itemize}
+  \item \textbf{A3} — Dynamique des fluides : pertes de charge, point de fonctionnement, équilibrage (niveau 3)
+  \item \textbf{A4} — Traitement d'air : diagramme de l'air humide, évolutions, soufflage (niveau 3)
+  \item \textbf{B2-1} — Ventilation simple/double flux, free cooling, récupération de chaleur (niveau 3)
+  \item \textbf{B4-2} — Réseaux aérauliques : gaines, filtres, diffuseurs, équilibrage, ventilateurs (niveau 3)
+  \item \textbf{S5.5} — Réglementations ventilation et climatisation (niveau 3)
+  \item \textbf{S10.5} — Mise en service d'une installation GCF (niveau 3)
+  \item \textbf{S10.6} — Critères de bon fonctionnement et optimisation (niveau 3)
+\end{itemize}
+
+% ============================================================
+\section{Introduction}
+% ============================================================
+
+L'aéraulique est la discipline qui étudie les écoulements d'air dans les bâtiments et leurs réseaux de distribution. Elle est au cœur des systèmes de ventilation, de climatisation et de traitement d'air (CVC). Un réseau mal dimensionné engendre des nuisances sonores, une mauvaise qualité d'air intérieur (QAI), des surconsommations électriques et un inconfort thermique.
+
+En France, la réglementation impose des débits minimaux de ventilation dans tous les locaux habités (arrêté du 24 mars 1982, NF EN 16798-3). Le technicien supérieur GCF dimensionne les réseaux de gaines, sélectionne les ventilateurs et les diffuseurs, équilibre les débits et vérifie les performances en mise en service.
+
+% ============================================================
+\section{Propriétés de l'air humide}
+% ============================================================
+
+\subsection{Composition et grandeurs caractéristiques}
+
+L'air atmosphérique est un mélange d'air sec et de vapeur d'eau. Ses propriétés varient avec la température et la teneur en humidité.
+
+\begin{definition}[title=Humidité spécifique (teneur en eau)]
+\begin{equation}
+  w = \frac{m_{vapeur}}{m_{air\,sec}} \qquad \left[\si{\kilogram\per\kilogram}\right]
+\end{equation}
+\begin{itemize}
+  \item $m_{vapeur}$ : masse de vapeur d'eau (\si{\kilogram})
+  \item $m_{air\,sec}$ : masse d'air sec (\si{\kilogram})
+\end{itemize}
+L'humidité spécifique est aussi notée $x$ ou $W$ selon les sources. En pratique : air extérieur hivernal $w \approx \SI{3}{\gram\per\kilogram}$, air estival $w \approx \SI{10}{\gram\per\kilogram}$.
+\end{definition}
+
+\begin{definition}[title=Humidité relative]
+\begin{equation}
+  HR = \frac{p_{vapeur}}{p_{vapeur\,sat}(T)} \times 100 \qquad [\%]
+\end{equation}
+\begin{itemize}
+  \item $p_{vapeur}$ : pression partielle de la vapeur d'eau dans l'air (\si{\pascal})
+  \item $p_{vapeur\,sat}(T)$ : pression de saturation de la vapeur à la température $T$ (\si{\pascal})
+\end{itemize}
+Confort recommandé : $HR$ entre 40 et 60\,\% (NF EN 15251).
+\end{definition}
+
+\begin{definition}[title=Enthalpie de l'air humide]
+\begin{equation}
+  h = c_{p,a} \cdot T + w \cdot (L_0 + c_{p,v} \cdot T) \qquad \left[\si{\kilo\joule\per\kilogram}\right]
+\end{equation}
+\begin{itemize}
+  \item $c_{p,a} = \SI{1006}{\joule\per\kilogram\per\kelvin}$ : chaleur massique de l'air sec
+  \item $c_{p,v} = \SI{1805}{\joule\per\kilogram\per\kelvin}$ : chaleur massique de la vapeur d'eau
+  \item $L_0 = \SI{2501}{\kilo\joule\per\kilogram}$ : chaleur latente de vaporisation à 0\,°C
+  \item $T$ : température en °C
+\end{itemize}
+Formule simplifiée pratique : $h \approx 1{,}006 \cdot T + w \cdot (2501 + 1{,}86 \cdot T)$
+\end{definition}
+
+\begin{definition}[title=Masse volumique de l'air humide]
+À pression atmosphérique standard (\SI{101325}{\pascal}) :
+\begin{equation}
+  \rho \approx \frac{1{,}293}{1 + 0{,}608 \cdot w} \cdot \frac{273}{273 + T} \qquad \left[\si{\kilogram\per\cubic\metre}\right]
+\end{equation}
+\textbf{Valeurs usuelles en CVC :}
+\begin{itemize}
+  \item Air à 20\,°C, $HR = 50\,\%$ : $\rho \approx \SI{1{,}20}{\kilogram\per\cubic\metre}$
+  \item Air à 0\,°C : $\rho \approx \SI{1{,}29}{\kilogram\per\cubic\metre}$
+\end{itemize}
+\end{definition}
+
+\subsection{Le diagramme de l'air humide (diagramme de Mollier)}
+
+Le diagramme de l'air humide représente graphiquement toutes les propriétés de l'air ($T$, $w$, $HR$, $h$, $T_{rosée}$). Il est indispensable pour calculer les évolutions d'air dans une CTA (Centrale de Traitement d'Air).
+
+\begin{table}[H]
+  \centering
+  \caption{Évolutions de l'air sur le diagramme de Mollier}
+  \begin{tabular}{p{3.5cm}p{4cm}p{4cm}}
+    \toprule
+    Évolution & Paramètre constant & Exemple \\
+    \midrule
+    Chauffage sensible & $w$ constant & Batterie chaude, résistance \\
+    Refroidissement sec & $w$ constant, $T > T_{rosée}$ & Début refroidissement \\
+    Refroidissement humide & $w$ diminue & Batterie froide (condensation) \\
+    Humidification adiabatique & $h$ constant & Humidificateur à eau \\
+    Humidification par vapeur & $w$ augmente, $T \uparrow$ & Injection vapeur \\
+    Mélange de deux airs & Point sur le segment & Mélange air neuf / repris \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% ============================================================
+\section{Dynamique des fluides gazeux}
+% ============================================================
+
+\subsection{Débits d'air}
+
+\begin{definition}[title=Débit volumique d'air]
+\begin{equation}
+  q_v = v \cdot S \qquad \left[\si{\cubic\metre\per\hour}\right]
+\end{equation}
+\begin{itemize}
+  \item $v$ : vitesse de l'air dans la gaine (\si{\metre\per\second})
+  \item $S$ : section droite de la gaine (\si{\square\metre})
+\end{itemize}
+\end{definition}
+
+\begin{definition}[title=Débit massique d'air]
+\begin{equation}
+  \dot{m} = \rho \cdot q_v \qquad \left[\si{\kilogram\per\hour}\right]
+\end{equation}
+\end{definition}
+
+\begin{methode}[title=Vitesses recommandées dans les gaines (NF EN 13779)]
+\begin{center}
+\begin{tabular}{lll}
+  \toprule
+  Type de gaine & Vitesse max (m/s) & Application \\
+  \midrule
+  Soufflage basse vitesse & 2 à 4 & Tertiaire, résidentiel \\
+  Soufflage haute vitesse & 6 à 10 & Industrie, grandes surfaces \\
+  Gaine principale & 5 à 8 & Transport \\
+  Gaine terminale & 2 à 4 & Distribution locale \\
+  Prise/rejet air extérieur & 2 à 3 & Façade, toiture \\
+  \bottomrule
+\end{tabular}
+\end{center}
+Des vitesses excessives provoquent du bruit et des pertes de charge importantes.
+\end{methode}
+
+\subsection{Pertes de charge dans les réseaux de gaines}
+
+\subsubsection{Pertes de charge régulières}
+
+La formule de Darcy-Weisbach s'applique également à l'air :
+\begin{equation}
+  \Delta P_r = \lambda \cdot \frac{L}{D_h} \cdot \frac{\rho v^2}{2} \qquad \left[\si{\pascal}\right]
+\end{equation}
+
+Pour les gaines rectangulaires de dimensions $a \times b$, on utilise le \textbf{diamètre hydraulique équivalent} :
+\begin{equation}
+  D_h = \frac{2 \cdot a \cdot b}{a + b} \qquad \left[\si{\metre}\right]
+\end{equation}
+
+En pratique, on utilise des abaques ou logiciels donnant la perte de charge linéique $R$ (\si{\pascal\per\metre}) en fonction du débit et du diamètre (ou des dimensions).
+
+\subsubsection{Pertes de charge singulières}
+
+\begin{equation}
+  \Delta P_s = \zeta \cdot \frac{\rho v^2}{2} \qquad \left[\si{\pascal}\right]
+\end{equation}
+
+\begin{table}[H]
+  \centering
+  \caption{Coefficients $\zeta$ courants pour les accessoires aérauliques}
+  \begin{tabular}{lll}
+    \toprule
+    Accessoire & Conditions & $\zeta$ typique \\
+    \midrule
+    Coude rectangulaire 90° & sans aube & 1{,}5 à 2{,}5 \\
+    Coude rectangulaire 90° & avec aubes & 0{,}3 à 0{,}5 \\
+    Piquage en té & dérivation & 0{,}8 à 1{,}5 \\
+    Convergent 30° & — & 0{,}05 \\
+    Divergent 15° & — & 0{,}10 \\
+    Filtre à poches (propre) & — & 20 à 50 Pa (valeur abs.) \\
+    Batterie à eau chaude & — & 30 à 80 Pa (valeur abs.) \\
+    Registre d'air frais & ouvert & 3 à 5 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{attention}
+Pour les filtres et batteries, les fabricants fournissent directement la perte de charge en \si{\pascal} (valeur absolue, pas un coefficient $\zeta$). Ces valeurs augmentent avec l'encrassement des filtres — prévoir la perte de charge \textbf{filtre colmaté} pour le dimensionnement.
+\end{attention}
+
+% ============================================================
+\section{Les ventilateurs}
+% ============================================================
+
+\subsection{Types de ventilateurs}
+
+\begin{table}[H]
+  \centering
+  \caption{Types de ventilateurs et domaines d'application en CVC}
+  \begin{tabular}{p{3cm}p{4.5cm}p{4.5cm}}
+    \toprule
+    Type & Principe & Application GCF \\
+    \midrule
+    Centrifuge à pales en avant & Fort débit, faible pression & Ventilation résidentielle basse vitesse \\
+    Centrifuge à pales en arrière & Rendement élevé (55–65\,\%) & CTA tertiaire, industrielle \\
+    Hélicoïdal & Faible pression, fort débit & Extraction directe, condenseurs \\
+    Tangentiel & Faible débit silencieux & Ventilo-convecteurs, split-systems \\
+    EC (moteur à commutation électronique) & Régulation vitesse intégrée, IE4 & Toutes CTA modernes (RE2020) \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Caractéristiques d'un ventilateur}
+
+\begin{definition}[title=Pression totale (HMT aéraulique)]
+La pression totale $\Delta P_t$ est la différence de pression totale (statique + dynamique) entre le refoulement et l'aspiration du ventilateur.
+\begin{equation}
+  \Delta P_t = \Delta P_{statique} + \Delta P_{dynamique} = \Delta P_s + \frac{\rho v^2}{2} \qquad \left[\si{\pascal}\right]
+\end{equation}
+\end{definition}
+
+\begin{definition}[title=Puissance absorbée et rendement]
+\begin{equation}
+  P_{hyd} = q_v \cdot \Delta P_t \qquad \left[\si{\watt}\right]
+\end{equation}
+\begin{equation}
+  P_{abs} = \frac{P_{hyd}}{\eta_{ventilateur}} \qquad \left[\si{\watt}\right]
+\end{equation}
+Rendement typique d'un ventilateur centrifuge à pales en arrière : $\eta = 55$ à $65\,\%$.
+\end{definition}
+
+\subsection{Lois de similitude des ventilateurs}
+
+Les lois de similitude permettent de prévoir le comportement d'un ventilateur lorsqu'on modifie sa vitesse de rotation. Elles sont fondamentales pour le calcul des économies d'énergie par variation de vitesse.
+
+\begin{methode}[title=Lois de similitude (variation de vitesse)]
+Pour un même ventilateur, si la vitesse passe de $n_1$ à $n_2$ :
+\begin{align}
+  q_{v2} &= q_{v1} \cdot \frac{n_2}{n_1} & \text{(débit)} \label{eq:sim_q}\\
+  \Delta P_{t2} &= \Delta P_{t1} \cdot \left(\frac{n_2}{n_1}\right)^2 & \text{(pression)} \label{eq:sim_p}\\
+  P_{abs2} &= P_{abs1} \cdot \left(\frac{n_2}{n_1}\right)^3 & \text{(puissance)} \label{eq:sim_p3}
+\end{align}
+
+\textbf{Conséquence énergétique majeure :} réduire la vitesse de 20\,\% ($n_2/n_1 = 0{,}8$) divise la puissance absorbée par $0{,}8^3 = 0{,}51$ — soit une économie de 49\,\% sur la consommation électrique du ventilateur.
+\end{methode}
+
+% ============================================================
+\section{Systèmes de ventilation}
+% ============================================================
+
+\subsection{Ventilation mécanique contrôlée (VMC)}
+
+\begin{table}[H]
+  \centering
+  \caption{Comparatif des systèmes VMC selon la réglementation française}
+  \begin{tabular}{p{2.5cm}p{4.5cm}p{4.5cm}}
+    \toprule
+    Système & Principe & Contexte d'usage \\
+    \midrule
+    VMC simple flux autoréglable & Extraction mécanique, entrées d'air autoréglables. Débit constant. & Logement neuf standard \\
+    VMC simple flux hygroréglable & Débit modulé selon l'humidité (bouches + entrées hygro). & Logement économe en énergie \\
+    VMC double flux & Extraction + soufflage avec récupérateur de chaleur (échangeur). Rendement 70–95\,\%. & Logement très performant, BBC, RE2020 \\
+    Ventilation naturelle assistée (VNA) & Extraction naturelle + appoint mécanique. & Réhabilitation \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Centrale de traitement d'air (CTA)}
+
+Une CTA conditionne l'air neuf (filtration, chauffage, refroidissement, humidification/déshumidification) avant de le distribuer dans le bâtiment.
+
+\textbf{Composants typiques d'une CTA tertiaire (dans l'ordre de l'air) :}
+\begin{enumerate}
+  \item Filtre grossier (G4) — protection mécanique
+  \item Récupérateur de chaleur (échangeur à plaques ou rotatif)
+  \item Batterie eau chaude (chauffage hiver)
+  \item Filtre fin (F7/F9) — filtration particulaire
+  \item Batterie eau glacée (refroidissement été)
+  \item Humidificateur (vapeur ou adiabatique)
+  \item Ventilateur de soufflage (moteur EC)
+  \item Gaine de distribution
+  \item Ventilateur d'extraction
+\end{enumerate}
+
+\begin{definition}[title=Débit d'air neuf réglementaire]
+L'arrêté du 24 mars 1982 (logements) et la NF EN 16798-1 (tertiaire) fixent les débits minimaux d'air neuf selon l'occupation et l'usage.
+
+\textbf{Valeurs courantes tertiaire (NF EN 16798-1, catégorie II) :}
+\begin{itemize}
+  \item Bureau : 7 à 10 \si{\litre\per\second} par personne + 1 \si{\litre\per\second\per\square\metre}
+  \item Salle de réunion : 10 \si{\litre\per\second} par personne
+  \item Restauration : 10 à 15 \si{\litre\per\second} par personne
+\end{itemize}
+\end{definition}
+
+% ============================================================
+\section{Équilibrage des réseaux aérauliques}
+% ============================================================
+
+L'équilibrage aéraulique garantit que chaque bouche ou diffuseur reçoit exactement le débit nominal.
+
+\begin{methode}[title=Méthode de la branche index (aéraulique)]
+Identique à la méthode hydraulique :
+\begin{enumerate}
+  \item Calculer les pertes de charge de chaque branche (du ventilateur à chaque bouche)
+  \item Identifier la branche index (pertes de charge maximales)
+  \item Calculer l'excédent de pression sur chaque autre branche
+  \item Régler les registres d'équilibrage pour absorber l'excédent
+\end{enumerate}
+
+Les registres utilisés sont :
+\begin{itemize}
+  \item \textbf{Registres à lamelles} — réglage manuel, verrouillage par vis
+  \item \textbf{Registres à débit constant} (CAV) — maintien mécanique du débit quelle que soit la pression
+  \item \textbf{Boîtes à débit variable} (VAV) — débit modulé selon la demande (occupation, CO\textsubscript{2})
+\end{itemize}
+\end{methode}
+
+% ============================================================
+\section{Exemples résolus}
+% ============================================================
+
+\begin{exemple}[title=Dimensionnement d'une gaine de soufflage]
+\textbf{Énoncé :} Une gaine rectangulaire de section 400 × 200 mm alimente 4 bureaux identiques. Le débit total est de \SI{2000}{\cubic\metre\per\hour}. L'air est à 18\,°C ($\rho = \SI{1{,}21}{\kilogram\per\cubic\metre}$). La longueur développée de la gaine est de \SI{25}{\metre}. La perte de charge linéique est $R = \SI{0{,}8}{\pascal\per\metre}$. La gaine comporte 2 coudes 90° avec aubes ($\zeta = 0{,}4$) et 4 piquages en té ($\zeta = 1{,}2$ par piquage, vitesse gaine principale).
+
+Calculer la perte de charge totale de cette gaine.
+
+\textbf{Étape 1 : Section et vitesse}
+\[
+  S = 0{,}4 \times 0{,}2 = \SI{0{,}08}{\square\metre}
+\]
+\[
+  q_v = \frac{2000}{3600} = \SI{0{,}556}{\cubic\metre\per\second}
+\]
+\[
+  v = \frac{0{,}556}{0{,}08} = \SI{6{,}94}{\metre\per\second}
+\]
+Vitesse acceptable pour une gaine principale tertiaire.
+
+\textbf{Étape 2 : Pression dynamique}
+\[
+  \frac{\rho v^2}{2} = \frac{1{,}21 \times (6{,}94)^2}{2} = \SI{29{,}1}{\pascal}
+\]
+
+\textbf{Étape 3 : Perte de charge régulière}
+\[
+  \Delta P_r = R \times L = 0{,}8 \times 25 = \SI{20}{\pascal}
+\]
+
+\textbf{Étape 4 : Pertes de charge singulières}
+\[
+  \Delta P_s = \left(2 \times 0{,}4 + 4 \times 1{,}2\right) \times 29{,}1 = 5{,}6 \times 29{,}1 = \SI{163}{\pascal}
+\]
+
+\textbf{Étape 5 : Perte de charge totale}
+\[
+  \Delta P_{total} = 20 + 163 = \SI{183}{\pascal}
+\]
+
+\textbf{Note :} Les piquages représentent la majorité des pertes. Des piquages coniques (avec divergent) réduiraient significativement $\zeta$.
+\end{exemple}
+
+\begin{exemple}[title=Sélection d'un ventilateur CTA]
+\textbf{Énoncé :} Une CTA tertiaire dessert 500\,m² de bureaux. Le débit d'air neuf est de \SI{3600}{\cubic\metre\per\hour}. La perte de charge totale du réseau (réseau soufflage + réseau extraction) est estimée à \SI{450}{\pascal} côté soufflage. Le ventilateur est à moteur EC ($\eta = 60\,\%$).
+
+\textbf{Étape 1 : Puissance hydraulique}
+\[
+  q_v = \frac{3600}{3600} = \SI{1}{\cubic\metre\per\second}
+\]
+\[
+  P_{hyd} = q_v \times \Delta P_t = 1 \times 450 = \SI{450}{\watt}
+\]
+
+\textbf{Étape 2 : Puissance absorbée}
+\[
+  P_{abs} = \frac{450}{0{,}60} = \SI{750}{\watt}
+\]
+
+\textbf{Étape 3 : Économie par variation de vitesse}
+En période d'occupation partielle (débit réduit à 60\,\%) :
+\[
+  P_{abs,60\%} = 750 \times (0{,}6)^3 = 750 \times 0{,}216 = \SI{162}{\watt}
+\]
+Économie : $750 - 162 = \SI{588}{\watt}$ soit 78\,\% d'économie par rapport au plein débit.
+\end{exemple}
+
+% ============================================================
+\section{Exercices d'application}
+% ============================================================
+
+\exercice{Calcul de débit d'air neuf réglementaire}
+
+Un plateau de bureaux de \SI{800}{\square\metre} accueille 60 personnes en occupation nominale. En dehors des heures de bureau, le plateau est inoccupé. Utiliser la catégorie II de la NF EN 16798-1 : 10 \si{\litre\per\second} par personne + 1 \si{\litre\per\second\per\square\metre}.
+
+\begin{enumerate}
+  \item Calculer le débit d'air neuf minimal en occupation nominale (en m³/h).
+  \item Calculer le débit réduit hors occupation (10\,\% du nominal, exigence minimale réglementaire de balayage).
+  \item Un système VAV (débit variable) réduit le débit à 30\,\% en heures creuses (20\,h/sem) par rapport aux heures pleines (40\,h/sem). Le ventilateur absorbe \SI{2{,}2}{\kilo\watt} en plein débit. Estimer la consommation hebdomadaire en kWh avec et sans variation de vitesse.
+\end{enumerate}
+
+\textbf{Corrigé :}
+
+\textit{Question 1 — Débit nominal :}
+\[
+  q_{v,pers} = 60 \times 10 = \SI{600}{\litre\per\second}
+\]
+\[
+  q_{v,surf} = 800 \times 1 = \SI{800}{\litre\per\second}
+\]
+\[
+  q_{v,total} = (600 + 800) \times 3{,}6 = 1400 \times 3{,}6 = \SI{5040}{\cubic\metre\per\hour}
+\]
+
+\textit{Question 2 — Débit hors occupation :}
+\[
+  q_{v,vide} = 0{,}10 \times 5040 = \SI{504}{\cubic\metre\per\hour}
+\]
+
+\textit{Question 3 — Consommation avec/sans variation de vitesse :}
+
+\textit{Sans variation (plein débit permanent) :}
+\[
+  W = 2{,}2 \times (40 + 20) = \SI{132}{\kilo\watt\heure\per\semaine}
+\]
+
+\textit{Avec variation (30\,\% en heures creuses) :}
+\[
+  P_{hc} = 2{,}2 \times (0{,}30)^3 = 2{,}2 \times 0{,}027 = \SI{0{,}059}{\kilo\watt}
+\]
+\[
+  W = 2{,}2 \times 40 + 0{,}059 \times 20 = 88 + 1{,}18 = \SI{89{,}2}{\kilo\watt\heure\per\semaine}
+\]
+Économie : $132 - 89{,}2 = \SI{42{,}8}{\kilo\watt\heure\per\semaine}$ soit 32\,\%.
+
+\exercice{Équilibrage d'un réseau de soufflage}
+
+Un réseau de soufflage dessert 5 salles. Après calcul des pertes de charge de chaque branche (du ventilateur à la bouche), on obtient :
+
+\begin{center}
+\begin{tabular}{lcc}
+  \toprule
+  Salle & $\Delta P$ branche (Pa) & Débit nominal (m³/h) \\
+  \midrule
+  S1 (proche) & 180 & 300 \\
+  S2 & 220 & 250 \\
+  S3 & 310 & 200 \\
+  S4 & 410 & 180 \\
+  S5 (index) & 520 & 160 \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\begin{enumerate}
+  \item Identifier la branche index et la pression totale que doit fournir le ventilateur.
+  \item Calculer la perte de charge supplémentaire à créer par le registre d'équilibrage de chaque salle.
+  \item Quel type d'organe d'équilibrage recommander pour une installation tertiaire avec variation d'occupation ?
+\end{enumerate}
+
+\textbf{Corrigé :}
+
+\textit{Question 1 :} La branche index est S5 avec $\Delta P = \SI{520}{\pascal}$. Le ventilateur doit fournir au minimum \SI{520}{\pascal}.
+
+\textit{Question 2 :}
+\begin{itemize}
+  \item S1 : registre $= 520 - 180 = \SI{340}{\pascal}$
+  \item S2 : registre $= 520 - 220 = \SI{300}{\pascal}$
+  \item S3 : registre $= 520 - 310 = \SI{210}{\pascal}$
+  \item S4 : registre $= 520 - 410 = \SI{110}{\pascal}$
+  \item S5 : registre $= \SI{0}{\pascal}$ (branche index, pas de réglage)
+\end{itemize}
+
+\textit{Question 3 :} Pour un tertiaire avec variation d'occupation, recommander des \textbf{boîtes à débit variable (VAV)} pilotées par sonde CO\textsubscript{2} ou capteur de présence, couplées à un ventilateur à vitesse variable. Le ventilateur adapte sa pression différentielle à la demande (régulation de pression constante sur la gaine principale).
+
+\exercice{Évolution de l'air dans une CTA — diagramme de Mollier}
+
+Une CTA traite de l'air extérieur dans les conditions suivantes :
+\begin{itemize}
+  \item Air extérieur hiver : $T_1 = \SI{2}{\celsius}$, $HR_1 = 70\,\%$, $w_1 = \SI{3{,}5}{\gram\per\kilogram}$, $h_1 = \SI{10{,}8}{\kilo\joule\per\kilogram}$
+  \item Conditions de soufflage souhaitées : $T_s = \SI{22}{\celsius}$, $HR_s = 45\,\%$, $w_s = \SI{7{,}4}{\gram\per\kilogram}$, $h_s = \SI{41{,}0}{\kilo\joule\per\kilogram}$
+  \item Débit massique : $\dot{m} = \SI{2500}{\kilogram\per\hour}$
+\end{itemize}
+
+\begin{enumerate}
+  \item Identifier les évolutions successives de l'air dans la CTA.
+  \item Calculer la puissance de la batterie chaude (chauffage sensible de 2\,°C à 15\,°C, $w$ constant).
+  \item Calculer la puissance de l'humidificateur (de 15\,°C à 22\,°C avec humidification, $h_{s,humid} = \SI{41{,}0}{\kilo\joule\per\kilogram}$, $h_{avant\_humid} = \SI{26{,}2}{\kilo\joule\per\kilogram}$).
+\end{enumerate}
+
+\textbf{Corrigé :}
+
+\textit{Question 1 — Évolutions :}
+\begin{enumerate}
+  \item Préchauffage par récupérateur (2\,°C → 8\,°C, $w$ constant)
+  \item Chauffage batterie chaude (8\,°C → 15\,°C, $w$ constant)
+  \item Humidification adiabatique ou vapeur (15\,°C → 22\,°C, $w$ augmente)
+\end{enumerate}
+
+\textit{Question 2 — Puissance batterie chaude :}
+\[
+  \dot{Q}_{BC} = \dot{m} \cdot c_{p,a} \cdot \Delta T = \frac{2500}{3600} \times 1006 \times (15 - 8) = \SI{4902}{\watt} \approx \SI{4{,}9}{\kilo\watt}
+\]
+
+\textit{Question 3 — Puissance humidificateur :}
+\[
+  \dot{Q}_{hum} = \dot{m} \cdot (h_s - h_{av}) = \frac{2500}{3600} \times (41{,}0 - 26{,}2) \times 1000 = \SI{10\,278}{\watt} \approx \SI{10{,}3}{\kilo\watt}
+\]
+
+% ============================================================
+\section{Éléments de réglementation}
+% ============================================================
+
+\begin{description}
+  \item[Arrêté du 24 mars 1982 (modifié)] Aération des logements neufs — fixe les débits minimaux d'extraction par pièce (cuisine : 75 ou 135\,m³/h selon cuisson, WC : 15\,m³/h, bain/douche : 15 ou 30\,m³/h).
+
+  \item[NF EN 16798-3] Ventilation des bâtiments non résidentiels — critères de performance et classification des systèmes. Remplace EN 13779.
+
+  \item[NF EN 15251] Critères d'ambiance intérieure pour la conception et l'évaluation de la performance énergétique des bâtiments. Définit 4 catégories de qualité d'air intérieur (I à IV).
+
+  \item[DTU 68.3 (NF P50-410)] Installations de VMC. Règles de conception et de mise en œuvre des réseaux aérauliques dans les logements.
+
+  \item[RE 2020] Impose une ventilation double flux avec récupération pour atteindre les niveaux de performance énergétique exigés dans les logements neufs. Le coefficient $b_{vent}$ pénalise les systèmes sans récupération.
+
+  \item[Règlement EU 1253/2014 (écoconception)] Définit les exigences de rendement minimal des unités de ventilation résidentielles et non résidentielles. Impose une efficacité de récupération de chaleur minimale pour les systèmes double flux.
+
+  \item[NF EN 12599] Procédures d'essais et méthodes de mesure pour la réception des installations de ventilation et de climatisation — mesure des débits, pressions, températures et humidité.
+\end{description}

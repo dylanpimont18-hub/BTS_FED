@@ -4,12 +4,12 @@ Mis à jour automatiquement par l'agent à chaque run.
 
 ## Dernier run
 - Date : 2026-04-03
-- Action : Création chapitre 02 — Hydraulique des circuits
+- Action : Création chapitre 03 — Aéraulique
 
 ## Prochain focus
-Créer le chapitre 03 : Aéraulique.
-Fichier cible : `cours/chapitres/03-aeraulique.tex`
-Objectif : ébauche complète — dynamique des fluides gazeux, réseaux de gaines, ventilation, CTA, diagramme de l'air humide (introduction).
+Créer le chapitre 04 : Production de chaleur.
+Fichier cible : `cours/chapitres/04-production-chaleur.tex`
+Objectif : ébauche complète — chaudières gaz (condensation, rendements), pompes à chaleur (COP, cycle frigorifique côté chaud), solaire thermique, réseaux de chaleur urbains.
 
 ## Chapitres
 
@@ -17,7 +17,7 @@ Objectif : ébauche complète — dynamique des fluides gazeux, réseaux de gain
 |---|---------|-------|--------|----------|-------|
 | 01 | 01-bases-thermiques.tex | Bases de la thermique | ébauche | 3 | Créé le 2026-04-02 |
 | 02 | 02-hydraulique.tex | Hydraulique des circuits | ébauche | 3 | Créé le 2026-04-03 |
-| 03 | 03-aeraulique.tex | Aéraulique | absent | — | |
+| 03 | 03-aeraulique.tex | Aéraulique | ébauche | 3 | Créé le 2026-04-03 |
 | 04 | 04-production-chaleur.tex | Production de chaleur | absent | — | |
 | 05 | 05-distribution-emission.tex | Distribution et émission | absent | — | |
 | 06 | 06-climatisation.tex | Climatisation et traitement d'air | absent | — | |
