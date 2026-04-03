@@ -1,0 +1,109 @@
+\chapter*{Chapitre 7 — Régulation et GTB}
+\addcontentsline{toc}{chapter}{Chapitre 7 — Régulation et GTB}
+
+% ============================================================
+\section*{Énoncés}
+% ============================================================
+
+\exercice{Choix de la loi de régulation}
+
+Une chaudière à condensation dessert un réseau de radiateurs en acier. La consigne de température ambiante est $w = \SI{19}{\celsius}$. Après un arrêt de nuit, la mesure de température ambiante est $y = \SI{14}{\celsius}$.
+
+\begin{enumerate}
+  \item Calculer l'erreur initiale $e_0$.
+  \item Avec un régulateur proportionnel de gain $K_P = \SI{5}{\percent\per\kelvin}$, calculer le signal de commande initial $u(t=0)$ sachant que $u_0 = 50\,\%$.
+  \item La commande calculée est-elle physiquement réalisable ? Conclure sur la saturation de l'actionneur.
+  \item Justifier l'intérêt d'ajouter une action intégrale (régulateur PI) pour atteindre exactement $\SI{19}{\celsius}$ en régime permanent.
+\end{enumerate}
+
+\exercice{Paramétrage de la loi d'eau d'une installation}
+
+Un immeuble de logements à Lyon (zone H2a, $T_{ext,base} = \SI{-9}{\celsius}$) est chauffé par des radiateurs à basse température ($T_{dep,max} = \SI{55}{\celsius}$ à $T_{ext,base}$). Le chauffage se coupe à $T_{ext} = \SI{16}{\celsius}$ ($T_{dep,min} = \SI{30}{\celsius}$).
+
+\begin{enumerate}
+  \item Calculer la pente de la loi d'eau $K_{loi}$.
+  \item Déterminer la température de départ programmée pour $T_{ext} = \SI{2}{\celsius}$.
+  \item Un correcteur de confort ajoute $+\SI{3}{\kelvin}$ à la consigne de départ lorsque les occupants signalent une sensation de froid. Quelle est la nouvelle température de départ pour $T_{ext} = \SI{2}{\celsius}$ ?
+  \item Quel est l'impact de cette correction sur la consommation de la chaudière ? (réponse qualitative)
+\end{enumerate}
+
+\exercice{Identification des composants GTB}
+
+Un bâtiment tertiaire est équipé d'une GTB structurée en trois niveaux. Le technicien relève les équipements suivants :
+
+\begin{enumerate}[label=\alph*)]
+  \item Sonde de température ambiante PT1000 installée dans le bureau
+  \item Logiciel SCADA affichant les synoptiques sur écran tactile au poste de garde
+  \item Régulateur de zone Siemens Synco 700 gérant la vanne de la batterie chaude
+  \item Vanne 2 voies motorisée DN15 sur circuit eau chaude
+  \item Switch Ethernet administrable reliant les automates et le serveur
+  \item Variateur de fréquence Schneider sur moteur pompe de circulation
+\end{enumerate}
+
+Classer chacun de ces équipements dans le niveau GTB correspondant (niveau 1, 2 ou 3) et préciser son rôle dans la chaîne de régulation.
+
+\newpage
+% ============================================================
+\section*{Corrigés}
+% ============================================================
+
+\subsection*{Corrigé — Exercice 1}
+
+\begin{enumerate}
+  \item Erreur initiale :
+  \[
+    e_0 = w - y = 19 - 14 = \boxed{\SI{5}{\kelvin}}
+  \]
+
+  \item Signal de commande :
+  \[
+    u = K_P \cdot e_0 + u_0 = 5 \times 5 + 50 = \boxed{75\,\%}
+  \]
+  La vanne s'ouvre à $75\,\%$ de sa course maximale.
+
+  \item La commande $75\,\%$ est physiquement réalisable (comprise entre 0 et 100\,\%). La saturation n'est pas atteinte dans ce cas. En revanche, pour $e > \SI{10}{\kelvin}$ : $u = 5 \times 10 + 50 = 100\,\%$ — saturation atteinte, la vanne est pleinement ouverte.
+
+  \item En régime permanent, un actionneur P pur laisse subsister un écart statique résiduel. L'action intégrale accumule l'erreur dans le temps et ajuste progressivement $u$ jusqu'à ce que $e = 0$, garantissant ainsi $y = w = \SI{19}{\celsius}$ en régime établi, quelle que soit la charge thermique.
+\end{enumerate}
+
+\subsection*{Corrigé — Exercice 2}
+
+\begin{enumerate}
+  \item Pente de la loi d'eau :
+  \[
+    K_{loi} = \frac{T_{dep,max} - T_{dep,min}}{T_{ext,coupure} - T_{ext,base}} = \frac{55 - 30}{16 - (-9)} = \frac{25}{25} = \boxed{1{,}0}
+  \]
+
+  \item Température de départ à $T_{ext} = \SI{2}{\celsius}$ :
+  \[
+    T_{dep} = T_{dep,min} + K_{loi} \times (T_{ext,coupure} - T_{ext}) = 30 + 1{,}0 \times (16 - 2) = 30 + 14 = \boxed{\SI{44}{\celsius}}
+  \]
+
+  \item Avec correcteur de confort $+\SI{3}{\kelvin}$ :
+  \[
+    T_{dep,corr} = 44 + 3 = \boxed{\SI{47}{\celsius}}
+  \]
+
+  \item Une hausse de $\SI{3}{\kelvin}$ sur la température de départ augmente les pertes thermiques du réseau de distribution et réduit le rendement de condensation de la chaudière (la température de retour augmente). On estime une surconsommation de l'ordre de 6 à 10\,\% selon l'isolation du réseau. Le correcteur doit donc être utilisé avec modération et remis à zéro dès retour à l'état de confort.
+\end{enumerate}
+
+\subsection*{Corrigé — Exercice 3}
+
+\begin{center}
+\begin{tabular}{clll}
+  \toprule
+  Équipement & Niveau & Rôle & Nature \\
+  \midrule
+  a) Sonde PT1000 & 1 — Terrain & Mesure grandeur réglée ($T_{amb}$) & Capteur \\
+  b) Logiciel SCADA & 3 — Supervision & Visualisation, historique, alarmes & IHM \\
+  c) Régulateur Synco 700 & 2 — Automatisme & Calcule la commande (boucle PI) & Contrôleur \\
+  d) Vanne motorisée & 1 — Terrain & Agit sur le débit d'eau chaude & Actionneur \\
+  e) Switch Ethernet & 3 — Supervision & Infrastructure réseau IP & Communication \\
+  f) Variateur de fréquence & 1/2 — Terrain/Auto. & Adapte la vitesse de la pompe & Actionneur piloté \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\begin{methode}
+Note : le variateur de fréquence est physiquement au niveau terrain mais intègre souvent une intelligence locale (boucle PID de pression) — il peut donc être considéré comme niveau 1 ou niveau 2 selon le contexte.
+\end{methode}

@@ -1,0 +1,235 @@
+\chapter*{Chapitre 10 — Électrotechnique appliquée CVC}
+\addcontentsline{toc}{chapter}{Chapitre 10 — Électrotechnique appliquée CVC}
+
+% ============================================================
+\section*{Énoncés}
+% ============================================================
+
+\exercice{Calcul de puissances — moteur de compresseur VRV}
+
+Un compresseur de système VRV est alimenté en triphasé 400\,V. Sa plaque indique : $P_n = 11\,\text{kW}$, $I_n = 23\,\text{A}$, $\cos\varphi = 0{,}88$, rendement $\eta = 91\,\%$.
+
+\begin{enumerate}
+  \item Calculer la puissance apparente $S$ et la puissance réactive $Q$ absorbées par le moteur.
+  \item Vérifier la cohérence avec la puissance active $P_n$ (tenir compte du rendement).
+  \item Quelle valeur de condensateur (en kvar) permettrait de relever le $\cos\varphi$ à 0,95\,?
+\end{enumerate}
+
+\textbf{Formules utiles :}
+\[
+  S = \sqrt{3} \cdot U \cdot I, \qquad P = S \cdot \cos\varphi, \qquad Q = \sqrt{S^2 - P^2}
+\]
+\[
+  Q_C = P \cdot (\tan\varphi_1 - \tan\varphi_2)
+\]
+
+\exercice{Démarrage étoile-triangle — ventilateur de désenfumage}
+
+Un ventilateur de désenfumage est équipé d'un moteur 15\,kW, 400\,V, $I_n = 29\,\text{A}$, courant de démarrage en triangle $I_{d,\triangle} = 7 \times I_n$.
+
+\begin{enumerate}
+  \item Calculer le courant de démarrage direct et le courant de démarrage en étoile.
+  \item Justifier l'intérêt du démarrage étoile-triangle pour ce type d'application.
+  \item Quel dispositif de protection choisir (disjoncteur ou fusible aM) et quel calibre ?
+\end{enumerate}
+
+\exercice{Lois de similitude — économies par variateur}
+
+Un ventilateur de CTA a les caractéristiques nominales : $Q_1 = 15\,000\,\text{m}^3/\text{h}$, $\Delta p_1 = 1\,200\,\text{Pa}$, $P_1 = 8\,\text{kW}$ à $n_1 = 1\,450\,\text{tr/min}$.
+
+\begin{enumerate}
+  \item Calculer $Q_2$, $\Delta p_2$ et $P_2$ si la vitesse est réduite à 75\,\%.
+  \item Exprimer l'économie en \% sur la puissance absorbée.
+  \item Sur une année de fonctionnement (4\,000\,h à 100\,\% + 4\,000\,h à 75\,\%), calculer l'économie d'énergie annuelle en kWh et en euros (tarif 0,18\,€/kWh).
+\end{enumerate}
+
+\textbf{Lois de similitude :}
+\[
+  \frac{Q_2}{Q_1} = \frac{n_2}{n_1}, \qquad \frac{\Delta p_2}{\Delta p_1} = \left(\frac{n_2}{n_1}\right)^2, \qquad \frac{P_2}{P_1} = \left(\frac{n_2}{n_1}\right)^3
+\]
+
+\exercice{Dimensionnement d'armoire CVC}
+
+Une armoire électrique CVC doit alimenter les équipements suivants (triphasé 400\,V) :
+\begin{itemize}
+  \item 2 pompes : $P = 2{,}2\,\text{kW}$ chacune, $\cos\varphi = 0{,}80$
+  \item 1 ventilateur : $P = 5{,}5\,\text{kW}$, $\cos\varphi = 0{,}83$
+  \item 1 groupe de froid : $P = 18\,\text{kW}$, $\cos\varphi = 0{,}86$
+\end{itemize}
+
+\begin{enumerate}
+  \item Calculer la puissance active totale et la puissance apparente totale (coefficient de foisonnement : 0,85).
+  \item Déduire le courant total absorbé et calibrer le disjoncteur général.
+  \item Vérifier si une batterie de condensateurs de 10\,kvar améliore significativement le $\cos\varphi$ global.
+\end{enumerate}
+
+\textbf{Courant triphasé :} $I = \dfrac{P}{\sqrt{3} \cdot U \cdot \cos\varphi}$
+
+\newpage
+% ============================================================
+\section*{Corrigés}
+% ============================================================
+
+\subsection*{Corrigé — Exercice 1}
+
+\textit{Question 1 — Puissance apparente et puissance réactive :}
+\[
+  S = \sqrt{3} \cdot U \cdot I_n = \sqrt{3} \times 400 \times 23 = \boxed{15\,929~\text{VA} \approx 15{,}9~\text{kVA}}
+\]
+\[
+  P_{\text{élec}} = S \cdot \cos\varphi = 15{,}9 \times 0{,}88 = \boxed{14{,}0~\text{kW}}
+\]
+\[
+  Q = \sqrt{S^2 - P^2} = \sqrt{15{,}9^2 - 14{,}0^2} = \sqrt{252{,}8 - 196{,}0} = \sqrt{56{,}8} = \boxed{7{,}54~\text{kvar}}
+\]
+
+\textit{Question 2 — Vérification cohérence avec $P_n$ et rendement :}
+
+La puissance mécanique utile est $P_n = 11$~kW. La puissance électrique absorbée doit être :
+\[
+  P_{\text{élec,attendue}} = \frac{P_n}{\eta} = \frac{11}{0{,}91} = 12{,}1~\text{kW}
+\]
+
+\begin{attention}
+La valeur calculée ($P_{\text{élec}} = 14{,}0$~kW) diffère de la valeur théorique ($12{,}1$~kW). Cet écart vient du fait que $I_n$ correspond au courant maximal admissible (courant nominal plaque), et non au courant en fonctionnement à charge nominale exacte. À charge nominale, le courant réel serait $I = P_{\text{élec}}/(\sqrt{3} \times 400 \times 0{,}88) \approx 19{,}8$~A.
+\end{attention}
+
+\textit{Question 3 — Condensateur pour relever le $\cos\varphi$ à 0,95 :}
+
+À partir de la puissance active absorbée $P = 14{,}0$~kW :
+\[
+  Q_C = P \cdot (\tan\varphi_1 - \tan\varphi_2) = 14{,}0 \times \left(\tan(\arccos 0{,}88) - \tan(\arccos 0{,}95)\right)
+\]
+\[
+  \tan(\arccos 0{,}88) = \frac{\sqrt{1-0{,}88^2}}{0{,}88} = \frac{0{,}475}{0{,}88} = 0{,}540
+\]
+\[
+  \tan(\arccos 0{,}95) = \frac{\sqrt{1-0{,}95^2}}{0{,}95} = \frac{0{,}312}{0{,}95} = 0{,}329
+\]
+\[
+  Q_C = 14{,}0 \times (0{,}540 - 0{,}329) = 14{,}0 \times 0{,}211 = \boxed{2{,}95~\text{kvar}}
+\]
+
+\subsection*{Corrigé — Exercice 2}
+
+\textit{Question 1 — Courants de démarrage :}
+
+Courant de démarrage direct (triangle) :
+\[
+  I_{d,\triangle} = 7 \times I_n = 7 \times 29 = \boxed{203~\text{A}}
+\]
+
+Courant de démarrage en étoile (divisé par 3) :
+\[
+  I_{d,Y} = \frac{I_{d,\triangle}}{3} = \frac{203}{3} = \boxed{67{,}7~\text{A}}
+\]
+
+\textit{Question 2 — Intérêt du démarrage étoile-triangle :}
+
+Le démarrage étoile-triangle réduit le courant de démarrage de 203~A à 67,7~A (division par 3), ce qui limite les chutes de tension sur le réseau électrique et réduit les contraintes mécaniques sur l'accouplement ventilateur-moteur. Pour un ventilateur (charge à couple résistant faible au démarrage), cette technique est parfaitement adaptée car le couple de démarrage étoile (divisé par 3 également) reste suffisant pour lancer le rotor.
+
+\textit{Question 3 — Protection et calibre :}
+
+\begin{methode}
+Pour un démarrage étoile-triangle, on utilise des \textbf{fusibles aM} (accompagnement moteur) : ils tolèrent la pointe de courant au démarrage ($7 \times I_n$) sans fondre, tout en assurant la protection contre les courts-circuits.
+
+Calibre recommandé : fusibles aM calibre \textbf{32~A} (cran normalisé au-dessus de $I_n = 29$~A). En fonctionnement normal, le courant en étoile est $I_{d,Y}/\sqrt{3} \approx 39$~A en démarrage, puis retombe à $I_n = 29$~A en régime — le fusible 32~A aM tolère la pointe de démarrage.
+\end{methode}
+
+\subsection*{Corrigé — Exercice 3}
+
+\textit{Question 1 — Nouvelles performances à 75\,\% de vitesse :}
+
+Rapport de vitesse : $k = n_2/n_1 = 0{,}75$
+
+\[
+  Q_2 = 0{,}75 \times 15\,000 = \boxed{11\,250~\text{m}^3/\text{h}}
+\]
+\[
+  \Delta p_2 = 0{,}75^2 \times 1\,200 = 0{,}5625 \times 1\,200 = \boxed{675~\text{Pa}}
+\]
+\[
+  P_2 = 0{,}75^3 \times 8 = 0{,}4219 \times 8 = \boxed{3{,}375~\text{kW}}
+\]
+
+\textit{Question 2 — Économie en \% sur la puissance :}
+\[
+  \text{Économie} = \frac{P_1 - P_2}{P_1} \times 100 = \frac{8 - 3{,}375}{8} \times 100 = \boxed{57{,}8\,\%}
+\]
+
+\textit{Question 3 — Économie d'énergie annuelle :}
+
+Consommation annuelle sans VFD (8\,000~h à $P_1$) :
+\[
+  W_{\text{ref}} = 8 \times 8\,000 = 64\,000~\text{kWh/an}
+\]
+
+Consommation avec VFD (4\,000~h à 100\,\% + 4\,000~h à 75\,\%) :
+\[
+  W_{\text{VFD}} = (8 \times 4\,000) + (3{,}375 \times 4\,000) = 32\,000 + 13\,500 = 45\,500~\text{kWh/an}
+\]
+
+Économie d'énergie :
+\[
+  \Delta W = 64\,000 - 45\,500 = \boxed{18\,500~\text{kWh/an}}
+\]
+
+Économie financière :
+\[
+  \Delta E = 18\,500 \times 0{,}18 = \boxed{3\,330~\text{€/an}}
+\]
+
+\subsection*{Corrigé — Exercice 4}
+
+\textit{Question 1 — Puissance active totale et puissance apparente (avec foisonnement) :}
+
+Puissance active totale (brute) :
+\[
+  P_{\text{total}} = 2 \times 2{,}2 + 5{,}5 + 18 = 4{,}4 + 5{,}5 + 18 = 27{,}9~\text{kW}
+\]
+
+Avec coefficient de foisonnement $k_f = 0{,}85$ :
+\[
+  P_{\text{bilan}} = 27{,}9 \times 0{,}85 = \boxed{23{,}7~\text{kW}}
+\]
+
+Puissances réactives par équipement :
+\begin{itemize}
+  \item 2 pompes : $Q_{\text{pompes}} = 2 \times \frac{2{,}2 \times \sqrt{1-0{,}80^2}}{0{,}80} = 2 \times 1{,}65 = 3{,}30$~kvar
+  \item Ventilateur : $Q_{\text{vent}} = \frac{5{,}5 \times \sqrt{1-0{,}83^2}}{0{,}83} = \frac{5{,}5 \times 0{,}558}{0{,}83} = 3{,}70$~kvar
+  \item Groupe froid : $Q_{\text{froid}} = \frac{18 \times \sqrt{1-0{,}86^2}}{0{,}86} = \frac{18 \times 0{,}510}{0{,}86} = 10{,}67$~kvar
+\end{itemize}
+
+$Q_{\text{total,brut}} = 3{,}30 + 3{,}70 + 10{,}67 = 17{,}67$~kvar, avec foisonnement : $Q_{\text{bilan}} = 17{,}67 \times 0{,}85 = 15{,}0$~kvar
+
+\[
+  S_{\text{bilan}} = \sqrt{P_{\text{bilan}}^2 + Q_{\text{bilan}}^2} = \sqrt{23{,}7^2 + 15{,}0^2} = \sqrt{561{,}7 + 225{,}0} = \sqrt{786{,}7} = \boxed{28{,}0~\text{kVA}}
+\]
+
+\[
+  \cos\varphi_{\text{global}} = \frac{P_{\text{bilan}}}{S_{\text{bilan}}} = \frac{23{,}7}{28{,}0} = 0{,}846
+\]
+
+\textit{Question 2 — Courant total et calibre du disjoncteur général :}
+\[
+  I_{\text{total}} = \frac{S_{\text{bilan}}}{\sqrt{3} \cdot U} = \frac{28\,000}{\sqrt{3} \times 400} = \frac{28\,000}{693} = \boxed{40{,}4~\text{A}}
+\]
+
+Calibre du disjoncteur général : \textbf{50~A} (cran normalisé supérieur à 40,4~A). Vérifier le pouvoir de coupure selon l'Icc du réseau.
+
+\textit{Question 3 — Impact d'une batterie de condensateurs de 10~kvar :}
+
+Puissance réactive résiduelle après compensation :
+\[
+  Q' = Q_{\text{bilan}} - Q_C = 15{,}0 - 10{,}0 = 5{,}0~\text{kvar}
+\]
+\[
+  S' = \sqrt{23{,}7^2 + 5{,}0^2} = \sqrt{561{,}7 + 25{,}0} = \sqrt{586{,}7} = 24{,}2~\text{kVA}
+\]
+\[
+  \cos\varphi' = \frac{23{,}7}{24{,}2} = \boxed{0{,}979}
+\]
+
+\begin{methode}
+La batterie de 10~kvar améliore significativement le $\cos\varphi$ de 0,846 à 0,979, au-delà du seuil de 0,93 requis par les fournisseurs HTA. Elle réduit le courant total de 40,4~A à $24\,200/693 = 34{,}9$~A, soit une réduction de 14\,\%, permettant de câbler avec des sections de conducteurs plus faibles.
+\end{methode}
