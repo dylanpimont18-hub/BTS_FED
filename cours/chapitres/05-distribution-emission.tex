@@ -28,7 +28,9 @@
 
 La distribution et l'émission de chaleur constituent le maillon final entre la production (chaudière, PAC) et le confort des occupants. Un émetteur bien dimensionné et correctement alimenté garantit la température de consigne dans chaque local, avec un minimum de consommation énergétique.
 
-En GCF, le technicien supérieur est amené à concevoir les réseaux de distribution (tracé, diamètres, topologie), à sélectionner les émetteurs sur catalogue, à vérifier l'équilibrage hydraulique et à intervenir en cas de dysfonctionnement. Ce chapitre couvre les émetteurs statiques (radiateurs, planchers chauffants) et dynamiques (ventilo-convecteurs), ainsi que les architectures de réseaux bitubes et monotubes.
+En GCF, le technicien supérieur est amené à concevoir les réseaux de distribution (tracé, diamètres, topologie), à sélectionner les émetteurs sur catalogue, à vérifier l'équilibrage hydraulique et à intervenir en cas de dysfonctionnement. Ce chapitre couvre les émetteurs statiques (radiateurs, planchers chauffants) et dynamiques (ventilo-convecteurs, aérothermes), ainsi que les architectures de réseaux bitubes et monotubes.
+
+La transition vers les pompes à chaleur (PAC) impose une réflexion systématique sur le dimensionnement des émetteurs en basse température — un enjeu central pour la rénovation énergétique du parc bâti français.
 
 % ============================================================
 \section{Topologies des réseaux de distribution}
@@ -79,13 +81,31 @@ Dans un réseau monotube, les émetteurs sont raccordés en série sur une boucl
   \end{tabular}
 \end{table}
 
-\subsection{Réseau en antenne vs réseau en anneau}
+\subsection{Réseau en antenne, en anneau et en nourrice}
 
 \begin{itemize}
   \item \textbf{Réseau en antenne (arborescent)} : la plus répandue. Distribution depuis une nourrice centrale vers des branches. Simple à équilibrer avec la méthode de la branche index.
   \item \textbf{Réseau en anneau (boucle)} : tolérance aux pannes, utilisé dans les grands réseaux collectifs. Équilibrage plus complexe.
-  \item \textbf{Réseau en nourrice} : toutes les branches partent du même collecteur, longueurs quasi-égales. Équilibrage facilité. Standard pour les planchers chauffants.
+  \item \textbf{Réseau en nourrice (manifold)} : toutes les branches partent du même collecteur, longueurs quasi-égales. Équilibrage facilité. Standard pour les planchers chauffants.
 \end{itemize}
+
+\subsection{Températures de fonctionnement selon l'émetteur}
+
+\begin{table}[H]
+  \centering
+  \caption{Températures d'eau caractéristiques selon l'émetteur}
+  \begin{tabular}{lcccc}
+    \toprule
+    Émetteur & $T_{dep}$ (°C) & $T_{ret}$ (°C) & $\Delta T$ & Compatible PAC \\
+    \midrule
+    Radiateur haute T & 75–80 & 60–65 & 15 K & Non \\
+    Radiateur moyenne T & 60–70 & 45–55 & 15 K & Difficile \\
+    Radiateur basse T & 45–55 & 35–45 & 10–15 K & Oui (surdimensionné) \\
+    Ventilo-convecteur & 45–55 & 40–50 & 5–10 K & Oui \\
+    Plancher chauffant & 30–40 & 25–35 & 5–10 K & Idéal PAC \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
 % ============================================================
 \section{Radiateurs à eau chaude}
@@ -110,9 +130,9 @@ Un radiateur transfère la chaleur de l'eau chaude vers l'air ambiant par convec
   \end{tabular}
 \end{table}
 
-\subsection{Puissance nominale et correction}
+\subsection{Puissance nominale et correction selon les températures}
 
-La puissance des radiateurs est donnée dans les catalogues fabricants pour des conditions normalisées :
+La puissance des radiateurs est donnée dans les catalogues fabricants pour des conditions normalisées (NF EN 442) :
 \begin{itemize}
   \item Température d'eau : départ 75\,°C / retour 65\,°C (moyenne 70\,°C)
   \item Température ambiante : 20\,°C
@@ -127,25 +147,40 @@ En conditions réelles (températures différentes), il faut corriger la puissan
 \end{equation}
 \begin{itemize}
   \item $\Delta T_{réel} = T_{moy,eau} - T_{ambiante}$ : écart réel (\si{\kelvin})
-  \item $\Delta T_{nom} = \SI{50}{\kelvin}$ : écart nominal
+  \item $\Delta T_{nom} = \SI{50}{\kelvin}$ : écart nominal (NF EN 442)
   \item $n$ : exposant du radiateur — typiquement $n = 1{,}3$ pour un panneau acier, $n = 1{,}25$ pour un radiateur fonte
 \end{itemize}
+
+\begin{table}[H]
+  \centering
+  \caption{Facteur de correction de puissance selon les températures de fonctionnement ($n = 1{,}3$)}
+  \begin{tabular}{lccc}
+    \toprule
+    Régime d'eau & $T_{dep}$/\,$T_{ret}$ (°C) & $\Delta T_{réel}$ (K) & Facteur de correction \\
+    \midrule
+    Haute température (HT) & 75/65 & 50 & 1,000 \\
+    Moyenne température (MT) & 60/50 & 35 & 0,638 \\
+    Basse température PAC & 50/40 & 25 & 0,406 \\
+    Très basse température PAC & 45/38 & 21,5 & 0,327 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
 \begin{attention}
 Avec des émetteurs basse température (50/40\,°C, compatible PAC), $\Delta T_{réel} = 45 - 20 = \SI{25}{\kelvin}$. Le radiateur ne délivre que :
 \[
   \Phi_{50/40} = \Phi_{nom} \cdot \left(\frac{25}{50}\right)^{1{,}3} = \Phi_{nom} \times 0{,}406
 \]
-Un radiateur prévu pour 75/65\,°C devra être surdimensionné d'un facteur $\approx 2{,}5$ pour fonctionner à basse température. C'est un point critique lors du passage à une PAC.
+Un radiateur prévu pour 75/65\,°C devra être surdimensionné d'un facteur $\approx 2{,}5$ pour fonctionner à basse température. C'est un point critique lors du passage à une PAC en rénovation.
 \end{attention}
 
 \subsection{Sélection d'un radiateur}
 
 \begin{methode}[title=Sélection d'un radiateur sur catalogue]
 \begin{enumerate}
-  \item Calculer la puissance de déperdition du local à couvrir $\dot{Q}_{local}$ (W)
+  \item Calculer la puissance de déperdition du local $\dot{Q}_{local}$ (W) à la température de base
   \item Déterminer les températures de fonctionnement ($T_{dep}$, $T_{ret}$, $T_{amb}$)
-  \item Calculer $\Delta T_{réel}$
+  \item Calculer $\Delta T_{réel} = (T_{dep} + T_{ret})/2 - T_{amb}$
   \item Calculer la puissance nominale équivalente nécessaire :
   \[
     \Phi_{nom,néc} = \frac{\dot{Q}_{local}}{\left(\dfrac{\Delta T_{réel}}{50}\right)^n}
@@ -166,6 +201,20 @@ Le $K_{vs}$ (ou $K_v$ à ouverture maximale) est le débit en m³/h d'eau à tra
 \end{equation}
 \end{definition}
 
+\begin{table}[H]
+  \centering
+  \caption{Kvs courants des robinets thermostatiques selon le diamètre}
+  \begin{tabular}{lccc}
+    \toprule
+    DN robinet & $K_{vs}$ (m³/h) & Débit max à 0,5\,bar & Usage \\
+    \midrule
+    DN 10 & 0,18 & 127 L/h & Petit radiateur \\
+    DN 15 & 0,52 & 368 L/h & Radiateur standard \\
+    DN 20 & 1,10 & 778 L/h & Grand radiateur ou VEC \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
 % ============================================================
 \section{Planchers chauffants hydrauliques}
 % ============================================================
@@ -174,10 +223,10 @@ Le $K_{vs}$ (ou $K_v$ à ouverture maximale) est le débit en m³/h d'eau à tra
 
 Le plancher chauffant hydraulique (PCH) est un émetteur à très basse température (35/28\,°C typique) intégré dans la dalle. Il offre un confort thermique excellent (chaleur rayonnante au sol) et est parfaitement adapté aux PAC.
 
-\begin{definition}[title=Température de surface maximale réglementaire]
+\begin{definition}[title=Température de surface maximale réglementaire (NF EN 1264)]
 La NF EN 1264 limite la température de surface du plancher à :
 \begin{itemize}
-  \item \textbf{30\,°C} dans les zones habitées (pièces principales)
+  \item \textbf{29\,°C} dans les zones habitées (pièces principales) — ancienne limite 30\,°C
   \item \textbf{35\,°C} dans les zones de bordure (bande périmétrique de 1\,m)
   \item \textbf{33\,°C} dans les salles de bain
 \end{itemize}
@@ -201,13 +250,28 @@ Où $B$ est un coefficient dépendant du revêtement de sol (résistance thermiq
 \textbf{Étapes de dimensionnement :}
 \begin{enumerate}
   \item Calculer la puissance surfacique nécessaire : $q_{néc} = \dot{Q}_{local} / S_{local}$
-  \item Choisir le revêtement de sol (carrelage : $R = 0{,}02$\,m²K/W ; parquet : $R = 0{,}10$\,m²K/W)
+  \item Choisir le revêtement de sol (carrelage : $R = 0{,}01$--$0{,}02$\,m²K/W ; parquet : $R = 0{,}10$--$0{,}15$\,m²K/W)
   \item Fixer les températures ($T_{dep}$, $T_{ret}$, $T_{moy}$, $T_{amb}$)
   \item Calculer $B$ puis le pas $p = B \cdot (T_{moy} - T_{amb}) / q_{néc}$
   \item Arrondir à un pas normalisé : 75, 100, 150, 200, 250, 300\,mm
-  \item Vérifier que la température de surface ne dépasse pas la limite
+  \item Vérifier que la température de surface ne dépasse pas la limite réglementaire
 \end{enumerate}
 \end{methode}
+
+\begin{table}[H]
+  \centering
+  \caption{Coefficient $B$ et puissances maximales selon le revêtement de sol (NF EN 1264)}
+  \begin{tabular}{lccc}
+    \toprule
+    Revêtement & $R_{revêt}$ (m²K/W) & $B$ (W/m²K) & $q_{max}$ (W/m²) typique \\
+    \midrule
+    Carrelage, marbre & 0,00–0,02 & 5,2–5,8 & 60–80 \\
+    Parquet collé & 0,05–0,10 & 3,4–4,3 & 40–60 \\
+    Parquet flottant & 0,10–0,15 & 2,7–3,4 & 35–50 \\
+    Moquette & 0,15–0,20 & 2,3–2,7 & 25–40 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
 \begin{attention}
 Sous un parquet massif ($R_{revêt} > 0{,}15$\,m²K/W), la puissance surfacique maximale chute fortement. Vérifier la compatibilité du revêtement avant de valider le dimensionnement (label « Compatible plancher chauffant »).
@@ -219,10 +283,25 @@ Le collecteur distribue l'eau chaude vers les différentes boucles du plancher. 
 \begin{itemize}
   \item Des débitmètres par boucle (en verre ou numériques) pour l'équilibrage
   \item Des têtes thermoélectriques (actionneurs) commandées par les thermostats de pièce
-  \item Un organe de sécurité (soupape) et un purgeur
+  \item Un organe de sécurité (soupape) et un purgeur automatique
 \end{itemize}
 
 \textbf{Longueur maximale d'une boucle :} 100 à 120\,m pour limiter les pertes de charge (pression différentielle au collecteur typique : 15 à 30\,kPa).
+
+\begin{table}[H]
+  \centering
+  \caption{Longueurs de boucle typiques selon le pas de tube et la surface}
+  \begin{tabular}{lccc}
+    \toprule
+    Pas de tube & Surface par boucle (m²) & Longueur boucle (m) & Remarque \\
+    \midrule
+    100 mm & 8 m² & 80 m & 1 boucle suffit \\
+    150 mm & 12 m² & 80 m & 1 boucle \\
+    200 mm & 20 m² & 100 m & 1 ou 2 boucles \\
+    300 mm & 30 m² & 100 m & 2 boucles recommandées \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
 % ============================================================
 \section{Ventilo-convecteurs}
@@ -242,13 +321,23 @@ Un ventilo-convecteur est un émetteur dynamique : il comporte un échangeur à 
     Nombre de circuits hydrauliques & 1 (chaud \textbf{ou} froid) & 2 (chaud \textbf{et} froid) \\
     Chauffage et froid simultanés & Non & Oui \\
     Coût d'installation & Faible & Élevé \\
-    Flexibilité & Limitée (saison) & Totale \\
+    Flexibilité saisonnière & Limitée (saison) & Totale \\
+    Changement saisonnier & Nécessaire & Inutile \\
     Usage typique & Logement collectif & Hôtel, bureaux, tertiaire \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-\textbf{Puissances typiques :} de 0,5 à 5\,kW en chauffage selon le modèle. Vitesse du ventilateur réglable (silencieux / moyen / fort).
+\textbf{Puissances typiques :} de 0,5 à 5\,kW en chauffage selon le modèle. Vitesse du ventilateur réglable (silencieux / moyen / fort — critère de sélection acoustique important, NR 30-35 en résidentiel).
+
+\begin{definition}[title=Conditions normalisées de puissance VEC (NF EN 14240)]
+Les performances des ventilo-convecteurs sont mesurées dans des conditions normalisées :
+\begin{itemize}
+  \item Chauffage : eau 70/60\,°C, air ambiant 20\,°C (EN 14240)
+  \item Refroidissement : eau 7/12\,°C, air ambiant 27\,°C / HR 50\,\%
+\end{itemize}
+En conditions réelles (PAC basse T : 45/40\,°C), appliquer la même correction que pour les radiateurs.
+\end{definition}
 
 % ============================================================
 \section{Aérothermes}
@@ -261,14 +350,31 @@ Un aérotherme est un grand ventilo-convecteur à soufflage d'air chaud, utilis�
 \textbf{Puissances typiques :} 10 à 100\,kW. Température de soufflage : 40 à 60\,°C. Portée du jet d'air : 10 à 30\,m.
 
 \begin{attention}
-L'aérotherme crée des mouvements d'air importants, ce qui peut causer de la poussière en suspension. À éviter dans les locaux propres (agro-alimentaire, médical) et à combiner avec une étude acoustique dans les locaux de travail (directive bruit au travail).
+L'aérotherme crée des mouvements d'air importants, ce qui peut causer de la poussière en suspension. À éviter dans les locaux propres (agro-alimentaire, médical) et à combiner avec une étude acoustique dans les locaux de travail (directive bruit au travail — niveau sonore $\leq 80$\,dB(A) sur 8\,h).
 \end{attention}
+
+\begin{table}[H]
+  \centering
+  \caption{Comparatif des émetteurs de chaleur hydrauliques — synthèse}
+  \begin{tabular}{p{2.5cm}p{2.5cm}p{2.5cm}p{2.5cm}p{2.5cm}}
+    \toprule
+    Critère & Radiateur & PCH & VEC & Aérotherme \\
+    \midrule
+    T° eau (PAC) & Difficile & Idéal & Bien & Bien \\
+    Confort & Bon & Excellent & Bon & Moyen \\
+    Inertie & Faible-moy. & Forte & Faible & Très faible \\
+    Bruit & Nul & Nul & Léger & Élevé \\
+    Investissement & Faible & Moyen & Moyen & Faible \\
+    Usage principal & Résidentiel & Résidentiel neuf & Tertiaire & Industrie \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
 % ============================================================
 \section{Exemples résolus}
 % ============================================================
 
-\begin{exemple}[title=Sélection d'un radiateur pour fonctionnement PAC]
+\begin{exemple}[title=Sélection d'un radiateur pour fonctionnement PAC basse température]
 \textbf{Énoncé :} Un séjour de 30\,m² présente des déperditions de \SI{1400}{\watt} pour $T_{ext} = -7$\,°C, $T_{amb} = 20$\,°C. La PAC fonctionne en 45/38\,°C. Sélectionner le radiateur (exposant $n = 1{,}3$).
 
 \textbf{Étape 1 : Écart de température réel}
@@ -287,9 +393,15 @@ L'aérotherme crée des mouvements d'air importants, ce qui peut causer de la po
 \textbf{Étape 3 : Sélection catalogue}
 Retenir un radiateur panneau acier type 22 (2 panneaux + 2 rangées d'ailettes) de puissance nominale $\geq$ \SI{3800}{\watt}.
 
-\textbf{Exemple :} Radiateur 22/600/1600 → puissance nominale 3936\,W (à vérifier catalogue fabricant). ✅
+Exemple : Radiateur 22/600/1600 → puissance nominale 3936\,W (à vérifier catalogue fabricant).
 
-\textbf{À noter :} Le même local avec des radiateurs 75/65\,°C n'aurait nécessité qu'un radiateur de \SI{1400}{\watt} nominal — le passage PAC multiplie par 2,5 la puissance nominale requise.
+\textbf{À noter :} Le même local avec des radiateurs 75/65\,°C n'aurait nécessité qu'un radiateur de \SI{1400}{\watt} nominal — le passage PAC multiplie par \textbf{2,7} la puissance nominale requise.
+
+\textbf{Vérification à la puissance partiellement réduite :} Si la PAC monte à 55/45\,°C ($\Delta T_{réel} = 30$\,K) en période de grand froid :
+\[
+  \Phi_{55/45} = 3936 \times \left(\frac{30}{50}\right)^{1{,}3} = 3936 \times 0{,}534 = \SI{2102}{\watt} > 1400\,\text{W}
+\]
+Le radiateur sélectionné couvre les besoins même en conditions normales d'hiver.
 \end{exemple}
 
 \begin{exemple}[title=Dimensionnement d'une boucle de plancher chauffant]
@@ -310,121 +422,28 @@ Retenir un radiateur panneau acier type 22 (2 panneaux + 2 rangées d'ailettes) 
   T_{moy} = \frac{35 + 28}{2} = \SI{31{,}5}{\celsius}
 \]
 
-\textbf{Étape 4 : Pas de tube}
+\textbf{Étape 4 : Puissance surfacique disponible à $p = 300$\,mm (pas max)}
 \[
-  p = \frac{B \cdot (T_{moy} - T_{amb})}{q_{néc}} = \frac{5{,}46 \times (31{,}5 - 20)}{40} = \frac{5{,}46 \times 11{,}5}{40} = \frac{62{,}8}{40} = \SI{1{,}57}{\metre}
+  q_{disp} = B \times \frac{T_{moy} - T_{amb}}{p} = 5{,}46 \times \frac{31{,}5 - 20}{0{,}30} = 5{,}46 \times \frac{11{,}5}{0{,}30} = \SI{209}{\watt\per\square\metre}
 \]
 
-\begin{attention}
-Un pas de 1,57\,m est irréaliste ! Recalculons : $B \cdot (T_{moy} - T_{amb}) = 5{,}46 \times 11{,}5 = 62{,}8$\,W/m². La puissance surfacique disponible (62,8\,W/m²) est déjà supérieure à la puissance nécessaire (40\,W/m²). Choisir le pas maximal : \textbf{300\,mm}.
-\end{attention}
+$q_{disp} = 209$\,W/m² $\gg$ $q_{néc} = 40$\,W/m² → le pas maximal de 300\,mm est largement suffisant.
 
-\textbf{Vérification avec $p = 0{,}30$\,m :}
-\[
-  q_{réel} = B \cdot \frac{(T_{moy} - T_{amb})}{p} = 5{,}46 \times \frac{11{,}5}{0{,}30} = \SI{209}{\watt\per\square\metre}
-\]
-Mais cette formule simplifiée n'est valable que pour $q < q_{max}$ (environ 100\,W/m²). En pratique, avec $p = 300$\,mm et ces températures, la puissance surfacique est bien suffisante (40\,W/m² << 100\,W/m² maxi).
-
-\textbf{Longueur de tube pour la chambre :}
+\textbf{Étape 5 : Longueur de tube pour la chambre}
 \[
   L_{tube} = \frac{S_{chambre}}{p} = \frac{12}{0{,}30} = \SI{40}{\metre}
 \]
-Acceptable (< 100\,m). Une seule boucle suffit.
+Acceptable ($< 100$\,m). Une seule boucle suffit.
+
+\textbf{Vérification température de surface :} Avec $B = 5{,}46$ et $q = 40$\,W/m², la température de surface est :
+\[
+  T_{surface} = T_{amb} + q / B_{sol} \approx 20 + 40/12 \approx \SI{23{,}3}{\celsius}
+\]
+Bien inférieure à 29\,°C — conforme NF EN 1264.
 \end{exemple}
 
-% ============================================================
-\section{Exercices d'application}
-% ============================================================
-
-\exercice{Réseau bitube — sélection des radiateurs d'un appartement}
-
-Un appartement de 4 pièces doit être équipé de radiateurs à eau chaude 70/55\,°C ($T_{amb} = 20$\,°C, exposant $n = 1{,}3$). Les déperditions par pièce sont :
-
-\begin{center}
-\begin{tabular}{lcc}
-  \toprule
-  Pièce & Déperditions (W) & Surface (m²) \\
-  \midrule
-  Séjour & 1600 & 25 \\
-  Chambre 1 & 800 & 12 \\
-  Chambre 2 & 700 & 10 \\
-  Cuisine & 500 & 8 \\
-  \bottomrule
-\end{tabular}
-\end{center}
-
-\begin{enumerate}
-  \item Calculer la puissance nominale nécessaire pour chaque pièce.
-  \item Calculer la puissance totale à fournir. Vérifier la cohérence avec le dimensionnement de la chaudière.
-\end{enumerate}
-
-\textbf{Corrigé :}
-
-\textit{Question 1 — Écart de température réel :}
-\[
-  T_{moy} = \frac{70 + 55}{2} = \SI{62{,}5}{\celsius}, \quad \Delta T_{réel} = 62{,}5 - 20 = \SI{42{,}5}{\kelvin}
-\]
-\[
-  \text{Facteur correction} = \left(\frac{42{,}5}{50}\right)^{1{,}3} = (0{,}85)^{1{,}3} = 0{,}826
-\]
-
-\begin{center}
-\begin{tabular}{lcc}
-  \toprule
-  Pièce & Déperditions (W) & $\Phi_{nom,néc}$ = Dép. / 0,826 (W) \\
-  \midrule
-  Séjour & 1600 & 1937 \\
-  Chambre 1 & 800 & 969 \\
-  Chambre 2 & 700 & 848 \\
-  Cuisine & 500 & 605 \\
-  \midrule
-  \textbf{Total} & \textbf{3600} & \textbf{4359} \\
-  \bottomrule
-\end{tabular}
-\end{center}
-
-\textit{Question 2 :} La puissance totale de déperditions est 3600\,W. La chaudière devra fournir au minimum 3,6\,kW, majoré des pertes de distribution (5–10\,\%) → chaudière $\geq$ 4\,kW.
-
-\exercice{Plancher chauffant — dimensionnement complet d'une pièce}
-
-Un salon de 20\,m² présente des déperditions de \SI{900}{\watt}. Revêtement : parquet flottant compatible PCH ($R_{revêt} = \SI{0{,}10}{\square\metre\kelvin\per\watt}$). Le PCH fonctionne en 40/32\,°C, $T_{amb} = 20$\,°C.
-
-\begin{enumerate}
-  \item Calculer la puissance surfacique nécessaire.
-  \item Calculer le coefficient $B$ et la puissance surfacique disponible avec $p = 150$\,mm.
-  \item Calculer la longueur de tube nécessaire.
-  \item Vérifier si une seule boucle suffit.
-\end{enumerate}
-
-\textbf{Corrigé :}
-
-\textit{Question 1 :}
-\[
-  q_{néc} = \frac{900}{20} = \SI{45}{\watt\per\square\metre}
-\]
-
-\textit{Question 2 :}
-\[
-  B = \frac{1}{0{,}173 + 0{,}10} = \frac{1}{0{,}273} = \SI{3{,}66}{\watt\per\square\metre\per\kelvin}
-\]
-\[
-  T_{moy} = \frac{40 + 32}{2} = \SI{36}{\celsius}, \quad \Delta T = 36 - 20 = \SI{16}{\kelvin}
-\]
-\[
-  q_{disp} = B \times \frac{\Delta T}{p} = 3{,}66 \times \frac{16}{0{,}15} = \SI{390}{\watt\per\square\metre}
-\]
-La puissance disponible (390\,W/m²) est très largement supérieure à la puissance nécessaire (45\,W/m²). Même avec $p = 300$\,mm, $q = 195$\,W/m² >> 45\,W/m². Choisir $p = \SI{300}{\milli\metre}$.
-
-\textit{Question 3 — Longueur de tube :}
-\[
-  L_{tube} = \frac{S}{p} = \frac{20}{0{,}30} = \SI{67}{\metre}
-\]
-
-\textit{Question 4 :} 67\,m < 100\,m → une seule boucle suffit. ✅
-
-\exercice{Diagnostic d'un radiateur sous-performant}
-
-Un technicien mesure sur un radiateur de bureau les valeurs suivantes :
+\begin{exemple}[title=Diagnostic d'un radiateur sous-performant]
+\textbf{Énoncé :} Un technicien mesure sur un radiateur de bureau les valeurs suivantes :
 \begin{itemize}
   \item Température entrée eau : 68\,°C
   \item Température sortie eau : 58\,°C
@@ -433,37 +452,32 @@ Un technicien mesure sur un radiateur de bureau les valeurs suivantes :
 \end{itemize}
 Le local présente des déperditions de 1200\,W. Le radiateur a une puissance nominale de 1800\,W (en 75/65/20\,°C, $n = 1{,}3$).
 
-\begin{enumerate}
-  \item Calculer la puissance thermique réellement délivrée.
-  \item Calculer la puissance théorique attendue dans ces conditions.
-  \item Analyser l'écart et proposer des pistes de diagnostic.
-\end{enumerate}
-
-\textbf{Corrigé :}
-
-\textit{Question 1 — Puissance réelle mesurée :}
+\textit{1 — Puissance thermique réellement délivrée :}
 \[
-  \dot{m} = \frac{40}{3600} \times 1000 \times \frac{1}{1000} = \SI{0{,}0111}{\kilogram\per\second}
+  \dot{m} = \frac{40 \times 978}{3600 \times 1000} = \SI{0{,}01087}{\kilogram\per\second}
 \]
 \[
-  \dot{Q}_{réel} = \dot{m} \times c_p \times \Delta T = 0{,}0111 \times 4186 \times (68 - 58) = \SI{465}{\watt}
+  \dot{Q}_{réel} = 0{,}01087 \times 4186 \times (68 - 58) = \SI{455}{\watt}
 \]
 
-\textit{Question 2 — Puissance théorique attendue :}
+\textit{2 — Puissance théorique attendue dans ces conditions :}
 \[
   T_{moy} = \frac{68 + 58}{2} = \SI{63}{\celsius}, \quad \Delta T_{réel} = 63 - 18 = \SI{45}{\kelvin}
 \]
 \[
-  \dot{Q}_{théo} = 1800 \times \left(\frac{45}{50}\right)^{1{,}3} = 1800 \times (0{,}90)^{1{,}3} = 1800 \times 0{,}870 = \SI{1566}{\watt}
+  \dot{Q}_{théo} = 1800 \times \left(\frac{45}{50}\right)^{1{,}3} = 1800 \times 0{,}870 = \SI{1566}{\watt}
 \]
 
-\textit{Question 3 — Analyse :} Écart massif : 465\,W mesuré vs 1566\,W théorique (−70\,\%). Pistes de diagnostic :
+\textit{3 — Analyse :} Écart massif : 455\,W mesuré vs 1566\,W théorique ($-71\,\%$). Pistes de diagnostic :
 \begin{itemize}
-  \item Débit très faible (40\,L/h vs débit nominal probablement 100–150\,L/h) → robinet thermostatique bloqué ou partiellement fermé
-  \item Présence d'air dans le radiateur → purge nécessaire
-  \item Encrassement intérieur (boues) réduisant le débit et l'échange thermique
-  \item Vanne d'équilibrage trop fermée → mesurer la pression différentielle
+  \item \textbf{Débit très faible} (40\,L/h vs débit nominal estimé 100–150\,L/h) → robinet thermostatique bloqué ou trop fermé
+  \item Présence d'air dans le radiateur → purge nécessaire (purger le point haut)
+  \item Encrassement intérieur (boues magnétiques) réduisant le débit et l'échange thermique
+  \item Vanne d'équilibrage trop fermée → mesurer la pression différentielle aux bornes du radiateur
 \end{itemize}
+
+\textbf{Action corrective :} Purger le radiateur, vérifier l'ouverture du robinet thermostatique et du robinet de retour, mesurer le débit après correction.
+\end{exemple}
 
 % ============================================================
 \section{Éléments de réglementation}
@@ -472,7 +486,9 @@ Le local présente des déperditions de 1200\,W. Le radiateur a une puissance no
 \begin{description}
   \item[NF EN 1264] Systèmes de chauffage et de rafraîchissement intégrés dans les planchers — exigences de calcul, dimensionnement et essais. Norme de référence pour les planchers chauffants hydrauliques. Fixe les températures de surface maximales.
 
-  \item[NF EN 442] Radiateurs et convecteurs — spécifications et essais techniques. Définit les conditions normalisées de mesure des puissances (75/65/20\,°C) et les méthodes d'essai.
+  \item[NF EN 442] Radiateurs et convecteurs — spécifications et essais techniques. Définit les conditions normalisées de mesure des puissances (75/65/20\,°C) et les méthodes d'essai. Les données des catalogues fabricants sont établies selon cette norme.
+
+  \item[NF EN 14240] Ventilo-convecteurs — spécifications et essais. Conditions normalisées de mesure des puissances en chaud et en froid pour les fan-coils.
 
   \item[NF EN 15316] Systèmes de chauffage dans les bâtiments — méthode de calcul des besoins en énergie et des rendements du système (distribution, émission, régulation). Utilisée pour le calcul réglementaire RE2020.
 
@@ -481,4 +497,6 @@ Le local présente des déperditions de 1200\,W. Le radiateur a une puissance no
   \item[DTU 65.14 — NF P52-307] Exécution des planchers chauffants à eau chaude. Prescrit les règles de pose, les distances minimales aux murs, les joints de dilatation et les conditions de mise en eau.
 
   \item[DTU 65.11 — NF P52-211] Dispositifs de sécurité pour installations de chauffage central. S'applique aux réseaux de distribution : soupapes de sécurité, vases d'expansion, pression maximale de service.
+
+  \item[Décret du 25 juin 2019 (robinets thermostatiques)] Obligation d'équiper de robinets thermostatiques (ou autre régulation locale) tous les radiateurs alimentés par le réseau collectif dans les logements neufs et à l'occasion de travaux.
 \end{description}
