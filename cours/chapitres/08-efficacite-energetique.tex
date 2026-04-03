@@ -1,0 +1,690 @@
+\chapter{Efficacité énergétique et RE2020}
+
+% ============================================================
+\section{Objectifs pédagogiques}
+% ============================================================
+
+À l'issue de ce chapitre, l'étudiant sera capable de :
+
+\begin{itemize}
+  \item Identifier et calculer les indicateurs réglementaires de la RE2020 (Bbio, Cep, Cep,nr, DH, IC\textsubscript{énergie}, IC\textsubscript{construction}).
+  \item Lire et interpréter un Diagnostic de Performance Énergétique (DPE).
+  \item Comparer les systèmes CVC à haute efficacité : pompes à chaleur, CTA double flux, récupération de chaleur.
+  \item Calculer les consommations conventionnelles d'une installation CVC selon la méthode réglementaire.
+  \item Situer les labels et certifications énergétiques (BBC, BEPOS, HQE, E+C-) dans leur contexte professionnel.
+\end{itemize}
+
+\medskip
+\noindent\textbf{Compétences GCF mobilisées :}
+\begin{itemize}
+  \item C1-2 — Exprimer les contraintes réglementaires, environnementales, économiques.
+  \item C3-2 — Comparer et proposer des solutions (critères technique, économique, environnemental, normatif).
+  \item C3-3 — Dimensionner tout ou partie selon les normes (notes de calcul justifiées).
+  \item C5 — Appliquer les réglementations en vigueur (S5.1 — Réglementation thermique, niveau 3).
+  \item C8 — Vérifier, adapter les performances d'un système (S10.6 — Critères de bon fonctionnement).
+\end{itemize}
+
+\medskip
+\noindent\textbf{Savoirs associés principaux :} S5.1, S5.10, S6.6, A2-3, A2-4, B1-1, B2-1, B6-3, B9.
+
+% ============================================================
+\section{Introduction}
+% ============================================================
+
+La transition énergétique du secteur du bâtiment constitue un enjeu majeur en France : les bâtiments représentent environ 45~\% de la consommation d'énergie finale nationale et 25~\% des émissions de gaz à effet de serre. Pour un technicien supérieur en génie climatique et fluidique, maîtriser les exigences réglementaires et les indicateurs de performance énergétique est indispensable, qu'il s'agisse de concevoir une installation neuve conforme à la RE2020, d'optimiser un système existant en vue d'un audit énergétique, ou de justifier le choix d'équipements à haute efficacité face à un maître d'ouvrage. Ce chapitre présente les fondements réglementaires actuels, les outils de calcul associés, et les systèmes techniques permettant d'atteindre — voire de dépasser — les exigences en vigueur.
+
+% ============================================================
+\section{La réglementation thermique RE2020}
+% ============================================================
+
+\subsection{Historique et champ d'application}
+
+La Réglementation Environnementale 2020 (RE2020) est entrée en vigueur pour les logements neufs au \textbf{1\textsuperscript{er} janvier 2022}, puis pour les bâtiments de bureaux et d'enseignement au 1\textsuperscript{er} juillet 2022. Elle succède à la RT2012 en renforçant trois axes :
+
+\begin{enumerate}
+  \item La \textbf{sobriété énergétique} : réduire les besoins en énergie du bâti.
+  \item La \textbf{décarbonation} : réduire les émissions de CO\textsubscript{2} liées à l'énergie et à la construction.
+  \item Le \textbf{confort d'été} : limiter l'inconfort thermique sans recourir à la climatisation.
+\end{enumerate}
+
+\begin{definition}[title=Champ d'application de la RE2020]
+La RE2020 s'applique aux bâtiments neufs à usage de logement, bureaux et enseignement dont le permis de construire est déposé après les dates d'entrée en vigueur. Les bâtiments existants restent soumis à des réglementations spécifiques (décret tertiaire, obligation de rénovation énergétique).
+\end{definition}
+
+\subsection{Les indicateurs réglementaires RE2020}
+
+La RE2020 introduit \textbf{six indicateurs} principaux. Trois existaient sous forme modifiée en RT2012 ; trois sont nouveaux.
+
+\subsubsection{Bbio — Besoin bioclimatique}
+
+\begin{definition}[title=Bbio — Besoin bioclimatique conventionnel]
+Le Bbio (sans unité) quantifie les besoins en énergie du bâti pour le chauffage, le refroidissement et l'éclairage, \textbf{indépendamment des systèmes énergétiques}. Il caractérise la qualité de l'enveloppe et de la conception architecturale.
+\end{definition}
+
+\begin{equation}
+  \text{Bbio} = \text{Bbio}_{\text{ch}} + \text{Bbio}_{\text{fr}} + \text{Bbio}_{\text{éclairage}}
+\end{equation}
+
+La RE2020 impose :
+\begin{equation}
+  \text{Bbio} \leq \text{Bbio}_{\text{max}} \times M_{\text{zone}} \times M_{\text{alt}} \times M_{\text{surface}}
+\end{equation}
+
+où $M_{\text{zone}}$, $M_{\text{alt}}$, $M_{\text{surface}}$ sont des modulateurs géographiques et dimensionnels.
+
+\begin{attention}
+Le Bbio est calculé par un logiciel réglementaire (COMETH ou équivalent) à partir des données architecturales. Son abaissement nécessite d'agir sur l'isolation, l'inertie, les apports solaires et l'étanchéité à l'air — \textbf{avant} de dimensionner les équipements CVC.
+\end{attention}
+
+\subsubsection{Cep — Consommation d'énergie primaire conventionnelle}
+
+\begin{definition}[title=Cep — Consommation en énergie primaire]
+Le Cep (en \si{\kWh_{ep} \per \m^2 \per \year}) est la consommation conventionnelle annuelle en énergie primaire pour le chauffage, le refroidissement, l'eau chaude sanitaire (ECS), l'éclairage et les auxiliaires (pompes, ventilateurs).
+\end{definition}
+
+\begin{equation}
+  \text{Cep} = \sum_{i} \frac{C_{\text{ef},i} \times \text{fep}_i}{S_{\text{ref}}}
+  \label{eq:cep}
+\end{equation}
+
+où :
+\begin{itemize}
+  \item $C_{\text{ef},i}$ — consommation en énergie finale pour l'usage $i$ [\si{\kWh \per \year}]
+  \item $\text{fep}_i$ — coefficient de conversion énergie finale $\rightarrow$ énergie primaire pour l'énergie $i$
+  \item $S_{\text{ref}}$ — surface de référence du bâtiment [\si{\m^2}]
+\end{itemize}
+
+\medskip
+\noindent\textbf{Coefficients fep réglementaires (RE2020) :}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{lc}
+    \toprule
+    Énergie & $\text{fep}$ \\
+    \midrule
+    Électricité & 2,3 \\
+    Gaz naturel & 1,0 \\
+    Fioul domestique & 1,0 \\
+    Réseau de chaleur & variable (arrêté) \\
+    Bois — biomasse & 1,0 \\
+    \bottomrule
+  \end{tabular}
+  \caption{Coefficients de conversion énergie finale / énergie primaire (RE2020)}
+\end{table}
+
+\subsubsection{Cep,nr — Consommation d'énergie primaire non renouvelable}
+
+\begin{definition}[title=Cep,nr — Indicateur clé RE2020]
+Le Cep,nr (en \si{\kWh_{ep,nr} \per \m^2 \per \year}) est le \textbf{nouvel indicateur central} de la RE2020 : il ne comptabilise que la part \textbf{non renouvelable} de l'énergie primaire consommée. L'énergie solaire, la pompe à chaleur (fraction renouvelable) et la biomasse sont valorisées.
+\end{definition}
+
+\begin{equation}
+  \text{Cep,nr} = \sum_{i} \frac{C_{\text{ef},i} \times \text{fep,nr}_i}{S_{\text{ref}}}
+\end{equation}
+
+Le seuil Cep,nr\textsubscript{max} varie de \SI{35}{\kWh_{ep,nr} \per \m^2 \per \year} (zones climatiques clémentes) à \SI{70}{\kWh_{ep,nr} \per \m^2 \per \year} (zones froides, petites surfaces).
+
+\subsubsection{DH — Degrés-heures d'inconfort thermique estival}
+
+\begin{definition}[title=DH — Indicateur de confort d'été]
+Le DH (en \si{\degreeCelsius \cdot h \per \year}) mesure l'inconfort thermique estival. Il comptabilise la somme des écarts positifs entre la température opérative intérieure et un seuil de confort, sur l'ensemble de la période estivale.
+\end{definition}
+
+\begin{equation}
+  \text{DH} = \sum_{\text{été}} \max\!\left(0,\; T_{\text{op}} - T_{\text{confort}}\right) \times \Delta t
+\end{equation}
+
+La RE2020 fixe :
+\begin{itemize}
+  \item DH $\leq$ 350 \si{\degreeCelsius \cdot h} : aucune pénalité
+  \item 350 $<$ DH $\leq$ 1\,250 \si{\degreeCelsius \cdot h} : exigence maximale tolérée
+  \item DH $>$ 1\,250 \si{\degreeCelsius \cdot h} : non-conformité
+\end{itemize}
+
+\subsubsection{IC\textsubscript{énergie} et IC\textsubscript{construction} — Impact carbone}
+
+\begin{definition}[title=IC — Indicateurs carbone (nouveautés RE2020)]
+\begin{itemize}
+  \item \textbf{IC\textsubscript{énergie}} [\si{\kgCO_2eq \per \m^2}] : émissions de GES liées aux consommations d'énergie sur la durée de vie du bâtiment (50 ans conventionnels).
+  \item \textbf{IC\textsubscript{construction}} [\si{\kgCO_2eq \per \m^2}] : émissions liées aux matériaux et procédés de construction (énergie grise). Calculé via les FDES (Fiches de Déclaration Environnementale et Sanitaire).
+\end{itemize}
+Ces indicateurs sont calculés par Analyse de Cycle de Vie (ACV) dynamique.
+\end{definition}
+
+Les seuils IC\textsubscript{construction} se renforcent par paliers : 2025, 2028, 2031, conduisant progressivement vers des constructions biosourcées ou à faible empreinte carbone.
+
+% ============================================================
+\section{Diagnostic de Performance Énergétique (DPE)}
+% ============================================================
+
+\subsection{Définition et cadre réglementaire}
+
+Le DPE est un document réglementaire (loi Grenelle, réforme 2021) obligatoire pour la vente et la location de tout bâtiment à usage d'habitation. Depuis le \textbf{1\textsuperscript{er} juillet 2021}, le DPE est opposable juridiquement et sa méthode de calcul est unifiée (3CL-DPE 2021).
+
+\begin{definition}[title=Étiquettes DPE]
+Le DPE classe le logement sur deux échelles de A à G :
+\begin{itemize}
+  \item \textbf{Énergie} : consommation en énergie primaire [\si{\kWh_{ep} \per \m^2 \per \year}]
+  \item \textbf{Climat} : émissions de GES [\si{\kgCO_2eq \per \m^2 \per \year}]
+\end{itemize}
+La classe retenue est la moins favorable des deux.
+\end{definition}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{ccc}
+    \toprule
+    Classe & Énergie primaire [\si{\kWh_{ep} \per \m^2 \per \year}] & GES [\si{\kgCO_2eq \per \m^2 \per \year}] \\
+    \midrule
+    A & $\leq 70$  & $\leq 6$   \\
+    B & $\leq 110$ & $\leq 11$  \\
+    C & $\leq 180$ & $\leq 30$  \\
+    D & $\leq 250$ & $\leq 50$  \\
+    E & $\leq 330$ & $\leq 70$  \\
+    F & $\leq 420$ & $\leq 100$ \\
+    G & $> 420$    & $> 100$    \\
+    \bottomrule
+  \end{tabular}
+  \caption{Seuils DPE 2021 — logements résidentiels}
+\end{table}
+
+\subsection{Audit énergétique réglementaire}
+
+Depuis le 1\textsuperscript{er} avril 2023, les logements classés F ou G mis en vente doivent être accompagnés d'un \textbf{audit énergétique} (décret n°2022-780). Cet audit inclut :
+\begin{itemize}
+  \item L'analyse de l'enveloppe et des systèmes existants.
+  \item Au moins deux scénarios de rénovation par étapes menant à la classe B.
+  \item L'estimation des coûts et des aides financières (MaPrimeRénov', CEE).
+\end{itemize}
+
+Le technicien GCF intervient en proposant les solutions CVC adaptées : PAC, ventilation double flux, régulation, isolation des réseaux.
+
+% ============================================================
+\section{Systèmes CVC à haute efficacité énergétique}
+% ============================================================
+
+\subsection{Pompes à chaleur (PAC)}
+
+\subsubsection{Principe et indicateurs de performance}
+
+\begin{definition}[title=Coefficient de Performance — COP et SCOP]
+\begin{itemize}
+  \item \textbf{COP} (Coefficient Of Performance) : rapport de la puissance thermique utile sur la puissance électrique absorbée en régime permanent, à des conditions normalisées (EN 14511).
+  \item \textbf{SCOP} (Seasonal COP) : COP saisonnier, intégré sur toute la saison de chauffage selon EN 14825. C'est l'indicateur réglementaire pour la RE2020.
+\end{itemize}
+\end{definition}
+
+\begin{equation}
+  \text{COP} = \frac{P_{\text{ch}}}{P_{\text{élec}}}
+  \label{eq:cop}
+\end{equation}
+
+\begin{equation}
+  \text{SCOP} = \frac{Q_{\text{ch,saison}}}{W_{\text{élec,saison}}}
+  \label{eq:scop}
+\end{equation}
+
+\medskip
+\noindent\textbf{Valeurs typiques pour les PAC air/eau :}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{lcc}
+    \toprule
+    Type de PAC & COP (A7/W35) & SCOP moyen \\
+    \midrule
+    Air/eau monobloc & 3,2 -- 4,5 & 2,8 -- 3,8 \\
+    Air/eau split & 3,5 -- 5,0 & 3,0 -- 4,2 \\
+    Eau glycolée/eau (géothermique) & 4,5 -- 6,5 & 4,0 -- 5,5 \\
+    \bottomrule
+  \end{tabular}
+  \caption{COP et SCOP typiques des PAC (conditions EN 14511)}
+\end{table}
+
+\begin{attention}
+Le COP dépend fortement des températures de source froide et de condensation. Une PAC air/eau dimensionnée pour des planchers chauffants (35°C) aura un COP nettement supérieur à une PAC alimentant des radiateurs haute température (70°C).
+\end{attention}
+
+\subsubsection{Fraction renouvelable et Cep,nr}
+
+La part renouvelable de l'énergie produite par une PAC est :
+
+\begin{equation}
+  Q_{\text{renouvelable}} = Q_{\text{ch}} - W_{\text{élec}} = Q_{\text{ch}} \left(1 - \frac{1}{\text{COP}}\right)
+\end{equation}
+
+Dans le calcul RE2020, la PAC électrique bénéficie d'un coefficient fep,nr réduit car une fraction de sa production est d'origine renouvelable, ce qui améliore directement le Cep,nr.
+
+\subsection{Centrale de traitement d'air double flux avec récupération}
+
+\subsubsection{Rendement de récupération thermique}
+
+\begin{definition}[title=Rendement de récupération thermique $\eta_r$]
+Le rendement de récupération (ou efficacité thermique) d'un échangeur air/air exprime la fraction de l'énergie de l'air extrait récupérée pour préchauffer (ou pré-refroidir) l'air neuf.
+\end{definition}
+
+\begin{equation}
+  \eta_r = \frac{T_{\text{soufflage}} - T_{\text{extérieur}}}{T_{\text{extrait}} - T_{\text{extérieur}}}
+  \label{eq:eta_recup}
+\end{equation}
+
+où :
+\begin{itemize}
+  \item $T_{\text{soufflage}}$ — température de l'air neuf après l'échangeur [\si{\degreeCelsius}]
+  \item $T_{\text{extérieur}}$ — température de l'air extérieur [\si{\degreeCelsius}]
+  \item $T_{\text{extrait}}$ — température de l'air extrait [\si{\degreeCelsius}]
+\end{itemize}
+
+Les échangeurs à contre-courant atteignent $\eta_r = $ 75 à 95~\%. La norme EN 308 définit les conditions d'essai. La RE2020 exige $\eta_r \geq $ 75~\% pour les systèmes double flux collectifs.
+
+\subsubsection{Économie d'énergie par rapport à un système simple flux}
+
+L'économie annuelle d'énergie thermique apportée par la récupération est :
+
+\begin{equation}
+  \Delta Q_{\text{récup}} = \dot{m}_{\text{air}} \times c_p \times \eta_r \times \int_{\text{hiver}} \left(T_{\text{intérieur}} - T_{\text{ext}}(t)\right) \, dt
+  \label{eq:recup_annuel}
+\end{equation}
+
+En pratique, pour les calculs réglementaires, on utilise les DJU (Degrés-Jours Unifiés) de la zone climatique.
+
+\subsection{Récupération de chaleur sur réseaux d'eaux usées}
+
+Les systèmes de récupération de chaleur sur eaux grises (RECUEIL) permettent de préchauffer l'eau froide sanitaire avec la chaleur des eaux de douche. Le rendement typique est de 40 à 60~\%, ce qui réduit la consommation d'ECS de 15 à 25~\%.
+
+\begin{equation}
+  Q_{\text{ECS, économisée}} = \dot{m}_{\text{EFS}} \times c_p \times \eta \times (T_{\text{ECS}} - T_{\text{EFS,ambiante}})
+\end{equation}
+
+\subsection{Récupération de chaleur sur condenseur (free-cooling et desurchauffe)}
+
+En installation de climatisation ou de froid commercial, la chaleur rejetée au condenseur peut être valorisée pour la production d'ECS ou de chauffage. Le condenseur à récupération totale peut fournir de l'eau chaude à 55--65°C.
+
+\begin{equation}
+  Q_{\text{récup,condenseur}} = Q_{\text{évap}} + W_{\text{comp}} = Q_{\text{évap}} \times \left(1 + \frac{1}{\text{COP}_{\text{froid}}}\right)
+\end{equation}
+
+% ============================================================
+\section{Calcul des consommations conventionnelles CVC}
+% ============================================================
+
+\subsection{Méthode de calcul réglementaire}
+
+Le calcul réglementaire RE2020 s'appuie sur la méthode \textbf{Th-BCE 2020} (Thermique Bâtiment — Calcul Énergétique), décrite dans l'arrêté du 4 août 2021. Les logiciels homologués (PLEIADES, COMETH, etc.) implémentent cette méthode.
+
+\begin{methode}[title=Démarche de calcul des consommations CVC]
+\begin{enumerate}
+  \item Définir les \textbf{données d'entrée} : géographie (zone H1a, H2a…), orientation, surface, composition des parois, systèmes.
+  \item Calculer les \textbf{déperditions} par transmission et renouvellement d'air (méthode NF EN 12831).
+  \item Déterminer les \textbf{besoins} en chauffage, refroidissement et ECS.
+  \item Calculer les \textbf{consommations en énergie finale} en tenant compte des rendements système (génération, distribution, émission, régulation).
+  \item Convertir en \textbf{énergie primaire} via les coefficients fep.
+  \item Vérifier les \textbf{exigences} Cep,nr, Bbio, DH, IC.
+\end{enumerate}
+\end{methode}
+
+\subsection{Rendements de système selon NF EN 15316}
+
+La consommation en énergie finale d'un système de chauffage se décompose selon :
+
+\begin{equation}
+  C_{\text{ef,ch}} = \frac{Q_{\text{besoin,ch}}}{\eta_{\text{gén}} \times \eta_{\text{dist}} \times \eta_{\text{ém}} \times \eta_{\text{rég}}}
+  \label{eq:cef_chauffage}
+\end{equation}
+
+où :
+\begin{itemize}
+  \item $Q_{\text{besoin,ch}}$ — besoin en chaleur du bâtiment [\si{\kWh}]
+  \item $\eta_{\text{gén}}$ — rendement de génération (chaudière, PAC…)
+  \item $\eta_{\text{dist}}$ — rendement de distribution (pertes réseau)
+  \item $\eta_{\text{ém}}$ — rendement d'émission (corps de chauffe)
+  \item $\eta_{\text{rég}}$ — rendement de régulation
+\end{itemize}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{lcccc}
+    \toprule
+    Système & $\eta_{\text{gén}}$ & $\eta_{\text{dist}}$ & $\eta_{\text{ém}}$ & $\eta_{\text{rég}}$ \\
+    \midrule
+    Chaudière gaz condensation & 1,05 & 0,95 & 0,97 & 0,97 \\
+    PAC air/eau (SCOP 3,5) & 3,50 & 0,97 & 0,98 & 0,97 \\
+    Réseau de chaleur urbain & 0,90 & 0,95 & 0,97 & 0,97 \\
+    Électrique direct & 1,00 & 1,00 & 0,99 & 0,95 \\
+    \bottomrule
+  \end{tabular}
+  \caption{Rendements de système de chauffage typiques (source : Th-BCE 2020)}
+\end{table}
+
+\subsection{DJU et besoins annuels en chauffage}
+
+Les Degrés-Jours Unifiés (DJU) permettent d'estimer le besoin annuel en chauffage :
+
+\begin{equation}
+  Q_{\text{besoin,ch}} = \frac{(\text{Ubât} \times S_{\text{dép}} + 0{,}34 \times \dot{V}_{\text{inf}}) \times \text{DJU} \times 24}{1\,000}
+  \label{eq:besoin_dju}
+\end{equation}
+
+où :
+\begin{itemize}
+  \item $\text{Ubât}$ — coefficient de déperdition global du bâti [\si{\W \per \m^2 \per \kelvin}]
+  \item $S_{\text{dép}}$ — surface déperditive [\si{\m^2}]
+  \item $\dot{V}_{\text{inf}}$ — débit d'air par infiltration [\si{\m^3 \per \hour}]
+  \item $\text{DJU}$ — degrés-jours unifiés annuels (base 18°C) [K.j]
+\end{itemize}
+
+\medskip
+\noindent\textbf{DJU de référence (base 18°C) pour quelques villes françaises :}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{lcc}
+    \toprule
+    Ville & Zone RE2020 & DJU chauffage \\
+    \midrule
+    Bordeaux & H2a & 1\,540 \\
+    Lyon & H1b & 2\,130 \\
+    Marseille & H3 & 960 \\
+    Paris & H1a & 2\,400 \\
+    Strasbourg & H1c & 3\,050 \\
+    \bottomrule
+  \end{tabular}
+  \caption{DJU chauffage de référence RE2020 (base 18°C)}
+\end{table}
+
+% ============================================================
+\section{Labels et certifications énergétiques}
+% ============================================================
+
+\subsection{BBC — Bâtiment Basse Consommation}
+
+Le label BBC (arrêté du 3 mai 2007, géré par Effinergie) a anticipé la RT2012. Il impose Cep $\leq$ 50 \si{\kWh_{ep} \per \m^2 \per \year} (modulé par zone et altitude). Bien que la RT2012 ait rendu le BBC obligatoire, ce label reste une référence de qualité pour les rénovations.
+
+\subsection{BEPOS — Bâtiment à Énergie POSitive}
+
+\begin{definition}[title=BEPOS — Bâtiment à Énergie Positive]
+Un bâtiment BEPOS produit, sur site, davantage d'énergie renouvelable qu'il n'en consomme. La production excédentaire est injectée sur le réseau ou stockée. Le label Effinergie+ définit Cep,nr $\leq$ 0 \si{\kWh_{ep,nr} \per \m^2 \per \year}.
+\end{definition}
+
+\subsection{Label E+C- — Énergie Positive et Réduction Carbone}
+
+Ce label expérimental (2016--2022) préfigurait la RE2020. Il comportait quatre niveaux d'énergie (E1 à E4) et deux niveaux carbone (C1 et C2). Les projets labellisés E3C2 ou E4C2 ont servi de base à l'étalonnage des seuils RE2020.
+
+\subsection{HQE — Haute Qualité Environnementale}
+
+\begin{definition}[title=Certification HQE]
+La HQE (Cerqual/Certivéa) est une certification globale de la qualité environnementale du bâtiment couvrant 14 cibles organisées en 4 domaines : Éco-construction, Éco-gestion, Confort, Santé. Elle intègre mais dépasse le seul volet énergétique, en abordant les nuisances acoustiques, la qualité de l'air intérieur et l'entretien-maintenance.
+\end{definition}
+
+\subsection{Tableau comparatif des labels}
+
+\begin{table}[H]
+  \centering
+  \begin{tabularx}{\linewidth}{lXXc}
+    \toprule
+    Label & Organisme & Critères principaux & Statut \\
+    \midrule
+    BBC & Effinergie & Cep $\leq$ 50 kWh$_{ep}$/m².an & Actif (réno) \\
+    BBC Effinergie & Effinergie & Cep conforme RT2012 & Actif (neuf) \\
+    Effinergie+ & Effinergie & Cep,nr $\leq$ 0 (BEPOS) & Actif \\
+    E+C- & Min. Logement & Énergie + Carbone & Arrêté (2022) \\
+    HQE & Cerqual/Certivéa & 14 cibles qualité globale & Actif \\
+    BREEAM & BRE Global & Méthode UK, notes A--Outstanding & Actif \\
+    LEED & US GBC & Points, niveaux Bronze--Platinum & Actif \\
+    \bottomrule
+  \end{tabularx}
+  \caption{Principaux labels et certifications énergétiques en France}
+\end{table}
+
+% ============================================================
+\section{Exemples résolus}
+% ============================================================
+
+\begin{exemple}[title=Calcul du Cep,nr d'un logement neuf — PAC vs chaudière gaz]
+
+\textbf{Données du projet :} Maison individuelle, $S_{\text{ref}} = \SI{120}{\m^2}$, zone H1a (Paris).
+Besoin en chauffage : $Q_{\text{ch}} = \SI{12\,000}{\kWh \per \year}$.
+Besoin ECS : $Q_{\text{ECS}} = \SI{2\,400}{\kWh \per \year}$.
+
+\textbf{Scénario A — Chaudière gaz condensation} ($\eta_{\text{syst}} = 1{,}05 \times 0{,}95 \times 0{,}97 \times 0{,}97 = 0{,}940$)
+
+Consommation en énergie finale chauffage + ECS :
+\[
+C_{\text{ef,A}} = \frac{12\,000}{0{,}940} + \frac{2\,400}{0{,}940} = \SI{15\,319}{\kWh \per \year}
+\]
+Avec $\text{fep,nr}(\text{gaz}) = 1{,}0$ :
+\[
+\text{Cep,nr}_A = \frac{15\,319}{120} = \SI{127{,}7}{\kWh_{ep,nr} \per \m^2 \per \year}
+\]
+
+\textbf{Scénario B — PAC air/eau} (SCOP chauffage = 3,5 ; SCOP ECS = 2,8 ; $\eta_{\text{dist}} = 0{,}97$)
+
+Consommation électrique chauffage :
+\[
+C_{\text{ef,ch,B}} = \frac{12\,000}{3{,}5 \times 0{,}97} = \SI{3\,534}{\kWh \per \year}
+\]
+Consommation électrique ECS :
+\[
+C_{\text{ef,ECS,B}} = \frac{2\,400}{2{,}8} = \SI{857}{\kWh \per \year}
+\]
+Avec $\text{fep,nr}(\text{élec}) = 2{,}3$ et déduction de la part renouvelable :
+
+Dans le cadre simplifié RE2020, le calcul Cep,nr intègre la pondération réglementaire :
+\[
+\text{Cep,nr}_B = \frac{(3\,534 + 857) \times 2{,}3 \times f_{\text{nr,PAC}}}{120}
+\]
+avec $f_{\text{nr,PAC}} \approx 0{,}60$ (fraction non renouvelable réglementaire PAC air/eau) :
+\[
+\text{Cep,nr}_B = \frac{4\,391 \times 2{,}3 \times 0{,}60}{120} = \frac{6\,060}{120} = \SI{50{,}5}{\kWh_{ep,nr} \per \m^2 \per \year}
+\]
+
+\textbf{Conclusion :} La PAC permet de diviser le Cep,nr par 2,5 par rapport à la chaudière gaz, et est conforme à la RE2020 (seuil $\approx$ \SI{65}{\kWh_{ep,nr} \per \m^2 \per \year} en H1a pour cette surface). La chaudière gaz seule est non conforme.
+
+\end{exemple}
+
+\begin{exemple}[title=Rendement de récupération d'une CTA double flux]
+
+\textbf{Données :}
+Débit d'air : $\dot{V} = \SI{2\,400}{\m^3 \per \hour}$, soit $\dot{m} = 2\,400 / 3\,600 \times 1{,}2 = \SI{0{,}800}{\kg \per \s}$.
+Température extérieure : $T_{\text{ext}} = \SI{2}{\degreeCelsius}$.
+Température de l'air extrait (local) : $T_{\text{ext,local}} = \SI{22}{\degreeCelsius}$.
+Température soufflage après échangeur : $T_{\text{soufflage}} = \SI{17}{\degreeCelsius}$.
+
+\textbf{Calcul du rendement de récupération :}
+\[
+\eta_r = \frac{17 - 2}{22 - 2} = \frac{15}{20} = 0{,}75 \quad \text{soit } 75\,\%
+\]
+
+\textbf{Puissance récupérée :}
+\[
+P_{\text{récup}} = \dot{m} \times c_p \times (T_{\text{soufflage}} - T_{\text{ext}}) = 0{,}800 \times 1\,006 \times 15 = \SI{12\,072}{\W} \approx \SI{12{,}1}{\kW}
+\]
+
+\textbf{Économie annuelle} (2\,400 h de fonctionnement hivernal) :
+\[
+\Delta Q = 12{,}1 \times 2\,400 = \SI{29\,040}{\kWh \per \year}
+\]
+
+À un coût de l'énergie de \SI{0{,}12}{\euro \per \kWh} (gaz), l'économie annuelle est de \textbf{\SI{3\,485}{\euro}}, justifiant l'investissement dans un échangeur performant.
+
+\end{exemple}
+
+% ============================================================
+\section{Exercices d'application}
+% ============================================================
+
+\exercice{Vérification de conformité RE2020 d'un bâtiment de bureaux}
+
+\textbf{Énoncé :}
+
+Un bureau de \SI{500}{\m^2} (zone H2b — Nantes) est équipé d'un système de climatisation réversible VRV avec CTA double flux ($\eta_r = 80\,\%$). Les données de la simulation thermique donnent :
+\begin{itemize}
+  \item Besoin chauffage : $Q_{\text{ch}} = \SI{28\,000}{\kWh \per \year}$
+  \item Besoin refroidissement : $Q_{\text{fr}} = \SI{15\,000}{\kWh \per \year}$
+  \item Besoin éclairage : $Q_{\text{écl}} = \SI{8\,000}{\kWh \per \year}$
+  \item Auxiliaires (pompes, ventilateurs) : $C_{\text{aux}} = \SI{4\,500}{\kWh \per \year}$
+\end{itemize}
+Données systèmes : SCOP chauffage = 3,8 ; EER refroidissement = 3,2 ; rendements distribution = 0,97.
+
+\medskip
+\textbf{Questions :}
+\begin{enumerate}
+  \item Calculer la consommation en énergie finale pour chaque usage.
+  \item Calculer le Cep en \si{\kWh_{ep} \per \m^2 \per \year} (fep électricité = 2,3).
+  \item Calculer le Cep,nr (\text{fep,nr} électricité VRV = 2,3 ; fraction non renouvelable éclairage = 1,0).
+  \item Comparer au seuil indicatif RE2020 bureaux (\SI{90}{\kWh_{ep,nr} \per \m^2 \per \year}) et conclure.
+\end{enumerate}
+
+\medskip
+\textbf{Corrigé détaillé :}
+
+\textbf{1. Consommation en énergie finale par usage :}
+
+Chauffage :
+\[
+C_{\text{ef,ch}} = \frac{28\,000}{3{,}8 \times 0{,}97} = \frac{28\,000}{3{,}686} = \SI{7\,596}{\kWh \per \year}
+\]
+
+Refroidissement :
+\[
+C_{\text{ef,fr}} = \frac{15\,000}{3{,}2 \times 0{,}97} = \frac{15\,000}{3{,}104} = \SI{4\,833}{\kWh \per \year}
+\]
+
+Éclairage (consommation directe) : $C_{\text{ef,écl}} = \SI{8\,000}{\kWh \per \year}$
+
+Auxiliaires : $C_{\text{aux}} = \SI{4\,500}{\kWh \per \year}$
+
+Total énergie finale : $C_{\text{ef,total}} = 7\,596 + 4\,833 + 8\,000 + 4\,500 = \SI{24\,929}{\kWh \per \year}$
+
+\medskip
+\textbf{2. Cep (toute l'électricité, fep = 2,3) :}
+\[
+\text{Cep} = \frac{24\,929 \times 2{,}3}{500} = \frac{57\,337}{500} = \SI{114{,}7}{\kWh_{ep} \per \m^2 \per \year}
+\]
+
+\medskip
+\textbf{3. Cep,nr :}
+
+En première approche simplifiée (tout en électricité) :
+\[
+\text{Cep,nr} = \frac{(7\,596 + 4\,833) \times 2{,}3 \times 0{,}55 + (8\,000 + 4\,500) \times 2{,}3 \times 1{,}0}{500}
+\]
+\[
+= \frac{12\,429 \times 1{,}265 + 12\,500 \times 2{,}3}{500} = \frac{15\,722 + 28\,750}{500} = \frac{44\,472}{500} = \SI{88{,}9}{\kWh_{ep,nr} \per \m^2 \per \year}
+\]
+
+\medskip
+\textbf{4. Conclusion :}
+
+$\text{Cep,nr} = \SI{88{,}9}{\kWh_{ep,nr} \per \m^2 \per \year} < \SI{90}{\kWh_{ep,nr} \per \m^2 \per \year}$ : le bâtiment est \textbf{conforme à la RE2020} sur l'indicateur Cep,nr avec une marge de 1,2~\%. Il conviendra toutefois de vérifier également les indicateurs Bbio, DH et IC avant de valider la conformité globale.
+
+\bigskip
+\exercice{Comparaison énergétique — simple flux vs double flux}
+
+\textbf{Énoncé :}
+
+Un bâtiment résidentiel collectif de \SI{800}{\m^2} est ventilé par extraction simple flux hygro B. On envisage de le remplacer par un système double flux avec récupération ($\eta_r = 85\,\%$). Données :
+\begin{itemize}
+  \item Débit d'air total : $\dot{V} = \SI{3\,200}{\m^3 \per \hour}$
+  \item DJU chauffage (Lyon H1b) : 2\,130 K.j
+  \item Température intérieure conventionnelle : \SI{19}{\degreeCelsius}
+  \item Coût du kWh chauffage gaz condensation : \SI{0{,}10}{\euro}
+\end{itemize}
+
+\begin{enumerate}
+  \item Calculer le besoin de chauffage annuel lié à la ventilation en simple flux.
+  \item Calculer l'économie de chauffage apportée par le double flux.
+  \item En déduire le temps de retour sur investissement si le surcoût du double flux est de \SI{18\,000}{\euro}.
+\end{enumerate}
+
+\medskip
+\textbf{Corrigé :}
+
+\textbf{1. Besoin de chauffage annuel — ventilation simple flux :}
+
+La puissance de chauffage liée à la ventilation (simple flux) :
+\[
+\dot{m}_{\text{air}} = \frac{3\,200}{3\,600} \times 1{,}2 = \SI{1{,}067}{\kg \per \s}
+\]
+
+Le besoin annuel (méthode DJU) :
+\[
+Q_{\text{vent,SF}} = \dot{m}_{\text{air}} \times c_p \times \text{DJU} \times 86\,400 \times \frac{1}{3\,600\,000}
+\]
+\[
+= 1{,}067 \times 1\,006 \times 2\,130 \times 86\,400 / 3\,600\,000 = \SI{55\,285}{\kWh \per \year}
+\]
+
+Ou de manière équivalente avec $\text{DJU} \times 24$ en K.h :
+\[
+Q_{\text{vent,SF}} = 1{,}067 \times 1\,006 \times (2\,130 \times 24) / 1\,000 = 1{,}073 \times 51\,120 / 1\,000 = \SI{54\,852}{\kWh \per \year}
+\]
+
+\textbf{2. Économie par double flux :}
+\[
+\Delta Q = \eta_r \times Q_{\text{vent,SF}} = 0{,}85 \times 54\,852 = \SI{46\,624}{\kWh \per \year}
+\]
+
+Économie financière (chauffage gaz, $\eta_{\text{syst}} = 0{,}95$) :
+\[
+\Delta E = \frac{46\,624}{0{,}95} \times 0{,}10 = \frac{46\,624}{0{,}95} \times 0{,}10 = \SI{4\,908}{\euro \per \year}
+\]
+
+\textbf{3. Temps de retour sur investissement :}
+\[
+T_{\text{retour}} = \frac{18\,000}{4\,908} \approx \textbf{3{,}7 ans}
+\]
+
+Ce temps de retour est excellent (inférieur à 5 ans), ce qui justifie pleinement l'investissement dans le double flux avec récupération.
+
+% ============================================================
+\section{Éléments de réglementation}
+% ============================================================
+
+\subsection{Textes réglementaires applicables}
+
+\begin{itemize}
+  \item \textbf{Arrêté du 4 août 2021} — Réglementation Environnementale 2020 (RE2020) : exigences de performance énergétique et environnementale des bâtiments neufs.
+  \item \textbf{Arrêté du 13 avril 2022} — Méthode de calcul Th-BCE 2020 (logiciels homologués).
+  \item \textbf{Loi Énergie-Climat du 8 novembre 2019} — Décret tertiaire, objectifs de réduction des consommations des bâtiments tertiaires existants (-40\,\% en 2030, -50\,\% en 2040, -60\,\% en 2050).
+  \item \textbf{Décret n°2022-780 du 4 mai 2022} — Obligation d'audit énergétique pour la vente des logements classés F ou G.
+  \item \textbf{Loi ELAN (2018)} — Réforme du DPE, opposabilité depuis le 1\textsuperscript{er} juillet 2021.
+  \item \textbf{Arrêté du 31 mars 2021} — Nouvelle méthode DPE 3CL 2021.
+\end{itemize}
+
+\subsection{Normes NF EN applicables}
+
+\begin{table}[H]
+  \centering
+  \begin{tabularx}{\linewidth}{lX}
+    \toprule
+    Norme & Objet \\
+    \midrule
+    NF EN 12831 & Calcul des déperditions thermiques (charge de dimensionnement) \\
+    NF EN 13370 & Transmission thermique par le sol \\
+    NF EN 14511 & PAC — Conditions d'essai et de mesure du COP \\
+    NF EN 14825 & PAC — Mesure à charge partielle et calcul du SCOP/SEER \\
+    NF EN 15316 & Systèmes de chauffage et ECS — Méthode de calcul des performances \\
+    NF EN 13779 & Ventilation des bâtiments non résidentiels — Exigences de performance \\
+    NF EN 308 & Échangeurs de chaleur air/air — Procédures d'essai \\
+    NF EN ISO 13789 & Performance thermique — Coefficients de transmission \\
+    ISO 50001 & Systèmes de management de l'énergie \\
+    \bottomrule
+  \end{tabularx}
+  \caption{Normes NF EN applicables à l'efficacité énergétique des bâtiments}
+\end{table}
+
+\subsection{DTU et documents techniques}
+
+\begin{itemize}
+  \item \textbf{DTU 65.11} — Dispositifs d'évacuation des produits de combustion des chaudières (impact sur l'étanchéité à l'air).
+  \item \textbf{DTU 68.3} — Travaux de bâtiment — Installations de ventilation mécanique (qualité de l'installation et des liaisons).
+  \item \textbf{Guide RAGE} — Règles de l'Art Grenelle Environnement : fiches thématiques sur l'isolation, la ventilation, les PAC (disponibles sur le site Règles de l'Art).
+  \item \textbf{Guide ADEME} — Méthodes de calcul des économies d'énergie, aide au dimensionnement des systèmes de récupération.
+  \item \textbf{Référentiel QUALIBAT / QualiPAC} — Qualification des installateurs de pompes à chaleur (obligatoire pour certaines aides financières).
+\end{itemize}
+
+\begin{attention}
+La RE2020 évolue par paliers successifs (2025, 2028, 2031) avec des seuils de Cep,nr et d'IC\textsubscript{construction} de plus en plus contraignants. Le technicien GCF doit veiller à se référer aux seuils en vigueur à la date de dépôt du permis de construire, disponibles sur le site officiel \texttt{rt-re2020.fr}.
+\end{attention}
