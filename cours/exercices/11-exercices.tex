@@ -1,0 +1,304 @@
+\chapter*{Chapitre 11 — Études de cas et dimensionnement}
+\addcontentsline{toc}{chapter}{Chapitre 11 — Études de cas et dimensionnement}
+
+% ============================================================
+\section*{Énoncés}
+% ============================================================
+
+% ----------------------------------------------------------
+\exercice{Dimensionnement chauffage maison individuelle RE2020}
+% ----------------------------------------------------------
+
+\textbf{Contexte :}
+Une maison individuelle de plain-pied est construite à Strasbourg (zone H1c,
+$T_{ext,base} = \SI{-11}{\celsius}$). La surface habitable est de \SI{120}{\metre\squared}
+pour une hauteur sous plafond de \SI{2{,}5}{\metre}. La maîtrise d'ouvrage souhaite
+une installation conforme RE2020 avec une PAC air/eau alimentant un plancher chauffant basse température.
+
+\textbf{Données de l'enveloppe :}
+
+\begin{center}
+\begin{tabular}{llcc}
+  \toprule
+  Paroi & Description & Surface (\si{\metre\squared}) & $U$ (\si{\watt\per\metre\squared\per\kelvin}) \\
+  \midrule
+  Murs extérieurs    & ITI laine roche 16 cm   & 140 & 0,20 \\
+  Toiture            & Combles perdus 40 cm    & 120 & 0,12 \\
+  Plancher bas       & Dalle isolée 10 cm      & 120 & 0,30 \\
+  Vitrages           & Triple vitrage          &  28 & 0,80 \\
+  Portes extérieures & Porte isolée            &   4 & 1,20 \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Ventilation :} VMC double flux avec récupérateur à plaques, rendement $\eta_{recup} = 0{,}88$.
+Taux de renouvellement : $0{,}4\,\mathrm{vol/h}$.
+
+\textbf{Température intérieure de consigne :} $T_{int} = \SI{19}{\celsius}$.
+
+\bigskip
+\textbf{Questions :}
+
+\begin{enumerate}
+  \item Calculer le coefficient de déperdition par transmission $H_T$ (\si{\watt\per\kelvin}).
+  \item Calculer le débit volumique d'air neuf $q_v$ (\si{\metre\cubed\per\hour}) et le coefficient de déperdition par ventilation $H_V$ (\si{\watt\per\kelvin}) en tenant compte du récupérateur.
+  \item En déduire la puissance de chauffage de pointe $\Phi_{ch}$ (\si{\kilo\watt}).
+  \item La PAC choisie a un COP de $3{,}5$ à $-11/35\,\si{\celsius}$. Calculer la puissance électrique absorbée et la puissance installée en prenant une marge de 15\,\%.
+  \item Calculer la puissance surfacique utile du plancher chauffant (\si{\watt\per\metre\squared}) et commenter le résultat par rapport aux valeurs courantes (40 à \SI{60}{\watt\per\metre\squared} max en RE2020).
+  \item Estimer la consommation annuelle de la PAC (en kWh électriques) en utilisant la formule :
+        $W_{el} = \dfrac{\Phi_{ch} \times DJU \times 24}{SCOP \times \Delta T_{base}}$
+        avec $DJU = 3\,100$ et $SCOP = 4{,}0$.
+  \item Calculer l'indicateur $Cep$ (en \si{\kilo\watt\hour_{ep}\per\metre\squared\per\year}) avec un coefficient de conversion $f_{prim} = 2{,}3$ et vérifier la conformité RE2020 (seuil résidentiel : \SI{70}{\kilo\watt\hour_{ep}\per\metre\squared\per\year} pour le seul chauffage).
+\end{enumerate}
+
+% ----------------------------------------------------------
+\exercice{Dimensionnement d'une CTA pour locaux tertiaires}
+% ----------------------------------------------------------
+
+\textbf{Contexte :}
+Un plateau de bureaux paysagers de \SI{500}{\metre\squared} (hauteur \SI{3}{\metre},
+50 personnes) doit être équipé d'une centrale de traitement d'air (CTA) double flux.
+Localisation : Lyon (zone H2b). Conditions d'été : $T_{ext} = \SI{33}{\celsius}$,
+humidité relative extérieure = 50\,\%.
+
+\textbf{Données :}
+\begin{itemize}
+  \item Débit d'air hygiénique : $25\,\si{\litre\per\second\per\personne}$
+  \item Apports internes : personnes \SI{70}{\watt}/pers, éclairage \SI{8}{\watt\per\metre\squared}, bureautique \SI{20}{\watt\per\metre\squared}
+  \item Apports solaires : vitrages Sud \SI{100}{\metre\squared}, $g = 0{,}30$, $G_{solaire} = \SI{550}{\watt\per\metre\squared}$
+  \item Température de soufflage : \SI{15}{\celsius}
+  \item Perte de charge réseau aéraulique circuit le plus défavorable : \SI{550}{\pascal}
+  \item Rendement ventilateur : $\eta_{vent} = 0{,}70$
+\end{itemize}
+
+\bigskip
+\textbf{Questions :}
+
+\begin{enumerate}
+  \item Calculer le débit d'air neuf $q_{v,AN}$ (\si{\metre\cubed\per\hour}).
+  \item Calculer les apports internes totaux (\si{\kilo\watt}).
+  \item Calculer les apports solaires (\si{\kilo\watt}).
+  \item Calculer la charge due au renouvellement d'air (\si{\kilo\watt}).
+  \item En déduire la puissance totale de la batterie froide $Q_{batt}$ (\si{\kilo\watt}).
+  \item Sélectionner la température d'eau glacée nécessaire sachant que la batterie doit abaisser l'air de \SI{27}{\celsius} à \SI{15}{\celsius}. Quelle température d'entrée eau glacée est compatible ?
+  \item Calculer la puissance du ventilateur de soufflage (\si{\kilo\watt}).
+  \item Le groupe froid alimentant la batterie a un EER de $3{,}2$. Calculer sa puissance électrique absorbée.
+  \item Calculer le débit d'eau glacée (\si{\metre\cubed\per\hour}) nécessaire pour la batterie, avec $\Delta T_{EG} = \SI{6}{\celsius}$.
+\end{enumerate}
+
+% ----------------------------------------------------------
+\exercice{Analyse de performance d'une installation existante et préconisation}
+% ----------------------------------------------------------
+
+\textbf{Contexte :}
+Un technicien de maintenance constate des anomalies dans le fonctionnement d'une installation
+de climatisation d'un restaurant (superficie \SI{200}{\metre\squared}, 80 couverts).
+Il dispose des mesures suivantes effectuées en conditions de pointe estivale :
+
+\begin{center}
+\begin{tabular}{lcc}
+  \toprule
+  Paramètre mesuré & Valeur relevée & Valeur attendue \\
+  \midrule
+  $T_{int}$ (salle) & \SI{29}{\celsius} & \SI{24}{\celsius} \\
+  $T_{ext}$ & \SI{35}{\celsius} & — \\
+  $T_{soufflage}$ CTA & \SI{22}{\celsius} & \SI{16}{\celsius} \\
+  $q_v$ soufflage & \SI{2\,800}{\metre\cubed\per\hour} & \SI{3\,600}{\metre\cubed\per\hour} \\
+  $T_{eau\ glacée\ entrée}$ batterie & \SI{12}{\celsius} & \SI{6}{\celsius} \\
+  $T_{eau\ glacée\ sortie}$ batterie & \SI{15}{\celsius} & \SI{12}{\celsius} \\
+  Courant moteur ventilateur & \SI{8}{\ampere} & \SI{9}{\ampere} \\
+  Pression HP groupe froid & \SI{28}{\bar} & \SI{22}{\bar} \\
+  Pression BP groupe froid & \SI{4}{\bar} & \SI{5}{\bar} \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Questions :}
+
+\begin{enumerate}
+  \item À partir des mesures, calculer la puissance frigorifique effectivement fournie par la batterie et la comparer à la puissance nominale (utiliser $\rho_{eau} = \SI{1000}{\kilogram\per\metre\cubed}$, $c_{p,eau} = \SI{4186}{\joule\per\kilogram\per\kelvin}$). On retiendra un débit d'eau glacée de $\SI{3{,}5}{\metre\cubed\per\hour}$ dans les deux cas.
+  \item Identifier au moins 3 anomalies probables à partir des écarts constatés entre valeurs relevées et valeurs attendues.
+  \item Pour chacune des anomalies identifiées, proposer une action corrective précise.
+  \item La haute pression anormalement élevée (28 bar au lieu de 22 bar) sur un groupe froid au R-410A correspond à une température de condensation d'environ \SI{65}{\celsius} (au lieu de \SI{50}{\celsius} normale). Quel est l'impact sur le COP ? Justifier qualitativement.
+  \item Le propriétaire envisage de remplacer le groupe froid R-410A (GWP = 2\,088) par un groupe R-32 (GWP = 675). Calculer la réduction d'équivalent CO\textsubscript{2} si la charge est de \SI{5}{\kilogram}. Commenter par rapport à la réglementation F-gas 2024.
+\end{enumerate}
+
+\newpage
+% ============================================================
+\section*{Corrigés}
+% ============================================================
+
+% ----------------------------------------------------------
+\subsection*{Corrigé — Exercice 1 : Dimensionnement chauffage maison individuelle RE2020}
+% ----------------------------------------------------------
+
+\textbf{1. Coefficient de déperdition par transmission $H_T$}
+
+\begin{center}
+\begin{tabular}{lccr}
+  \toprule
+  Paroi & $U$ & $A$ & $U \cdot A$ (\si{\watt\per\kelvin}) \\
+  \midrule
+  Murs ext.   & 0,20 & 140 & 28,0 \\
+  Toiture     & 0,12 & 120 & 14,4 \\
+  Plancher bas& 0,30 & 120 & 36,0 \\
+  Vitrages    & 0,80 &  28 & 22,4 \\
+  Portes      & 1,20 &   4 &  4,8 \\
+  \midrule
+  \textbf{Total} & & & \textbf{105,6} \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+$$H_T = \SI{105{,}6}{\watt\per\kelvin}$$
+
+\textbf{2. Coefficient de déperdition par ventilation $H_V$}
+
+Volume du bâtiment : $V = 120 \times 2{,}5 = \SI{300}{\metre\cubed}$
+
+Débit d'air neuf : $q_v = 0{,}4 \times 300 = \SI{120}{\metre\cubed\per\hour} = \SI{0{,}0333}{\metre\cubed\per\second}$
+
+Avec récupérateur ($\eta = 0{,}88$) :
+$$H_V = 0{,}34 \times q_{v,m^3/h} \times (1 - \eta_{recup}) = 0{,}34 \times 120 \times (1 - 0{,}88) = \SI{4{,}9}{\watt\per\kelvin}$$
+
+\textbf{3. Puissance de chauffage de pointe}
+
+$\Delta T = T_{int} - T_{ext,base} = 19 - (-11) = \SI{30}{\kelvin}$
+
+$$H_{total} = H_T + H_V = 105{,}6 + 4{,}9 = \SI{110{,}5}{\watt\per\kelvin}$$
+$$\Phi_{ch} = 110{,}5 \times 30 = \SI{3\,315}{\watt} \approx \SI{3{,}3}{\kilo\watt}$$
+
+\textbf{4. Puissance PAC et puissance électrique}
+
+Puissance électrique PAC nominale : $P_{el} = \dfrac{\Phi_{ch}}{COP} = \dfrac{3\,315}{3{,}5} = \SI{947}{\watt}$
+
+Puissance installée avec marge de 15\,\% : $P_{installée} = 3{,}3 \times 1{,}15 \approx \SI{3{,}8}{\kilo\watt}$
+
+Sélection : \textbf{PAC 4 kW} (gamme commerciale standard).
+
+\textbf{5. Puissance surfacique plancher chauffant}
+
+$$q_{plancher} = \frac{\Phi_{ch}}{A_{totale}} = \frac{3\,315}{120} = \SI{27{,}6}{\watt\per\metre\squared}$$
+
+Valeur très confortable (largement inférieure à 40 W/m²), ce qui confirme que l'enveloppe très performante (RE2020) est compatible avec un plancher chauffant basse température à \SI{30}{\celsius} maximum de départ.
+
+\textbf{6. Consommation annuelle PAC}
+
+$$W_{el} = \frac{\Phi_{ch} \times DJU \times 24}{SCOP \times \Delta T_{base}} = \frac{3{,}315 \times 3\,100 \times 24}{4{,}0 \times 30} = \SI{2\,052}{\kilo\watt\hour\per\year}$$
+
+\textbf{7. Indicateur $Cep$ et conformité RE2020}
+
+$$Cep_{chauffage} = \frac{W_{el} \times f_{prim}}{A_{ref}} = \frac{2\,052 \times 2{,}3}{120} = \SI{39{,}3}{\kilo\watt\hour_{ep}\per\metre\squared\per\year}$$
+
+$39{,}3 < 70$ : \textbf{conforme RE2020}. L'installation présente même un excellent niveau de performance énergétique, proche des exigences BEPOS.
+
+% ----------------------------------------------------------
+\subsection*{Corrigé — Exercice 2 : Dimensionnement d'une CTA pour locaux tertiaires}
+% ----------------------------------------------------------
+
+\textbf{1. Débit d'air neuf}
+
+$$q_{v,AN} = 50\,pers \times 25\,\si{\litre\per\second} = \SI{1\,250}{\litre\per\second} = \SI{4\,500}{\metre\cubed\per\hour}$$
+
+\textbf{2. Apports internes}
+
+\begin{align*}
+  Q_{personnes} &= 50 \times 70 = \SI{3\,500}{\watt} \\
+  Q_{eclairage} &= 500 \times 8 = \SI{4\,000}{\watt} \\
+  Q_{bureautique}&= 500 \times 20 = \SI{10\,000}{\watt} \\
+  Q_{int,total}  &= \SI{17\,500}{\watt} = \SI{17{,}5}{\kilo\watt}
+\end{align*}
+
+\textbf{3. Apports solaires}
+
+$$Q_{solaire} = g \times A_{vitrage} \times G_{solaire} = 0{,}30 \times 100 \times 550 = \SI{16\,500}{\watt} = \SI{16{,}5}{\kilo\watt}$$
+
+\textbf{4. Charge de renouvellement d'air}
+
+$\Delta T_{vent} = T_{ext} - T_{int} = 33 - 24 = \SI{9}{\kelvin}$ (température intérieure souhaitée : \SI{24}{\celsius})
+
+$$Q_{vent} = \frac{1{,}2 \times 1005 \times 4500}{3600} \times 9 = 1507 \times 9 = \SI{13\,563}{\watt} \approx \SI{13{,}6}{\kilo\watt}$$
+
+\textbf{5. Puissance batterie froide}
+
+$$Q_{batt} = Q_{int} + Q_{solaire} + Q_{vent} = 17{,}5 + 16{,}5 + 13{,}6 = \SI{47{,}6}{\kilo\watt}$$
+
+Avec marge de 10\,\% : $Q_{batt,installée} = 47{,}6 \times 1{,}10 \approx \SI{52}{\kilo\watt}$
+
+\textbf{6. Température eau glacée}
+
+Pour refroidir l'air de \SI{27}{\celsius} à \SI{15}{\celsius} (enthalpie sensible), la température d'entrée eau glacée doit être inférieure à la température de rosée de l'air traité. Avec un pincement de $\SI{4}{\celsius}$, $T_{EG,entrée} \leq 15 - 4 = \SI{11}{\celsius}$. On retient \textbf{\SI{7}{\celsius}} (circuit type \SI{6/12}{\celsius}).
+
+\textbf{7. Puissance du ventilateur de soufflage}
+
+$$P_{vent} = \frac{q_v \times \Delta P_{tot}}{\eta_{vent}} = \frac{(4500/3600) \times 550}{0{,}70} = \frac{1{,}25 \times 550}{0{,}70} = \SI{982}{\watt} \approx \SI{1}{\kilo\watt}$$
+
+\textbf{8. Puissance électrique groupe froid}
+
+$$P_{GF} = \frac{Q_{batt}}{EER} = \frac{52}{3{,}2} = \SI{16{,}25}{\kilo\watt}$$
+
+\textbf{9. Débit eau glacée}
+
+$$\dot{V}_{EG} = \frac{Q_{batt}}{\rho \cdot c_p \cdot \Delta T_{EG}} = \frac{52\,000}{1000 \times 4186 \times 6 / 3600} = \frac{52\,000}{6\,977} = \SI{7{,}45}{\metre\cubed\per\hour}$$
+
+% ----------------------------------------------------------
+\subsection*{Corrigé — Exercice 3 : Analyse de performance d'une installation existante}
+% ----------------------------------------------------------
+
+\textbf{1. Puissance frigorifique batterie — comparaison}
+
+\textit{Puissance effectivement fournie (valeurs relevées) :}
+$$Q_{batt,réel} = \dot{m} \times c_p \times \Delta T_{EG} = \frac{3{,}5}{3600} \times 1000 \times 4186 \times (15-12) = \SI{12\,227}{\watt} \approx \SI{12{,}2}{\kilo\watt}$$
+
+\textit{Puissance nominale attendue :}
+$$Q_{batt,nominal} = \frac{3{,}5}{3600} \times 1000 \times 4186 \times (12-6) = \SI{24\,454}{\watt} \approx \SI{24{,}5}{\kilo\watt}$$
+
+La puissance réelle est donc à \textbf{50\,\% de la puissance nominale} — défaillance avérée.
+
+\textbf{2. Anomalies identifiées}
+
+\begin{enumerate}[label=\alph*.]
+  \item \textbf{Température eau glacée trop élevée} ($12\,°C$ au lieu de $6\,°C$) : le groupe froid ne produit pas l'eau à la température requise. Cause probable : manque de fluide frigorigène, encrassement condenseur ou problème compresseur.
+  \item \textbf{Débit d'air soufflé insuffisant} ($2\,800$ au lieu de $3\,600\,\mathrm{m^3/h}$) : obstruction réseau (filtre colmaté), ou perte de vitesse du ventilateur (courroie détendue, variateur mal réglé).
+  \item \textbf{Haute pression anormalement élevée} ($28$ au lieu de $22\,\mathrm{bar}$) : condenseur encrassé (poussières, calcaire sur version eau), température ambiante du local technique trop élevée, ou ventilateur condenseur défaillant.
+  \item \textbf{Basse pression trop faible} ($4$ au lieu de $5\,\mathrm{bar}$) : sous-charge en fluide frigorigène (fuite), détendeur mal réglé ou détendeur colmaté.
+\end{enumerate}
+
+\textbf{3. Actions correctives}
+
+\begin{center}
+\begin{tabular}{ll}
+  \toprule
+  Anomalie & Action corrective \\
+  \midrule
+  Eau glacée à 12°C & Contrôle charge fluide frigorigène ; recherche de fuite \\
+  Débit d'air réduit & Nettoyage / remplacement filtre CTA ; réglage variateur \\
+  HP élevée & Nettoyage condenseur (air/eau) ; vérification ventilateur condenseur \\
+  BP basse & Test d'étanchéité circuit ; appoint fluide si fuite réparée \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{4. Impact de la haute pression sur le COP}
+
+Le COP d'une machine frigorifique est lié au rapport entre la puissance frigorifique et la puissance compresseur. Lorsque la température de condensation augmente (ici de 50°C à 65°C), la pression de condensation augmente, ce qui impose :
+\begin{itemize}
+  \item Un taux de compression plus élevé $\rightarrow$ puissance compresseur augmente ;
+  \item Une enthalpie frigorifique utile qui diminue (diagramme de Mollier).
+\end{itemize}
+Le COP diminue donc significativement : une hausse de 15°C de la température de condensation peut entraîner une chute du COP de l'ordre de 20 à 30\,\%. Pour un EER nominal de 3,0, on peut estimer un EER réel de 2,1 à 2,4.
+
+\textbf{5. Réduction d'équivalent CO\textsubscript{2} par changement de fluide}
+
+\textit{R-410A (GWP = 2\,088), charge = 5 kg :}
+$$CO_{2eq,R410A} = 5 \times 2\,088 = \SI{10\,440}{\kilogram_{CO2eq}}$$
+
+\textit{R-32 (GWP = 675), charge = 5 kg :}
+$$CO_{2eq,R32} = 5 \times 675 = \SI{3\,375}{\kilogram_{CO2eq}}$$
+
+\textit{Réduction :}
+$$\Delta CO_{2eq} = 10\,440 - 3\,375 = \SI{7\,065}{\kilogram_{CO2eq}} \approx \SI{7{,}1}{\tonne_{CO2eq}}$$
+
+Soit une réduction de \textbf{67,7\,\%} de l'équivalent CO\textsubscript{2} potentiel (en cas de fuite totale).
+
+La charge de 5 kg $\times$ GWP 2\,088 = 10,44 tonnes CO\textsubscript{2}eq : le seuil F-gas 2024 pour les nouveaux équipements est de \textbf{GWP $\leq$ 750}. Le R-410A (GWP = 2\,088) est donc \textbf{interdit pour les équipements neufs} depuis le 1\textsuperscript{er} janvier 2025. Le R-32 (GWP = 675) est conforme. Attention : le R-32 est légèrement inflammable (classe A2L) et nécessite des mesures de sécurité adaptées à l'installation et à la maintenance.

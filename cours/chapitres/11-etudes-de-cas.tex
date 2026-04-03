@@ -1,0 +1,553 @@
+\chapter{Études de cas et dimensionnement}
+
+% ============================================================
+\section{Objectifs pédagogiques}
+% ============================================================
+
+À l'issue de ce chapitre, l'étudiant sera capable de :
+\begin{itemize}
+  \item Conduire une démarche complète de dimensionnement CVC en partant du cahier des charges ;
+  \item Calculer les déperditions thermiques d'un bâtiment selon la méthode réglementaire (RE2020 / NF EN 12831) ;
+  \item Sélectionner et dimensionner les équipements de production, distribution et émission de chaleur ;
+  \item Dimensionner un réseau aéraulique et une centrale de traitement d'air (CTA) ;
+  \item Appliquer les critères d'efficacité énergétique et vérifier la conformité réglementaire ;
+  \item Intégrer la régulation et la GTB dans une étude globale ;
+  \item Rédiger une note de calcul justifiée à présenter en situation professionnelle.
+\end{itemize}
+
+\textbf{Compétences mobilisées :} C1, C2, C3, C5, C7, C8, C9 \quad
+\textbf{Savoirs associés :} S5.1, S8-A2, S8-A3, S8-A4, S8-A5, S8-B1, S8-B2, S8-B4, S8-B11
+
+% ============================================================
+\section{Introduction}
+% ============================================================
+
+Le technicien supérieur GCF est régulièrement amené à produire des études techniques complètes : appels d'offres, avant-projets sommaires (APS), avant-projets définitifs (APD), dossiers de consultation des entreprises (DCE). Ces études intègrent plusieurs disciplines enseignées séparément dans les chapitres précédents.
+
+Ce chapitre propose trois études de cas représentatives :
+\begin{enumerate}
+  \item Un \textbf{immeuble résidentiel RE2020} — déperditions, production chaleur par PAC, distribution hydraulique, régulation ;
+  \item Un \textbf{bâtiment tertiaire climatisé} — CTA double flux, réseau aéraulique, production froid, GTB ;
+  \item Une \textbf{installation industrielle} — process thermique, sécurités, efficacité énergétique.
+\end{enumerate}
+
+\begin{definition}[title={Note de calcul}]
+  La note de calcul est le document technique central d'une étude CVC. Elle regroupe :
+  les données d'entrée (géométrie, occupation, conditions climatiques), les hypothèses
+  retenues, les formules appliquées avec leurs références normatives, les résultats
+  numériques et la sélection du matériel. Elle doit être \textbf{traçable, vérifiable et justifiée}.
+\end{definition}
+
+% ============================================================
+\section{Méthodologie de dimensionnement CVC}
+% ============================================================
+
+\subsection{Démarche générale}
+
+\begin{methode}[title={Étapes du dimensionnement CVC}]
+  \begin{enumerate}
+    \item \textbf{Collecte des données} : plans architectural, orientation, localisation climatique, destination des locaux, réglementation applicable.
+    \item \textbf{Bilan thermique d'hiver} : calcul des déperditions par transmission et renouvellement d'air (NF EN 12831).
+    \item \textbf{Bilan thermique d'été} : calcul des charges de refroidissement (apports solaires, internes, renouvellement).
+    \item \textbf{Sélection des générateurs} : chaudière, PAC, groupe froid — selon besoins de pointe et modulabilité.
+    \item \textbf{Distribution} : réseau hydraulique (dimensionnement des tuyauteries, pompes, équilibrage) et/ou aéraulique (gaines, ventilateurs, diffuseurs).
+    \item \textbf{Émission} : radiateurs, planchers chauffants, ventilo-convecteurs, soufflage.
+    \item \textbf{Régulation et GTB} : stratégies de commande, sondes, actionneurs.
+    \item \textbf{Vérification RE2020} : calcul Bbio, Cep, DH.
+    \item \textbf{Rédaction de la note de calcul} et sélection du matériel sur catalogue.
+  \end{enumerate}
+\end{methode}
+
+\subsection{Données climatiques de référence}
+
+Les températures extérieures de base $T_{ext,base}$ sont définies par zone climatique (NF EN 12831 et données Météo-France) :
+
+\begin{center}
+\begin{tabular}{llcc}
+  \toprule
+  Zone & Exemples de villes & $T_{ext,base}$ (\si{\celsius}) & DJU (base 18) \\
+  \midrule
+  H1a & Paris, Lille         & $-7$  & 2\,400 \\
+  H1b & Reims, Nancy         & $-9$  & 2\,800 \\
+  H1c & Strasbourg           & $-11$ & 3\,100 \\
+  H2a & Nantes, La Rochelle  & $-4$  & 1\,800 \\
+  H2b & Lyon, Grenoble       & $-8$  & 2\,400 \\
+  H2c & Bordeaux, Toulouse   & $-3$  & 1\,600 \\
+  H2d & Nice, Marseille      & 0     & 1\,200 \\
+  H3   & Guadeloupe, Réunion  & +18  & 0 \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Rappel des formules fondamentales}
+
+\subsubsection{Déperditions par transmission}
+
+\begin{equation}
+  \Phi_{T} = H_T \cdot (T_{int} - T_{ext,base})
+\end{equation}
+
+avec $H_T = \sum_{i} U_i \cdot A_i$ le coefficient de déperdition global par transmission (\si{\watt\per\kelvin}).
+
+\subsubsection{Déperditions par ventilation et infiltrations}
+
+\begin{equation}
+  \Phi_{V} = H_V \cdot (T_{int} - T_{ext,base})
+\end{equation}
+
+avec $H_V = \rho_{air} \cdot c_{p,air} \cdot q_v$ (\si{\watt\per\kelvin}), où $q_v$ est le débit volumique d'air neuf (\si{\cubic\meter\per\second}).
+
+\subsubsection{Puissance de chauffage de pointe}
+
+\begin{equation}
+  \Phi_{ch} = \Phi_{T} + \Phi_{V} \quad [\si{\watt}]
+\end{equation}
+
+\subsubsection{Coefficient de performance de la PAC}
+
+\begin{equation}
+  \mathrm{COP} = \frac{P_{calorifique}}{P_{electrique}}
+\end{equation}
+
+\subsubsection{Perte de charge en réseau hydraulique}
+
+\begin{equation}
+  \Delta P = \lambda \cdot \frac{L}{D} \cdot \frac{\rho v^2}{2} + \sum \xi_i \cdot \frac{\rho v^2}{2} \quad [\si{\pascal}]
+\end{equation}
+
+\subsubsection{Puissance frigorifique nécessaire}
+
+\begin{equation}
+  Q_f = Q_{apports\_solaires} + Q_{apports\_internes} + Q_{ventilation}
+\end{equation}
+
+% ============================================================
+\section{Étude de cas 1 — Immeuble résidentiel RE2020}
+% ============================================================
+
+\subsection{Présentation du projet}
+
+\begin{exemple}[title={Contexte}]
+  Immeuble résidentiel collectif R+3, zone climatique H1a (Paris), altitude \SI{75}{\metre}.
+  Surface habitable totale : \SI{1200}{\metre\squared} (12 appartements de \SI{100}{\metre\squared}).
+  Destination : logements sociaux BBC-RE2020.
+  Système CVC retenu : PAC air/eau collective + planchers chauffants + VMC double flux.
+\end{exemple}
+
+\subsection{Données architecturales}
+
+\begin{center}
+\begin{tabular}{llccc}
+  \toprule
+  Paroi & Description & Surface (\si{\metre\squared}) & $U$ (\si{\watt\per\metre\squared\per\kelvin}) & $U \cdot A$ (\si{\watt\per\kelvin}) \\
+  \midrule
+  Murs ext.    & Béton + isolation ITE 14 cm & 620 & 0,22 & 136,4 \\
+  Toiture      & Terrasse accessible isolée   & 300 & 0,15 & 45,0  \\
+  Plancher bas & Dalle sur terre-plein        & 300 & 0,30 & 90,0  \\
+  Vitrages     & Double vitrage Uw 1,2        & 180 & 1,20 & 216,0 \\
+  Portes ext.  & Porte palière isolée         & 30  & 1,40 & 42,0  \\
+  \midrule
+  \textbf{Total} & & & & \textbf{529,4} \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Calcul des déperditions}
+
+\textbf{Données :} $T_{int} = \SI{19}{\celsius}$, $T_{ext,base} = \SI{-7}{\celsius}$, $\Delta T = \SI{26}{\kelvin}$.
+
+\textbf{Renouvellement d'air :}
+\begin{itemize}
+  \item Débit VMC double flux : $q_v = \SI{0,5}{\per\hour} \times \SI{3600}{\metre\cubed} = \SI{1800}{\metre\cubed\per\hour}$
+  \item Rendement échangeur : $\eta = 0,85$ (75\,\% récupéré)
+  \item $H_V = 0,34 \times 1800 \times (1 - 0,85) = \SI{91,8}{\watt\per\kelvin}$
+\end{itemize}
+
+\textbf{Coefficient de déperdition total :}
+\begin{equation}
+  H_{total} = H_T + H_V = 529{,}4 + 91{,}8 = \SI{621{,}2}{\watt\per\kelvin}
+\end{equation}
+
+\textbf{Puissance de chauffage de pointe :}
+\begin{equation}
+  \Phi_{ch} = 621{,}2 \times 26 = \SI{16{,}15}{\kilo\watt}
+\end{equation}
+
+\begin{attention}
+  La puissance de pointe calculée correspond aux déperditions en conditions hivernales extrêmes.
+  Elle ne prend pas en compte les apports solaires et internes, qui sont favorables en hiver
+  mais doivent être vérifiés en été pour le confort d'été (calcul des charges de refroidissement).
+\end{attention}
+
+\subsection{Sélection de la PAC}
+
+\begin{methode}[title={Critères de sélection d'une PAC collective}]
+  \begin{enumerate}
+    \item Puissance calorifique $\geq \Phi_{ch}$ (avec marge de 15\,\% pour pertes réseau)
+    \item COP $\geq 3{,}2$ à $-7/35$ (SCOP annuel selon EN 14825)
+    \item Fluide frigorigène à faible GWP ($<$ 750 — exigences F-gas 2024)
+    \item Compatibilité avec plancher chauffant (eau à \SI{35}{\celsius} max)
+    \item Niveau acoustique $\leq$ 50 dB(A) à \SI{1}{\metre} (mitoyenneté)
+  \end{enumerate}
+\end{methode}
+
+\textbf{Puissance installée avec marge :}
+\begin{equation}
+  P_{PAC} = 16{,}15 \times 1{,}15 = \SI{18{,}6}{\kilo\watt} \rightarrow \text{sélection : PAC 20 kW}
+\end{equation}
+
+\textbf{Consommation électrique annuelle estimée :}
+\begin{equation}
+  W_{el} = \frac{P_{calorifique} \times DJU \times 24}{SCOP \times \Delta T_{base}} = \frac{20 \times 2400 \times 24}{3{,}5 \times 26} \approx \SI{12\,615}{\kilo\watt\hour\per\year}
+\end{equation}
+
+\subsection{Dimensionnement du plancher chauffant}
+
+Le plancher chauffant basse température (PCBT) délivre la chaleur par rayonnement depuis la dalle.
+
+\textbf{Puissance surfacique utile :}
+\begin{equation}
+  q_{plancher} = \frac{\Phi_{ch}}{A_{totale}} = \frac{16\,150}{1200} = \SI{13{,}5}{\watt\per\metre\squared}
+\end{equation}
+
+\textbf{Température de départ eau :} \SI{35}{\celsius} (retour \SI{28}{\celsius}), compatible PAC.
+
+\textbf{Pas de pose des tubes :} espacement $e = \SI{15}{\centi\metre}$ (standard pour habitat). Débit par circuit :
+\begin{equation}
+  \dot{m}_{circuit} = \frac{q_{plancher} \times A_{circuit}}{\rho \cdot c_p \cdot \Delta T_{eau}} = \frac{13{,}5 \times 15}{1000 \times 4186 \times 7 / 3600} \approx \SI{37{,}4}{\litre\per\hour}
+\end{equation}
+
+\subsection{Réseau hydraulique}
+
+\begin{center}
+\begin{tabular}{lcccc}
+  \toprule
+  Tronçon & Débit (\si{\metre\cubed\per\hour}) & $\Delta P_{lin}$ (\si{\pascal\per\metre}) & Longueur (\si{\metre}) & $\Delta P_{tot}$ (\si{\pascal}) \\
+  \midrule
+  Collecteur$\to$R+3 & 1,8 & 120 & 15 & 1\,800 \\
+  R+3$\to$appart 1  & 0,15 & 80  & 12 & 960 \\
+  Circuit PCBT       & 0,15 & 60  & 60 & 3\,600 \\
+  \midrule
+  \textbf{Circuit le plus défavorable} & & & & \textbf{6\,360} \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Sélection de la pompe :} $q_v = \SI{1,8}{\metre\cubed\per\hour}$, $\Delta P = \SI{6\,360}{\pascal} \approx \SI{6,4}{\metre} CE$.
+
+\subsection{Vérification RE2020}
+
+\begin{definition}[title={Indicateurs RE2020 à vérifier}]
+  \begin{itemize}
+    \item \textbf{Bbio} (Besoin bioclimatique) : efficacité de l'enveloppe — $\leq Bbio_{max}$
+    \item \textbf{Cep} (Consommation d'énergie primaire) : $\leq Cep_{max}$
+    \item \textbf{Cep,nr} (Énergie primaire non renouvelable) : $\leq Cep,nr_{max}$
+    \item \textbf{Icénergie} (Impact carbone énergie) : $\leq$ seuil progressif
+    \item \textbf{DH} (Degrés-Heures de confort d'été) : $\leq 1\,250$ DH (résidentiel)
+  \end{itemize}
+\end{definition}
+
+Pour notre immeuble PAC (coefficient de conversion électricité : $f_{prim} = 2{,}3$) :
+\begin{equation}
+  Cep = \frac{W_{el} \times f_{prim}}{A_{ref}} = \frac{12\,615 \times 2{,}3}{1\,200} = \SI{24{,}2}{\kilo\watt\hour\per\metre\squared\per\year}
+\end{equation}
+
+Ce résultat est très inférieur au seuil RE2020 de \SI{70}{\kilo\watt\hour_{ep}\per\metre\squared\per\year} pour le chauffage en zone H1a.
+
+% ============================================================
+\section{Étude de cas 2 — Bâtiment tertiaire climatisé}
+% ============================================================
+
+\subsection{Présentation du projet}
+
+\begin{exemple}[title={Contexte}]
+  Immeuble de bureaux R+5, zone H2b (Lyon), surface utile : \SI{3\,000}{\metre\squared}.
+  Occupation : 300 personnes, bureaux paysagers et salles de réunion.
+  Système CVC : groupe d'eau glacée (GEG) + CTA double flux avec batterie froide
+  + ventilo-convecteurs (VRV en complément), GTB centralisée.
+  Objectif : confort d'été garanti ($T_{int} \leq \SI{26}{\celsius}$), labelisation HQE.
+\end{exemple}
+
+\subsection{Calcul des charges de refroidissement}
+
+\textbf{Apports internes (été) :}
+\begin{center}
+\begin{tabular}{lcc}
+  \toprule
+  Source & Valeur unitaire & Total \\
+  \midrule
+  Personnes (sensible) & $70\,\si{\watt}/pers$ & $300 \times 70 = \SI{21\,000}{\watt}$ \\
+  Éclairage LED & $8\,\si{\watt\per\metre\squared}$ & $3000 \times 8 = \SI{24\,000}{\watt}$ \\
+  Bureautique & $150\,\si{\watt}/poste$ & $200 \times 150 = \SI{30\,000}{\watt}$ \\
+  \midrule
+  \textbf{Total apports internes} & & \SI{75\,000}{\watt} \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Apports solaires (façade Sud, fenêtres \SI{600}{\metre\squared}, $g = 0{,}35$, $G_{max} = \SI{600}{\watt\per\metre\squared}$) :}
+\begin{equation}
+  Q_{solaire} = g \times A_{vitrage} \times G_{max} = 0{,}35 \times 600 \times 600 = \SI{126\,000}{\watt}
+\end{equation}
+
+\textbf{Apports par renouvellement d'air (conditions : $T_{ext} = \SI{33}{\celsius}$, $T_{int} = \SI{26}{\celsius}$) :}
+\begin{equation}
+  q_v = 300\,pers \times \SI{25}{\litre\per\second\per\personne} = \SI{7{,}5}{\metre\cubed\per\second}
+\end{equation}
+\begin{equation}
+  Q_{vent} = \rho \cdot c_p \cdot q_v \cdot (T_{ext} - T_{int}) = 1{,}2 \times 1005 \times 7{,}5 \times 7 = \SI{63\,315}{\watt}
+\end{equation}
+
+\textbf{Charge totale de refroidissement :}
+\begin{equation}
+  Q_f = 75\,000 + 126\,000 + 63\,315 = \SI{264\,315}{\watt} \approx \SI{265}{\kilo\watt}
+\end{equation}
+
+\subsection{Sélection du groupe d'eau glacée}
+
+\textbf{Puissance frigorifique nécessaire (marge 10\,\%) :}
+\begin{equation}
+  Q_{GEG} = 265 \times 1{,}10 = \SI{292}{\kilo\watt} \rightarrow \text{GEG 300 kW}
+\end{equation}
+
+\textbf{COP du groupe froid à $5/12$\,\si{\celsius} :} $\mathrm{EER} = 3{,}0$ (classe A, norme EN 14511).
+
+\textbf{Puissance absorbée :}
+\begin{equation}
+  P_{el} = \frac{Q_{GEG}}{EER} = \frac{300}{3{,}0} = \SI{100}{\kilo\watt}
+\end{equation}
+
+\textbf{Circuit eau glacée :} température $5/12\,\si{\celsius}$, débit :
+\begin{equation}
+  \dot{m}_{EG} = \frac{Q_{GEG}}{\rho \cdot c_p \cdot \Delta T} = \frac{300\,000}{1000 \times 4186 \times 7} = \SI{10{,}2}{\metre\cubed\per\hour}
+\end{equation}
+
+\subsection{Dimensionnement de la CTA double flux}
+
+\begin{methode}[title={Dimensionnement d'une CTA}]
+  \begin{enumerate}
+    \item Déterminer le débit d'air neuf $q_{v,AN}$ (réglementation aéraulique, besoins hygiéniques).
+    \item Choisir les températures de soufflage ($T_{soufflage}$) et de reprise.
+    \item Dimensionner la batterie froide : $Q_{batterie} = \rho \cdot c_p \cdot q_v \cdot (T_{reprise} - T_{soufflage})$.
+    \item Sélectionner le ventilateur (débit + pression disponible).
+    \item Vérifier le bilan enthalpique sur le diagramme de l'air humide.
+  \end{enumerate}
+\end{methode}
+
+\textbf{Débit air total CTA :} $q_{v,total} = \SI{25\,000}{\metre\cubed\per\hour}$ (8 vol/h + hygiénique).
+
+\textbf{Température de soufflage : \SI{15}{\celsius}} (reprise \SI{26}{\celsius}).
+
+\textbf{Puissance de la batterie froide de la CTA :}
+\begin{equation}
+  Q_{batterie} = \frac{1{,}2 \times 1005 \times 25\,000}{3600} \times (26 - 15) = \SI{92\,125}{\watt} \approx \SI{92}{\kilo\watt}
+\end{equation}
+
+\textbf{Perte de charge réseau aéraulique (circuit le plus défavorable) :}
+\begin{center}
+\begin{tabular}{lccc}
+  \toprule
+  Tronçon & Débit (\si{\metre\cubed\per\hour}) & $\Delta P$ (\si{\pascal}) & Vitesse (\si{\metre\per\second}) \\
+  \midrule
+  Gaine principale & 25\,000 & 180 & 6,0 \\
+  Gaines secondaires & 5\,000 & 95 & 4,5 \\
+  Diffuseurs & — & 20 & — \\
+  CTA (filtres+batteries) & — & 350 & — \\
+  \midrule
+  \textbf{Total} & & \textbf{645} & \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Sélection du ventilateur :} $q_v = \SI{25\,000}{\metre\cubed\per\hour}$, $\Delta P_{tot} = \SI{645}{\pascal}$.
+Puissance ventilateur (rendement $\eta = 0{,}75$) :
+\begin{equation}
+  P_{vent} = \frac{q_v \times \Delta P_{tot}}{\eta} = \frac{(25\,000/3600) \times 645}{0{,}75} = \SI{5\,972}{\watt} \approx \SI{6}{\kilo\watt}
+\end{equation}
+
+\subsection{Intégration GTB}
+
+\begin{definition}[title={Architecture GTB pour bâtiment tertiaire}]
+  La GTB centralise la supervision et la commande de toutes les installations CVC :
+  \begin{itemize}
+    \item \textbf{Niveau terrain} : capteurs (sondes de température, CO\textsubscript{2}, humidité, pression), actionneurs (vannes, volets, variateurs de vitesse) ;
+    \item \textbf{Niveau automation} : automates DDC (Direct Digital Control) gérant les boucles de régulation locales ;
+    \item \textbf{Niveau supervision} : IHM de surveillance et de pilotage, archivage des données, alarmes.
+  \end{itemize}
+  Protocoles courants : BACnet (IP ou MS/TP), Modbus RTU/TCP, KNX.
+\end{definition}
+
+\textbf{Fonctions GTB pour ce projet :}
+\begin{itemize}
+  \item Programmation horaire des CTA (démarrage anticipé, relance matinale) ;
+  \item Régulation de la température d'eau glacée en fonction de la charge (reset) ;
+  \item Free-cooling aéraulique ($T_{ext} < T_{int} - \SI{2}{\celsius}$) ;
+  \item Comptage des consommations électriques (GEG, CTA, éclairage) ;
+  \item Alarmes de dépassement de température et de pression.
+\end{itemize}
+
+% ============================================================
+\section{Étude de cas 3 — Installation industrielle}
+% ============================================================
+
+\subsection{Présentation du projet}
+
+\begin{exemple}[title={Contexte}]
+  Atelier de production pharmaceutique, surface : \SI{800}{\metre\squared}.
+  Exigences : température $22 \pm \SI{1}{\celsius}$, humidité relative $50 \pm 5\,\%$,
+  surpression par rapport aux zones adjacentes, renouvellement d'air conforme BPF
+  (Bonnes Pratiques de Fabrication — 20 volumes/heure minimum).
+  Énergie : vapeur process à \SI{6}{\bar} disponible sur site, eau glacée \SI{6/12}{\celsius}.
+\end{exemple}
+
+\subsection{Bilan thermique et massique}
+
+\textbf{Charges internes spécifiques (process) :}
+\begin{center}
+\begin{tabular}{lcc}
+  \toprule
+  Équipement & Puissance dissipée (\si{\kilo\watt}) & Fonctionnement \\
+  \midrule
+  Malaxeurs (4 $\times$ 15 kW) & 45 (rendement 75\,\%) & 16\,h/j \\
+  Éclairage salles blanches    & 12 & 16\,h/j \\
+  Personnel (50 pers $\times$ 100 W) & 5 & 8\,h/j \\
+  Pertes parois (isolation $U_{moy}=0,3$) & 8 & continu \\
+  \midrule
+  \textbf{Total pointe} & \textbf{70} & \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Débit d'air neuf (20 vol/h) :}
+\begin{equation}
+  q_{v,AN} = 20 \times \SI{800}{\metre\squared} \times \SI{3}{\metre} = \SI{48\,000}{\metre\cubed\per\hour}
+\end{equation}
+
+\textbf{Charge frigorifique totale (été, $T_{ext} = \SI{33}{\celsius}$) :}
+\begin{equation}
+  Q_{f,total} = Q_{process} + Q_{vent} = 70 + \frac{1{,}2 \times 1005 \times (48\,000/3600) \times (33-22)}{1000} = 70 + \SI{176}{\kilo\watt} = \SI{246}{\kilo\watt}
+\end{equation}
+
+\subsection{Traitement d'air et hygrométrie}
+
+\begin{methode}[title={Contrôle hygrométrique en salle propre}]
+  \begin{enumerate}
+    \item Calculer la teneur en vapeur d'eau requise : $w_{cible} = f(T_{int}, HR_{cible})$ — diagramme de l'air humide.
+    \item Déshumidification si $w_{ext} > w_{cible}$ : batterie froide amenée à $T_{rosée}$, puis remontée en température.
+    \item Humidification si $w_{ext} < w_{cible}$ : humidificateur vapeur (vapeur propre, sans additifs chimiques en pharmaceutique).
+    \item Régulation proportionnelle-intégrale de l'humidité relative avec sonde HR (\SI{\pm 1}{\percent} de précision).
+  \end{enumerate}
+\end{methode}
+
+\textbf{Calcul de la teneur en eau à $22\,\si{\celsius}$, $HR = 50\,\%$ :}
+\begin{equation}
+  P_{vs}(22°C) = \SI{2\,643}{\pascal}
+\end{equation}
+\begin{equation}
+  w = 0{,}622 \times \frac{HR \times P_{vs}}{P_{atm} - HR \times P_{vs}} = 0{,}622 \times \frac{0{,}5 \times 2643}{101\,325 - 0{,}5 \times 2643} = \SI{8{,}2}{\gram\per\kilogram}
+\end{equation}
+
+\subsection{Efficacité énergétique et économies d'énergie}
+
+\begin{definition}[title={PUE et indicateurs performance installation industrielle}]
+  \begin{itemize}
+    \item \textbf{SEER} (Seasonal Energy Efficiency Ratio) : EER annuel moyenné sur les conditions climatiques.
+    \item \textbf{Récupération de chaleur} sur air extrait : réducteur des consommations de chauffage/humidification.
+    \item \textbf{Variateurs de vitesse} sur ventilateurs et pompes : économie proportionnelle au cube de la réduction de vitesse.
+    \item \textbf{Free-cooling} : utilisation de l'air extérieur frais pour le refroidissement sans compresseur.
+  \end{itemize}
+\end{definition}
+
+\textbf{Économie par récupération de chaleur sur air extrait (échangeur à plaques, $\eta = 0,75$) :}
+\begin{equation}
+  Q_{recup} = 0{,}75 \times \frac{1{,}2 \times 1005 \times 48\,000}{3600} \times (22 - (-5)) = \SI{362}{\kilo\watt}
+\end{equation}
+
+Cette économie permet de réduire considérablement la puissance de la batterie chaude vapeur en hiver.
+
+\textbf{Économie annuelle estimée (chauffage et humidification) :}
+\begin{equation}
+  W_{econo} = 362 \times 3\,000\,h/an \times 10^{-3} \approx \SI{1\,086}{\mega\watt\hour\per\year}
+\end{equation}
+
+\subsection{Sécurités spécifiques installation industrielle}
+
+\begin{attention}
+  En milieu industriel et pharmaceutique, les sécurités CVC sont critiques pour la
+  production et la sécurité des personnels :
+  \begin{itemize}
+    \item \textbf{Surpression salle blanche} : maintenir $+15\,\si{\pascal}$ par rapport aux zones adjacentes (évite contamination).
+    \item \textbf{Alarme température} : dépassement de $22 \pm \SI{2}{\celsius}$ déclenche une alarme de niveau 2 avec traçabilité.
+    \item \textbf{Filtre à haute efficacité} : filtration HEPA H14 ($\geq 99{,}995\,\%$ de rétention à \SI{0,3}{\micro\metre}).
+    \item \textbf{Redondance des équipements} : doublement des ventilateurs (N+1), groupe froid de secours.
+    \item \textbf{Qualification IQ/OQ/PQ} : installation CVC qualifiée selon les référentiels BPF (FDA, EMA).
+  \end{itemize}
+\end{attention}
+
+% ============================================================
+\section{Éléments de réglementation}
+% ============================================================
+
+\subsection{Réglementation thermique RE2020}
+
+La RE2020 (entrée en vigueur le 1\textsuperscript{er} janvier 2022) fixe des exigences de performance énergétique et environnementale pour les bâtiments neufs :
+
+\begin{center}
+\begin{tabular}{lp{7cm}l}
+  \toprule
+  Indicateur & Définition & Exigence type \\
+  \midrule
+  Bbio & Besoin bioclimatique (enveloppe seule) & $\leq Bbio_{max}$ \\
+  Cep & Consommation énergie primaire totale & $\leq Cep_{max}$ \\
+  Cep,nr & Part non renouvelable de Cep & $\leq Cep,nr_{max}$ \\
+  Icénergie & Impact CO\textsubscript{2} des consommations & $\leq$ seuil progressif \\
+  Iconstruction & Impact CO\textsubscript{2} des matériaux de construction & $\leq$ seuil progressif \\
+  DH & Degrés-Heures inconfort d'été & $\leq 1\,250$ DH résidentiel \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Réglementation aéraulique et qualité de l'air intérieur (QAI)}
+
+\begin{itemize}
+  \item \textbf{Arrêté du 24 mars 1982} (modifié) : débits minimaux d'air neuf par local et par usage.
+  \item \textbf{Décret n°2012-14} : obligation de vérification des systèmes de ventilation mécanique.
+  \item \textbf{NF EN 16798-1} : paramètres d'entrée pour la conception des bâtiments (QAI, catégories IDA 1 à 4).
+  \item \textbf{Arrêté 2011 Établissements recevant du public} : surveillance CO\textsubscript{2} et COVT obligatoire dans les ERP de catégories 1 à 4.
+\end{itemize}
+
+\subsection{Fluides frigorigènes et réglementation F-gas}
+
+\begin{definition}[title={Règlement F-gas (UE) n°517/2014 et révision 2024}]
+  Calendrier de réduction progressive des HFC à fort PRG (Potentiel de Réchauffement Global) :
+  \begin{itemize}
+    \item \textbf{2025} : interdiction équipements neufs charge $>$ 3 kg avec GWP $>$ 750.
+    \item \textbf{2027} : interdiction GWP $>$ 150 pour équipements hermétiques.
+    \item \textbf{2032} : interdiction générale HFC pour équipements neufs dans de nombreuses applications.
+  \end{itemize}
+  Alternatives : R-290 (propane, GWP=3), R-32 (GWP=675), R-1234yf (GWP<1), R-744 (CO\textsubscript{2}, GWP=1).
+\end{definition}
+
+\begin{attention}
+  Toute intervention sur un circuit frigorifique de charge $\geq \SI{5}{\tonne}$ CO\textsubscript{2}
+  équivalent nécessite une attestation de capacité délivrée par un organisme accrédité
+  (Certifrigo, Qualifrigo). L'enregistrement des fluides récupérés est obligatoire.
+\end{attention}
+
+\subsection{Normes de conception}
+
+\begin{center}
+\begin{tabular}{ll}
+  \toprule
+  Norme & Domaine \\
+  \midrule
+  NF EN 12831-1 & Calcul des déperditions thermiques de base \\
+  NF EN 12831-3 & Calcul des besoins de chauffage des locaux \\
+  NF EN 15243 & Calcul de la charge de froid \\
+  NF EN 14511 & Performances des climatiseurs et PAC \\
+  NF EN 16798-3 & Conception des systèmes de ventilation \\
+  DTU 65.11 & Dispositifs de sécurité installations chauffage \\
+  DTU 65.12 & Réseaux de tuyauteries en acier \\
+  \bottomrule
+\end{tabular}
+\end{center}

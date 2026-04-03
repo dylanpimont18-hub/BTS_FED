@@ -4,12 +4,10 @@ Mis à jour automatiquement par l'agent à chaque run.
 
 ## Dernier run
 - Date : 2026-04-03
-- Action : Création chapitres 09 — Acoustique du bâtiment + 10 — Électrotechnique appliquée CVC (agents parallèles)
+- Action : Création chapitre 11 — Études de cas et dimensionnement + livret d'exercices cours/exercices/11-exercices.tex
 
 ## Prochain focus
-Créer le chapitre 11 : Études de cas et dimensionnement.
-Fichier cible : `cours/chapitres/11-etudes-de-cas.tex`
-Objectif : ébauche complète — études de cas intégrées, dimensionnement complet d'une installation CVC.
+Tous les chapitres sont créés. Prochaine étape : enrichissement vers complet.
 
 ## Chapitres
 
@@ -25,7 +23,7 @@ Objectif : ébauche complète — études de cas intégrées, dimensionnement co
 | 08 | 08-efficacite-energetique.tex | Efficacité énergétique et RE2020 | ébauche | 4 | Créé le 2026-04-03 |
 | 09 | 09-acoustique.tex | Acoustique du bâtiment | ébauche | 4 | Créé le 2026-04-03 |
 | 10 | 10-electrotechnique.tex | Électrotechnique appliquée CVC | ébauche | 4 | Créé le 2026-04-03 |
-| 11 | 11-etudes-de-cas.tex | Études de cas et dimensionnement | absent | — | |
+| 11 | 11-etudes-de-cas.tex | Études de cas et dimensionnement | ébauche | 4 | Créé le 2026-04-03 |
 
 ## Légende des statuts
 - `absent` : chapitre non encore créé
