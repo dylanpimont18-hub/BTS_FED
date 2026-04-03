@@ -1,0 +1,158 @@
+\chapter*{Chapitre 4 — Production de chaleur}
+\addcontentsline{toc}{chapter}{Chapitre 4 — Production de chaleur}
+
+% ============================================================
+\section*{Énoncés}
+% ============================================================
+
+\exercice{Dimensionnement de la puissance d'une chaudière collective}
+
+Un immeuble collectif de 20 logements de 70\,m² chacun est situé en zone climatique H2 (température de base $T_{base} = -7$\,°C, $T_{int} = 19$\,°C). Le coefficient de déperdition moyen est $G = \SI{1{,}2}{\watt\per\square\metre\per\kelvin}$. Les besoins ECS représentent \SI{8}{\kilo\watt} en pointe. Le coefficient de foisonnement est 0,8.
+
+\begin{enumerate}
+  \item Calculer les déperditions totales de l'immeuble.
+  \item Calculer la puissance de production nécessaire (chauffage + ECS).
+  \item Choisir entre deux chaudières à condensation : modèle A (\SI{60}{\kilo\watt}) et modèle B (\SI{80}{\kilo\watt}). Justifier.
+\end{enumerate}
+
+% ----------------------------------------------------------
+
+\exercice{Comparaison PAC vs chaudière à condensation en rénovation}
+
+Un propriétaire doit remplacer sa vieille chaudière gaz dans une maison de 120\,m² (zone H1, $T_{base} = -12$\,°C). Les déperditions sont estimées à \SI{10}{\kilo\watt}. Les émetteurs sont des radiateurs haute température (80/60\,°C). Il hésite entre :
+\begin{itemize}
+  \item Solution A : chaudière à condensation gaz, $\eta_{PCS} = 104\,\%$ (référencé PCS), prix gaz \SI{0{,}11}{\euro\per\kilo\watt\heure}
+  \item Solution B : PAC air/eau haute température, SCOP = 2,8 (fonctionnement à 60\,°C), prix élec \SI{0{,}22}{\euro\per\kilo\watt\heure}
+\end{itemize}
+Consommation annuelle estimée : 15\,000 kWh thermiques.
+
+\begin{enumerate}
+  \item Calculer le coût annuel de chauffage pour chaque solution.
+  \item Sachant que la PAC coûte \SI{5000}{\euro} de plus à l'installation, calculer le temps de retour sur investissement simple.
+\end{enumerate}
+
+% ----------------------------------------------------------
+
+\exercice{Analyse des performances d'une PAC en exploitation}
+
+Une PAC air/eau est relevée lors de sa mise en service par les mesures suivantes :
+\begin{itemize}
+  \item Puissance électrique mesurée : \SI{3{,}8}{\kilo\watt}
+  \item Température départ eau : \SI{45}{\celsius}
+  \item Température retour eau : \SI{40}{\celsius}
+  \item Débit eau : \SI{1200}{\litre\per\hour}
+  \item Température extérieure : \SI{2}{\celsius}
+\end{itemize}
+$\rho_{eau} = \SI{992}{\kilogram\per\cubic\metre}$ à 42\,°C, $c_p = \SI{4179}{\joule\per\kilogram\per\kelvin}$.
+
+\begin{enumerate}
+  \item Calculer la puissance thermique produite.
+  \item Calculer le COP mesuré.
+  \item Le fabricant annonce COP = 3,8 en A2/W45. Analyser l'écart.
+\end{enumerate}
+
+\newpage
+% ============================================================
+\section*{Corrigés}
+% ============================================================
+
+\subsection*{Corrigé — Exercice 1}
+
+\textit{Question 1 — Déperditions :}
+\[
+  S_{totale} = 20 \times 70 = \SI{1400}{\square\metre}
+\]
+\[
+  \dot{Q}_{dep} = G \times S \times (T_{int} - T_{base}) = 1{,}2 \times 1400 \times (19 - (-7)) = 1{,}2 \times 1400 \times 26 = \SI{43\,680}{\watt} \approx \SI{43{,}7}{\kilo\watt}
+\]
+
+\[
+  \boxed{\dot{Q}_{dep} \approx \SI{43{,}7}{\kilo\watt}}
+\]
+
+\textit{Question 2 — Puissance nécessaire :}
+\[
+  \dot{Q}_{total} = (\dot{Q}_{dep} + \dot{Q}_{ECS}) \times \frac{1}{foisonnement} = (43{,}7 + 8) \times \frac{1}{0{,}8} = 51{,}7 \times 1{,}25 = \SI{64{,}6}{\kilo\watt}
+\]
+
+\[
+  \boxed{\dot{Q}_{total} = \SI{64{,}6}{\kilo\watt}}
+\]
+
+\textit{Question 3 — Choix :} Le modèle A (\SI{60}{\kilo\watt}) est insuffisant (60 < 64,6). Le \textbf{modèle B (\SI{80}{\kilo\watt})} est retenu — il couvre les besoins avec une marge de 24\,\%, suffisante sans surdimensionnement excessif.
+
+% ----------------------------------------------------------
+
+\subsection*{Corrigé — Exercice 2}
+
+\textit{Question 1 — Coûts annuels :}
+
+\textit{Solution A (chaudière) :} L'énergie achetée en gaz pour produire 15\,000\,kWh thermiques :
+\[
+  E_{gaz} = \frac{15\,000}{1{,}04} = \SI{14\,423}{\kilo\watt\heure_{PCS}}
+\]
+\[
+  C_A = 14\,423 \times 0{,}11 = \SI{1587}{\euro\per an}
+\]
+
+\textit{Solution B (PAC) :} L'énergie électrique consommée :
+\[
+  E_{élec} = \frac{15\,000}{2{,}8} = \SI{5357}{\kilo\watt\heure_{élec}}
+\]
+\[
+  C_B = 5357 \times 0{,}22 = \SI{1179}{\euro\per an}
+\]
+
+\[
+  \boxed{C_A = \SI{1587}{\euro\per an} \quad \text{vs} \quad C_B = \SI{1179}{\euro\per an}}
+\]
+
+\textit{Question 2 — Temps de retour :}
+\[
+  \text{Économie annuelle} = 1587 - 1179 = \SI{408}{\euro\per an}
+\]
+\[
+  TRI = \frac{5000}{408} \approx \mathbf{12{,}3\,\text{ans}}
+\]
+
+\[
+  \boxed{TRI \approx 12{,}3 \text{ ans}}
+\]
+
+\begin{attention}
+Ce temps de retour est à comparer avec les aides disponibles (MaPrimeRénov', CEE) qui peuvent le réduire significativement.
+\end{attention}
+
+% ----------------------------------------------------------
+
+\subsection*{Corrigé — Exercice 3}
+
+\textit{Question 1 — Puissance thermique :}
+\[
+  \dot{m} = \frac{1200 \times 992}{3600 \times 1000} = \SI{0{,}331}{\kilogram\per\second}
+\]
+\[
+  \dot{Q} = \dot{m} \cdot c_p \cdot \Delta T = 0{,}331 \times 4179 \times 5 = \SI{6\,916}{\watt} \approx \SI{6{,}9}{\kilo\watt}
+\]
+
+\[
+  \boxed{\dot{Q} \approx \SI{6{,}9}{\kilo\watt}}
+\]
+
+\textit{Question 2 — COP mesuré :}
+\[
+  COP_{mes} = \frac{6{,}9}{3{,}8} = \mathbf{1{,}82}
+\]
+
+\[
+  \boxed{COP_{mes} = 1{,}82}
+\]
+
+\textit{Question 3 — Analyse :} Le COP mesuré (1,82) est très inférieur au COP annoncé (3,8 en A2/W45). Pistes de diagnostic :
+\begin{itemize}
+  \item Vérifier l'état du circuit frigorifique (charge en fluide frigorigène)
+  \item Vérifier l'encrassement ou le givrage de l'échangeur air/fluide
+  \item Vérifier que la PAC n'est pas en mode dégivrage lors de la mesure
+  \item Vérifier le débit d'air sur l'évaporateur (filtre encrassé ?)
+  \item Vérifier l'absence de court-circuit d'air chaud recyclé vers l'aspiration
+\end{itemize}

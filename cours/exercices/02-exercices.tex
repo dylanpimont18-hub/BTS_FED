@@ -1,0 +1,146 @@
+\chapter*{Chapitre 2 — Hydraulique des circuits}
+\addcontentsline{toc}{chapter}{Chapitre 2 — Hydraulique des circuits}
+
+% ============================================================
+\section*{Énoncés}
+% ============================================================
+
+\exercice{Pertes de charge d'un réseau bitubes}
+
+Un réseau bitubes de chauffage alimente 3 radiateurs en dérivation. Le tronçon commun (départ chaudière → nœud de distribution) est en tube acier DN 32 (diamètre intérieur \SI{35{,}9}{\milli\metre}), longueur \SI{20}{\metre}. Il débite \SI{1500}{\litre\per\hour}. La perte de charge linéique pour ce tronçon est $R = \SI{180}{\pascal\per\metre}$. On majore de 40\,\% pour les singularités.
+
+\begin{enumerate}
+  \item Calculer la perte de charge du tronçon commun.
+  \item Calculer la vitesse du fluide. Vérifier qu'elle est dans la plage recommandée.
+  \item La branche la plus défavorisée (radiateur le plus éloigné) présente une perte de charge de \SI{9000}{\pascal}. Les deux autres branches ont respectivement \SI{4500}{\pascal} et \SI{6000}{\pascal}. Calculer la perte de charge supplémentaire à créer sur chaque robinet d'équilibrage.
+\end{enumerate}
+
+% ----------------------------------------------------------
+
+\exercice{Dimensionnement d'une installation de climatisation eau glacée}
+
+Un bâtiment tertiaire nécessite une puissance de froid de \SI{120}{\kilo\watt}. Le groupe froid produit de l'eau glacée à 7\,°C retournant à 12\,°C ($\Delta T = 5$\,°C, $\rho = \SI{999}{\kilogram\per\cubic\metre}$, $c_p = \SI{4182}{\joule\per\kilogram\per\kelvin}$). La perte de charge de la boucle la plus défavorisée est estimée à \SI{35000}{\pascal}.
+
+\begin{enumerate}
+  \item Calculer le débit volumique nécessaire en m³/h.
+  \item Calculer la HMT de la pompe en mCE.
+  \item Calculer la puissance hydraulique absorbée (en supposant $\eta_{pompe} = 55\,\%$).
+\end{enumerate}
+
+% ----------------------------------------------------------
+
+\exercice{Analyse d'un dysfonctionnement hydraulique}
+
+Lors de la réception d'une installation de chauffage, un technicien mesure les débits suivants sur 3 radiateurs d'un même niveau :
+
+\begin{center}
+\begin{tabular}{lccc}
+  \toprule
+  Radiateur & Débit mesuré (L/h) & Débit nominal (L/h) & Écart \\
+  \midrule
+  R1 (proche pompe) & 280 & 180 & +56\,\% \\
+  R2 (intermédiaire) & 195 & 180 & +8\,\% \\
+  R3 (éloigné) & 120 & 180 & -33\,\% \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\begin{enumerate}
+  \item Identifier le problème et sa cause probable.
+  \item Proposer les actions correctives à mettre en œuvre.
+  \item Calculer la perte de charge supplémentaire à créer sur R1 sachant que R3 est la branche index avec une $\Delta P$ mesurée de \SI{7200}{\pascal}, et que la $\Delta P$ sur R1 est de \SI{4100}{\pascal}.
+\end{enumerate}
+
+\newpage
+% ============================================================
+\section*{Corrigés}
+% ============================================================
+
+\subsection*{Corrigé — Exercice 1}
+
+\textit{Question 1 — Perte de charge tronçon commun :}
+\[
+  \Delta P = R \times L \times (1 + 0{,}40) = 180 \times 20 \times 1{,}40 = \SI{5040}{\pascal}
+\]
+
+\textit{Question 2 — Vitesse du fluide :}
+\[
+  S = \frac{\pi \times (0{,}0359)^2}{4} = \SI{1{,}012e-3}{\square\metre}
+\]
+\[
+  q_v = \frac{1500}{3600 \times 1000} = \SI{4{,}17e-4}{\cubic\metre\per\second}
+\]
+\[
+  v = \frac{4{,}17 \times 10^{-4}}{1{,}012 \times 10^{-3}} = \SI{0{,}41}{\metre\per\second}
+\]
+Vitesse dans la plage recommandée (0,5 à 1,5 m/s) — légèrement en dessous, acceptable pour une colonne montante.
+
+\textit{Question 3 — Équilibrage :}
+
+Branche index = \SI{9000}{\pascal}
+\begin{itemize}
+  \item Branche 2 : excédent = $9000 - 6000 = \SI{3000}{\pascal}$ → régler le robinet à +3000\,Pa
+  \item Branche 3 : excédent = $9000 - 4500 = \SI{4500}{\pascal}$ → régler le robinet à +4500\,Pa
+\end{itemize}
+
+% ----------------------------------------------------------
+
+\subsection*{Corrigé — Exercice 2}
+
+\textit{Question 1 — Débit :}
+\[
+  \dot{m} = \frac{120\,000}{4182 \times 5} = \SI{5{,}74}{\kilogram\per\second}
+\]
+\[
+  q_v = \frac{5{,}74}{999} = \SI{5{,}74e-3}{\cubic\metre\per\second} = \SI{20{,}67}{\cubic\metre\per\hour}
+\]
+
+\[
+  \boxed{q_v \approx \SI{20{,}67}{\cubic\metre\per\hour}}
+\]
+
+\textit{Question 2 — HMT :}
+\[
+  HMT = \frac{35\,000}{999 \times 9{,}81} = \SI{3{,}57}{mCE}
+\]
+
+\[
+  \boxed{HMT \approx \SI{3{,}57}{mCE}}
+\]
+
+\textit{Question 3 — Puissance absorbée :}
+\[
+  P_{hyd} = \rho \cdot g \cdot q_v \cdot HMT = 999 \times 9{,}81 \times 5{,}74 \times 10^{-3} \times 3{,}57 = \SI{201}{\watt}
+\]
+\[
+  P_{abs} = \frac{P_{hyd}}{\eta} = \frac{201}{0{,}55} = \SI{365}{\watt} \approx \SI{0{,}37}{\kilo\watt}
+\]
+
+\[
+  \boxed{P_{abs} \approx \SI{0{,}37}{\kilo\watt}}
+\]
+
+% ----------------------------------------------------------
+
+\subsection*{Corrigé — Exercice 3}
+
+\textit{Question 1 :} Le réseau est clairement déséquilibré : R1 reçoit trop de débit (surchauffe), R3 est sous-alimenté (inconfort froid). Cause : absence d'équilibrage hydraulique ou robinets d'équilibrage non réglés.
+
+\textit{Question 2 :} Actions correctives :
+\begin{itemize}
+  \item Identifier et vérifier les robinets d'équilibrage sur chaque branche
+  \item Utiliser une pince de mesure de débit ou un débitmètre ultrasonique
+  \item Régler les robinets d'équilibrage selon la méthode de la branche index (R3)
+  \item Re-mesurer les débits après réglage et valider
+\end{itemize}
+
+\textit{Question 3 :}
+\[
+  \Delta P_{excédent} = \Delta P_{R3} - \Delta P_{R1} = 7200 - 4100 = \SI{3100}{\pascal}
+\]
+
+\[
+  \boxed{\Delta P_{excédent} = \SI{3100}{\pascal}}
+\]
+
+Le robinet d'équilibrage de R1 doit être réglé pour créer une perte de charge supplémentaire de \SI{3100}{\pascal}.
