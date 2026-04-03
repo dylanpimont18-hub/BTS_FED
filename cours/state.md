@@ -4,12 +4,12 @@ Mis à jour automatiquement par l'agent à chaque run.
 
 ## Dernier run
 - Date : 2026-04-03
-- Action : Création chapitre 03 — Aéraulique
+- Action : Création chapitre 04 — Production de chaleur
 
 ## Prochain focus
-Créer le chapitre 04 : Production de chaleur.
-Fichier cible : `cours/chapitres/04-production-chaleur.tex`
-Objectif : ébauche complète — chaudières gaz (condensation, rendements), pompes à chaleur (COP, cycle frigorifique côté chaud), solaire thermique, réseaux de chaleur urbains.
+Créer le chapitre 05 : Distribution et émission de chaleur.
+Fichier cible : `cours/chapitres/05-distribution-emission.tex`
+Objectif : ébauche complète — radiateurs (sélection, puissance, courbes), planchers chauffants (conception, calcul pas/tube), ventilo-convecteurs, réseaux bitubes/monotube.
 
 ## Chapitres
 
@@ -18,7 +18,7 @@ Objectif : ébauche complète — chaudières gaz (condensation, rendements), po
 | 01 | 01-bases-thermiques.tex | Bases de la thermique | ébauche | 3 | Créé le 2026-04-02 |
 | 02 | 02-hydraulique.tex | Hydraulique des circuits | ébauche | 3 | Créé le 2026-04-03 |
 | 03 | 03-aeraulique.tex | Aéraulique | ébauche | 3 | Créé le 2026-04-03 |
-| 04 | 04-production-chaleur.tex | Production de chaleur | absent | — | |
+| 04 | 04-production-chaleur.tex | Production de chaleur | ébauche | 3 | Créé le 2026-04-03 |
 | 05 | 05-distribution-emission.tex | Distribution et émission | absent | — | |
 | 06 | 06-climatisation.tex | Climatisation et traitement d'air | absent | — | |
 | 07 | 07-regulation-gtb.tex | Régulation et GTB | absent | — | |
