@@ -134,6 +134,57 @@ avec $H_V = \rho_{air} \cdot c_{p,air} \cdot q_v$ (\si{\watt\per\kelvin}), où $
   Système CVC retenu : PAC air/eau collective + planchers chauffants + VMC double flux.
 \end{exemple}
 
+% --- Schéma hydraulique simplifié ---
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+    font=\small,
+    box/.style={draw, rectangle, minimum width=2.4cm, minimum height=0.8cm, align=center},
+    pump/.style={draw, circle, minimum size=0.7cm, align=center, font=\footnotesize\bfseries},
+    aller/.style={draw=red!70!black, thick, -Latex},
+    retour/.style={draw=blue!70!black, thick, dashed, -Latex},
+    node distance=0.5cm
+  ]
+
+  % ---- Composants principaux ----
+  \node[box, fill=orange!15] (pac)   at (0,0)   {PAC\\Air/Eau\\20\,kW};
+  \node[pump] (p1) at (3.2, 0)       {P1};
+  \node[box, fill=yellow!20] (bt)    at (5.5,0)  {Ballon\\tampon};
+  \node[pump] (p2) at (8.0, 0)       {P2};
+  \node[box, fill=gray!15] (cd)      at (10.2,0) {Collecteur/\\distributeur};
+
+  % ---- Émetteurs ----
+  \node[box, fill=green!15] (pc) at (9.0,-2.5)  {Plancher\\chauffant\\35/30\,\si{\celsius}};
+  \node[box, fill=cyan!15]  (vmc) at (11.6,-2.5) {VMC\\double flux};
+
+  % ---- Robinets thermostatiques ----
+  \node[box, fill=gray!10] (rt) at (9.0,-4.5) {Robinets\\thermostat.};
+
+  % ---- Liaisons aller (rouge) ----
+  \draw[aller] (pac.east)  -- node[above, font=\footnotesize] {40\,°C} (p1.west);
+  \draw[aller] (p1.east)   -- (bt.west);
+  \draw[aller] (bt.east)   -- node[above, font=\footnotesize] {35\,°C} (p2.west);
+  \draw[aller] (p2.east)   -- (cd.west);
+  \draw[aller] (cd.south)  -- ++(0,-0.6) -| (pc.north);
+  \draw[aller] ([xshift=4mm]cd.south) -- ++(0,-0.6) -| (vmc.north);
+
+  % ---- Retour (bleu, tireté) ----
+  \draw[retour] (pc.south) -- ++(0,-0.5) -- (rt.north);
+  \draw[retour] (rt.south) -- ++(0,-0.4) -- ++(-9.5,0)
+                node[midway, below, font=\footnotesize] {retour 30\,°C}
+                |- (pac.west);
+  \draw[retour] (vmc.south) -- ++(0,-1.8) -| (rt.east);
+
+  % ---- Températures PAC ----
+  \node[font=\footnotesize, text=red!70!black, above] at (1.5, 0.5) {départ 40\,°C};
+  \node[font=\footnotesize, text=blue!70!black, below] at (1.5,-0.5) {retour 35\,°C};
+
+  \end{tikzpicture}
+  \caption{Schéma hydraulique simplifié — Immeuble résidentiel RE2020 :
+    PAC air/eau, ballon tampon, distribution vers plancher chauffant (35/30\,\si{\celsius})
+    et VMC double flux, avec robinets thermostatiques.}
+\end{figure}
+
 \subsection{Données architecturales}
 
 \begin{center}
@@ -268,6 +319,64 @@ Ce résultat est très inférieur au seuil RE2020 de \SI{70}{\kilo\watt\hour_{ep
   Objectif : confort d'été garanti ($T_{int} \leq \SI{26}{\celsius}$), labelisation HQE.
 \end{exemple}
 
+% --- Schéma aéraulique CTA ---
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+    font=\small,
+    comp/.style={draw, rectangle, minimum width=1.8cm, minimum height=1.0cm, align=center, font=\footnotesize},
+    arrow/.style={-Latex, thick},
+    chaud/.style={-Latex, thick, draw=red!70!black},
+    froid/.style={-Latex, thick, draw=blue!60!black},
+    node distance=0.3cm
+  ]
+
+  % ---- Ligne soufflage (haut) ----
+  \node[comp, fill=gray!15]   (an)   at (0,0)    {Air\\neuf};
+  \node[comp, fill=yellow!20] (fg4)  at (2.2,0)  {Filtre\\G4};
+  \node[comp, fill=red!15]    (bch)  at (4.4,0)  {Batterie\\chaude\\70/60\,°C};
+  \node[comp, fill=blue!15]   (bfr)  at (6.7,0)  {Batterie\\froide\\EG 7/12\,°C};
+  \node[comp, fill=cyan!15]   (hum)  at (9.0,0)  {Humidif.\\vapeur};
+  \node[comp, fill=orange!15] (vent) at (11.2,0) {Venti-\\lateur};
+  \node[comp, fill=gray!10]   (gso)  at (13.2,0) {Gaines\\soufflage};
+
+  % ---- Flèches soufflage ----
+  \draw[froid,->] (an.east)   -- node[above,font=\scriptsize]{+1\,°C} (fg4.west);
+  \draw[arrow,->] (fg4.east)  -- (bch.west);
+  \draw[chaud,->] (bch.east)  -- node[above,font=\scriptsize]{18\,°C} (bfr.west);
+  \draw[froid,->] (bfr.east)  -- node[above,font=\scriptsize]{12\,°C\\$w\downarrow$} (hum.west);
+  \draw[arrow,->] (hum.east)  -- node[above,font=\scriptsize]{15\,°C} (vent.west);
+  \draw[arrow,->] (vent.east) -- (gso.west);
+
+  % ---- Locaux ----
+  \node[comp, fill=green!10]  (loc)  at (13.2,-2.5) {Locaux\\26\,°C};
+  \draw[arrow,->] (gso.south) -- (loc.north);
+
+  % ---- Ligne reprise (bas) ----
+  \node[comp, fill=yellow!10] (fm5)  at (4.4,-2.5)  {Filtre\\M5};
+  \node[comp, fill=orange!10] (vr)   at (6.7,-2.5)  {Venti-\\lateur\\reprise};
+  \node[comp, fill=gray!10]   (rep)  at (9.0,-2.5)  {Air\\repris};
+
+  % ---- Flèches retour ----
+  \draw[chaud,->] (loc.west)  -- (rep.east);
+  \draw[arrow,->] (rep.west)  -- (vr.east);
+  \draw[arrow,->] (vr.west)   -- (fm5.east);
+  \draw[arrow,->] (fm5.west)  -- ++(-1.5,0) |- node[left,font=\scriptsize,pos=0.7]{rejet ext.} (an.south);
+
+  % ---- Récupérateur entre les deux flux ----
+  \draw[draw=violet, thick, dashed]
+    (5.5, -0.5) rectangle node[font=\scriptsize, text=violet]{Récup.\\chaleur} (5.5,-2.0);
+  \draw[draw=violet, thick, dashed] (5.5,0.5) -- (5.5,-0.5);
+  \draw[draw=violet, thick, dashed] (5.5,-2.0) -- (5.5,-2.5);
+
+  \end{tikzpicture}
+  \caption{Schéma aéraulique simplifié de la CTA double flux — Bâtiment tertiaire :
+    trajet de l'air neuf (filtre G4, batterie chaude 70/60\,°C, batterie froide 7/12\,°C,
+    humidificateur vapeur, ventilateur soufflage) et circuit de reprise (filtre M5,
+    ventilateur de reprise). Les flèches rouges indiquent l'air chaud, les bleues l'air
+    froid. Les états de l'air (température, humidité) sont annotés entre chaque composant.}
+\end{figure}
+
 \subsection{Calcul des charges de refroidissement}
 
 \textbf{Apports internes (été) :}
@@ -399,6 +508,76 @@ Puissance ventilateur (rendement $\eta = 0{,}75$) :
   (Bonnes Pratiques de Fabrication — 20 volumes/heure minimum).
   Énergie : vapeur process à \SI{6}{\bar} disponible sur site, eau glacée \SI{6/12}{\celsius}.
 \end{exemple}
+
+% --- Schéma salle propre ---
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+    font=\small,
+    box/.style={draw, rectangle, minimum width=2.8cm, minimum height=1.0cm, align=center, font=\footnotesize},
+    arrow/.style={-Latex, thick},
+    froid/.style={-Latex, thick, draw=blue!70!black},
+    chaud/.style={-Latex, thick, draw=red!60!black},
+    recirc/.style={-Latex, thick, draw=green!50!black, dashed},
+    node distance=1.0cm
+  ]
+
+  % ---- Groupe froid ----
+  \node[box, fill=blue!12]  (gf)   at (0,0)    {Groupe froid\\eau glacée\\246\,kW};
+  \node[box, fill=gray!15]  (tour) at (0,-2.8)  {Tour de\\refroidis-\\sement};
+
+  % ---- CTA avec filtres ----
+  \node[box, fill=yellow!15] (cta)  at (5.5,0)  {CTA\\+ filtres\\F7 \& H14};
+
+  % ---- Salle propre ----
+  \node[box, fill=green!12, minimum width=3.2cm, minimum height=2.2cm]
+    (salle) at (11.0,0) {Salle propre\\ISO\,7\\22\,°C $\pm$1 / HR\,50\,$\pm$5\,\%\\$\Delta P = +15$\,Pa};
+
+  % ---- Récupérateur ----
+  \node[box, fill=orange!12] (recup) at (5.5,-2.8) {Récupérateur\\de chaleur\\$\eta=75$\,\%};
+
+  % ---- Extraction filtrée ----
+  \node[box, fill=gray!10]   (ext)   at (11.0,-2.8) {Extraction\\filtrée};
+
+  % ---- Liaisons eau glacée ----
+  \draw[froid] (gf.east) -- node[above, font=\scriptsize]{EG 6\,°C} (cta.west);
+  \draw[froid, dashed] (cta.west) -- node[below, font=\scriptsize]{retour 12\,°C} (gf.east);
+
+  % ---- Liaison groupe froid / tour ----
+  \draw[arrow] (gf.south) -- node[left, font=\scriptsize]{condenseur} (tour.north);
+  \draw[arrow] (tour.north) -- (gf.south);  % retour eau tour
+
+  % ---- Air soufflage vers salle (filtres HEPA) ----
+  \draw[chaud] (cta.east) -- node[above, font=\scriptsize]{air traité\\H14} (salle.west);
+
+  % ---- Surpression : fuite d'air vers ext ----
+  \draw[arrow, draw=green!60!black, thick]
+    (salle.north) -- ++(0, 0.7)
+    node[above, font=\scriptsize, text=green!50!black]{surpression $\rightarrow$ ext.};
+
+  % ---- Extraction ----
+  \draw[arrow] (salle.south) -- node[right, font=\scriptsize]{air vicié} (ext.north);
+
+  % ---- Récupération sur extrait ----
+  \draw[recirc] (ext.west) -- node[below, font=\scriptsize]{chaleur récupérée} (recup.east);
+  \draw[recirc] (recup.north) -- node[right, font=\scriptsize]{préchauffage AN} (cta.south);
+
+  % ---- Légende filtres ----
+  \node[font=\scriptsize, text=blue!70!black, below] at (5.5, -1.3)
+    {Filtre F7 (préfiltre) + H14 (HEPA, \(\geq\)99{,}995\,\%)};
+
+  % ---- Recirculation interne ----
+  \draw[recirc, -Latex] (salle.east) -- ++(1.0,0) -- ++(0, 1.8)
+    -- ++(-7.0,0) node[above, midway, font=\scriptsize, text=green!50!black]
+    {recirculation partielle (5\,vol/h)}
+    |- (cta.north);
+
+  \end{tikzpicture}
+  \caption{Schéma de principe — Salle propre ISO\,7, installation industrielle pharmaceutique :
+    groupe froid eau glacée alimentant la CTA (filtres F7 + HEPA H14),
+    surpression de la salle ($+15$\,Pa) avec extraction filtrée,
+    récupération de chaleur sur l'air extrait et recirculation partielle.}
+\end{figure}
 
 \subsection{Bilan thermique et massique}
 
