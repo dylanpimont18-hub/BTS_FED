@@ -39,6 +39,38 @@ Un bâtiment résidentiel collectif de \SI{800}{\m^2} est ventilé par extractio
   \item En déduire le temps de retour sur investissement si le surcoût du double flux est de \SI{18\,000}{\euro}.
 \end{enumerate}
 
+% ----------------------------------------------------------
+
+\exercice{Diagnostic DPE et rénovation CVC}
+
+Un appartement de \SI{75}{\m^2} à Strasbourg (zone H1c) construit en 1975 est diagnostiqué étiquette F (consommation conventionnelle : $320\,\text{kWh}_{ep}/\text{m}^2/\text{an}$). Le propriétaire envisage deux scénarios de rénovation pour atteindre l'étiquette C ($< 150\,\text{kWh}_{ep}/\text{m}^2/\text{an}$) :
+\begin{itemize}
+  \item \textbf{Scénario A} : isolation des murs + remplacement chaudière gaz ($\eta = 90\,\%$) par chaudière à condensation ($\eta = 105\,\%$ sur PCI)
+  \item \textbf{Scénario B} : isolation des murs + remplacement chaudière gaz par PAC air/eau (SCOP = 3,1) + ECS par PAC intégrée (même SCOP)
+\end{itemize}
+
+\textit{Données actuelles :}
+\begin{itemize}
+  \item Consommation chauffage : $C_{ch} = 230\,\text{kWh}_{ef}/\text{m}^2/\text{an}$ (gaz, $f_{ep} = 1{,}0$)
+  \item Consommation ECS : $C_{ECS} = 30\,\text{kWh}_{ef}/\text{m}^2/\text{an}$ (gaz, $f_{ep} = 1{,}0$)
+  \item Consommation auxiliaires/éclairage : $C_{aux} = 25\,\text{kWh}_{ef}/\text{m}^2/\text{an}$ (électricité, $f_{ep} = 2{,}3$)
+\end{itemize}
+
+\textit{Après isolation (commune aux deux scénarios) :}
+\begin{itemize}
+  \item Réduction des besoins de chauffage : $-40\,\%$ $\Rightarrow$ $C_{ch,rénov} = 138\,\text{kWh}_{ef}/\text{m}^2/\text{an}$
+\end{itemize}
+
+\begin{enumerate}
+  \item Calculer la consommation en énergie primaire actuelle ($C_{ep}$, en $\text{kWh}_{ep}/\text{m}^2/\text{an}$). Confirmer l'étiquette F.
+  \item Pour le scénario A : calculer le $C_{ep}$ après rénovation. Atteint-on l'étiquette C ?
+  \item Pour le scénario B : calculer la consommation finale électrique du chauffage PAC ($\text{kWh}_{ef}/\text{m}^2/\text{an}$), puis le $C_{ep}$. Atteint-on l'étiquette B ($< 110\,\text{kWh}_{ep}/\text{m}^2/\text{an}$) ?
+  \item Calculer l'économie financière annuelle de chaque scénario par rapport à la situation actuelle. \\
+  (Prix gaz : $0{,}095\,€/\text{kWh}$ ; prix électricité : $0{,}18\,€/\text{kWh}$)
+  \item Si le scénario A coûte $12\,000\,€$ et le scénario B $16\,000\,€$ (aides déduites), calculer le TRI de chaque scénario.
+  \item Quelle est l'aide MaPrimeRénov' applicable pour une PAC air/eau chez un ménage aux revenus intermédiaires ?
+\end{enumerate}
+
 \newpage
 % ============================================================
 \section*{Corrigés}
@@ -124,4 +156,120 @@ Besoin annuel par la méthode DJU ($\text{DJU} \times 24$ en K.h) :
 
 \begin{methode}
 Ce temps de retour est excellent (inférieur à 5 ans), ce qui justifie pleinement l'investissement dans un système double flux avec récupération thermique.
+\end{methode}
+
+% ----------------------------------------------------------
+
+\subsection*{Corrigé — Exercice 3}
+
+\textbf{1. Consommation en énergie primaire actuelle :}
+
+\[
+  C_{ep} = C_{ch} \times f_{ep,gaz} + C_{ECS} \times f_{ep,gaz} + C_{aux} \times f_{ep,élec}
+\]
+\[
+  = 230 \times 1{,}0 + 30 \times 1{,}0 + 25 \times 2{,}3 = 230 + 30 + 57{,}5 = \boxed{317{,}5\,\text{kWh}_{ep}/\text{m}^2/\text{an}}
+\]
+
+L'étiquette F correspond à $270 \leq C_{ep} < 330\,\text{kWh}_{ep}/\text{m}^2/\text{an}$ selon le DPE 2021. Avec $317{,}5\,\text{kWh}_{ep}/\text{m}^2/\text{an}$, \textbf{l'étiquette F est confirmée}.
+
+\medskip
+\textbf{2. Scénario A — Chaudière à condensation :}
+
+Après isolation, la consommation de chauffage en gaz avec $\eta = 105\,\%$ sur PCI :
+\[
+  C_{ch,A} = \frac{138}{1{,}05} = 131{,}4\,\text{kWh}_{ef,gaz}/\text{m}^2/\text{an}
+\]
+\[
+  C_{ep,A} = C_{ch,A} \times 1{,}0 + C_{ECS} \times 1{,}0 + C_{aux} \times 2{,}3
+\]
+\[
+  = 131{,}4 + 30 + 57{,}5 = \boxed{218{,}9\,\text{kWh}_{ep}/\text{m}^2/\text{an}}
+\]
+
+L'étiquette C correspond à $\text{Cep} < 150\,\text{kWh}_{ep}/\text{m}^2/\text{an}$. \textbf{Le scénario A atteint l'étiquette D} ($150 \leq C_{ep} < 230$) mais \textbf{ne permet pas d'atteindre l'étiquette C}.
+
+\medskip
+\textbf{3. Scénario B — PAC air/eau (SCOP = 3,1) :}
+
+Chauffage PAC :
+\[
+  C_{ch,B} = \frac{138}{\text{SCOP}} = \frac{138}{3{,}1} = 44{,}5\,\text{kWh}_{ef,élec}/\text{m}^2/\text{an}
+\]
+
+ECS par PAC intégrée (même SCOP) :
+\[
+  C_{ECS,B} = \frac{30}{3{,}1} = 9{,}7\,\text{kWh}_{ef,élec}/\text{m}^2/\text{an}
+\]
+
+Tout est désormais électrique ($f_{ep} = 2{,}3$) :
+\[
+  C_{ep,B} = (C_{ch,B} + C_{ECS,B} + C_{aux}) \times 2{,}3 = (44{,}5 + 9{,}7 + 25) \times 2{,}3
+\]
+\[
+  = 79{,}2 \times 2{,}3 = \boxed{182{,}2\,\text{kWh}_{ep}/\text{m}^2/\text{an}}
+\]
+
+\begin{attention}
+Avec le coefficient $f_{ep} = 2{,}3$ standard (méthode DPE actuelle), le scénario B donne $182\,\text{kWh}_{ep}/\text{m}^2/\text{an}$, soit l'étiquette D. \textbf{L'étiquette B ($< 110$) n'est pas atteinte} avec cette méthode de calcul. Cela illustre la limite du DPE pour valoriser les PAC couplées à une électricité décarbonée : le coefficient 2,3 pénalise tous les usages électriques indépendamment de l'efficacité du système.
+\end{attention}
+
+\medskip
+\textbf{4. Économies financières annuelles :}
+
+\textit{Coût annuel actuel :}
+\[
+  C_{actuel} = (C_{ch} + C_{ECS}) \times \text{prix}_{gaz} + C_{aux} \times \text{prix}_{élec}
+\]
+\[
+  = (230 + 30) \times 75 \times 0{,}095 + 25 \times 75 \times 0{,}18
+\]
+\[
+  = 260 \times 75 \times 0{,}095 + 25 \times 75 \times 0{,}18 = 1\,852 + 338 = \SI{2\,190}{\euro\per\year}
+\]
+
+\textit{Coût scénario A :}
+\[
+  C_A = (131{,}4 + 30) \times 75 \times 0{,}095 + 25 \times 75 \times 0{,}18
+\]
+\[
+  = 161{,}4 \times 75 \times 0{,}095 + 338 = 1\,150 + 338 = \SI{1\,488}{\euro\per\year}
+\]
+\[
+  \boxed{\Delta C_A = 2\,190 - 1\,488 = \SI{702}{\euro\per\year}}
+\]
+
+\textit{Coût scénario B (tout électrique) :}
+\[
+  C_B = (44{,}5 + 9{,}7 + 25) \times 75 \times 0{,}18 = 79{,}2 \times 75 \times 0{,}18 = \SI{1\,070}{\euro\per\year}
+\]
+\[
+  \boxed{\Delta C_B = 2\,190 - 1\,070 = \SI{1\,120}{\euro\per\year}}
+\]
+
+\medskip
+\textbf{5. Temps de retour sur investissement :}
+
+\[
+  TRI_A = \frac{12\,000}{702} \approx \boxed{17{,}1\,\text{ans}}
+\]
+\[
+  TRI_B = \frac{16\,000}{1\,120} \approx \boxed{14{,}3\,\text{ans}}
+\]
+
+Malgré un investissement plus élevé, le scénario B présente un meilleur TRI grâce à des économies annuelles plus importantes. Ce TRI reste élevé — les aides financières sont donc décisives.
+
+\medskip
+\textbf{6. MaPrimeRénov' — PAC air/eau, ménage revenus intermédiaires :}
+
+Selon le barème MaPrimeRénov' 2024 (décret du 26 décembre 2023) :
+\begin{itemize}
+  \item Ménages aux \textbf{revenus intermédiaires} (jaunes) : aide forfaitaire de \textbf{4\,000\,€} pour l'installation d'une PAC air/eau.
+  \item Cette aide est cumulable avec la TVA à 5,5\,\% sur les travaux de rénovation énergétique.
+  \item Les CEE (Certificats d'Économies d'Énergie) sont également cumulables et peuvent représenter 500 à 1\,500\,€ supplémentaires selon les offres des obligés.
+  \item L'éco-PTZ (prêt à taux zéro) peut financer le reste à charge jusqu'à 50\,000\,€ sur 20 ans.
+\end{itemize}
+
+\begin{methode}
+En déduisant la seule MaPrimeRénov' de $4\,000\,€$, l'investissement net du scénario B passe à $12\,000\,€$, ce qui ramène le TRI à $12\,000 / 1\,120 \approx \mathbf{10{,}7\,\text{ans}}$ — nettement plus attractif. Il convient de vérifier les plafonds de ressources sur le simulateur officiel \texttt{mesaidesrénov.gouv.fr}.
 \end{methode}

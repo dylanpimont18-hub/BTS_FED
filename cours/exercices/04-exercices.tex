@@ -51,6 +51,70 @@ $\rho_{eau} = \SI{992}{\kilogram\per\cubic\metre}$ à 42\,°C, $c_p = \SI{4179}{
   \item Le fabricant annonce COP = 3,8 en A2/W45. Analyser l'écart.
 \end{enumerate}
 
+% ----------------------------------------------------------
+
+\exercice{Analyse des fumées et combustion}
+
+Un technicien effectue un contrôle réglementaire d'une chaudière à gaz naturel de \SI{80}{\kilo\watt} installée dans une chaufferie collective. L'analyseur de fumées donne les résultats suivants :
+\begin{itemize}
+  \item Teneur en CO\textsubscript{2} mesurée : $[\text{CO}_2]_{mes} = 8{,}2\,\%$
+  \item Teneur en CO : $[\text{CO}] = 42\,\text{ppm}$
+  \item Température des fumées : $T_{fum} = \SI{185}{\celsius}$
+  \item Température de l'air comburant : $T_{air} = \SI{18}{\celsius}$
+  \item PCI du gaz naturel : $\text{PCI} = \SI{10{,}33}{\kilo\watt\heure\per\cubic\metre}$
+\end{itemize}
+
+\textit{Rappels :}
+\begin{itemize}
+  \item Teneur en CO\textsubscript{2} max (stœchiométrie gaz naturel) : $[\text{CO}_2]_{max} = 11{,}7\,\%$
+  \item Excès d'air : $e = \dfrac{[\text{CO}_2]_{max}}{[\text{CO}_2]_{mes}} - 1$
+  \item Rendement de combustion (méthode de Siegert simplifiée) : $\eta_{comb} = 1 - \dfrac{A + B \times T_{fum}}{[\text{CO}_2]_{mes}\,\%}$ avec $A = 0{,}68$ et $B = 0{,}007$ pour le gaz naturel
+  \item Seuil réglementaire CO : $< 100\,\text{ppm}$ dans les fumées sèches
+  \item Rendement annuel saisonnier minimal : 91\,\% sur PCI (arrêté du 2 octobre 2009 pour chaudières $> 70\,\text{kW}$)
+\end{itemize}
+
+\begin{enumerate}
+  \item Calculer l'excès d'air $e$ (en \,\%).
+  \item Calculer le rendement de combustion $\eta_{comb}$ avec la formule de Siegert.
+  \item Le taux de CO est-il conforme ? Quelles peuvent être les causes d'un taux de CO élevé ?
+  \item Le rendement est-il conforme à la réglementation ?
+  \item Quelle économie de gaz (en m\textsuperscript{3}/an et en €) peut-on espérer en optimisant la combustion pour atteindre $[\text{CO}_2] = 10\,\%$ ? \\
+  (consommation actuelle : $85\,000\,\text{kWh}_{\text{PCI}}/\text{an}$, prix gaz : $0{,}095\,€/\text{kWh}$)
+\end{enumerate}
+
+% ----------------------------------------------------------
+
+\exercice{Dimensionnement d'une installation solaire thermique}
+
+Un hôtel de 20 chambres à Marseille (zone H3) souhaite installer des capteurs solaires plans pour préchauffer l'ECS. Données :
+\begin{itemize}
+  \item Besoin ECS journalier : $V_{ECS} = 500\,\text{L/j}$ à $T_{puis} = \SI{60}{\celsius}$
+  \item Température de l'eau froide : $T_{fr} = \SI{15}{\celsius}$
+  \item Irradiance moyenne annuelle sur plan incliné 45°S à Marseille : $G_{an} = \SI{1800}{\kilo\watt\heure\per\square\metre\per\year}$
+  \item Rendement optique du capteur plan : $\eta_0 = 0{,}79$
+  \item Coefficient de pertes : $a_1 = \SI{3{,}8}{\watt\per\square\metre\per\kelvin}$
+  \item Température moyenne du fluide capteur : $T_m = \SI{50}{\celsius}$
+  \item Température extérieure moyenne annuelle : $T_{ext,moy} = \SI{15}{\celsius}$
+  \item Taux de couverture solaire cible : $f = 60\,\%$
+  \item Rendement des échangeurs et pertes réseau : $\eta_{sys} = 0{,}85$
+  \item Irradiance journalière moyenne à utiliser : $G_{moy} = \SI{5{,}0}{\kilo\watt\heure\per\square\metre\per\day}$
+\end{itemize}
+
+\begin{enumerate}
+  \item Calculer le besoin thermique journalier pour l'ECS (en kWh/j).
+  \item Calculer le besoin thermique annuel total (en kWh/an).
+  \item Calculer le rendement annuel moyen du capteur :
+  \[
+    \eta_{cap} = \eta_0 - \frac{a_1 \times (T_m - T_{ext,moy})}{G_{moy} \times 1000}
+  \]
+  \item Calculer la surface de capteurs nécessaire pour atteindre le taux de couverture $f = 60\,\%$ :
+  \[
+    S = \frac{f \times \text{Besoin}_{an}}{G_{an} \times \eta_{cap} \times \eta_{sys}}
+  \]
+  \item Quel est le volume de ballon de stockage recommandé (règle : 50 à 80\,L/m² de capteur) ?
+  \item Comparer le coût évité (énergie solaire produite × prix gaz) à l'investissement de $850\,€/\text{m}^2$ pour calculer le TRI.
+\end{enumerate}
+
 \newpage
 % ============================================================
 \section*{Corrigés}
@@ -156,3 +220,167 @@ Ce temps de retour est à comparer avec les aides disponibles (MaPrimeRénov', C
   \item Vérifier le débit d'air sur l'évaporateur (filtre encrassé ?)
   \item Vérifier l'absence de court-circuit d'air chaud recyclé vers l'aspiration
 \end{itemize}
+
+% ----------------------------------------------------------
+
+\subsection*{Corrigé — Exercice 4}
+
+\textit{Question 1 — Excès d'air :}
+\[
+  e = \frac{[\text{CO}_2]_{max}}{[\text{CO}_2]_{mes}} - 1 = \frac{11{,}7}{8{,}2} - 1 = 1{,}427 - 1 = 0{,}427
+\]
+\[
+  \boxed{e = 42{,}7\,\%}
+\]
+Un excès d'air de 42,7\,\% signifie que la chaudière aspire 42,7\,\% d'air de plus que le strict minimum stœchiométrique. Cet air excédentaire est chauffé inutilement par la combustion puis évacué dans les fumées, ce qui pénalise le rendement.
+
+\textit{Question 2 — Rendement de combustion (Siegert) :}
+
+$T_{fum} = 185\,°C$ mais la formule de Siegert utilise $\Delta T = T_{fum} - T_{air} = 185 - 18 = 167\,\text{K}$ intégré dans les coefficients $A$ et $B$ :
+\[
+  \eta_{comb} = 1 - \frac{A + B \times \Delta T}{[\text{CO}_2]_{mes}\,\%} = 1 - \frac{0{,}68 + 0{,}007 \times 167}{8{,}2}
+\]
+\[
+  = 1 - \frac{0{,}68 + 1{,}169}{8{,}2} = 1 - \frac{1{,}849}{8{,}2} = 1 - 0{,}2255 = 0{,}7745
+\]
+\[
+  \boxed{\eta_{comb} \approx 77{,}5\,\%}
+\]
+
+\begin{attention}
+Ce rendement de combustion (77,5\,\%) est anormalement bas pour une chaudière récente. Il traduit une perte sensible dans les fumées trop chaudes combinée à un excès d'air excessif. Un réglage fin du brûleur est indispensable.
+\end{attention}
+
+\textit{Question 3 — Conformité CO :}
+\[
+  [\text{CO}] = 42\,\text{ppm} < 100\,\text{ppm} \quad \Rightarrow \quad \textbf{Conforme}
+\]
+Le taux de CO est réglementairement acceptable. Néanmoins un CO élevé peut provenir de :
+\begin{itemize}
+  \item Manque d'air (richesse excessive) — inverse du cas présent
+  \item Mauvaise atomisation du combustible / injecteur encrassé
+  \item Flamme froide (mauvais réglage, encrassement chambre de combustion)
+  \item Température de chambre insuffisante (court-circuit de flamme sur paroi froide)
+  \item Défaut d'étanchéité du circuit de fumées (faux air diluteur)
+\end{itemize}
+
+\textit{Question 4 — Conformité réglementaire du rendement :}
+
+L'arrêté du 2 octobre 2009 impose un rendement saisonnier $\geq 91\,\%$ sur PCI pour les chaudières $> 70\,\text{kW}$.
+\[
+  \eta_{comb} = 77{,}5\,\% < 91\,\% \quad \Rightarrow \quad \textbf{Non conforme}
+\]
+La chaudière doit être réglée (réduction de l'excès d'air, abaissement de la température de fumées) avant de pouvoir être mise en service ou maintenue en exploitation.
+
+\textit{Question 5 — Économie potentielle :}
+
+En portant $[\text{CO}_2]$ de 8,2\,\% à 10\,\%, on recalcule le rendement cible :
+\[
+  e_{cible} = \frac{11{,}7}{10} - 1 = 0{,}17 \quad \Rightarrow \quad 17\,\% \text{ d'excès d'air}
+\]
+En supposant que la température de fumées diminue à environ $T_{fum,cible} \approx 160\,°C$ ($\Delta T = 142\,\text{K}$) :
+\[
+  \eta_{comb,cible} = 1 - \frac{0{,}68 + 0{,}007 \times 142}{10} = 1 - \frac{0{,}68 + 0{,}994}{10} = 1 - \frac{1{,}674}{10} = 83{,}3\,\%
+\]
+Gain de rendement : $\Delta\eta = 83{,}3 - 77{,}5 = 5{,}8\,\%$
+
+Économie en énergie :
+\[
+  \Delta E = 85\,000 \times \frac{5{,}8}{77{,}5} \approx \SI{6\,355}{\kilo\watt\heure_{\text{PCI}} \per\year}
+\]
+
+Économie financière :
+\[
+  \Delta C = 6\,355 \times 0{,}095 = \boxed{\SI{604}{\euro\per\year}}
+\]
+
+En volume de gaz ($\text{PCI} = 10{,}33\,\text{kWh/m}^3$) :
+\[
+  \Delta V_{gaz} = \frac{6\,355}{10{,}33} \approx \boxed{615\,\text{m}^3/\text{an}}
+\]
+
+% ----------------------------------------------------------
+
+\subsection*{Corrigé — Exercice 5}
+
+\textit{Question 1 — Besoin thermique journalier ECS :}
+\[
+  Q_j = \frac{V_{ECS} \times \rho_{eau} \times c_p \times (T_{puis} - T_{fr})}{3\,600}
+\]
+\[
+  = \frac{500 \times 1{,}0 \times 4{,}186 \times (60 - 15)}{3\,600} = \frac{500 \times 4{,}186 \times 45}{3\,600}
+\]
+\[
+  = \frac{94\,185}{3\,600} \approx 26{,}2\,\text{kWh/j}
+\]
+\[
+  \boxed{Q_j \approx 26{,}2\,\text{kWh/j}}
+\]
+(On utilise $\rho_{eau} = 1\,\text{kg/L}$, $c_p = 4{,}186\,\text{kJ/kg·K}$, le facteur $1/3\,600$ convertit kJ en kWh.)
+
+\textit{Question 2 — Besoin thermique annuel :}
+\[
+  Q_{an} = Q_j \times 365 = 26{,}2 \times 365 = \boxed{\SI{9\,563}{\kilo\watt\heure\per\year}}
+\]
+
+\textit{Question 3 — Rendement annuel moyen du capteur :}
+
+$G_{moy} = 5{,}0\,\text{kWh/m}^2/\text{j} = 5{,}0 \times 1\,000 / 3{,}6\,\text{W/m}^2 \approx 1\,389\,\text{W/m}^2$ (en crête). La formule donnée utilise $G_{moy}$ en kWh/m²/j — on applique la conversion pour obtenir une puissance en W/m² :
+\[
+  G_{moy,\,W} = \frac{G_{moy} \times 1\,000}{3{,}6} = \frac{5{,}0 \times 1\,000}{3{,}6} \approx 1\,389\,\text{W/m}^2
+\]
+\[
+  \eta_{cap} = \eta_0 - \frac{a_1 \times (T_m - T_{ext,moy})}{G_{moy,\,W}} = 0{,}79 - \frac{3{,}8 \times (50 - 15)}{1\,389}
+\]
+\[
+  = 0{,}79 - \frac{3{,}8 \times 35}{1\,389} = 0{,}79 - \frac{133}{1\,389} = 0{,}79 - 0{,}096 = 0{,}694
+\]
+\[
+  \boxed{\eta_{cap} \approx 69{,}4\,\%}
+\]
+
+\textit{Question 4 — Surface de capteurs :}
+\[
+  S = \frac{f \times Q_{an}}{G_{an} \times \eta_{cap} \times \eta_{sys}} = \frac{0{,}60 \times 9\,563}{1\,800 \times 0{,}694 \times 0{,}85}
+\]
+\[
+  = \frac{5\,738}{1\,062{,}2} \approx \boxed{5{,}4\,\text{m}^2}
+\]
+En pratique, on retiendra \textbf{6 m²} (en unités de capteurs standard de 2 m² chacun, soit 3 capteurs).
+
+\textit{Question 5 — Volume de ballon de stockage :}
+
+Règle empirique : 50 à 80\,L par m² de capteur :
+\[
+  V_{ballon} = 50 \text{ à } 80\,\text{L/m}^2 \times 5{,}4\,\text{m}^2 = 270 \text{ à } 430\,\text{L}
+\]
+\[
+  \boxed{V_{ballon} \approx 300 \text{ à } 400\,\text{L}}
+\]
+On retiendra un ballon de \textbf{400\,L} (volume standard disponible) pour offrir une autonomie suffisante en cas de faible ensoleillement.
+
+\textit{Question 6 — TRI de l'installation :}
+
+Énergie solaire produite annuellement :
+\[
+  E_{sol} = f \times Q_{an} = 0{,}60 \times 9\,563 = \SI{5\,738}{\kilo\watt\heure\per\year}
+\]
+
+Coût évité (énergie qui aurait été fournie par gaz, $\eta_{chaud} = 0{,}90$) :
+\[
+  \Delta C = \frac{E_{sol}}{\eta_{chaud}} \times \text{prix gaz} = \frac{5\,738}{0{,}90} \times 0{,}095 \approx 6\,376 \times 0{,}095 = \boxed{\SI{606}{\euro\per\year}}
+\]
+
+Investissement total :
+\[
+  I = S \times 850 = 5{,}4 \times 850 = \SI{4\,590}{\euro}
+\]
+(On retient $S = 5{,}4\,\text{m}^2$ pour le calcul ; en pratique l'investissement sera basé sur la surface réellement posée.)
+
+\[
+  TRI = \frac{I}{\Delta C} = \frac{4\,590}{606} \approx \boxed{7{,}6\,\text{ans}}
+\]
+
+\begin{methode}
+Ce TRI de 7 à 8 ans est typique pour une installation solaire thermique en zone méditerranéenne. Les aides MaPrimeRénov' Copropriété ou les CEE peuvent réduire l'investissement de 30 à 50\,\%, ramenant le TRI à 4--5 ans. En zone H1 (Paris), l'irradiance plus faible allonge le TRI à 10--12 ans sans aides.
+\end{methode}
