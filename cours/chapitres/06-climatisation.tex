@@ -98,6 +98,156 @@ Le premier principe appliqué au cycle donne :
 Le condenseur rejette la somme de l'effet frigorifique et du travail de compression.
 \end{definition}
 
+% ------------------------------------------------------------------
+% Diagramme log P/h — cycle R32 type PAC — TikZ pur (sans pgfplots)
+% Axe X : enthalpie h de 150 à 450 kJ/kg (largeur 10 cm → 1 cm = 30 kJ/kg)
+% Axe Y : log pression de log(1) à log(40) bar (hauteur 7 cm)
+%   y = 7 × log(P)/log(40) cm   [log = log base 10]
+%   log(9.9)/log(40) ≈ 0.9956/1.6021 ≈ 0.6214 → y1 = 4.350 cm
+%   log(28)/log(40)  ≈ 1.4472/1.6021 ≈ 0.9033 → y2 = 6.323 cm
+% Axe X : (h - 150)/300 × 10 cm
+%   h1=480 → x1 = (480-150)/300×10 = 11.00 cm  [hors domaine, ajusté à domaine 150–550]
+%   → utilisation domaine h : 150 à 550 kJ/kg (400 kJ/kg), largeur 12 cm
+%   x = (h - 150)/400 × 12 cm
+%   h1=480 → x1 = 330/400×12 = 9.90 cm
+%   h2=530 → x2 = 380/400×12 = 11.40 cm
+%   h3=280 → x3 = 130/400×12 = 3.90 cm
+%   h4=280 → x4 = 3.90 cm  (même enthalpie, détente isenthalpique)
+% ------------------------------------------------------------------
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[x=1cm, y=1cm, >=Stealth]
+
+    % Paramètres de l'axe Y (log P)
+    % hauteur totale = 7 cm, P de 1 à 40 bar (base 10)
+    % y(P) = 7 * log10(P) / log10(40)
+    % Raccourci : scale = 7/log10(40) = 7/1.60206 = 4.3692
+    % Positions Y des niveaux de pression utiles :
+    %   P = 1  bar → y = 0.000
+    %   P = 2  bar → y = 4.3692 × log10(2)  = 4.3692 × 0.30103 = 1.315
+    %   P = 5  bar → y = 4.3692 × log10(5)  = 4.3692 × 0.69897 = 3.053
+    %   P = 9.9 bar → y = 4.3692 × log10(9.9)= 4.3692 × 0.99564 = 4.350
+    %   P = 10 bar → y = 4.3692 × log10(10) = 4.3692 × 1.00000 = 4.369
+    %   P = 20 bar → y = 4.3692 × log10(20) = 4.3692 × 1.30103 = 5.685
+    %   P = 28 bar → y = 4.3692 × log10(28) = 4.3692 × 1.44716 = 6.320
+    %   P = 40 bar → y = 7.000
+
+    % Domaine h : 150 à 550 kJ/kg → largeur 12 cm (1 cm = 400/12 ≈ 33.3 kJ/kg)
+    % x(h) = (h - 150) / 400 × 12
+    %   h=150 → x=0, h=550 → x=12
+
+    % ---- Cadre des axes ----
+    \draw[thick,->] (0,0) -- (13,0) node[right] {$h$ (kJ/kg)};
+    \draw[thick,->] (0,0) -- (0,7.6) node[above] {$P$ (bar) — échelle log};
+    \draw[thick] (12,0) -- (12,7.5); % bord droit
+
+    % ---- Grille et graduations axe X ----
+    \foreach \hval/\xval in {150/0, 200/1.5, 250/3.0, 300/4.5, 350/6.0, 400/7.5, 450/9.0, 500/10.5, 550/12.0}{
+      \draw[gray!30] (\xval,0) -- (\xval,7.5);
+      \node[below, font=\tiny] at (\xval,0) {\hval};
+    }
+    \node[below=6pt, font=\small] at (6,0) {};
+
+    % ---- Grille et graduations axe Y (log) ----
+    % Graduations principales : 1, 2, 5, 10, 20, 40 bar
+    \foreach \pval/\yval in {1/0.000, 2/1.315, 5/3.053, 10/4.369, 20/5.685, 40/7.000}{
+      \draw[gray!30] (0,\yval) -- (12,\yval);
+      \draw (-0.1,\yval) -- (0,\yval);
+      \node[left, font=\tiny] at (0,\yval) {\pval};
+    }
+
+    % ---- Courbe de saturation (simplifiée — dôme schématique) ----
+    % Point sommet du dôme : h_critique R32 ≈ 380 kJ/kg, P_crit ≈ 57.8 bar (hors domaine Y)
+    % On trace une courbe schématique basse pression / haute pression
+    % Ligne de rosée (côté vapeur) : de (h=480, P=1) à (h=420, P=40) approximation
+    % Ligne de bulle (côté liquide) : de (h=200, P=1) à (h=300, P=40) approximation
+    % Coordonnées x : x=(h-150)/400*12
+    %   h=480 → 9.90, h=420 → 8.10, h=200 → 1.50, h=300 → 4.50, h=380 → 6.90
+    \draw[gray!60, thick, dashed]
+      (1.50, 0.000)  % h=200, P=1 bar — liquide saturé BP
+      .. controls (2.00, 2.5) and (3.00, 5.0) ..
+      (4.20, 6.200)  % h=265, P~32 bar — approximation côté liquide HP
+      .. controls (5.50, 7.0) and (6.50, 7.2) ..
+      (6.90, 7.00)   % sommet approximatif
+      .. controls (7.50, 7.0) and (8.50, 6.5) ..
+      (9.00, 5.200)  % h=450, P~20 bar — côté vapeur
+      .. controls (9.60, 4.0) and (9.90, 2.5) ..
+      (10.50, 0.000); % h=500, P=1 bar — vapeur saturée BP
+
+    % ---- Coordonnées des 4 points du cycle ----
+    % P1 = 9,9 bar → y1 = 4.350 ; h1=480 → x1=9.90
+    % P2 = 28 bar  → y2 = 6.320 ; h2=530 → x2=11.40
+    % P3 = 28 bar  → y3 = 6.320 ; h3=280 → x3=3.90
+    % P4 = 9,9 bar → y4 = 4.350 ; h4=280 → x4=3.90
+
+    % ---- Segments du cycle ----
+
+    % Segment 4→1 : Évaporation (bleu) — BP, h croît de 280 à 480
+    \draw[blue!70!black, very thick, ->]
+      (3.90, 4.350) -- (9.90, 4.350);
+
+    % Segment 1→2 : Compression (vert) — h croît, P croît
+    \draw[green!60!black, very thick, ->]
+      (9.90, 4.350) -- (11.40, 6.320);
+
+    % Segment 2→3 : Condensation (rouge) — HP, h décroît de 530 à 280
+    \draw[red!70!black, very thick, ->]
+      (11.40, 6.320) -- (3.90, 6.320);
+
+    % Segment 3→4 : Détente (orange) — h constant (isenthalpique), P chute
+    \draw[orange!80!black, very thick, ->]
+      (3.90, 6.320) -- (3.90, 4.350);
+
+    % ---- Points du cycle ----
+    \filldraw[blue!70!black]   (9.90,  4.350) circle (2.5pt);
+    \filldraw[green!60!black]  (11.40, 6.320) circle (2.5pt);
+    \filldraw[red!70!black]    (3.90,  6.320) circle (2.5pt);
+    \filldraw[orange!80!black] (3.90,  4.350) circle (2.5pt);
+
+    % ---- Annotations des points ----
+    \node[above right, font=\small\bfseries, blue!70!black]
+      at (9.90, 4.350) {1 \ ($h_1$=480, $P_1$=9,9)};
+    \node[above right, font=\small\bfseries, green!60!black]
+      at (11.40, 6.320) {2 \ ($h_2$=530, $P_2$=28)};
+    \node[above left, font=\small\bfseries, red!70!black]
+      at (3.90, 6.320) {3 \ ($h_3$=280, $P_3$=28)};
+    \node[below left, font=\small\bfseries, orange!80!black]
+      at (3.90, 4.350) {4 \ ($h_4$=280, $P_4$=9,9)};
+
+    % ---- Annotations des segments ----
+    \node[below, font=\footnotesize, blue!70!black, fill=white, inner sep=1pt]
+      at (6.90, 4.350) {\textbf{Évaporation}};
+    \node[right, font=\footnotesize, green!60!black, fill=white, inner sep=1pt]
+      at (10.65, 5.335) {\textbf{Compression}};
+    \node[above, font=\footnotesize, red!70!black, fill=white, inner sep=1pt]
+      at (7.65, 6.320) {\textbf{Condensation}};
+    \node[left, font=\footnotesize, orange!80!black, fill=white, inner sep=1pt]
+      at (3.90, 5.335) {\textbf{Détente}};
+
+    % ---- Annotations des grandeurs thermodynamiques ----
+    % q_evap = h1 - h4 = 200 kJ/kg → flèche horizontale sous la courbe BP
+    \draw[blue!50, <->, thick]
+      (3.90, 3.80) -- (9.90, 3.80)
+      node[midway, below, font=\footnotesize, blue!70!black]
+        {$q_{evap} = h_1 - h_4 = \SI{200}{\kilo\joule\per\kilogram}$};
+
+    % w_comp = h2 - h1 = 50 kJ/kg → accolade à droite
+    \draw[green!50!black, <->, thick]
+      (12.20, 4.350) -- (12.20, 6.320)
+      node[midway, right, font=\footnotesize, green!60!black]
+        {$w_{comp} = h_2 - h_1 = \SI{50}{\kilo\joule\per\kilogram}$};
+
+    % q_cond = h2 - h3 = 250 kJ/kg → flèche horizontale au-dessus de HP
+    \draw[red!50, <->, thick]
+      (3.90, 6.75) -- (11.40, 6.75)
+      node[midway, above, font=\footnotesize, red!70!black]
+        {$q_{cond} = h_2 - h_3 = \SI{250}{\kilo\joule\per\kilogram}$};
+
+  \end{tikzpicture}
+  \caption{Diagramme pression-enthalpie (log P/h) — cycle R32 type PAC}
+  \label{fig:diag_ph_r32}
+\end{figure}
+
 \subsection{Coefficient de performance en froid (EER)}
 
 \begin{definition}[title=EER — Energy Efficiency Ratio]

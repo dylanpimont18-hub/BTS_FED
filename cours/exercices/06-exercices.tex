@@ -43,14 +43,42 @@ Un groupe froid à eau glacée de 80\,kW nominal présente les mesures suivantes
   \item Puissance électrique mesurée : \SI{28}{\kilo\watt}
   \item Température eau glacée départ : 9\,°C (consigne : 7\,°C)
   \item Température eau glacée retour : 13\,°C
-  \item Débit eau glacée : \SI{30}{\cubic\metre\per\hour}, $\rho = \SI{999}{\kilogram\per\cubic\metre}$, $c_p = \SI{4182}{\joule\per\kilogram\per\kelvin}$
+  \item Débit eau glacée : \SI{13{,}8}{\cubic\metre\per\hour}, $\rho = \SI{999}{\kilogram\per\cubic\metre}$, $c_p = \SI{4182}{\joule\per\kilogram\per\kelvin}$
   \item Température extérieure : 28\,°C
 \end{itemize}
 
 \begin{enumerate}
-  \item Calculer la puissance frigorifique produite.
-  \item Calculer l'EER mesuré.
-  \item Identifier les anomalies et les causes probables.
+  \item Calculer la puissance frigorifique produite à partir du bilan hydraulique.
+  \item Calculer l'EER mesuré et comparer à l'EER nominal du constructeur (EER\textsubscript{nom} = 3,2 à 35\,°C, EER\textsubscript{att} \,$\approx$\,3,6 à 28\,°C).
+  \item La puissance calculée est conforme à la puissance nominale. Identifier les anomalies restantes (départ, $\Delta T$ eau, condensation) et proposer des causes probables.
+\end{enumerate}
+
+\exercice{Free-cooling — calcul d'économie annuelle}
+
+Un immeuble de bureaux à Paris dispose d'un groupe froid de 200\,kW pour la climatisation. L'ingénieur propose d'ajouter un système de free-cooling aéraulique.
+
+\textbf{Données :}
+\begin{itemize}
+  \item Puissance frigorifique totale : 200\,kW
+  \item Température de soufflage air neuf : $T_{souf} = \SI{16}{\degreeCelsius}$
+  \item Température intérieure maintenue : $T_{int} = \SI{26}{\degreeCelsius}$
+  \item Débit d'air de ventilation : $Q_{air} = \SI{20000}{\cubic\metre\per\hour}$
+  \item $\rho_{air} = \SI{1{,}2}{\kilogram\per\cubic\metre}$, $c_{p,air} = \SI{1006}{\joule\per\kilogram\per\kelvin}$
+  \item Heures de climatisation/an : 1\,800\,h (mai–septembre)
+  \item Heures avec $T_{ext} < 16$\,°C pendant la période de clim : 600\,h/an (données météo Paris)
+  \item COP du groupe froid : 3,2
+  \item Coût électricité : 0,15\,€/kWh
+  \item Énergie électrique des ventilateurs free-cooling : 8\,kW supplémentaires
+  \item Charge moyenne pendant les heures de free-cooling : 120\,kW
+\end{itemize}
+
+\begin{enumerate}
+  \item Calculer la puissance frigorifique disponible par free-cooling aéraulique ($\dot{Q}_{fc} = \rho \cdot c_p \cdot Q_{air} \cdot \Delta T$).
+  \item Pendant les 600\,h de free-cooling disponibles, quelle est la part de charge couverte par le free-cooling (\%) pour une charge moyenne de 120\,kW ?
+  \item Calculer l'énergie électrique économisée sur le compresseur pendant ces 600\,h.
+  \item Calculer le surcoût électrique des ventilateurs free-cooling sur ces 600\,h.
+  \item Calculer l'économie nette annuelle en euros.
+  \item Si l'investissement du système free-cooling est 25\,000\,€, quel est le temps de retour sur investissement (TRI) ?
 \end{enumerate}
 
 \newpage
@@ -124,26 +152,99 @@ Un groupe froid à eau glacée de 80\,kW nominal présente les mesures suivantes
 
 \subsection*{Corrigé — Exercice 3}
 
-\textit{Question 1 — Puissance frigorifique :}
+\textit{Question 1 — Puissance frigorifique produite :}
 \[
-  \dot{m} = \frac{30 \times 999}{3600} = \SI{8{,}33}{\kilogram\per\second}
+  \dot{m} = \frac{13{,}8 \times 999}{3600} = \SI{3{,}830}{\kilogram\per\second}
 \]
 \[
-  \dot{Q}_0 = 8{,}33 \times 4182 \times (13 - 9) = \boxed{\SI{139}{\kilo\watt}}
+  \dot{Q}_0 = \dot{m} \times c_p \times (T_{ret} - T_{dep}) = 3{,}830 \times 4182 \times (13 - 9) = \boxed{\approx \SI{64{,}1}{\kilo\watt}}
 \]
-
-\begin{attention}
-La puissance produite (139\,kW) est largement supérieure à la puissance nominale (80\,kW), ce qui constitue la première anomalie à analyser.
-\end{attention}
 
 \textit{Question 2 — EER mesuré :}
 \[
-  EER = \frac{139}{28} = \boxed{4{,}96}
+  EER_{mes} = \frac{64{,}1}{28} = \boxed{2{,}29}
 \]
 
-\textit{Question 3 — Anomalies :}
+L'EER attendu à $T_{ext} = 28$\,°C est d'environ 3,6 (interpolation entre 3,2 à 35\,°C et les données constructeur). L'EER mesuré (2,29) est \textbf{significativement inférieur} à l'EER attendu.
+
+\textit{Question 3 — Anomalies et causes probables :}
 \begin{itemize}
-  \item La puissance produite (139\,kW) est \textbf{supérieure} à la puissance nominale (80\,kW) → le groupe est en surcharge ou les conditions sont plus favorables que prévues (température extérieure plus basse, ou nominal mesuré à des conditions défavorables).
-  \item La température de départ (9\,°C) est \textbf{au-dessus} de la consigne (7\,°C) → vérifier la régulation, le sous-refroidissement insuffisant, ou un débit trop élevé.
-  \item \textbf{Pistes d'action :} recalibrer la vanne de régulation du débit ; vérifier la charge en fluide frigorigène ; vérifier la consigne du thermostat de départ.
+  \item \textbf{Anomalie 1 — Puissance frigorifique insuffisante (64,1\,kW au lieu de 80\,kW) :}
+    le groupe ne délivre que 80\,\% de sa puissance nominale malgré une température extérieure favorable (28\,°C au lieu de 35\,°C). Causes probables : sous-charge en fluide frigorigène (fuite ou purge insuffisante), encrassement de l'évaporateur côté eau (entartrage, dépôts), perte de capacité du compresseur (clapet défectueux).
+  \item \textbf{Anomalie 2 — Température de départ trop élevée (9\,°C vs consigne 7\,°C) :}
+    le groupe ne descend pas à la consigne de production. Causes probables : débit d'eau trop faible (vanne partiellement fermée, colmatage du filtre), puissance frigorifique insuffisante par rapport à la charge hydraulique, problème de régulation (capteur de température déplacé ou défaillant).
+  \item \textbf{Anomalie 3 — EER anormalement bas (2,29 vs 3,6 attendu) :}
+    à débit et $\Delta T$ mesurés, la puissance électrique (28\,kW) est disproportionnée par rapport à l'effet frigorifique produit. Causes probables : température de condensation anormalement élevée (condenseur encrassé ou ventilateur défaillant), surchauffe excessive en sortie de compresseur (valve de régulation de surchauffe déréglée), pression de condensation hors plage normale.
+  \item \textbf{Actions correctives :} contrôle et recharge éventuelle du fluide frigorigène (test d'étanchéité), nettoyage du condenseur à air, vérification du débit hydraulique et du filtre à tamis, recalibrage de la sonde de départ eau glacée.
 \end{itemize}
+
+\subsection*{Corrigé — Exercice 4}
+
+\textit{Question 1 — Puissance frigorifique disponible par free-cooling aéraulique :}
+\[
+  \dot{m}_{air} = \rho_{air} \times Q_{air} = 1{,}2 \times \frac{20\,000}{3600} = 1{,}2 \times 5{,}556 = \SI{6{,}667}{\kilogram\per\second}
+\]
+\[
+  \Delta T = T_{int} - T_{souf} = 26 - 16 = \SI{10}{\kelvin}
+\]
+\[
+  \dot{Q}_{fc} = \dot{m}_{air} \times c_{p,air} \times \Delta T = 6{,}667 \times 1006 \times 10 = \boxed{\SI{67{,}1}{\kilo\watt}}
+\]
+
+Le free-cooling aéraulique peut fournir jusqu'à 67,1\,kW de puissance frigorifique, soit environ 33,5\,\% de la capacité nominale du groupe froid (200\,kW).
+
+\textit{Question 2 — Part de charge couverte par le free-cooling lors des 600\,h disponibles :}
+
+La charge moyenne pendant ces 600\,h est de 120\,kW. La puissance free-cooling disponible est de 67,1\,kW.
+\[
+  \text{Part FC} = \frac{\dot{Q}_{fc}}{\dot{Q}_{charge}} = \frac{67{,}1}{120} = \boxed{55{,}9\,\%}
+\]
+
+Pendant ces heures, le free-cooling couvre environ 56\,\% de la charge ; le compresseur ne couvre que les 44\,\% restants.
+
+\textit{Question 3 — Énergie électrique économisée sur le compresseur :}
+
+Sans free-cooling, la puissance électrique du compresseur pour 120\,kW de charge :
+\[
+  P_{comp,sans\,FC} = \frac{120}{3{,}2} = \SI{37{,}5}{\kilo\watt}
+\]
+
+Avec free-cooling, le compresseur ne couvre plus que $120 - 67{,}1 = 52{,}9$\,kW :
+\[
+  P_{comp,avec\,FC} = \frac{52{,}9}{3{,}2} = \SI{16{,}5}{\kilo\watt}
+\]
+
+Puissance électrique économisée sur le compresseur :
+\[
+  \Delta P_{comp} = 37{,}5 - 16{,}5 = \SI{21}{\kilo\watt}
+\]
+
+Énergie économisée sur 600\,h :
+\[
+  \Delta E_{comp} = 21 \times 600 = \boxed{\SI{12\,600}{\kilo\watt\heure}}
+\]
+
+\textit{Question 4 — Surcoût électrique des ventilateurs free-cooling :}
+\[
+  E_{vent,FC} = 8 \times 600 = \boxed{\SI{4\,800}{\kilo\watt\heure}}
+\]
+
+\textit{Question 5 — Économie nette annuelle :}
+\[
+  \text{Économie brute} = \Delta E_{comp} \times 0{,}15 = 12\,600 \times 0{,}15 = \SI{1\,890}{\euro}
+\]
+\[
+  \text{Surcoût ventilateurs} = E_{vent,FC} \times 0{,}15 = 4\,800 \times 0{,}15 = \SI{720}{\euro}
+\]
+\[
+  \text{Économie nette} = 1\,890 - 720 = \boxed{\SI{1\,170}{\euro\per\year}}
+\]
+
+\textit{Question 6 — Temps de retour sur investissement (TRI) :}
+\[
+  TRI = \frac{\text{Investissement}}{\text{Économie nette annuelle}} = \frac{25\,000}{1\,170} = \boxed{21{,}4 \text{ ans}}
+\]
+
+\begin{attention}
+Un TRI de 21 ans est économiquement peu attractif pour un investissement industriel (seuil habituel : 5–8 ans). Ce résultat s'explique par le nombre limité d'heures de free-cooling disponibles à Paris en période de climatisation (600\,h/an, soit 33\,\% des 1\,800\,h de fonctionnement). Le free-cooling aéraulique devient plus rentable dans des villes plus nordiques (Lille, Strasbourg) où les heures disponibles sont plus nombreuses, ou si le groupe froid fonctionne également en demi-saison avec des besoins modérés mais des températures extérieures déjà basses.
+\end{attention}
