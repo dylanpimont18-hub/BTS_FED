@@ -1,0 +1,127 @@
+\chapter*{Chapitre 8 — Efficacité énergétique et RE2020}
+\addcontentsline{toc}{chapter}{Chapitre 8 — Efficacité énergétique et RE2020}
+
+% ============================================================
+\section*{Énoncés}
+% ============================================================
+
+\exercice{Vérification de conformité RE2020 d'un bâtiment de bureaux}
+
+Un bureau de \SI{500}{\m^2} (zone H2b — Nantes) est équipé d'un système de climatisation réversible VRV avec CTA double flux ($\eta_r = 80\,\%$). Les données de la simulation thermique donnent :
+\begin{itemize}
+  \item Besoin chauffage : $Q_{\text{ch}} = \SI{28\,000}{\kWh \per \year}$
+  \item Besoin refroidissement : $Q_{\text{fr}} = \SI{15\,000}{\kWh \per \year}$
+  \item Besoin éclairage : $Q_{\text{écl}} = \SI{8\,000}{\kWh \per \year}$
+  \item Auxiliaires (pompes, ventilateurs) : $C_{\text{aux}} = \SI{4\,500}{\kWh \per \year}$
+\end{itemize}
+Données systèmes : SCOP chauffage = 3,8 ; EER refroidissement = 3,2 ; rendements distribution = 0,97.
+
+\begin{enumerate}
+  \item Calculer la consommation en énergie finale pour chaque usage.
+  \item Calculer le Cep en \si{\kWh_{ep} \per \m^2 \per \year} (fep électricité = 2,3).
+  \item Calculer le Cep,nr ($\text{fep,nr}$ électricité VRV = 2,3 avec fraction non renouvelable 0,55 pour le CVC ; fraction non renouvelable éclairage + auxiliaires = 1,0).
+  \item Comparer au seuil indicatif RE2020 bureaux (\SI{90}{\kWh_{ep,nr} \per \m^2 \per \year}) et conclure.
+\end{enumerate}
+
+\exercice{Comparaison énergétique — simple flux vs double flux}
+
+Un bâtiment résidentiel collectif de \SI{800}{\m^2} est ventilé par extraction simple flux hygro B. On envisage de le remplacer par un système double flux avec récupération ($\eta_r = 85\,\%$). Données :
+\begin{itemize}
+  \item Débit d'air total : $\dot{V} = \SI{3\,200}{\m^3 \per \hour}$
+  \item DJU chauffage (Lyon H1b) : 2\,130 K.j
+  \item Température intérieure conventionnelle : \SI{19}{\degreeCelsius}
+  \item Coût du kWh chauffage gaz condensation : \SI{0{,}10}{\euro}
+\end{itemize}
+
+\begin{enumerate}
+  \item Calculer le besoin de chauffage annuel lié à la ventilation en simple flux.
+  \item Calculer l'économie de chauffage apportée par le double flux.
+  \item En déduire le temps de retour sur investissement si le surcoût du double flux est de \SI{18\,000}{\euro}.
+\end{enumerate}
+
+\newpage
+% ============================================================
+\section*{Corrigés}
+% ============================================================
+
+\subsection*{Corrigé — Exercice 1}
+
+\textbf{1. Consommation en énergie finale par usage :}
+
+Chauffage :
+\[
+  C_{\text{ef,ch}} = \frac{Q_{\text{ch}}}{\text{SCOP} \times \eta_{\text{dist}}} = \frac{28\,000}{3{,}8 \times 0{,}97} = \frac{28\,000}{3{,}686} = \boxed{\SI{7\,596}{\kWh \per \year}}
+\]
+
+Refroidissement :
+\[
+  C_{\text{ef,fr}} = \frac{Q_{\text{fr}}}{\text{EER} \times \eta_{\text{dist}}} = \frac{15\,000}{3{,}2 \times 0{,}97} = \frac{15\,000}{3{,}104} = \boxed{\SI{4\,833}{\kWh \per \year}}
+\]
+
+Éclairage (consommation directe) : $C_{\text{ef,écl}} = \boxed{\SI{8\,000}{\kWh \per \year}}$
+
+Auxiliaires : $C_{\text{aux}} = \boxed{\SI{4\,500}{\kWh \per \year}}$
+
+Total énergie finale :
+\[
+  C_{\text{ef,total}} = 7\,596 + 4\,833 + 8\,000 + 4\,500 = \boxed{\SI{24\,929}{\kWh \per \year}}
+\]
+
+\medskip
+\textbf{2. Cep (toute l'électricité, fep = 2,3) :}
+\[
+  \text{Cep} = \frac{C_{\text{ef,total}} \times \text{fep}}{S_{\text{ref}}} = \frac{24\,929 \times 2{,}3}{500} = \frac{57\,337}{500} = \boxed{\SI{114{,}7}{\kWh_{ep} \per \m^2 \per \year}}
+\]
+
+\medskip
+\textbf{3. Cep,nr :}
+
+En première approche simplifiée (VRV + fraction non renouvelable 0,55 ; éclairage + auxiliaires avec fraction 1,0) :
+\[
+  \text{Cep,nr} = \frac{(7\,596 + 4\,833) \times 2{,}3 \times 0{,}55 + (8\,000 + 4\,500) \times 2{,}3 \times 1{,}0}{500}
+\]
+\[
+  = \frac{12\,429 \times 1{,}265 + 12\,500 \times 2{,}3}{500} = \frac{15\,722 + 28\,750}{500} = \frac{44\,472}{500} = \boxed{\SI{88{,}9}{\kWh_{ep,nr} \per \m^2 \per \year}}
+\]
+
+\medskip
+\textbf{4. Conclusion :}
+
+$\text{Cep,nr} = \SI{88{,}9}{\kWh_{ep,nr} \per \m^2 \per \year} < \SI{90}{\kWh_{ep,nr} \per \m^2 \per \year}$ : le bâtiment est \textbf{conforme à la RE2020} sur l'indicateur Cep,nr avec une marge de 1,2~\%. Il conviendra toutefois de vérifier également les indicateurs Bbio, DH et IC avant de valider la conformité globale.
+
+\subsection*{Corrigé — Exercice 2}
+
+\textbf{1. Besoin de chauffage annuel — ventilation simple flux :}
+
+Débit massique d'air :
+\[
+  \dot{m}_{\text{air}} = \frac{\dot{V}}{3\,600} \times \rho_{\text{air}} = \frac{3\,200}{3\,600} \times 1{,}2 = \SI{1{,}067}{\kg \per \s}
+\]
+
+Besoin annuel par la méthode DJU ($\text{DJU} \times 24$ en K.h) :
+\[
+  Q_{\text{vent,SF}} = \dot{m}_{\text{air}} \times c_p \times (\text{DJU} \times 24) / 1\,000
+  = 1{,}067 \times 1\,006 \times (2\,130 \times 24) / 1\,000
+\]
+\[
+  = 1{,}073 \times 51\,120 / 1\,000 \approx \boxed{\SI{54\,852}{\kWh \per \year}}
+\]
+
+\textbf{2. Économie par double flux :}
+\[
+  \Delta Q = \eta_r \times Q_{\text{vent,SF}} = 0{,}85 \times 54\,852 = \SI{46\,624}{\kWh \per \year}
+\]
+
+Économie financière (chauffage gaz, $\eta_{\text{syst}} = 0{,}95$) :
+\[
+  \Delta E = \frac{46\,624}{0{,}95} \times 0{,}10 = \boxed{\SI{4\,908}{\euro \per \year}}
+\]
+
+\textbf{3. Temps de retour sur investissement :}
+\[
+  T_{\text{retour}} = \frac{18\,000}{4\,908} \approx \boxed{3{,}7\text{ ans}}
+\]
+
+\begin{methode}
+Ce temps de retour est excellent (inférieur à 5 ans), ce qui justifie pleinement l'investissement dans un système double flux avec récupération thermique.
+\end{methode}

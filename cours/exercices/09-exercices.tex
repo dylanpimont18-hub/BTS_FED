@@ -1,0 +1,200 @@
+\chapter*{Chapitre 9 — Acoustique du bâtiment}
+\addcontentsline{toc}{chapter}{Chapitre 9 — Acoustique du bâtiment}
+
+% ============================================================
+\section*{Énoncés}
+% ============================================================
+
+\exercice{Calcul de niveaux acoustiques}
+
+Un extracteur de cuisine collective est caractérisé par un niveau de puissance sonore $L_w = 88$~dB. Il est installé au centre d'un local de dimensions $8 \times 6 \times 3$~m (coefficient d'absorption moyen $\bar{\alpha} = 0{,}15$, source au plafond $Q = 2$).
+
+\begin{enumerate}
+  \item Calculer la constante du local $R$.
+  \item Calculer le niveau de pression sonore $L_p$ à 1,5~m de l'extracteur.
+  \item Quel serait $L_p$ si l'on passait à $\bar{\alpha} = 0{,}40$ grâce à un traitement acoustique des parois ?
+  \item Deux extracteurs identiques sont mis en service simultanément. Quel est le niveau $L_p$ résultant à 1,5~m (avec $\bar{\alpha} = 0{,}15$) ?
+\end{enumerate}
+
+\textbf{Données :}
+\[
+  L_p = L_w + 10 \cdot \log_{10}\!\left(\frac{Q}{4\pi r^2} + \frac{4}{R}\right), \qquad R = \frac{S \cdot \bar{\alpha}}{1 - \bar{\alpha}}
+\]
+
+\exercice{Isolement acoustique — choix de paroi}
+
+Un local de compresseurs (niveau de pression mesuré $L_1 = 92$~dB(A)) jouxte un bureau ouvert (exigence $L_2 \leq 45$~dB(A)). La salle de réception a une absorption $A = 25$~sabins et la paroi séparative mesure $S = 20$~\si{\metre\squared}.
+
+\begin{enumerate}
+  \item Calculer l'affaiblissement acoustique $R$ minimum de la paroi séparative.
+  \item En déduire la masse surfacique minimale $m_s$ à 500~Hz (loi de masse).
+  \item Proposer une solution constructive et vérifier sa conformité à partir du tableau de $R_w$ ci-dessous.
+  \item Citer deux mesures complémentaires pour limiter la transmission solidienne.
+\end{enumerate}
+
+\textbf{Tableau de référence $R_w$ :}
+\begin{center}
+\begin{tabular}{lc}
+\toprule
+Type de paroi & $R_w$ (dB) \\
+\midrule
+Cloison légère plaque de plâtre 72 mm & 38 \\
+Mur béton 15 cm & 48 \\
+Mur béton 20 cm & 52 \\
+Porte acoustique renforcée & 42--47 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Formules utiles :}
+\[
+  R = L_1 - L_2 + 10 \cdot \log_{10}\!\left(\frac{S}{A}\right), \qquad R \approx 20 \cdot \log_{10}(m_s \cdot f) - 48
+\]
+
+\exercice{Dimensionnement acoustique d'une installation VMC double flux}
+
+Une CTA double flux dessert 8 bureaux individuels (exigence NC 30 $\approx$ 38~dB(A)). Les données constructeur de la CTA sont : $L_w = 78$~dB (global) ; le réseau aéraulique assure une atténuation de 15~dB ; les bouches de soufflage ont un niveau NC 28 pour le débit nominal.
+
+\begin{enumerate}
+  \item Calculer l'atténuation totale nécessaire entre la CTA et les locaux.
+  \item Déterminer si un silencieux est nécessaire et quelle atténuation il doit apporter.
+  \item La vitesse dans la gaine principale est de 5~m/s pour un débit de 800~m³/h. Calculer la section de gaine rectangulaire ($a \times b$ avec $a = 400$~mm). Cette vitesse est-elle conforme aux recommandations ?
+  \item Citer deux réglages opérationnels permettant de réduire le bruit sans modifier l'installation.
+\end{enumerate}
+
+\textbf{Rappel :} $Q = v \times S_{\text{gaine}}$, avec $Q$ en m³/s et $S$ en m².
+
+\newpage
+% ============================================================
+\section*{Corrigés}
+% ============================================================
+
+\subsection*{Corrigé — Exercice 1}
+
+\textit{Question 1 — Constante du local :}
+
+Surface totale des parois : $S = 2 \times (8 \times 6 + 8 \times 3 + 6 \times 3) = 2 \times (48 + 24 + 18) = 180$~m²
+\[
+  R = \frac{S \cdot \bar{\alpha}}{1 - \bar{\alpha}} = \frac{180 \times 0{,}15}{1 - 0{,}15} = \frac{27}{0{,}85} = \boxed{31{,}8~\text{m}^2}
+\]
+
+\textit{Question 2 — Niveau de pression à 1,5~m ($\bar{\alpha} = 0{,}15$) :}
+\[
+  \frac{Q}{4\pi r^2} = \frac{2}{4\pi \times 1{,}5^2} = \frac{2}{28{,}27} = 0{,}0707
+\]
+\[
+  \frac{4}{R} = \frac{4}{31{,}8} = 0{,}1258
+\]
+\[
+  L_p = 88 + 10 \cdot \log_{10}(0{,}0707 + 0{,}1258) = 88 + 10 \cdot \log_{10}(0{,}1965) = 88 - 7{,}1 = \boxed{80{,}9~\text{dB}}
+\]
+
+\textit{Question 3 — Avec $\bar{\alpha} = 0{,}40$ :}
+\[
+  R' = \frac{180 \times 0{,}40}{1 - 0{,}40} = \frac{72}{0{,}60} = 120~\text{m}^2
+\]
+\[
+  \frac{4}{R'} = \frac{4}{120} = 0{,}0333
+\]
+\[
+  L_p' = 88 + 10 \cdot \log_{10}(0{,}0707 + 0{,}0333) = 88 + 10 \cdot \log_{10}(0{,}1040) = 88 - 9{,}8 = \boxed{78{,}2~\text{dB}}
+\]
+
+\begin{attention}
+Le gain acoustique par traitement absorbant est de $80{,}9 - 78{,}2 = 2{,}7$~dB seulement à 1,5~m. Le champ direct domine à courte distance ; le traitement absorbant est surtout efficace en champ réverbéré (grande distance).
+\end{attention}
+
+\textit{Question 4 — Deux extracteurs identiques ($L_w = 88$~dB chacun) :}
+
+Le niveau de puissance sonore de deux sources identiques :
+\[
+  L_{w,total} = 88 + 10 \cdot \log_{10}(2) = 88 + 3 = 91~\text{dB}
+\]
+\[
+  L_p = 91 + 10 \cdot \log_{10}(0{,}0707 + 0{,}1258) = 91 - 7{,}1 = \boxed{83{,}9~\text{dB}}
+\]
+
+\subsection*{Corrigé — Exercice 2}
+
+\textit{Question 1 — Affaiblissement acoustique $R$ minimum :}
+\[
+  R_{\min} = L_1 - L_2 + 10 \cdot \log_{10}\!\left(\frac{S}{A}\right) = 92 - 45 + 10 \cdot \log_{10}\!\left(\frac{20}{25}\right)
+\]
+\[
+  = 47 + 10 \cdot \log_{10}(0{,}80) = 47 - 1{,}0 = \boxed{46~\text{dB}}
+\]
+
+\textit{Question 2 — Masse surfacique minimale à 500~Hz :}
+
+À partir de la loi de masse $R \approx 20 \cdot \log_{10}(m_s \cdot f) - 48$ :
+\[
+  46 = 20 \cdot \log_{10}(m_s \times 500) - 48
+\]
+\[
+  20 \cdot \log_{10}(500 \cdot m_s) = 94
+\]
+\[
+  \log_{10}(500 \cdot m_s) = 4{,}7 \quad \Rightarrow \quad 500 \cdot m_s = 10^{4{,}7} = 50\,119
+\]
+\[
+  m_s = \frac{50\,119}{500} = \boxed{100~\text{kg/m}^2}
+\]
+
+\textit{Question 3 — Solution constructive :}
+
+Un mur béton de 15~cm ($R_w = 48$~dB) répond à l'exigence de $R_{\min} = 46$~dB. Un mur béton de 20~cm ($R_w = 52$~dB) offre une marge de sécurité supplémentaire de 6~dB.
+
+\begin{methode}
+Vérification : $R_w = 48$~dB $>$ $R_{\min} = 46$~dB \checkmark \quad La paroi béton 15~cm est conforme.
+\end{methode}
+
+\textit{Question 4 — Mesures complémentaires pour la transmission solidienne :}
+\begin{itemize}
+  \item Montage du compresseur sur plots anti-vibratiles ou ressorts isolants pour découpler les vibrations du bâti.
+  \item Raccordement des canalisations par manchons souples (EPDM) pour éviter la propagation des vibrations vers les parois.
+\end{itemize}
+
+\subsection*{Corrigé — Exercice 3}
+
+\textit{Question 1 — Atténuation totale nécessaire :}
+
+L'exigence NC 30 correspond à environ 38~dB(A) en réception. L'atténuation totale nécessaire entre la CTA et les locaux est :
+\[
+  \text{Att}_{totale} = L_{w,CTA} - L_{p,exigence} = 78 - 38 = 40~\text{dB}
+\]
+
+\textit{Question 2 — Silencieux nécessaire :}
+
+L'atténuation naturelle du réseau est de 15~dB. La bouche de soufflage émet NC 28 $\approx$ 36~dB(A), ce qui est inférieur à 38~dB(A) — elle est conforme. Mais il faut vérifier le niveau en sortie de réseau avant la bouche :
+\[
+  L_{p,\text{avant bouche}} = 78 - 15 = 63~\text{dB}
+\]
+
+Atténuation manquante :
+\[
+  \text{Att}_{\text{silencieux}} = 63 - 38 = \boxed{25~\text{dB}}
+\]
+
+Un silencieux à baffles de 1~m (atténuation $\approx 25$~dB(A) à 500~Hz) est nécessaire. Vérifier la perte de charge ajoutée ($\approx$ 35~Pa) par rapport à la pression disponible du ventilateur.
+
+\textit{Question 3 — Section de gaine et vitesse :}
+
+Débit : $Q = \SI{800}{\m^3 \per \hour} = \SI{800}{} / 3600 = 0{,}222~\text{m}^3/\text{s}$
+
+Section nécessaire :
+\[
+  S_{\text{gaine}} = \frac{Q}{v} = \frac{0{,}222}{5} = 0{,}0444~\text{m}^2
+\]
+
+Avec $a = 400$~mm $= 0{,}4$~m :
+\[
+  b = \frac{S_{\text{gaine}}}{a} = \frac{0{,}0444}{0{,}4} = 0{,}111~\text{m} \approx \boxed{110~\text{mm}}
+\]
+
+La section est $400 \times 110$~mm. La vitesse de 5~m/s est conforme aux recommandations pour une gaine principale tertiaire (limite : 6--8~m/s).
+
+\textit{Question 4 — Réglages opérationnels réducteurs de bruit :}
+\begin{itemize}
+  \item Réduire la vitesse de rotation du ventilateur par le variateur de vitesse (VFD) : une réduction de 20\,\% de la vitesse diminue le bruit d'environ 6~dB.
+  \item Diminuer le débit de soufflage aux heures creuses (occupation réduite) en ajustant les registres ou la consigne du variateur.
+\end{itemize}
