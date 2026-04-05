@@ -1,0 +1,217 @@
+\chapter*{Chapitre 1 — Bases de la thermique}
+\addcontentsline{toc}{chapter}{Chapitre 1 — Bases de la thermique}
+
+% ============================================================
+\section*{Énoncés}
+% ============================================================
+
+\exercice{Paroi multicouche d'un immeuble collectif}
+
+La façade d'un immeuble collectif BBC (Bâtiment Basse Consommation) est constituée,
+de l'intérieur vers l'extérieur, des couches suivantes :
+\begin{itemize}
+  \item Plaque de plâtre (BA13) : \(e = \SI{13}{\milli\meter}\), \(\lambda = \SI{0,25}{\watt\per\meter\per\kelvin}\)
+  \item Lame d'air ventilée : \textit{résistance fournie} \(R_{air} = \SI{0,18}{\meter\squared\kelvin\per\watt}\)
+  \item Laine de roche (panneau rigide) : \(e = \SI{14}{\centi\meter}\), \(\lambda = \SI{0,038}{\watt\per\meter\per\kelvin}\)
+  \item Béton cellulaire (bloc YTONG) : \(e = \SI{20}{\centi\meter}\), \(\lambda = \SI{0,11}{\watt\per\meter\per\kelvin}\)
+  \item Enduit de façade : \(e = \SI{1,5}{\centi\meter}\), \(\lambda = \SI{0,87}{\watt\per\meter\per\kelvin}\)
+\end{itemize}
+
+Résistances superficielles standard : \(R_{si} = \SI{0,13}{\meter\squared\kelvin\per\watt}\),
+\(R_{se} = \SI{0,13}{\meter\squared\kelvin\per\watt}\) (paroi verticale, flux horizontal).
+
+\textbf{Questions :}
+\begin{enumerate}
+  \item Calculer la résistance thermique de chaque couche.
+  \item Calculer la résistance thermique totale \(R_{tot}\).
+  \item Calculer le coefficient \(U\) de la paroi.
+  \item Vérifier la conformité à la RT2012 (\(U_{max} = \SI{0,36}{\watt\per\meter\squared\per\kelvin}\) pour mur en zone H1b).
+  \item Calculer la perte thermique pour une surface de \SI{80}{\meter\squared} et une
+        différence de température de \SI{25}{\kelvin}\,.
+\end{enumerate}
+
+% ----------------------------------------------------------
+
+\exercice{Dimensionnement d'un plancher chauffant hydraulique}
+
+Un salon de \SI{30}{\meter\squared} doit être chauffé par un plancher chauffant hydraulique.
+La puissance de chauffe nécessaire est estimée à \SI{60}{\watt\per\meter\squared} (déperditions
+calculées selon la méthode RE2020). Le plancher chauffant fonctionne avec des températures
+d'eau de \SI{35}{\degreeCelsius} (aller) et \SI{28}{\degreeCelsius} (retour).
+
+\textbf{Questions :}
+\begin{enumerate}
+  \item Calculer la puissance thermique totale nécessaire pour ce salon.
+  \item Calculer le débit volumique d'eau chaude nécessaire [\si{\liter\per\hour}] en
+        utilisant le facteur pratique \num{1,163}.
+  \item Vérifier que la température de surface du plancher reste inférieure à
+        \SI{28}{\degreeCelsius} (confort et réglementation). Commentaire.
+\end{enumerate}
+
+% ----------------------------------------------------------
+
+\exercice{Bilan thermique d'une pièce de bureau}
+
+Un bureau de \SI{20}{\meter\squared} est situé dans un immeuble tertiaire. Les déperditions
+sont les suivantes :
+\begin{itemize}
+  \item Par le mur extérieur (\(S = \SI{12}{\meter\squared}\), \(U = \SI{0,30}{\watt\per\meter\squared\per\kelvin}\)) ;
+  \item Par la fenêtre double vitrage (\(S = \SI{4}{\meter\squared}\), \(U = \SI{1,40}{\watt\per\meter\squared\per\kelvin}\)) ;
+  \item Par le plancher haut non isolé sur combles (\(S = \SI{20}{\meter\squared}\), \(U = \SI{0,25}{\watt\per\meter\squared\per\kelvin}\)) ;
+  \item Par ponts thermiques linéiques : \(\Psi \cdot L = \SI{0,45}{\watt\per\kelvin}\) (valeur globale).
+\end{itemize}
+
+Les apports internes sont : éclairage \SI{200}{\watt}, occupants (2 personnes × \SI{80}{\watt}),
+équipements informatiques \SI{150}{\watt}.
+
+Conditions de calcul : \(\theta_i = \SI{20}{\degreeCelsius}\), \(\theta_e = \SI{-7}{\degreeCelsius}\)
+(température extérieure de base en zone H1, Paris, selon EN 12831).
+
+\textbf{Questions :}
+\begin{enumerate}
+  \item Calculer le coefficient de déperdition total de la pièce (\(H_T\) en \si{\watt\per\kelvin}).
+  \item Calculer les déperditions thermiques totales.
+  \item Calculer les apports internes totaux.
+  \item Déterminer la puissance de chauffage à installer.
+\end{enumerate}
+
+\newpage
+% ============================================================
+\section*{Corrigés}
+% ============================================================
+
+\subsection*{Corrigé — Exercice 1}
+
+\textit{1. Résistances des couches}
+
+\[
+  R_{pl} = \frac{0{,}013}{0{,}25} = \SI{0,052}{\meter\squared\kelvin\per\watt}
+  \qquad
+  R_{lr} = \frac{0{,}14}{0{,}038} = \SI{3,684}{\meter\squared\kelvin\per\watt}
+\]
+\[
+  R_{bc} = \frac{0{,}20}{0{,}11} = \SI{1,818}{\meter\squared\kelvin\per\watt}
+  \qquad
+  R_{end} = \frac{0{,}015}{0{,}87} = \SI{0,017}{\meter\squared\kelvin\per\watt}
+\]
+\[
+  R_{air} = \SI{0,18}{\meter\squared\kelvin\per\watt} \quad \text{(donnée)}
+\]
+
+\textit{2. Résistance totale}
+
+\[
+  R_{tot} = R_{si} + R_{pl} + R_{air} + R_{lr} + R_{bc} + R_{end} + R_{se}
+\]
+\[
+  R_{tot} = 0{,}13 + 0{,}052 + 0{,}18 + 3{,}684 + 1{,}818 + 0{,}017 + 0{,}13
+\]
+\[
+  \boxed{R_{tot} = \SI{6,011}{\meter\squared\kelvin\per\watt}}
+\]
+
+\textit{3. Coefficient U}
+
+\[
+  \boxed{U = \frac{1}{6{,}011} = \SI{0,166}{\watt\per\meter\squared\per\kelvin}}
+\]
+
+\textit{4. Conformité RT2012}
+
+\(U = \SI{0,166}{\watt\per\meter\squared\per\kelvin} < U_{max} = \SI{0,36}{\watt\per\meter\squared\per\kelvin}\)
+\(\Rightarrow\) La paroi est \textbf{conforme} à la RT2012 (et a fortiori à la RE2020 qui est
+encore plus exigeante).
+
+\textit{5. Perte thermique}
+
+\[
+  \dot{Q} = U \cdot S \cdot \Delta T = 0{,}166 \times 80 \times 25 = \SI{332}{\watt}
+\]
+
+Pour une façade de \SI{80}{\meter\squared} avec \(\Delta T = \SI{25}{\kelvin}\), la perte
+thermique est seulement \SI{332}{\watt}, ce qui illustre l'excellente performance de cette
+composition de paroi.
+
+% ----------------------------------------------------------
+
+\subsection*{Corrigé — Exercice 2}
+
+\textit{1. Puissance totale nécessaire}
+
+\[
+  \dot{Q}_{tot} = \varphi \cdot S = 60 \times 30 = \SI{1800}{\watt} = \SI{1{,}8}{\kilo\watt}
+\]
+
+\textit{2. Débit volumique d'eau}
+
+On utilise la formule pratique : \(\dot{Q} = \dot{V} \times 1{,}163 \times \Delta T\)
+
+\[
+  \Delta T = 35 - 28 = \SI{7}{\kelvin}
+\]
+\[
+  \dot{V} = \frac{\dot{Q}}{1{,}163 \times \Delta T} = \frac{1800}{1{,}163 \times 7}
+  = \frac{1800}{8{,}141} = \SI{221}{\liter\per\hour}
+\]
+
+\[
+  \boxed{\dot{V} \approx \SI{221}{\liter\per\hour}}
+\]
+
+\textit{3. Température de surface et confort}
+
+La réglementation impose que la température de surface d'un plancher chauffant ne dépasse pas
+\SI{28}{\degreeCelsius} (norme NF EN 1264-2). La température de surface est liée à la
+température moyenne de l'eau : \(T_{moy} = (35+28)/2 = \SI{31{,}5}{\degreeCelsius}\). Avec
+les résistances du plancher (chape, revêtement), la surface sera bien inférieure à
+\SI{28}{\degreeCelsius}. Ce dimensionnement est conforme.
+
+% ----------------------------------------------------------
+
+\subsection*{Corrigé — Exercice 3}
+
+\textit{1. Coefficient de déperdition \(H_T\)}
+
+\[
+  H_T = \sum (U_i \cdot S_i) + \Psi \cdot L
+\]
+\[
+  H_T = (0{,}30 \times 12) + (1{,}40 \times 4) + (0{,}25 \times 20) + 0{,}45
+\]
+\[
+  H_T = 3{,}60 + 5{,}60 + 5{,}00 + 0{,}45 = \SI{14{,}65}{\watt\per\kelvin}
+\]
+
+\textit{2. Déperditions thermiques}
+
+\[
+  \Delta T = \theta_i - \theta_e = 20 - (-7) = \SI{27}{\kelvin}
+\]
+\[
+  \dot{Q}_{dep} = H_T \cdot \Delta T = 14{,}65 \times 27 = \SI{395{,}6}{\watt}
+\]
+
+\textit{3. Apports internes}
+
+\[
+  \dot{Q}_{int} = 200 + (2 \times 80) + 150 = 200 + 160 + 150 = \SI{510}{\watt}
+\]
+
+\textit{4. Puissance de chauffage à installer}
+
+En période de chauffage, les apports internes réduisent le besoin en chauffage :
+
+\[
+  \dot{Q}_{chauf} = \dot{Q}_{dep} - \dot{Q}_{int} = 395{,}6 - 510 = \SI{-114{,}4}{\watt}
+\]
+
+Le résultat négatif indique que les apports internes dépassent les déperditions dans ces
+conditions. \textbf{Aucun chauffage n'est nécessaire} dans cette configuration pour \(\theta_e
+= \SI{-7}{\degreeCelsius}\). Cette situation est caractéristique des immeubles tertiaires à
+forte densité d'occupation et d'équipements.
+
+\begin{attention}
+  En pratique, il faut également prévoir le chauffage pour les périodes sans occupation
+  (nuit, week-end) avec apports internes nuls. La puissance à installer devient alors :
+  \(\dot{Q}_{chauf} = \SI{395{,}6}{\watt}\), arrondie à \SI{400}{\watt} après marges de sécurité.
+\end{attention}
