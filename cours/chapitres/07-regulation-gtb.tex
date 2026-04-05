@@ -63,6 +63,68 @@ Les composants types d'une boucle fermée sont :
 \end{tabular}
 \end{center}
 
+% --- Schéma A — Boucle de régulation fermée ---
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  >=Stealth,
+  bloc/.style={
+    draw=btsprimary, fill=btssecondary,
+    rounded corners=4pt,
+    minimum width=2.6cm, minimum height=0.9cm,
+    text centered, font=\small
+  },
+  comparateur/.style={
+    draw=btsprimary, fill=white,
+    circle, minimum size=0.8cm,
+    font=\small\bfseries
+  },
+  fl/.style={->, thick},
+  lbl/.style={font=\footnotesize\itshape}
+]
+
+% --- Noeuds chaîne directe (ligne du haut) ---
+\node[comparateur]           (comp) at (0,0)    {$\Sigma$};
+\node[bloc] (pid)  at (3.2,0)   {Correcteur\\(PID)};
+\node[bloc] (act)  at (6.8,0)   {Actionneur\\(vanne/VFD)};
+\node[bloc] (proc) at (10.8,0)  {Processus\\(installation)};
+
+% Sortie
+\node[font=\small] (sortie) at (13.6,0) {$y$};
+
+% Consigne
+\node[font=\small] (cons) at (-2.0,0) {Consigne $w$};
+
+% Capteur (chaîne de retour)
+\node[bloc] (capt) at (5.4,-2.2) {Capteur\\(sonde T°)};
+
+% Perturbation
+\node[font=\footnotesize\itshape, color=red!70!black] (pert) at (10.8,1.8) {Perturbation};
+
+% --- Flèches chaîne directe ---
+\draw[fl] (cons)  -- (comp);
+\draw[fl] (comp)  -- node[above, lbl]{Erreur $e$} (pid);
+\draw[fl] (pid)   -- node[above, lbl]{Signal $u$} (act);
+\draw[fl] (act)   -- (proc);
+\draw[fl] (proc)  -- node[above, lbl]{$y$} (sortie);
+
+% --- Retour via capteur ---
+% Depuis la sortie vers le bas, puis vers la gauche via capteur, puis vers le comp
+\draw[fl] (sortie.south) -- ++(0,-2.2) -| (capt.east);
+\draw[fl] (capt.west) -| (comp.south);
+
+% --- Perturbation sur le processus ---
+\draw[fl, dashed, color=red!70!black] (pert) -- (proc.north);
+
+% --- Labels +/- sur comparateur ---
+\node[lbl, above left=1pt and 1pt of comp] {$+$};
+\node[lbl, below=2pt of comp] {$-$};
+
+\end{tikzpicture}
+\caption{Schéma A — Boucle de régulation en boucle fermée (principe général)}
+\label{fig:boucle-fermee}
+\end{figure}
+
 \subsection{Régulation Tout-ou-Rien (TOR)}
 
 \begin{definition}
@@ -217,6 +279,82 @@ où :
 \begin{attention}
   La loi d'eau doit être \textbf{adaptée à chaque émetteur} : les planchers chauffants (émetteurs basse température, $T_{dep} \leq \SI{45}{\celsius}$) nécessitent une pente bien plus faible que des radiateurs haute température.
 \end{attention}
+
+% --- Schéma B — Courbe de chauffe (loi d'eau) — TikZ pur ---
+% Axe X : T_ext de -10 à +18°C  → plage = 28 K, échelle : 0.35 cm/K → 9.8 cm
+% Axe Y : T_dep de 25 à 80°C    → plage = 55 K, échelle : 0.13 cm/K → 7.15 cm
+% Origine repère TikZ : (0,0) = (T_ext=-10, T_dep=25)
+% Transformation : x_tikz = (T_ext - (-10)) * 0.35   y_tikz = (T_dep - 25) * 0.13
+%   Radiateurs   : (-10,70)→(0,5.85)   (18,30)→(9.8,0.65)
+%   PC           : (-10,45)→(0,2.60)   (18,28)→(9.8,0.39)
+%   Bivalence    : T_ext=-2 → x=(8)*0.35=2.80  T_dep=50 → y=(25)*0.13=3.25
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=0.35cm, y=0.13cm]
+  % --- Repère ---
+  % Axes
+  \draw[->, thick] (0,0) -- (30,0) node[right, font=\small] {$T_{ext}$ (°C)};
+  \draw[->, thick] (0,0) -- (0,60) node[above, font=\small] {$T_{dep}$ (°C)};
+
+  % Graduations X : T_ext de -10 à 18 par pas de 4
+  % x_tikz = (T_ext - (-10)) * 1 (unité x=0.35cm → 1 unité = 1K depuis -10)
+  \foreach \Text/\Tpos in {-10/0,-6/4,-2/8,2/12,6/16,10/20,14/24,18/28}{
+    \draw (\Tpos, -1.5) -- (\Tpos, 0);
+    \node[below, font=\footnotesize] at (\Tpos, -2) {\Text};
+  }
+
+  % Graduations Y : T_dep de 25 à 80 par pas de 5
+  % y_tikz = (T_dep - 25) * 1 (unité y=0.13cm → 1 unité = 1K depuis 25)
+  \foreach \Tdep/\Ypos in {25/0,30/5,35/10,40/15,45/20,50/25,55/30,60/35,65/40,70/45,75/50,80/55}{
+    \draw (-0.8, \Ypos) -- (0, \Ypos);
+    \node[left, font=\footnotesize] at (-1.2, \Ypos) {\Tdep};
+  }
+
+  % --- Grille légère ---
+  \foreach \Tpos in {0,4,8,12,16,20,24,28}{
+    \draw[gray!25, thin] (\Tpos, 0) -- (\Tpos, 55);
+  }
+  \foreach \Ypos in {0,5,10,15,20,25,30,35,40,45,50,55}{
+    \draw[gray!25, thin] (0, \Ypos) -- (28, \Ypos);
+  }
+
+  % --- Courbe 1 : Radiateurs (pente forte) ---
+  % Points : T_ext=-10,T_dep=70 → (0,45) ; T_ext=18,T_dep=30 → (28,5)
+  \draw[btsprimary, line width=1.8pt] (0,45) -- (28,5);
+  \node[btsprimary, font=\footnotesize\bfseries, anchor=south west] at (0,45)
+    {Radiateurs};
+
+  % --- Courbe 2 : Plancher chauffant (pente douce) ---
+  % Points : T_ext=-10,T_dep=45 → (0,20) ; T_ext=18,T_dep=28 → (28,3)
+  \draw[btsaccent, line width=1.8pt, dashed] (0,20) -- (28,3);
+  \node[btsaccent, font=\footnotesize\bfseries, anchor=north west] at (0,20)
+    {Plancher chauffant};
+
+  % --- Point de bivalence PAC ---
+  % T_ext=-2 → x=8 ; T_dep=50 → y=25
+  \filldraw[red!70!black] (8,25) circle (0.6ex);
+  \draw[red!70!black, thin, ->, shorten >=2pt]
+    (8,25) -- ++(5,6)
+    node[anchor=south west, font=\footnotesize, color=red!70!black,
+         align=left]
+      {Point de bivalence PAC\\$T_{ext}=-2$°C, $T_{dep}=50$°C};
+
+  % --- Ligne de coupure chauffage T_ext=18°C ---
+  \draw[gray!60, dotted, thin] (28,0) -- (28,55);
+  \node[gray, font=\footnotesize, rotate=90, anchor=south] at (28.8,10)
+    {Coupure (18°C)};
+
+  % --- Légende ---
+  \draw[btsprimary, line width=1.5pt] (16,50) -- (20,50);
+  \node[right, font=\footnotesize] at (20.3,50) {Radiateurs};
+  \draw[btsaccent, line width=1.5pt, dashed] (16,46) -- (20,46);
+  \node[right, font=\footnotesize] at (20.3,46) {Plancher chauffant};
+
+\end{tikzpicture}
+\caption{Schéma B — Courbe de chauffe (loi d'eau) : radiateurs vs plancher chauffant,
+         avec point de bivalence PAC ($T_{biv}=-2$°C)}
+\label{fig:loi-eau}
+\end{figure}
 
 \subsection{Régulation en cascade (maître-esclave)}
 

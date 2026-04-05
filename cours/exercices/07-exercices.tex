@@ -42,6 +42,69 @@ Un bâtiment tertiaire est équipé d'une GTB structurée en trois niveaux. Le t
 
 Classer chacun de ces équipements dans le niveau GTB correspondant (niveau 1, 2 ou 3) et préciser son rôle dans la chaîne de régulation.
 
+% ============================================================
+% EXERCICE 4
+% ============================================================
+
+\exercice{Régulation de pression différentielle par variateur de fréquence}
+
+Un réseau hydraulique de chauffage alimente 8 radiateurs en bitube. La pompe de circulation est entraînée par un variateur de fréquence (VFD). Les données nominales à \SI{50}{\hertz} sont :
+
+\begin{center}
+\begin{tabular}{ll}
+  \toprule
+  Grandeur & Valeur \\
+  \midrule
+  Débit nominal & $Q_n = \SI{3.5}{\cubic\metre\per\hour}$ \\
+  HMT nominale  & $H_n = \SI{8}{mCE}$ \\
+  Puissance absorbée & $P_n = \SI{180}{\watt}$ \\
+  Consigne pression différentielle & $\Delta P_{cons} = \SI{4}{mCE}$ (mode $\Delta P$ proportionnel) \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\begin{enumerate}
+  \item En mi-saison, la charge thermique est de 40\,\%. En mode $\Delta P$ proportionnel, le débit est proportionnel à la charge. Calculer le débit résiduel $Q_1$.
+  \item Calculer la fréquence d'alimentation $f_1$ du moteur (loi de similitude : $Q \propto n \propto f$).
+  \item Calculer la puissance absorbée $P_1$ à cette fréquence (loi de similitude : $P \propto n^3$).
+  \item Calculer l'économie d'énergie sur une saison de chauffage de 4\,000\,h si la mi-saison représente 60\,\% du temps (2\,400\,h) et le plein régime 40\,\% (1\,600\,h).
+  \item Calculer l'économie financière annuelle (électricité à \SI{0.18}{\euro\per\kilo\watt\hour}).
+\end{enumerate}
+
+% ============================================================
+% EXERCICE 5
+% ============================================================
+
+\exercice{Calcul d'économie GTB : passage de classe C à classe B}
+
+Un immeuble de bureaux de \SI{2000}{\metre\squared} (SHON) consomme actuellement \SI{85}{kWh$_\text{ef}$/m²/an} en chauffage, climatisation et ECS. Il est classé GTB\,C (régulation basique). Une rénovation GTB vers la classe\,B est envisagée.
+
+\begin{center}
+\begin{tabular}{ll}
+  \toprule
+  Donnée & Valeur \\
+  \midrule
+  Surface SHON & \SI{2000}{\metre\squared} \\
+  Consommation actuelle (classe\,C) & 85 kWh$_\text{ef}$/m²/an \\
+  Économie attendue C$\to$B (NF EN 15232) & 18\,\% \\
+  Répartition & 65\,\% chauffage gaz, 35\,\% froid+auxiliaires élec \\
+  Prix gaz & \SI{0.095}{\euro\per\kilo\watt\hour} \\
+  Prix électricité & \SI{0.18}{\euro\per\kilo\watt\hour} \\
+  Coût rénovation GTB & \SI{45000}{\euro} \\
+  Durée de vie GTB & 15 ans \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\begin{enumerate}
+  \item Calculer la consommation totale annuelle actuelle en kWh$_\text{ef}$.
+  \item Calculer la consommation économisée en kWh$_\text{ef}$ après passage en classe\,B.
+  \item Calculer la répartition gaz/élec de l'économie et l'économie financière annuelle en euros.
+  \item Calculer le TRI simple (Temps de Retour sur Investissement) de l'investissement GTB.
+  \item Calculer le bénéfice total sur 15 ans en tenant compte d'une hausse des prix énergie de 3\,\%/an (somme géométrique).
+  \item La RE2020 impose le décret BACS pour les bâtiments tertiaires au-delà de \SI{290}{\kilo\watt}. Quelle classe GTB est imposée au minimum ?
+\end{enumerate}
+
 \newpage
 % ============================================================
 \section*{Corrigés}
@@ -107,3 +170,133 @@ Classer chacun de ces équipements dans le niveau GTB correspondant (niveau 1, 2
 \begin{methode}
 Note : le variateur de fréquence est physiquement au niveau terrain mais intègre souvent une intelligence locale (boucle PID de pression) — il peut donc être considéré comme niveau 1 ou niveau 2 selon le contexte.
 \end{methode}
+
+\subsection*{Corrigé — Exercice 4}
+
+\begin{enumerate}
+  \item \textbf{Débit résiduel à 40\,\% de charge :}
+
+  En mode $\Delta P$ proportionnel, le débit est proportionnel à la charge thermique :
+  \[
+    Q_1 = 0{,}40 \times Q_n = 0{,}40 \times 3{,}5 = \boxed{\SI{1.4}{\cubic\metre\per\hour}}
+  \]
+
+  \item \textbf{Fréquence $f_1$ du moteur :}
+
+  Par la loi de similitude ($Q \propto n \propto f$) :
+  \[
+    \frac{Q_1}{Q_n} = \frac{f_1}{f_n}
+    \quad\Rightarrow\quad
+    f_1 = f_n \times \frac{Q_1}{Q_n} = 50 \times \frac{1{,}4}{3{,}5} = \boxed{\SI{20}{\hertz}}
+  \]
+
+  \item \textbf{Puissance absorbée à mi-charge :}
+
+  Par la loi de similitude ($P \propto n^3$) :
+  \[
+    P_1 = P_n \times \left(\frac{f_1}{f_n}\right)^3 = 180 \times \left(\frac{20}{50}\right)^3
+         = 180 \times (0{,}40)^3 = 180 \times 0{,}064 = \boxed{\SI{11.5}{\watt}}
+  \]
+
+  \item \textbf{Économie d'énergie sur la saison :}
+
+  Énergie consommée \textit{sans} VFD (pompe à vitesse fixe, $P_n$ permanente) :
+  \[
+    E_{sans} = P_n \times \text{durée totale} = \frac{180}{1000} \times 4\,000 = \SI{720}{\kilo\watt\hour}
+  \]
+
+  Énergie consommée \textit{avec} VFD :
+  \begin{align*}
+    E_{avec} &= P_n \times t_{plein} + P_1 \times t_{mi} \\
+             &= \frac{180}{1000} \times 1\,600 + \frac{11{,}5}{1000} \times 2\,400 \\
+             &= 288 + 27{,}6 = \SI{315.6}{\kilo\watt\hour}
+  \end{align*}
+
+  Économie d'énergie :
+  \[
+    \Delta E = E_{sans} - E_{avec} = 720 - 315{,}6 = \boxed{\SI{404.4}{\kilo\watt\hour/saison}}
+  \]
+
+  Soit une réduction de $\dfrac{404{,}4}{720} \approx \mathbf{56\,\%}$ de la consommation de la pompe.
+
+  \item \textbf{Économie financière annuelle :}
+  \[
+    \text{Économie} = \Delta E \times p_{elec} = 404{,}4 \times 0{,}18 = \boxed{\SI{72.8}{\euro/an}}
+  \]
+\end{enumerate}
+
+\begin{methode}
+Les lois de similitude des turbomachines (lois d'affinité) sont fondamentales en CVC. Retenir : $Q \propto n$, $H \propto n^2$, $P \propto n^3$. La réduction de $P$ est cubique : à demi-vitesse, la puissance est divisée par 8.
+\end{methode}
+
+\subsection*{Corrigé — Exercice 5}
+
+\begin{enumerate}
+  \item \textbf{Consommation totale annuelle actuelle :}
+  \[
+    C_{tot} = S \times c_{sp} = 2\,000 \times 85 = \boxed{170\,000\;\text{kWh}_\text{ef}/\text{an}}
+  \]
+
+  \item \textbf{Économie après passage en classe\,B :}
+  \[
+    \Delta C = C_{tot} \times 18\,\% = 170\,000 \times 0{,}18 = \boxed{30\,600\;\text{kWh}_\text{ef}/\text{an}}
+  \]
+
+  \item \textbf{Répartition gaz / électricité et économie financière :}
+
+  Économie sur la part gaz (65\,\%) :
+  \[
+    \Delta C_{gaz} = 30\,600 \times 0{,}65 = 19\,890\;\text{kWh/an}
+    \quad\Rightarrow\quad
+    \text{Éco}_{\text{gaz}} = 19\,890 \times 0{,}095 = \SI{1889.6}{\euro/an}
+  \]
+
+  Économie sur la part électricité (35\,\%) :
+  \[
+    \Delta C_{elec} = 30\,600 \times 0{,}35 = 10\,710\;\text{kWh/an}
+    \quad\Rightarrow\quad
+    \text{Éco}_{\text{elec}} = 10\,710 \times 0{,}18 = \SI{1927.8}{\euro/an}
+  \]
+
+  \textbf{Économie financière annuelle totale :}
+  \[
+    \text{Éco}_{tot} = 1\,889{,}6 + 1\,927{,}8 = \boxed{\SI{3817.4}{\euro/an}}
+  \]
+
+  \item \textbf{Temps de Retour sur Investissement simple (TRI) :}
+  \[
+    TRI = \frac{C_{investissement}}{\text{Éco}_{tot}} = \frac{45\,000}{3\,817{,}4} \approx \boxed{11{,}8\;\text{ans}}
+  \]
+
+  \item \textbf{Bénéfice total sur 15 ans avec hausse énergétique 3\,\%/an :}
+
+  La somme géométrique des économies revalorisées (hausse de 3\,\%/an) est :
+  \[
+    B_{15} = \text{Éco}_{tot} \times \sum_{k=0}^{14}(1{,}03)^k
+           = \text{Éco}_{tot} \times \frac{(1{,}03)^{15} - 1}{1{,}03 - 1}
+  \]
+
+  Calcul intermédiaire :
+  \[
+    (1{,}03)^{15} \approx 1{,}5580
+    \quad\Rightarrow\quad
+    \frac{1{,}5580 - 1}{0{,}03} = \frac{0{,}5580}{0{,}03} \approx 18{,}60
+  \]
+
+  \[
+    B_{15} = 3\,817{,}4 \times 18{,}60 \approx \boxed{\SI{71003}{\euro}}
+  \]
+
+  Bénéfice net sur 15 ans (après déduction de l'investissement initial) :
+  \[
+    B_{net} = 71\,003 - 45\,000 = \boxed{\SI{26003}{\euro}}
+  \]
+
+  \item \textbf{Classe GTB imposée par le décret BACS :}
+
+  Le décret BACS (n°2020-658) impose l'installation d'un système d'automatisation et de contrôle pour les bâtiments tertiaires dont la puissance nominale des systèmes CVC dépasse \SI{290}{\kilo\watt}. La classe minimale requise est la \textbf{classe\,B} au sens de la norme NF EN 15232 / EN\,52120-1, correspondant à une automatisation avancée (régulation PI, loi d'eau, optimisation du démarrage, suivi énergétique).
+
+  \begin{attention}
+    Le décret BACS ne mentionne pas explicitement les classes A–D de la norme EN\,15232, mais les fonctionnalités qu'il impose (monitoring, journalisation, pilotage centralisé) correspondent au minimum à la \textbf{classe\,B}. Le passage vers la classe\,A (GTB intégrée multi-énergie) est fortement recommandé pour les bâtiments soumis au Décret Tertiaire (Éco Énergie Tertiaire).
+  \end{attention}
+\end{enumerate}
