@@ -127,6 +127,139 @@ Le diagramme de l'air humide représente graphiquement toutes les propriétés d
   \end{tabular}
 \end{table}
 
+% --- Diagramme de Mollier schématique en TikZ ---
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[x=0.10cm, y=0.37cm, font=\small]
+
+    % --- Axes ---
+    \draw[->] (0,0) -- (105,0) node[right] {$h$ (kJ/kg)};
+    \draw[->] (0,0) -- (0,32)  node[above] {$w$ (g/kg)};
+
+    % Graduation axe X (enthalpie) tous les 10 kJ/kg
+    \foreach \hval/\hlabel in {0/0, 10/10, 20/20, 30/30, 40/40, 50/50, 60/60, 70/70, 80/80, 90/90, 100/100}{
+      \draw (\hval, 0) -- (\hval, -0.4) node[below] {\hlabel};
+    }
+    % Graduation axe Y (teneur en eau) tous les 5 g/kg
+    \foreach \wval/\wlabel in {0/0, 5/5, 10/10, 15/15, 20/20, 25/25, 30/30}{
+      \draw (0, \wval) -- (-1, \wval) node[left] {\wlabel};
+    }
+
+    % -------------------------------------------------------
+    % Courbe de saturation (phi=100%)
+    % Points calculés : T=-10 -> (h≈-6,h=1.006*(-10)+0.0021*(2501+1.86*(-10))≈-5.9, w=2.1)
+    %   T=-10 : h = 1.006*(-10) + 0.0021*(2501-18.6) = -10.06 + 5.21 = -4.85 ≈ -5
+    %   T=0   : h = 0 + 0.0038*(2501) = 9.5
+    %   T=10  : h = 10.06 + 0.0077*(2501+18.6) = 10.06 + 19.41 = 29.5
+    %   T=20  : h = 20.12 + 0.0147*(2501+37.2) = 20.12 + 37.33 = 57.4
+    %   T=30  : h = 30.18 + 0.0273*(2501+55.8) = 30.18 + 69.83 = 100.0
+    % Coordonnées (h, w) : (-5,2.1) (9.5,3.8) (29.5,7.7) (57.4,14.7) (100,27.3)
+    % Clamp h à 0 pour l'affichage (on trace de h=0 environ)
+    \draw[blue!80!black, very thick]
+      (0, 2.4)       % interpolé ~T=-8°C
+      .. controls (5,3.2) and (15,5.5) ..
+      (29.5, 7.7)   % T=10°C
+      .. controls (43,11.0) and (50,13.5) ..
+      (57.4, 14.7)  % T=20°C
+      .. controls (75,20.5) and (88,24.0) ..
+      (100, 27.3);  % T=30°C
+
+    % Étiquette courbe saturation
+    \node[blue!80!black, rotate=50] at (65,18) {\textbf{$\varphi = 100\,\%$}};
+
+    % -------------------------------------------------------
+    % Courbe phi=50% : w_50 = 0.5 * w_sat, h identique (approximation)
+    % Points : (0,1.2) (9.5,1.9) (29.5,3.85) (57.4,7.35) (100,13.65)
+    \draw[blue!50, thick, dashed]
+      (0, 1.2)
+      .. controls (5,1.6) and (15,2.7) ..
+      (29.5, 3.85)
+      .. controls (43,5.5) and (50,6.5) ..
+      (57.4, 7.35)
+      .. controls (75,10.0) and (88,12.0) ..
+      (100, 13.65);
+    \node[blue!50] at (80,11.5) {$\varphi = 50\,\%$};
+
+    % -------------------------------------------------------
+    % Courbe phi=30% : w_30 = 0.3 * w_sat
+    % Points : (0,0.72) (9.5,1.14) (29.5,2.31) (57.4,4.41) (100,8.19)
+    \draw[blue!30, thick, dotted]
+      (0, 0.72)
+      .. controls (5,0.95) and (15,1.6) ..
+      (29.5, 2.31)
+      .. controls (43,3.3) and (50,3.9) ..
+      (57.4, 4.41)
+      .. controls (75,6.0) and (88,7.2) ..
+      (100, 8.19);
+    \node[blue!30] at (80,7.0) {$\varphi = 30\,\%$};
+
+    % -------------------------------------------------------
+    % Lignes isothermes de référence (trait fin vertical approximatif)
+    % À 0°C : h≈9.5 kJ/kg   À 20°C : h≈57.4 kJ/kg
+    \draw[gray!50, thin] (9.5,0) -- (9.5,30)  node[above, gray!70] {\tiny 0°C};
+    \draw[gray!50, thin] (29.5,0) -- (29.5,30) node[above, gray!70] {\tiny 10°C};
+    \draw[gray!50, thin] (57.4,0) -- (57.4,30) node[above, gray!70] {\tiny 20°C};
+
+    % -------------------------------------------------------
+    % Points caractéristiques A et B
+    % A = air extérieur hiver : h≈0 kJ/kg, w≈3 g/kg
+    \filldraw[red] (0, 3) circle (3pt) node[right, red] {\textbf{A}};
+    \node[red, align=left] at (18, 4.5) {\footnotesize A : air ext. hiver\\[-2pt]\footnotesize $h=0$\,kJ/kg, $w=3$\,g/kg};
+
+    % B = air soufflé typique : h≈40 kJ/kg, w≈8 g/kg
+    \filldraw[red!70!black] (40, 8) circle (3pt) node[above right, red!70!black] {\textbf{B}};
+    \node[red!70!black, align=left] at (55, 6.5) {\footnotesize B : air soufflé\\[-2pt]\footnotesize $h=40$\,kJ/kg, $w=8$\,g/kg};
+
+    % -------------------------------------------------------
+    % Flèches — 7 évolutions types
+    % 1. Chauffage sensible : w=const, h augmente (A -> vers droite)
+    \draw[->, thick, orange!80!black]
+      (0, 3) -- (30, 3)
+      node[midway, above, align=center] {\footnotesize\textbf{(1)} Chauffage\\[-2pt]\footnotesize sensible};
+
+    % 2. Refroidissement sec : w=const, h diminue
+    \draw[->, thick, cyan!70!black]
+      (40, 8) -- (20, 8)
+      node[midway, above, align=center] {\footnotesize\textbf{(2)} Refroid.\\[-2pt]\footnotesize sec};
+
+    % 3. Refroidissement humide : w diminue ET h diminue
+    \draw[->, thick, cyan!40!black]
+      (40, 8) -- (10, 2.5)
+      node[near end, left, align=right] {\footnotesize\textbf{(3)} Refroid.\\[-2pt]\footnotesize humide};
+
+    % 4. Humidification adiabatique : h=const, w augmente, T baisse
+    % h=40 fixé, w augmente de 8 -> 12 (la température baisse, h restant ~40)
+    \draw[->, thick, green!60!black]
+      (40, 8) -- (38, 14)
+      node[right, align=left] {\footnotesize\textbf{(4)} Humid.\\[-2pt]\footnotesize adiabatique};
+
+    % 5. Humidification par vapeur : w augmente, h augmente (légèrement)
+    \draw[->, thick, green!40!black]
+      (40, 8) -- (47, 13)
+      node[right, align=left] {\footnotesize\textbf{(5)} Humid.\\[-2pt]\footnotesize vapeur};
+
+    % 6. Mélange air neuf / air repris : segment A-B
+    % Point A (0,3), point B (40,8) — flèche vers le milieu
+    \draw[->, thick, violet]
+      (0, 3) -- (20, 5.5)
+      node[below right, align=left] {\footnotesize\textbf{(6)} Mélange};
+
+    % 7. Déshumidification (condensation sur batterie froide)
+    \draw[->, thick, orange!60!black]
+      (40, 8) -- (28, 5)
+      node[midway, right, align=left] {\footnotesize\textbf{(7)} Déshumid.};
+
+    % -------------------------------------------------------
+    % Légende (coin bas-droit)
+    \draw[blue!80!black, very thick] (65,2.5) -- (72,2.5) node[right] {\footnotesize $\varphi=100\,\%$ (saturation)};
+    \draw[blue!50, thick, dashed]   (65,1.5) -- (72,1.5) node[right] {\footnotesize $\varphi=50\,\%$};
+    \draw[blue!30, thick, dotted]   (65,0.5) -- (72,0.5) node[right] {\footnotesize $\varphi=30\,\%$};
+
+  \end{tikzpicture}
+  \caption{Diagramme de Mollier de l'air humide (schématique)}
+  \label{fig:mollier}
+\end{figure}
+
 \begin{methode}[title=Calcul du mélange de deux masses d'air]
 Si l'on mélange un débit massique $\dot{m}_1$ d'air à l'état $(T_1, w_1, h_1)$ avec un débit $\dot{m}_2$ d'air à l'état $(T_2, w_2, h_2)$, le mélange a pour propriétés :
 \begin{equation}

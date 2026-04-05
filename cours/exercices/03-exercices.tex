@@ -58,6 +58,37 @@ Une CTA traite de l'air extérieur dans les conditions suivantes :
   \item Calculer la puissance de l'humidificateur (de 15\,°C à 22\,°C avec humidification, $h_{s,humid} = \SI{41{,}0}{\kilo\joule\per\kilogram}$, $h_{avant\_humid} = \SI{26{,}2}{\kilo\joule\per\kilogram}$).
 \end{enumerate}
 
+% ----------------------------------------------------------
+
+\exercice{VMC double flux — récupération de chaleur et dimensionnement}
+
+Contexte : Un appartement de 85\,m² à Lyon (zone H1b, $T_{ext}$ hiver $= -7\,°C$) est équipé d'une VMC double flux avec échangeur à contre-courant.
+
+\textbf{Données :}
+\begin{itemize}
+  \item Débit d'air neuf réglementaire (arrêté 1982) : $Q = 90$\,m³/h
+  \item Rendement de récupération de l'échangeur : $\eta_r = 78\,\%$ (NF EN 308)
+  \item Température ambiante : $T_{int} = 20\,°C$
+  \item Puissance ventilateurs (SFP) : $P_{vent} = 0{,}45$\,Wh/m³
+  \item Coût de l'énergie : 0,18\,€/kWh (élec.), 0,12\,€/kWh (gaz, chaudière existante $\eta = 0{,}87$)
+  \item DJU Lyon (chauffage 18\,°C) : 2\,400\,°C.j/an
+  \item Nombre d'heures de fonctionnement annuel : 8\,760\,h/an
+  \item Masse volumique de l'air : $\rho = 1{,}2$\,kg/m³ ; $c_p = 1006$\,J/(kg·K)
+\end{itemize}
+
+\begin{enumerate}
+  \item Calculer la puissance thermique économisée grâce à la récupération en condition de dimensionnement ($T_{ext} = -7\,°C$).
+  \item Calculer l'énergie thermique annuelle économisée (méthode DJU simplifiée) :
+    \[
+      E_{éco} = \eta_r \cdot \rho \cdot c_p \cdot Q \cdot \frac{DJU \times 3600}{1000}
+    \]
+    avec DJU exprimés en °C·j puis convertis en °C·s ($\times 86\,400$).
+  \item Calculer le surcoût de consommation électrique annuel lié aux ventilateurs double flux par rapport à une VMC simple flux ($P_{SF} = 0{,}20$\,Wh/m³).
+  \item Calculer l'économie nette annuelle (en €) en tenant compte du surcoût électrique des ventilateurs.
+  \item Si le surcoût d'installation d'une VMC double flux par rapport à une simple flux est de 2\,800\,€, calculer le temps de retour sur investissement (TRI).
+  \item Quel est le rendement minimal de récupération exigé par la RE2020 pour les VMC double flux ? Cette installation est-elle conforme ?
+\end{enumerate}
+
 \newpage
 % ============================================================
 \section*{Corrigés}
@@ -161,4 +192,104 @@ $P_2 = P_1 \times (q_{v2}/q_{v1})^3$
 
 \[
   \boxed{\dot{Q}_{hum} \approx \SI{10{,}3}{\kilo\watt}}
+\]
+
+% ----------------------------------------------------------
+
+\subsection*{Corrigé — Exercice 4}
+
+\textit{Question 1 — Puissance thermique récupérée en condition de dimensionnement :}
+
+La puissance thermique économisée par la récupération est :
+\[
+  \dot{Q}_{rec} = \eta_r \cdot \rho \cdot c_p \cdot \frac{Q}{3600} \cdot (T_{int} - T_{ext})
+\]
+\[
+  \dot{Q}_{rec} = 0{,}78 \times 1{,}2 \times 1006 \times \frac{90}{3600} \times \bigl(20 - (-7)\bigr)
+\]
+\[
+  \dot{Q}_{rec} = 0{,}78 \times 1{,}2 \times 1006 \times 0{,}025 \times 27 = 0{,}78 \times 1{,}2 \times 676{,}0 = \SI{632}{\watt}
+\]
+
+\[
+  \boxed{\dot{Q}_{rec} \approx \SI{632}{\watt} \approx \SI{0{,}63}{\kilo\watt}}
+\]
+
+\textit{Question 2 — Énergie thermique annuelle économisée (méthode DJU) :}
+
+Conversion DJU en secondes :
+\[
+  DJU_{s} = 2\,400 \times 86\,400 = 207\,360\,000\,\text{°C·s}
+\]
+
+Application de la formule :
+\[
+  E_{éco} = \eta_r \cdot \rho \cdot c_p \cdot \frac{Q}{3600} \cdot \frac{DJU_s}{1000}
+\]
+\[
+  E_{éco} = 0{,}78 \times 1{,}2 \times 1006 \times 0{,}025 \times \frac{207\,360\,000}{1\,000\,000}
+\]
+\[
+  E_{éco} = 0{,}78 \times 1{,}2 \times 1006 \times 0{,}025 \times 207{,}36 \approx 4\,875\,\text{kWh/an}
+\]
+
+\[
+  \boxed{E_{éco} \approx \SI{4875}{\kilo\watt\heure}/\text{an}}
+\]
+
+\textit{Question 3 — Surcoût électrique annuel des ventilateurs double flux :}
+
+Consommation électrique supplémentaire par rapport à la VMC simple flux :
+\[
+  \Delta P_{SFP} = P_{DF} - P_{SF} = 0{,}45 - 0{,}20 = 0{,}25\,\text{Wh/m}^3
+\]
+\[
+  \Delta W_{elec} = \Delta P_{SFP} \times Q \times h_{an} = 0{,}25 \times 90 \times 8\,760 = 197\,100\,\text{Wh} = 197\,\text{kWh}_{elec}/\text{an}
+\]
+
+\[
+  \boxed{\Delta W_{elec} \approx \SI{197}{\kilo\watt\heure}/\text{an}}
+\]
+
+\textit{Question 4 — Économie nette annuelle :}
+
+\textbf{Économie sur la facture gaz} (l'énergie thermique récupérée évite de faire travailler la chaudière) :
+\[
+  \text{Économie gaz} = \frac{E_{éco}}{\eta_{chaudière}} \times c_{gaz} = \frac{4\,875}{0{,}87} \times 0{,}12 = 5\,603 \times 0{,}12 \approx 672\,\text{€/an}
+\]
+
+\textbf{Surcoût électrique} :
+\[
+  \text{Surcoût élec} = 197 \times 0{,}18 \approx 35\,\text{€/an}
+\]
+
+\textbf{Économie nette} :
+\[
+  \text{Économie nette} = 672 - 35 = 637\,\text{€/an}
+\]
+
+\[
+  \boxed{\text{Économie nette} \approx \SI{637}{\text{€}/\text{an}}}
+\]
+
+\textit{Question 5 — Temps de retour sur investissement (TRI) :}
+
+\[
+  TRI = \frac{\text{Surcoût installation}}{\text{Économie nette annuelle}} = \frac{2\,800}{637} \approx 4{,}4\,\text{ans}
+\]
+
+\[
+  \boxed{TRI \approx 4{,}4\,\text{ans}}
+\]
+
+Ce résultat est favorable ; la durée de vie d'une VMC double flux est de l'ordre de 20 à 25 ans, soit un retour sur investissement très satisfaisant.
+
+\textit{Question 6 — Conformité RE2020 :}
+
+La RE2020 (arrêté du 4 août 2021, article 19) exige pour les VMC double flux un \textbf{rendement minimal de récupération $\eta_r \geq 75\,\%$} (mesuré selon NF EN 308).
+
+L'installation présente $\eta_r = 78\,\% > 75\,\%$.
+
+\[
+  \boxed{\text{Installation conforme à la RE2020 : } 78\,\% > 75\,\%}
 \]
