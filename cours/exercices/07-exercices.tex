@@ -18,7 +18,7 @@ Une chaudière à condensation dessert un réseau de radiateurs en acier. La con
 
 \exercice{Paramétrage de la loi d'eau d'une installation}
 
-Un immeuble de logements à Lyon (zone H1b, $T_{ext,base} = \SI{-7}{\celsius}$) est chauffé par des radiateurs à basse température ($T_{dep,max} = \SI{55}{\celsius}$ à $T_{ext,base}$). Le chauffage se coupe à $T_{ext} = \SI{16}{\celsius}$ ($T_{dep,min} = \SI{30}{\celsius}$).
+Un immeuble de logements à Lyon (zone H2b, $T_{ext,base} = \SI{-8}{\celsius}$) est chauffé par des radiateurs à basse température ($T_{dep,max} = \SI{55}{\celsius}$ à $T_{ext,base}$). Le chauffage se coupe à $T_{ext} = \SI{16}{\celsius}$ ($T_{dep,min} = \SI{30}{\celsius}$).
 
 \begin{enumerate}
   \item Calculer la pente de la loi d'eau $K_{loi}$.
@@ -134,12 +134,12 @@ Un immeuble de bureaux de \SI{2000}{\metre\squared} (SHON) consomme actuellement
 \begin{enumerate}
   \item Pente de la loi d'eau :
   \[
-    K_{loi} = \frac{T_{dep,max} - T_{dep,min}}{T_{ext,coupure} - T_{ext,base}} = \frac{55 - 30}{16 - (-7)} = \frac{25}{23} \approx \boxed{1{,}09}
+    K_{loi} = \frac{T_{dep,max} - T_{dep,min}}{T_{ext,coupure} - T_{ext,base}} = \frac{55 - 30}{16 - (-8)} = \frac{25}{24} \approx \boxed{1{,}04}
   \]
 
   \item Température de départ à $T_{ext} = \SI{2}{\celsius}$ :
   \[
-    T_{dep} = T_{dep,min} + K_{loi} \times (T_{ext,coupure} - T_{ext}) = 30 + 1{,}09 \times (16 - 2) = 30 + 15{,}3 \approx \boxed{\SI{45}{\celsius}}
+    T_{dep} = T_{dep,min} + K_{loi} \times (T_{ext,coupure} - T_{ext}) = 30 + 1{,}04 \times (16 - 2) = 30 + 14{,}6 \approx \boxed{\SI{45}{\celsius}}
   \]
 
   \item Avec correcteur de confort $+\SI{3}{\kelvin}$ :

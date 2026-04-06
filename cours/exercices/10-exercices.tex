@@ -133,7 +133,13 @@ Le démarrage étoile-triangle réduit le courant de démarrage de 203~A à 67,7
 \begin{methode}
 Pour un démarrage étoile-triangle, on utilise des \textbf{fusibles aM} (accompagnement moteur) : ils tolèrent la pointe de courant au démarrage ($7 \times I_n$) sans fondre, tout en assurant la protection contre les courts-circuits.
 
-Calibre recommandé : fusibles aM calibre \textbf{32~A} (cran normalisé au-dessus de $I_n = 29$~A). En fonctionnement normal, le courant en étoile est $I_{d,Y}/\sqrt{3} \approx 39$~A en démarrage, puis retombe à $I_n = 29$~A en régime — le fusible 32~A aM tolère la pointe de démarrage.
+Le courant de démarrage côté réseau en phase étoile est $I_{d,Y} = I_{d,\triangle}/3 = 67{,}7$~A. Ce courant transite dans les fusibles aM lors du démarrage.
+
+Calibre recommandé : fusibles aM calibre \textbf{63~A} (selon NF C 15-100 : calibre $\geq 2 \times I_n$ pour démarrage étoile-triangle). Le calibre 32~A serait insuffisant car il fondrait lors de la pointe de démarrage en étoile ($I_{d,Y} = 67{,}7$~A $> 32$~A). Le calibre 40~A peut être accepté si la durée de démarrage est très courte ; le calibre 63~A offre une marge sécurisée pour les applications de désenfumage à démarrage fréquent.
+
+\begin{attention}
+Ne pas confondre $I_{d,Y}$ (courant de ligne côté réseau en étoile $= I_{d,\triangle}/3$) avec $I_{d,\triangle}/\sqrt{3}$ qui n'a pas de sens physique direct dans ce contexte. La division par 3 (et non par $\sqrt{3}$) résulte du fait que la tension aux bornes du moteur est divisée par $\sqrt{3}$ en étoile, entraînant une réduction du courant par $\sqrt{3}$ côté moteur et par $\sqrt{3} \times \sqrt{3} = 3$ côté réseau (puisque $I_{ligne} = I_{phase}$ en étoile).
+\end{attention}
 \end{methode}
 
 \subsection*{Corrigé — Exercice 3}
