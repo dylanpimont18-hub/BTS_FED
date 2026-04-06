@@ -3,8 +3,8 @@
 Mis à jour automatiquement par l'agent à chaque run.
 
 ## Dernier run
-- Date : 2026-04-03
-- Action : Enrichissement ch01-10 vers complet + création chapitre 11 + livret exercices (agents parallèles)
+- Date : 2026-04-06
+- Action : Enrichissement ch11 ébauche → complet — 3 études de cas chiffrées, pincement thermique défini, check-list RE2020
 
 ## Prochain focus
 Tous les chapitres sont créés. Prochaine étape : enrichissement vers complet.
@@ -23,7 +23,7 @@ Tous les chapitres sont créés. Prochaine étape : enrichissement vers complet.
 | 08 | 08-efficacite-energetique.tex | Efficacité énergétique et RE2020 | complet | 5 | Enrichi 2026-04-03 : décret tertiaire, aides financières, exercices extraits |
 | 09 | 09-acoustique.tex | Acoustique du bâtiment | complet | 4 | Enrichi 2026-04-03 : bilan acoustique réseau, NC par local, exercices extraits |
 | 10 | 10-electrotechnique.tex | Électrotechnique appliquée CVC | complet | 5 | Enrichi 2026-04-03 : compensation cos φ, armoire CVC, exercices extraits |
-| 11 | 11-etudes-de-cas.tex | Études de cas et dimensionnement | ébauche | 4 | Créé le 2026-04-03 |
+| 11 | 11-etudes-de-cas.tex | Études de cas et dimensionnement | complet | 5 | Enrichi 2026-04-06 : 3 études de cas chiffrées, pincement thermique défini, check-list RE2020 |
 
 ## Légende des statuts
 - `absent` : chapitre non encore créé
