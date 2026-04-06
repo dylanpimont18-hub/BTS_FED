@@ -42,21 +42,21 @@ Un salon de 20\,m² présente des déperditions de \SI{900}{\watt}. Revêtement 
 
 % ----------------------------------------------------------
 
-\exercice{Diagnostic d'un radiateur sous-performant}
+\exercice{Diagnostic d'un radiateur sous-performant en salle de réunion}
 
-Un technicien mesure sur un radiateur de bureau les valeurs suivantes :
+Un technicien mesure sur un radiateur de salle de réunion les valeurs suivantes :
 \begin{itemize}
-  \item Température entrée eau : 68\,°C
-  \item Température sortie eau : 58\,°C
-  \item Débit eau mesuré : 40\,L/h
-  \item Température ambiante : 18\,°C
+  \item Température entrée eau : 72\,°C
+  \item Température sortie eau : 62\,°C
+  \item Débit eau mesuré : 60\,L/h
+  \item Température ambiante : 20\,°C
 \end{itemize}
-Le local présente des déperditions de 1200\,W. Le radiateur a une puissance nominale de 1800\,W (en 75/65/20\,°C, $n = 1{,}3$).
+Le local présente des déperditions de 1500\,W. Le radiateur a une puissance nominale de 2200\,W (en 75/65/20\,°C, $n = 1{,}3$).
 
 \begin{enumerate}
   \item Calculer la puissance thermique réellement délivrée.
-  \item Calculer la puissance théorique attendue dans ces conditions.
-  \item Analyser l'écart et proposer des pistes de diagnostic.
+  \item Calculer la puissance théorique attendue dans ces conditions (en appliquant la correction d'écart de température logarithmique moyen).
+  \item Analyser l'écart entre puissance réelle et théorique, et proposer des pistes de diagnostic.
 \end{enumerate}
 
 \newpage
@@ -150,32 +150,40 @@ La puissance disponible (390\,W/m²) est très largement supérieure à la puiss
 
 \textit{Question 1 — Puissance réelle mesurée :}
 \[
-  \dot{m} = \frac{40}{3600} \times 1000 \times \frac{1}{1000} = \SI{0{,}0111}{\kilogram\per\second}
+  \dot{m} = \frac{60}{3600} \times 1{,}0 = \SI{0{,}01\overline{6}}{\kilogram\per\second} \approx \SI{0{,}0167}{\kilogram\per\second}
 \]
 \[
-  \dot{Q}_{réel} = \dot{m} \times c_p \times \Delta T = 0{,}0111 \times 4186 \times (68 - 58) = \SI{465}{\watt}
+  \dot{Q}_{réel} = \dot{m} \times c_p \times \Delta T = 0{,}0167 \times 4186 \times (72 - 62) = \SI{699}{\watt} \approx \SI{700}{\watt}
 \]
 
 \[
-  \boxed{\dot{Q}_{réel} = \SI{465}{\watt}}
+  \boxed{\dot{Q}_{réel} \approx \SI{700}{\watt}}
 \]
 
 \textit{Question 2 — Puissance théorique attendue :}
+
+On applique la correction de puissance par l'exposant $n = 1{,}3$ (conditions normalisées : 75/65/20\,°C, soit $\Delta T_{norm} = 50$\,K) :
 \[
-  T_{moy} = \frac{68 + 58}{2} = \SI{63}{\celsius}, \quad \Delta T_{réel} = 63 - 18 = \SI{45}{\kelvin}
+  T_{moy} = \frac{72 + 62}{2} = \SI{67}{\celsius}, \quad \Delta T_{réel} = 67 - 20 = \SI{47}{\kelvin}
 \]
 \[
-  \dot{Q}_{théo} = 1800 \times \left(\frac{45}{50}\right)^{1{,}3} = 1800 \times (0{,}90)^{1{,}3} = 1800 \times 0{,}870 = \SI{1566}{\watt}
+  \dot{Q}_{théo} = 2200 \times \left(\frac{47}{50}\right)^{1{,}3} = 2200 \times (0{,}94)^{1{,}3}
+\]
+\[
+  (0{,}94)^{1{,}3} = e^{1{,}3 \times \ln(0{,}94)} = e^{1{,}3 \times (-0{,}0619)} = e^{-0{,}0805} \approx 0{,}923
+\]
+\[
+  \dot{Q}_{théo} = 2200 \times 0{,}923 = \SI{2031}{\watt}
 \]
 
 \[
-  \boxed{\dot{Q}_{théo} = \SI{1566}{\watt}}
+  \boxed{\dot{Q}_{théo} \approx \SI{2031}{\watt}}
 \]
 
-\textit{Question 3 — Analyse :} Écart massif : 465\,W mesuré vs 1566\,W théorique (−70\,\%). Pistes de diagnostic :
+\textit{Question 3 — Analyse :} Écart important : 700\,W mesuré vs 2031\,W théorique (−65\,\%). Les déperditions de 1500\,W ne sont pas couvertes — le local est en sous-chauffe. Pistes de diagnostic :
 \begin{itemize}
-  \item Débit très faible (40\,L/h vs débit nominal probablement 100–150\,L/h) → robinet thermostatique bloqué ou partiellement fermé
-  \item Présence d'air dans le radiateur → purge nécessaire
-  \item Encrassement intérieur (boues) réduisant le débit et l'échange thermique
-  \item Vanne d'équilibrage trop fermée → mesurer la pression différentielle
+  \item Débit très faible (60\,L/h vs débit nominal estimé à 130–180\,L/h) → robinet thermostatique bloqué ou partiellement fermé, ou vanne d'équilibrage surréduite
+  \item Présence d'air dans le radiateur → purger le purgeur manuel
+  \item Encrassement intérieur (dépôts de boues magnétites) réduisant la section de passage et l'échange thermique
+  \item Déséquilibre hydraulique du réseau → vérifier les pressions différentielles avec un manomètre
 \end{itemize}

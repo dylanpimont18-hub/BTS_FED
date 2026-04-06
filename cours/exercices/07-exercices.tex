@@ -18,7 +18,7 @@ Une chaudière à condensation dessert un réseau de radiateurs en acier. La con
 
 \exercice{Paramétrage de la loi d'eau d'une installation}
 
-Un immeuble de logements à Lyon (zone H2a, $T_{ext,base} = \SI{-9}{\celsius}$) est chauffé par des radiateurs à basse température ($T_{dep,max} = \SI{55}{\celsius}$ à $T_{ext,base}$). Le chauffage se coupe à $T_{ext} = \SI{16}{\celsius}$ ($T_{dep,min} = \SI{30}{\celsius}$).
+Un immeuble de logements à Lyon (zone H1b, $T_{ext,base} = \SI{-7}{\celsius}$) est chauffé par des radiateurs à basse température ($T_{dep,max} = \SI{55}{\celsius}$ à $T_{ext,base}$). Le chauffage se coupe à $T_{ext} = \SI{16}{\celsius}$ ($T_{dep,min} = \SI{30}{\celsius}$).
 
 \begin{enumerate}
   \item Calculer la pente de la loi d'eau $K_{loi}$.
@@ -134,17 +134,17 @@ Un immeuble de bureaux de \SI{2000}{\metre\squared} (SHON) consomme actuellement
 \begin{enumerate}
   \item Pente de la loi d'eau :
   \[
-    K_{loi} = \frac{T_{dep,max} - T_{dep,min}}{T_{ext,coupure} - T_{ext,base}} = \frac{55 - 30}{16 - (-9)} = \frac{25}{25} = \boxed{1{,}0}
+    K_{loi} = \frac{T_{dep,max} - T_{dep,min}}{T_{ext,coupure} - T_{ext,base}} = \frac{55 - 30}{16 - (-7)} = \frac{25}{23} \approx \boxed{1{,}09}
   \]
 
   \item Température de départ à $T_{ext} = \SI{2}{\celsius}$ :
   \[
-    T_{dep} = T_{dep,min} + K_{loi} \times (T_{ext,coupure} - T_{ext}) = 30 + 1{,}0 \times (16 - 2) = 30 + 14 = \boxed{\SI{44}{\celsius}}
+    T_{dep} = T_{dep,min} + K_{loi} \times (T_{ext,coupure} - T_{ext}) = 30 + 1{,}09 \times (16 - 2) = 30 + 15{,}3 \approx \boxed{\SI{45}{\celsius}}
   \]
 
   \item Avec correcteur de confort $+\SI{3}{\kelvin}$ :
   \[
-    T_{dep,corr} = 44 + 3 = \boxed{\SI{47}{\celsius}}
+    T_{dep,corr} = 45 + 3 = \boxed{\SI{48}{\celsius}}
   \]
 
   \item Une hausse de $\SI{3}{\kelvin}$ sur la température de départ augmente les pertes thermiques du réseau de distribution et réduit le rendement de condensation de la chaudière (la température de retour augmente). On estime une surconsommation de l'ordre de 6 à 10\,\% selon l'isolation du réseau. Le correcteur doit donc être utilisé avec modération et remis à zéro dès retour à l'état de confort.
