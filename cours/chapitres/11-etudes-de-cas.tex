@@ -77,7 +77,7 @@ Le technicien supérieur GCF est régulièrement amené à produire des études 
   En pratique, le pincement thermique fixe la température minimale d'eau glacée requise.
   Exemple : pour refroidir de l'air à $T_{soufflage} = \SI{15}{\celsius}$, avec un
   pincement de $\SI{4}{\celsius}$, la température d'entrée eau glacée doit être
-  $\leq 15 - 4 = \SI{11}{\celsius}$. On retient couramment le circuit \SI{7/12}{\celsius}.
+  $\leq 15 - 4 = \SI{11}{\celsius}$. On retient couramment le circuit \SI[parse-numbers=false]{7/12}{\celsius}.
 \end{attention}
 
 \subsection{Données climatiques de référence}
@@ -141,7 +141,7 @@ avec $H_V = 0{,}34 \times q_{v,m^3/h} \times (1 - \eta_{recup})$ (\si{\watt\per\
 \subsubsection{Indicateur d'énergie primaire RE2020}
 
 \begin{equation}
-  Cep = \frac{W_{el} \times f_{prim}}{A_{ref}} \quad [\si{\kilo\watt\hour_{ep}\per\metre\squared\per\year}], \quad f_{prim,elec} = 2{,}3
+  Cep = \frac{W_{el} \times f_{prim}}{A_{ref}} \quad [\si{\kilo\watt\hour\per\metre\squared\per\year}_{\mathrm{ep}}], \quad f_{prim,elec} = 2{,}3
 \end{equation}
 
 \subsubsection{Perte de charge en réseau hydraulique}
@@ -260,10 +260,10 @@ côté réfrigérant, condensation à $\approx \SI{40}{\celsius}$ — cohérent 
 \textbf{Consommation annuelle et vérification RE2020 (SCOP = 4,0) :}
 \begin{align*}
   W_{el} &= \frac{3{,}3 \times 2\,400 \times 24}{4{,}0 \times 27} = \SI{1\,760}{\kilo\watt\hour\per\year} \\
-  Cep    &= \frac{1\,760 \times 2{,}3}{120} = \SI{33{,}7}{\kilo\watt\hour_{ep}\per\metre\squared\per\year}
+  Cep    &= \frac{1\,760 \times 2{,}3}{120} = \SI{33{,}7}{\kilo\watt\hour\per\metre\squared\per\year}_{\mathrm{ep}}
 \end{align*}
 
-\textbf{Conclusion :} $33{,}7 < 70\,\si{\kilo\watt\hour_{ep}\per\metre\squared\per\year}$ — \textbf{conforme RE2020}.
+\textbf{Conclusion :} $33{,}7 < 70\,\si{\kilo\watt\hour\per\metre\squared\per\year}_{\mathrm{ep}}$ — \textbf{conforme RE2020}.
 Excellent niveau de performance, proche des exigences BEPOS.
 \end{exemple}
 
@@ -350,7 +350,7 @@ La plage de free-cooling à Bordeaux est estimée à environ 2\,500\,h/an.
 Le \textbf{pincement thermique dans la batterie froide} conditionne la température d'eau glacée :
 pour une température de soufflage de \SI{15}{\celsius}, avec un pincement de \SI{4}{\celsius},
 la température d'eau glacée en entrée doit être $\leq \SI{11}{\celsius}$ ;
-on choisit le circuit standard \SI{7/12}{\celsius}.
+on choisit le circuit standard \SI[parse-numbers=false]{7/12}{\celsius}.
 
 \begin{exemple}[title={Bureaux 500 m² à Bordeaux — Dimensionnement CTA}]
 \textbf{Données :}
@@ -388,7 +388,7 @@ on choisit le circuit standard \SI{7/12}{\celsius}.
 
 \textbf{5 — Pincement thermique batterie froide :}
 $T_{soufflage} = \SI{15}{\celsius}$, $\Delta T_{pinch} = \SI{4}{\celsius}$ \\
-$\Rightarrow T_{EG,entrée} \leq 15 - 4 = \SI{11}{\celsius}$ — circuit \SI{7/12}{\celsius} retenu.
+$\Rightarrow T_{EG,entrée} \leq 15 - 4 = \SI{11}{\celsius}$ — circuit \SI[parse-numbers=false]{7/12}{\celsius} retenu.
 
 \textbf{6 — Puissance batterie froide CTA :}
 \begin{align*}
@@ -415,7 +415,7 @@ $\Rightarrow T_{EG,entrée} \leq 15 - 4 = \SI{11}{\celsius}$ — circuit \SI{7/1
 Consommation annuelle groupe froid (2\,000\,h équivalent plein régime, dont 500\,h free-cooling) :
 \begin{align*}
   W_{GF,annuel} &= 17{,}2 \times (2\,000 - 500) = \SI{25\,800}{\kilo\watt\hour\per\year} \\
-  Cep_{refroid} &= \frac{25\,800 \times 2{,}3}{500} = \SI{118{,}7}{\kilo\watt\hour_{ep}\per\metre\squared\per\year}
+  Cep_{refroid} &= \frac{25\,800 \times 2{,}3}{500} = \SI{118{,}7}{\kilo\watt\hour\per\metre\squared\per\year}_{\mathrm{ep}}
 \end{align*}
 
 Seuil RE2020 tertiaire (décret tertiaire, objectif 2030) : réduction 40\,\% /2010.
@@ -449,7 +449,7 @@ Le free-cooling réduit la consommation de 25\,\% environ — action prioritaire
   \draw[froid,->] (an.east)   -- node[above,font=\scriptsize]{+1\,°C} (fg4.west);
   \draw[arrow,->] (fg4.east)  -- (bch.west);
   \draw[chaud,->] (bch.east)  -- node[above,font=\scriptsize]{18\,°C} (bfr.west);
-  \draw[froid,->] (bfr.east)  -- node[above,font=\scriptsize]{12\,°C\\$w\downarrow$} (hum.west);
+  \draw[froid,->] (bfr.east)  -- node[above,font=\scriptsize,align=center]{12\,°C\\$w\downarrow$} (hum.west);
   \draw[arrow,->] (hum.east)  -- node[above,font=\scriptsize]{15\,°C} (vent.west);
   \draw[arrow,->] (vent.east) -- (gso.west);
 
@@ -470,7 +470,8 @@ Le free-cooling réduit la consommation de 25\,\% environ — action prioritaire
 
   % ---- Récupérateur entre les deux flux ----
   \draw[draw=violet, thick, dashed]
-    (5.5, -0.5) rectangle node[font=\scriptsize, text=violet]{Récup.\\chaleur} (5.5,-2.0);
+    (4.8, -0.5) rectangle (6.2,-2.0);
+  \node[font=\scriptsize, text=violet, align=center] at (5.5,-1.25) {Récup.\\chaleur};
   \draw[draw=violet, thick, dashed] (5.5,0.5) -- (5.5,-0.5);
   \draw[draw=violet, thick, dashed] (5.5,-2.0) -- (5.5,-2.5);
 
@@ -492,7 +493,7 @@ Surface : \SI{600}{\metre\squared}, hauteur \SI{3}{\metre}.
 Exigences : classification \textbf{ISO\,7}, température $22 \pm \SI{1}{\celsius}$,
 HR $50 \pm 5\,\%$, surpression $+15\,\si{\pascal}$ par rapport aux zones adjacentes,
 renouvellement d'air conforme BPF (20 volumes/heure minimum).
-Énergie disponible sur site : vapeur process à \SI{6}{\bar}, eau glacée \SI{6/12}{\celsius}.
+Énergie disponible sur site : vapeur process à \SI{6}{\bar}, eau glacée \SI[parse-numbers=false]{6/12}{\celsius}.
 
 \textbf{Objectifs :} classification ISO 7, dimensionnement CTA HEPA, bilan énergétique annuel,
 vérification des exigences de surpression et contamination.
@@ -529,7 +530,7 @@ température de rosée cible et la température d'eau glacée.
 \textbf{Température de rosée cible} (ISO\,7, $22\,\si{\celsius}$, $HR = 50\,\%$) :
 $T_{rosée} \approx \SI{10{,}8}{\celsius}$.
 Avec pincement de $\SI{3}{\celsius}$, température eau glacée entrée $\leq \SI{7{,}8}{\celsius}$ :
-le circuit \SI{6/12}{\celsius} disponible sur site convient.
+le circuit \SI[parse-numbers=false]{6/12}{\celsius} disponible sur site convient.
 
 \begin{exemple}[title={Salle ISO 7 — Pharma à Strasbourg — Bilan complet}]
 \textbf{Données charges internes process :}
@@ -636,7 +637,7 @@ en chauffage et humidification, représentant un retour sur investissement estim
   \draw[arrow] (tour.north) -- (gf.south);  % retour eau tour
 
   % ---- Air soufflage vers salle (filtres HEPA) ----
-  \draw[chaud] (cta.east) -- node[above, font=\scriptsize]{air traité\\H14} (salle.west);
+  \draw[chaud] (cta.east) -- node[above, font=\scriptsize, align=center]{air traité\\H14} (salle.west);
 
   % ---- Surpression : fuite d'air vers ext ----
   \draw[arrow, draw=green!60!black, thick]
@@ -726,7 +727,7 @@ acoustique et hydraulique.
 \begin{center}
 \begin{tabular}{lcccc}
   \toprule
-  Indicateur & Cas 1\\Maison (Lyon) & Cas 2\\Bureaux (Bordeaux) & Cas 3\\Pharma (Strasbourg) & Objectif/Seuil \\
+  Indicateur & Cas 1 -- Maison (Lyon) & Cas 2 -- Bureaux (Bordeaux) & Cas 3 -- Pharma (Strasbourg) & Objectif/Seuil \\
   \midrule
   Puissance de pointe & 3,3 kW & 55 kW & 220 kW & Calculé \\
   $Cep$ chauffage & 33,7 kWh$_{ep}$/m².an & — & — & $\leq 70$ (rés.) \\
