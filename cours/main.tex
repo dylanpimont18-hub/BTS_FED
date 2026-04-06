@@ -4,24 +4,63 @@
 \begin{document}
 
 \begin{titlepage}
+  \pagecolor{btsprimary}
+  \color{white}
+  \begin{tikzpicture}[remember picture, overlay]
+    % Bande décorative accent en haut
+    \fill[btsaccent] (current page.north west)
+      rectangle ([yshift=-8pt] current page.north east);
+  \end{tikzpicture}
+
   \centering
-  \vspace*{3cm}
-  {\Huge\bfseries\textcolor{btsprimary}{BTS FED}\par}
-  \vspace{0.5cm}
-  {\Large Option Génie Climatique et Fluidique\par}
-  \vspace{1cm}
-  \rule{\linewidth}{0.5pt}
-  \vspace{0.5cm}
-  {\LARGE\bfseries Cours complet — Formation 2 ans\par}
-  \vspace{0.5cm}
-  \rule{\linewidth}{0.5pt}
+  \vspace*{2.5cm}
+
+  % Monogramme principal
+  {\fontsize{72}{72}\selectfont\bfseries BTS\par}
+  \vspace{0.15cm}
+  {\fontsize{36}{36}\selectfont\bfseries FED\par}
+  \vspace{0.4cm}
+  {\large\color{btsaccent}\rule{6cm}{1.5pt}\par}
+  \vspace{0.6cm}
+
+  % Option
+  {\Large\bfseries Option Génie Climatique et Fluidique\par}
+  \vspace{0.2cm}
+  {\normalsize\color{white!80!btsprimary}(GCF)\par}
+
   \vspace{2cm}
-  {\large Formation initiale\par}
-  \vspace{0.5cm}
-  {\large\textit{Généré et amélioré en continu par agent Claude Code}\par}
+
+  % Boîte titre dans un colorbox sur fond bleu
+  \begin{tcolorbox}[
+    enhanced, arc=4mm,
+    colback=white, colframe=btsaccent,
+    leftrule=6pt, rightrule=0.5pt, toprule=0.5pt, bottomrule=0.5pt,
+    width=0.8\linewidth,
+    halign=center,
+    boxsep=10pt
+  ]
+    \color{btsprimary}
+    {\LARGE\bfseries Cours complet\par}
+    \vspace{4pt}
+    {\large Formation 2 ans — Formation initiale\par}
+  \end{tcolorbox}
+
   \vfill
-  {\large \today\par}
+
+  % Pied de page titre
+  {\small\color{white!70!btsprimary}\itshape
+    Généré et amélioré en continu par agent Claude Code\par}
+  \vspace{0.5cm}
+  {\normalsize\color{btsaccent}\bfseries\today\par}
+  \vspace{1cm}
+  \begin{tikzpicture}[remember picture, overlay]
+    % Bande décorative accent en bas
+    \fill[btsaccent] (current page.south west)
+      rectangle ([yshift=8pt] current page.south east);
+  \end{tikzpicture}
 \end{titlepage}
+\pagecolor{white}
+\color{black}
 
 \tableofcontents
 \newpage

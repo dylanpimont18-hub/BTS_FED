@@ -1,27 +1,72 @@
 \documentclass[12pt, a4paper, twoside]{report}
 \input{preamble}
 
+% Couleur d'accent propre au livret exercices (teal, distincte du bleu cours)
+\definecolor{exoaccent}{RGB}{0, 140, 120}
+\definecolor{exolight}{RGB}{230, 248, 245}
+
 \begin{document}
 
 \begin{titlepage}
+  \pagecolor{exoaccent}
+  \color{white}
+  \begin{tikzpicture}[remember picture, overlay]
+    % Bande décorative en haut
+    \fill[btsaccent] (current page.north west)
+      rectangle ([yshift=-8pt] current page.north east);
+  \end{tikzpicture}
+
   \centering
-  \vspace*{3cm}
-  {\Huge\bfseries\textcolor{btsprimary}{BTS FED}\par}
-  \vspace{0.5cm}
-  {\Large Option Génie Climatique et Fluidique\par}
-  \vspace{1cm}
-  \rule{\linewidth}{0.5pt}
-  \vspace{0.5cm}
-  {\LARGE\bfseries Livret d'exercices — Formation 2 ans\par}
-  \vspace{0.5cm}
-  \rule{\linewidth}{0.5pt}
+  \vspace*{2.5cm}
+
+  % Monogramme principal
+  {\fontsize{72}{72}\selectfont\bfseries BTS\par}
+  \vspace{0.15cm}
+  {\fontsize{36}{36}\selectfont\bfseries FED\par}
+  \vspace{0.4cm}
+  {\large\color{btsaccent}\rule{6cm}{1.5pt}\par}
+  \vspace{0.6cm}
+
+  % Option
+  {\Large\bfseries Option Génie Climatique et Fluidique\par}
+  \vspace{0.2cm}
+  {\normalsize\color{white!80!exoaccent}(GCF)\par}
+
   \vspace{2cm}
-  {\large Formation initiale\par}
-  \vspace{0.5cm}
-  {\large\textit{Énoncés et corrigés détaillés par chapitre}\par}
+
+  % Boîte titre
+  \begin{tcolorbox}[
+    enhanced, arc=4mm,
+    colback=white, colframe=btsaccent,
+    leftrule=6pt, rightrule=0.5pt, toprule=0.5pt, bottomrule=0.5pt,
+    width=0.8\linewidth,
+    halign=center,
+    boxsep=10pt
+  ]
+    \color{exoaccent}
+    {\LARGE\bfseries Livret d'exercices\par}
+    \vspace{4pt}
+    {\large Énoncés et corrigés détaillés par chapitre\par}
+    \vspace{4pt}
+    {\normalsize Formation 2 ans — Formation initiale\par}
+  \end{tcolorbox}
+
   \vfill
-  {\large \today\par}
+
+  % Pied de page titre
+  {\small\color{white!70!exoaccent}\itshape
+    Généré et amélioré en continu par agent Claude Code\par}
+  \vspace{0.5cm}
+  {\normalsize\color{btsaccent}\bfseries\today\par}
+  \vspace{1cm}
+  \begin{tikzpicture}[remember picture, overlay]
+    % Bande décorative en bas
+    \fill[btsaccent] (current page.south west)
+      rectangle ([yshift=8pt] current page.south east);
+  \end{tikzpicture}
 \end{titlepage}
+\pagecolor{white}
+\color{black}
 
 \tableofcontents
 \newpage

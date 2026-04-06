@@ -1,9 +1,17 @@
 % preamble.tex — BTS FED GCF — Cours complet 2 ans
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
+\usepackage{lmodern}
 \usepackage[french]{babel}
-\usepackage{geometry}
-\geometry{a4paper, margin=2.5cm}
+\usepackage{microtype}
+
+% Mise en page
+\usepackage[top=2.5cm, bottom=2.5cm, left=3cm, right=2.5cm, headheight=15pt]{geometry}
+
+% Espacement des paragraphes
+\usepackage{parskip}
+\setlength{\parskip}{6pt}
+\setlength{\parindent}{0pt}
 
 % Mathématiques et unités
 \usepackage{amsmath, amssymb, mathtools}
@@ -16,43 +24,131 @@
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric, arrows.meta, positioning}
 
-% Mise en forme
+% Couleurs
 \usepackage{xcolor}
 \definecolor{btsprimary}{RGB}{0, 82, 147}
 \definecolor{btssecondary}{RGB}{220, 237, 255}
 \definecolor{btsaccent}{RGB}{255, 140, 0}
+\definecolor{btslight}{RGB}{245, 249, 255}
+\definecolor{btsrule}{RGB}{180, 210, 240}
 
+% Boîtes pédagogiques
 \usepackage{tcolorbox}
 \tcbuselibrary{breakable, skins}
 
-% Boîtes pédagogiques
 \newtcolorbox{definition}[1][]{
-  colback=btssecondary, colframe=btsprimary,
-  fonttitle=\bfseries, title=Définition,#1
+  enhanced,
+  breakable,
+  arc=3mm,
+  colback=btslight,
+  colframe=btsprimary,
+  leftrule=4pt, rightrule=0.5pt, toprule=0.5pt, bottomrule=0.5pt,
+  fonttitle=\bfseries\color{btsprimary},
+  title=Définition,
+  before upper={\setlength{\parskip}{4pt}},
+  #1
 }
 \newtcolorbox{methode}[1][]{
-  colback=orange!10, colframe=btsaccent,
-  fonttitle=\bfseries, title=Méthode,#1
+  enhanced,
+  breakable,
+  arc=3mm,
+  colback=orange!6,
+  colframe=btsaccent,
+  leftrule=4pt, rightrule=0.5pt, toprule=0.5pt, bottomrule=0.5pt,
+  fonttitle=\bfseries\color{btsaccent!80!black},
+  title=Méthode,
+  before upper={\setlength{\parskip}{4pt}},
+  #1
 }
 \newtcolorbox{attention}[1][]{
-  colback=red!8, colframe=red!60!black,
-  fonttitle=\bfseries, title=Attention,#1
+  enhanced,
+  breakable,
+  arc=3mm,
+  colback=red!5,
+  colframe=red!55!black,
+  leftrule=4pt, rightrule=0.5pt, toprule=0.5pt, bottomrule=0.5pt,
+  fonttitle=\bfseries\color{red!60!black},
+  title=Attention,
+  before upper={\setlength{\parskip}{4pt}},
+  #1
 }
 \newtcolorbox{exemple}[1][]{
-  colback=green!8, colframe=green!50!black,
-  fonttitle=\bfseries, title=Exemple résolu,#1
+  enhanced,
+  breakable,
+  arc=3mm,
+  colback=green!5,
+  colframe=green!45!black,
+  leftrule=4pt, rightrule=0.5pt, toprule=0.5pt, bottomrule=0.5pt,
+  fonttitle=\bfseries\color{green!45!black},
+  title=Exemple résolu,
+  before upper={\setlength{\parskip}{4pt}},
+  #1
 }
+
+% Style des titres de chapitres et sections
+\usepackage{titlesec}
+
+\titleformat{\chapter}[display]
+  {\normalfont\bfseries\color{btsprimary}}
+  {\filleft\fontsize{60}{60}\selectfont\color{btsrule}\thechapter}
+  {-10pt}
+  {\Huge\raggedright\color{btsprimary}}
+  [\vspace{4pt}{\color{btsprimary}\titlerule[1.5pt]}\vspace{6pt}]
+
+\titlespacing*{\chapter}{0pt}{-20pt}{20pt}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{btsprimary}}
+  {\textcolor{btsaccent}{\thesection}}
+  {0.75em}
+  {}
+  [\vspace{2pt}{\color{btsrule}\hrule height 0.6pt}\vspace{2pt}]
+
+\titlespacing*{\section}{0pt}{16pt}{8pt}
+
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{btsprimary!80!black}}
+  {\textcolor{btsaccent}{\thesubsection}}
+  {0.75em}
+  {}
+
+\titlespacing*{\subsection}{0pt}{12pt}{4pt}
+
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\itshape\color{btsprimary!60!black}}
+  {\thesubsubsection}
+  {0.75em}
+  {}
+
+% Table des matières
+\usepackage{tocloft}
+\renewcommand{\cftchapfont}{\bfseries\color{btsprimary}}
+\renewcommand{\cftchappagefont}{\bfseries\color{btsprimary}}
+\renewcommand{\cftchapleader}{\cftdotfill{\cftchapdotsep}}
+\renewcommand{\cftchapdotsep}{\cftdotsep}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\setlength{\cftbeforechapskip}{6pt}
 
 % En-têtes et pieds de page
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small\textcolor{btsprimary}{BTS FED — Option GCF}}
-\fancyhead[R]{\small\textcolor{btsprimary}{\leftmark}}
-\fancyfoot[C]{\thepage}
-\renewcommand{\headrulewidth}{0.4pt}
+\fancyhead[LE,RO]{\small\textcolor{btsprimary}{\textit{BTS FED — Option GCF}}}
+\fancyhead[RE,LO]{\small\textcolor{btsprimary!70!black}{\nouppercase{\leftmark}}}
+\fancyfoot[C]{\small\textcolor{btsprimary!60!black}{--- \thepage\ ---}}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{btsprimary}\leaders\hrule height \headrulewidth\hfill}}
+\renewcommand{\footrulewidth}{0pt}
 
-% Liens
+% Style plain propre pour les premières pages de chapitre
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyfoot[C]{\small\textcolor{btsprimary!60!black}{--- \thepage\ ---}}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+
+% Liens (toujours en dernier)
 \usepackage{hyperref}
 \hypersetup{
   colorlinks=true, linkcolor=btsprimary,
