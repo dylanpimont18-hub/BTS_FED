@@ -17,8 +17,13 @@ de l'intérieur vers l'extérieur, des couches suivantes :
   \item Enduit de façade : \(e = \SI{1,5}{\centi\meter}\), \(\lambda = \SI{0,87}{\watt\per\meter\per\kelvin}\)
 \end{itemize}
 
-Résistances superficielles standard : \(R_{si} = \SI{0,13}{\meter\squared\kelvin\per\watt}\),
-\(R_{se} = \SI{0,13}{\meter\squared\kelvin\per\watt}\) (paroi verticale, flux horizontal).
+Résistances superficielles standard (NF EN ISO 6946) :
+\(R_{si} = \SI{0,13}{\meter\squared\kelvin\per\watt}\) (intérieur),
+\(R_{se} = \SI{0,04}{\meter\squared\kelvin\per\watt}\) (extérieur, paroi verticale, flux horizontal).
+
+\begin{remarque}
+Selon NF EN ISO 6946 : \(R_{si} = 0{,}13\,\text{m}^2\text{·K/W}\) (intérieur), \(R_{se} = 0{,}04\,\text{m}^2\text{·K/W}\) (extérieur). La valeur \(R_{se} = 0{,}13\) s'applique uniquement à la face intérieure ; la face extérieure, exposée au vent, a une résistance superficielle bien plus faible.
+\end{remarque}
 
 \textbf{Questions :}
 \begin{enumerate}
@@ -104,32 +109,32 @@ Conditions de calcul : \(\theta_i = \SI{20}{\degreeCelsius}\), \(\theta_e = \SI{
   R_{tot} = R_{si} + R_{pl} + R_{air} + R_{lr} + R_{bc} + R_{end} + R_{se}
 \]
 \[
-  R_{tot} = 0{,}13 + 0{,}052 + 0{,}18 + 3{,}684 + 1{,}818 + 0{,}017 + 0{,}13
+  R_{tot} = 0{,}13 + 0{,}052 + 0{,}18 + 3{,}684 + 1{,}818 + 0{,}017 + 0{,}04
 \]
 \[
-  \boxed{R_{tot} = \SI{6,011}{\meter\squared\kelvin\per\watt}}
+  \boxed{R_{tot} = \SI{5,921}{\meter\squared\kelvin\per\watt}}
 \]
 
 \textit{3. Coefficient U}
 
 \[
-  \boxed{U = \frac{1}{6{,}011} = \SI{0,166}{\watt\per\meter\squared\per\kelvin}}
+  \boxed{U = \frac{1}{5{,}921} = \SI{0,169}{\watt\per\meter\squared\per\kelvin}}
 \]
 
 \textit{4. Conformité RT2012}
 
-\(U = \SI{0,166}{\watt\per\meter\squared\per\kelvin} < U_{max} = \SI{0,36}{\watt\per\meter\squared\per\kelvin}\)
+\(U = \SI{0,169}{\watt\per\meter\squared\per\kelvin} < U_{max} = \SI{0,36}{\watt\per\meter\squared\per\kelvin}\)
 \(\Rightarrow\) La paroi est \textbf{conforme} à la RT2012 (et a fortiori à la RE2020 qui est
 encore plus exigeante).
 
 \textit{5. Perte thermique}
 
 \[
-  \dot{Q} = U \cdot S \cdot \Delta T = 0{,}166 \times 80 \times 25 = \SI{332}{\watt}
+  \dot{Q} = U \cdot S \cdot \Delta T = 0{,}169 \times 80 \times 25 = \SI{338}{\watt}
 \]
 
 Pour une façade de \SI{80}{\meter\squared} avec \(\Delta T = \SI{25}{\kelvin}\), la perte
-thermique est seulement \SI{332}{\watt}, ce qui illustre l'excellente performance de cette
+thermique est seulement \SI{338}{\watt}, ce qui illustre l'excellente performance de cette
 composition de paroi.
 
 % ----------------------------------------------------------

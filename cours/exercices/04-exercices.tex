@@ -7,7 +7,7 @@
 
 \exercice{Dimensionnement de la puissance d'une chaudière collective}
 
-Une résidence de 30 logements de 55\,m² chacun est située en zone climatique H1b (Lyon, température de base $T_{base} = -7$\,°C, $T_{int} = 19$\,°C). Le coefficient de déperdition moyen est $G = \SI{1{,}0}{\watt\per\square\metre\per\kelvin}$. Les besoins ECS représentent \SI{10}{\kilo\watt} en pointe. Le coefficient de foisonnement est 0,75.
+Une résidence de 30 logements de 55\,m² chacun est située en zone climatique H2b (Lyon, température de base $T_{base} = -8$\,°C, $T_{int} = 19$\,°C). Le coefficient de déperdition moyen est $G = \SI{1{,}0}{\watt\per\square\metre\per\kelvin}$. Les besoins ECS représentent \SI{10}{\kilo\watt} en pointe. Le coefficient de foisonnement est 0,75.
 
 \begin{enumerate}
   \item Calculer les déperditions totales de la résidence.
@@ -86,11 +86,11 @@ Un technicien effectue un contrôle réglementaire d'une chaudière à gaz natur
 
 \exercice{Dimensionnement d'une installation solaire thermique}
 
-Un hôtel de 20 chambres à Marseille (zone H3) souhaite installer des capteurs solaires plans pour préchauffer l'ECS. Données :
+Un hôtel de 20 chambres à Marseille (zone H2d, Sud méditerranéen, DJU $\approx$ 700\,°C·j/an, irradiance $\approx$ 1700\,kWh/m²/an) souhaite installer des capteurs solaires plans pour préchauffer l'ECS. Données :
 \begin{itemize}
   \item Besoin ECS journalier : $V_{ECS} = 500\,\text{L/j}$ à $T_{puis} = \SI{60}{\celsius}$
   \item Température de l'eau froide : $T_{fr} = \SI{15}{\celsius}$
-  \item Irradiance moyenne annuelle sur plan incliné 45°S à Marseille : $G_{an} = \SI{1800}{\kilo\watt\heure\per\square\metre\per\year}$
+  \item Irradiance moyenne annuelle sur plan incliné 45°S à Marseille (H2d) : $G_{an} = \SI{1700}{\kilo\watt\heure\per\square\metre\per\year}$
   \item Rendement optique du capteur plan : $\eta_0 = 0{,}79$
   \item Coefficient de pertes : $a_1 = \SI{3{,}8}{\watt\per\square\metre\per\kelvin}$
   \item Température moyenne du fluide capteur : $T_m = \SI{50}{\celsius}$
@@ -127,23 +127,23 @@ Un hôtel de 20 chambres à Marseille (zone H3) souhaite installer des capteurs 
   S_{totale} = 30 \times 55 = \SI{1650}{\square\metre}
 \]
 \[
-  \dot{Q}_{dep} = G \times S \times (T_{int} - T_{base}) = 1{,}0 \times 1650 \times (19 - (-7)) = 1{,}0 \times 1650 \times 26 = \SI{42\,900}{\watt} \approx \SI{42{,}9}{\kilo\watt}
+  \dot{Q}_{dep} = G \times S \times (T_{int} - T_{base}) = 1{,}0 \times 1650 \times (19 - (-8)) = 1{,}0 \times 1650 \times 27 = \SI{44\,550}{\watt} \approx \SI{44{,}6}{\kilo\watt}
 \]
 
 \[
-  \boxed{\dot{Q}_{dep} \approx \SI{42{,}9}{\kilo\watt}}
+  \boxed{\dot{Q}_{dep} \approx \SI{44{,}6}{\kilo\watt}}
 \]
 
 \textit{Question 2 — Puissance nécessaire :}
 \[
-  \dot{Q}_{total} = (\dot{Q}_{dep} + \dot{Q}_{ECS}) \times \frac{1}{foisonnement} = (42{,}9 + 10) \times \frac{1}{0{,}75} = 52{,}9 \times 1{,}333 \approx \SI{70{,}5}{\kilo\watt}
+  \dot{Q}_{total} = (\dot{Q}_{dep} + \dot{Q}_{ECS}) \times \frac{1}{foisonnement} = (44{,}6 + 10) \times \frac{1}{0{,}75} = 54{,}6 \times 1{,}333 \approx \SI{72{,}8}{\kilo\watt}
 \]
 
 \[
-  \boxed{\dot{Q}_{total} \approx \SI{70{,}5}{\kilo\watt}}
+  \boxed{\dot{Q}_{total} \approx \SI{72{,}8}{\kilo\watt}}
 \]
 
-\textit{Question 3 — Choix :} Avec une marge de sécurité de 10\,\%, la puissance minimale à installer est $70{,}5 \times 1{,}10 \approx \SI{77{,}6}{\kilo\watt}$. Le modèle X (\SI{60}{\kilo\watt}) est insuffisant. Le modèle Y (\SI{80}{\kilo\watt}) couvre juste les besoins (80 > 77,6) mais laisse une marge faible. Le \textbf{modèle Z (\SI{100}{\kilo\watt})} est retenu pour offrir une marge opérationnelle confortable (42\,\%) permettant d'absorber un pic ECS simultané sans dégradation.
+\textit{Question 3 — Choix :} Avec une marge de sécurité de 10\,\%, la puissance minimale à installer est $72{,}8 \times 1{,}10 \approx \SI{80{,}1}{\kilo\watt}$. Le modèle X (\SI{60}{\kilo\watt}) est insuffisant. Le modèle Y (\SI{80}{\kilo\watt}) est légèrement insuffisant (80 < 80,1). Le \textbf{modèle Z (\SI{100}{\kilo\watt})} est retenu pour offrir une marge opérationnelle confortable (25\,\%) permettant d'absorber un pic ECS simultané sans dégradation.
 
 % ----------------------------------------------------------
 
@@ -341,10 +341,10 @@ $G_{moy} = 5{,}0\,\text{kWh/m}^2/\text{j} = 5{,}0 \times 1\,000 / 3{,}6\,\text{W
 
 \textit{Question 4 — Surface de capteurs :}
 \[
-  S = \frac{f \times Q_{an}}{G_{an} \times \eta_{cap} \times \eta_{sys}} = \frac{0{,}60 \times 9\,563}{1\,800 \times 0{,}694 \times 0{,}85}
+  S = \frac{f \times Q_{an}}{G_{an} \times \eta_{cap} \times \eta_{sys}} = \frac{0{,}60 \times 9\,563}{1\,700 \times 0{,}694 \times 0{,}85}
 \]
 \[
-  = \frac{5\,738}{1\,062{,}2} \approx \boxed{5{,}4\,\text{m}^2}
+  = \frac{5\,738}{1\,002{,}8} \approx \boxed{5{,}7\,\text{m}^2}
 \]
 En pratique, on retiendra \textbf{6 m²} (en unités de capteurs standard de 2 m² chacun, soit 3 capteurs).
 
@@ -352,10 +352,10 @@ En pratique, on retiendra \textbf{6 m²} (en unités de capteurs standard de 2 m
 
 Règle empirique : 50 à 80\,L par m² de capteur :
 \[
-  V_{ballon} = 50 \text{ à } 80\,\text{L/m}^2 \times 5{,}4\,\text{m}^2 = 270 \text{ à } 430\,\text{L}
+  V_{ballon} = 50 \text{ à } 80\,\text{L/m}^2 \times 5{,}7\,\text{m}^2 = 285 \text{ à } 456\,\text{L}
 \]
 \[
-  \boxed{V_{ballon} \approx 300 \text{ à } 400\,\text{L}}
+  \boxed{V_{ballon} \approx 300 \text{ à } 450\,\text{L}}
 \]
 On retiendra un ballon de \textbf{400\,L} (volume standard disponible) pour offrir une autonomie suffisante en cas de faible ensoleillement.
 
@@ -373,14 +373,14 @@ Coût évité (énergie qui aurait été fournie par gaz, $\eta_{chaud} = 0{,}90
 
 Investissement total :
 \[
-  I = S \times 850 = 5{,}4 \times 850 = \SI{4\,590}{\euro}
+  I = S \times 850 = 5{,}7 \times 850 = \SI{4\,845}{\euro}
 \]
-(On retient $S = 5{,}4\,\text{m}^2$ pour le calcul ; en pratique l'investissement sera basé sur la surface réellement posée.)
+(On retient $S = 5{,}7\,\text{m}^2$ pour le calcul ; en pratique l'investissement sera basé sur la surface réellement posée.)
 
 \[
-  TRI = \frac{I}{\Delta C} = \frac{4\,590}{606} \approx \boxed{7{,}6\,\text{ans}}
+  TRI = \frac{I}{\Delta C} = \frac{4\,845}{606} \approx \boxed{8{,}0\,\text{ans}}
 \]
 
 \begin{methode}
-Ce TRI de 7 à 8 ans est typique pour une installation solaire thermique en zone méditerranéenne. Les aides MaPrimeRénov' Copropriété ou les CEE peuvent réduire l'investissement de 30 à 50\,\%, ramenant le TRI à 4--5 ans. En zone H1 (Paris), l'irradiance plus faible allonge le TRI à 10--12 ans sans aides.
+Ce TRI de 8 ans est typique pour une installation solaire thermique en zone méditerranéenne (H2d). Les aides MaPrimeRénov' Copropriété ou les CEE peuvent réduire l'investissement de 30 à 50\,\%, ramenant le TRI à 4--5 ans. En zone H1 (Paris), l'irradiance plus faible allonge le TRI à 10--12 ans sans aides.
 \end{methode}

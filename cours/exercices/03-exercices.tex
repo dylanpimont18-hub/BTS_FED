@@ -80,9 +80,15 @@ Contexte : Un appartement de 85\,m² à Lyon (zone H1b, $T_{ext}$ hiver $= -7\,�
   \item Calculer la puissance thermique économisée grâce à la récupération en condition de dimensionnement ($T_{ext} = -7\,°C$).
   \item Calculer l'énergie thermique annuelle économisée (méthode DJU simplifiée) :
     \[
-      E_{éco} = \eta_r \cdot \rho \cdot c_p \cdot Q \cdot \frac{DJU \times 3600}{1000}
+      E_{éco} = \eta_r \cdot \rho \cdot c_p \cdot \frac{Q}{3600} \cdot \frac{DJU \times 86\,400}{1\,000\,000}
     \]
-    avec DJU exprimés en °C·j puis convertis en °C·s ($\times 86\,400$).
+    avec $Q$ en m³/h, $\rho \cdot c_p$ en J/(m³·K), DJU en °C·j convertis en °C·s ($\times 86\,400$ s/j), et le résultat en kWh.
+
+    \begin{remarque}
+    \textbf{Attention à la conversion :} DJU [°C·j] $\times$ 86\,400 [s/j] = [°C·s]. Si $Q$ est en m³/h, il faut diviser par 3600 pour obtenir des m³/s. La formule complète est donc :
+    $E_{éco} = \eta_r \cdot \rho \cdot c_p \cdot (Q/3600) \cdot DJU_{s} / 10^6$ [kWh/an].
+    \textbf{Ne pas confondre} $\times 3600$ (qui serait une conversion h→s incorrecte ici) avec $\times 86\,400$ (conversion j→s).
+    \end{remarque}
   \item Calculer le surcoût de consommation électrique annuel lié aux ventilateurs double flux par rapport à une VMC simple flux ($P_{SF} = 0{,}20$\,Wh/m³).
   \item Calculer l'économie nette annuelle (en €) en tenant compte du surcoût électrique des ventilateurs.
   \item Si le surcoût d'installation d'une VMC double flux par rapport à une simple flux est de 2\,800\,€, calculer le temps de retour sur investissement (TRI).
