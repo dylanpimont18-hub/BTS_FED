@@ -1,0 +1,608 @@
+% ============================================================
+%  Chapitre 00 — Analyse dimensionnelle et remise à niveau
+%  BTS FED option GCF — Cours complet
+%  Créé le 2026-04-07
+% ============================================================
+
+\chapter{Analyse dimensionnelle et remise à niveau mathématique}
+
+% ============================================================
+\section{Objectifs pédagogiques}
+% ============================================================
+
+\subsection*{Compétences GCF mobilisées}
+
+\begin{itemize}
+  \item \textbf{C1-1} — Exploiter des sources d'information : récupérer et interpréter des
+        données techniques (fiches produit, tableaux, courbes).
+  \item \textbf{C3-1} — Analyser un système : identifier les paramètres et les grandeurs
+        physiques pertinentes.
+  \item \textbf{C3-3} — Dimensionner : maîtriser les transformations d'équations et les
+        conversions d'unités.
+  \item \textbf{C7-4} — Conduire des mesures : interpréter les résultats en cohérence avec
+        les unités employées.
+\end{itemize}
+
+\subsection*{Savoirs associés GCF}
+
+\begin{itemize}
+  \item \textbf{S1} — Mathématiques appliquées : calcul littéral, résolution d'équations,
+        exploitation de graphiques. (Niveau GCF\,: 3)
+  \item \textbf{S4} — Sciences physiques : grandeurs, unités SI et dérivées, analyse
+        dimensionnelle. (Niveau GCF\,: 2)
+\end{itemize}
+
+% ============================================================
+\section{Introduction}
+% ============================================================
+
+L'analyse dimensionnelle est une méthode fondamentale en sciences de l'ingénieur permettant
+de vérifier la cohérence physicienne d'une équation ou d'un calcul. En génie climatique, on
+rencontre fréquemment des formules complexes mettant en jeu des puissances (W), des débits
+(m³/h, kg/s), des pressions (Pa, bar), des températures (K, °C)…
+
+Ce chapitre fournit les outils pour :
+\begin{itemize}
+  \item \textbf{Vérifier l'homogénéité} d'une formule avant de l'appliquer ;
+  \item \textbf{Convertir des unités} avec assurance et rigueur ;
+  \item \textbf{Transformer des équations} pour exprimer une inconnue en fonction d'autres
+        paramètres ;
+  \item \textbf{Exploiter des graphiques et abaques} : lecture de courbes, interpolation,
+        extériorisation dans un réseau dimanche.
+\end{itemize}
+
+La maîtrise de ces concepts garantit la fiabilité des dimensionnements et la détection rapide
+d'erreurs.
+
+% ============================================================
+\section{Système international d'unités (SI)}
+% ============================================================
+
+\subsection{Les sept unités de base}
+
+Le Système International (SI) repose sur sept unités de base, dont sont dérivées toutes les
+autres :
+
+\begin{table}[h]
+  \centering
+  \sffamily
+  \caption{Unités de base du SI}
+  \label{tab:unite-base}
+  \begin{tabular}{|l|c|l|}
+    \hline
+    \textbf{Grandeur} & \textbf{Symbole} & \textbf{Unité SI} \\
+    \hline
+    Longueur & $\ell$, $L$, $d$ & \si{\meter} (m) \\
+    Masse & $m$ & \si{\kilogram} (kg) \\
+    Temps & $t$ & \si{\second} (s) \\
+    Intensité de courant & $I$ & \si{\ampere} (A) \\
+    Température thermodynamique & $T$ & \si{\kelvin} (K) \\
+    Quantité de matière & $n$ & \si{\mole} (mol) \\
+    Intensité lumineuse & $I_v$ & \si{\candela} (cd) \\
+    \hline
+  \end{tabular}
+\end{table}
+
+En génie climatique, les trois premières unités (longueur, masse, temps) sont prédominantes,
+associées à la température thermodynamique.
+
+\subsection{Unités dérivées courantes en CVC}
+
+De nombreuses grandeurs dérivées des sept unités de base sont d'usage courant. Le tableau
+ci-dessous en liste les plus importantes :
+
+\begin{table}[h]
+  \centering
+  \sffamily
+  \caption{Unités dérivées du SI usuelles en génie climatique}
+  \label{tab:unite-derivee}
+  \begin{tabular}{|l|c|c|l|}
+    \hline
+    \textbf{Grandeur} & \textbf{Symbole} & \textbf{Unité SI} & \textbf{Expression en base} \\
+    \hline
+    Vitesse & $v$ & \si{\meter\per\second} (m/s) & $\mathrm{m \cdot s^{-1}}$ \\
+    Accélération & $a$ & \si{\meter\per\second\squared} (m/s²) & $\mathrm{m \cdot s^{-2}}$ \\
+    Force & $F$ & \si{\newton} (N) & $\mathrm{kg \cdot m \cdot s^{-2}}$ \\
+    Pression & $P$ & \si{\pascal} (Pa) & $\mathrm{kg \cdot m^{-1} \cdot s^{-2}}$ \\
+    Énergie, travail & $E$, $W$ & \si{\joule} (J) & $\mathrm{kg \cdot m^2 \cdot s^{-2}}$ \\
+    Puissance & $\dot{Q}$, $P$ & \si{\watt} (W) & $\mathrm{kg \cdot m^2 \cdot s^{-3}}$ \\
+    Débit massique & $\dot{m}$ & \si{\kilogram\per\second} (kg/s) & $\mathrm{kg \cdot s^{-1}}$ \\
+    Débit volumique & $\dot{V}$ & \si{\meter\cubed\per\second} (m³/s) & $\mathrm{m^3 \cdot s^{-1}}$ \\
+    \hline
+  \end{tabular}
+\end{table}
+
+% ============================================================
+\section{Analyse dimensionnelle — Principe d'homogénéité}
+% ============================================================
+
+\subsection{Définition}
+
+\begin{definition}
+  Une équation physique est \textbf{dimensionnellement homogène} si, et seulement si, tous
+  les termes de l'équation ont la même dimension. Chaque terme doit s'exprimer dans les mêmes
+  unités (ou équivalentes via les unités dérivées).
+\end{definition}
+
+\textbf{Principe cardinal} : \emph{On ne peut ajouter ou soustraire que des grandeurs de même
+dimension. On ne peut comparer que des grandeurs de même dimension.}
+
+\subsection{Méthode — Vérifier l'homogénéité}
+
+Soit l'équation de bilan thermique d'un échangeur :
+\begin{equation}
+  \dot{Q} = \dot{m}_f \cdot c_p \cdot \Delta T
+  \label{eq:bilan-thermal}
+\end{equation}
+
+où :
+\begin{itemize}
+  \item $\dot{Q}$ : puissance thermique échangée (\si{\watt}, W)
+  \item $\dot{m}_f$ : débit massique du fluide (\si{\kilogram\per\second}, kg/s)
+  \item $c_p$ : capacité thermique massique (\si{\joule\per\kilogram\per\kelvin}, J/(kg·K))
+  \item $\Delta T$ : différence de température (\si{\kelvin}, K)
+\end{itemize}
+
+\vspace{0.5cm}
+
+\textbf{Analyse de dimension} :
+
+\begin{align*}
+  [\dot{Q}] &= \mathrm{W} = \mathrm{kg \cdot m^2 \cdot s^{-3}} \\
+  [\dot{m}_f \cdot c_p \cdot \Delta T] &= [\mathrm{kg/s}] \times [\mathrm{J/(kg \cdot K)}] \times [
+  \mathrm{K}] \\
+  &= \mathrm{(kg \cdot s^{-1})} \times \mathrm{(kg^{-1} \cdot m^2 \cdot s^{-2} \cdot K^{-1})} \times
+  \mathrm{K} \\
+  &= \mathrm{kg \cdot s^{-1} \cdot kg^{-1} \cdot m^2 \cdot s^{-2} \cdot K \cdot K^{-1}} \\
+  &= \mathrm{m^2 \cdot s^{-3}} = \mathrm{W}
+\end{align*}
+
+$\Rightarrow$ L'équation \eqref{eq:bilan-thermal} est dimensionnellement homogène. ✓
+
+\subsection*{Exemple 1 — Détection d'erreur}
+
+Supposons une formule proposée (erronée) :
+\begin{equation*}
+  P_{\text{pompe}} = \dot{m} + \Delta P
+\end{equation*}
+
+où $P_{\text{pompe}}$ est en W, $\dot{m}$ en kg/s et $\Delta P$ en Pa.
+
+\[
+  [\mathrm{W}] \stackrel{?}{=} [\mathrm{kg/s}] + [\mathrm{Pa}]
+\]
+
+Les dimensions ne correspondent pas :
+\begin{itemize}
+  \item Membre de gauche : $\mathrm{kg \cdot m^2 \cdot s^{-3}}$
+  \item Membre de droite (1) : $\mathrm{kg \cdot s^{-1}}$
+  \item Membre de droite (2) : $\mathrm{kg \cdot m^{-1} \cdot s^{-2}}$
+\end{itemize}
+
+$\Rightarrow$ La formule est \textbf{fausse}. La bonne formule est : $P_{\text{pompe}} = \dot{V}
+\times \Delta P$
+
+% ============================================================
+\section{Conversions d'unités}
+% ============================================================
+
+\subsection{Principes généraux}
+
+Une conversion d'unité consiste à exprimer une grandeur dans une unité différente, sans en
+modifier la valeur physique. Trois approches sont possibles :
+
+\begin{enumerate}
+  \item \textbf{Utiliser un facteur de conversion} (rapport dimensionnel)
+  \item \textbf{Passer par l'unité SI} de référence
+  \item \textbf{Utiliser des tableaux prédéfinis}
+\end{enumerate}
+
+\subsection{Conversions courantes en génie climatique}
+
+\subsubsection{Puissance et énergie}
+
+\begin{table}[h]
+  \centering
+  \sffamily\small
+  \caption{Conversions couantes — Énergie et puissance}
+  \label{tab:conv-energie}
+  \begin{tabular}{|l|c|l|}
+    \hline
+    \textbf{De} & \textbf{Vers} & \textbf{Facteur de conversion} \\
+    \hline
+    \si{\watt (W)} & \si{\kilowatt (kW)} & $\times 10^{-3}$ \\
+    \si{\joule (J)} & \si{\kilowatt\hour (kWh)} & $\times 2{,}778 \times 10^{-7}$ \\
+    kWh & \si{\joule (J)} & $\times 3{,}6 \times 10^6$ \\
+    \si{\watt\hour (Wh)} & \si{\kilowatt\hour (kWh)} & $\times 10^{-3}$ \\
+    \si{\calorie (cal)} & \si{\joule (J)} & $\times 4{,}1868$ \\
+    kilocalorie (kcal) & \si{\joule (J)} & $\times 4186{,}8$ \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\textbf{Exemple — Conversion W $\leftrightarrow$ kW} :
+
+Une chaudière gaz produit une puissance de $35~\mathrm{kW}$.
+
+\[
+  P = 35 \text{ kW} = 35 \times 10^3 \text{ W} = 35\,000 \text{ W}
+\]
+
+\subsubsection{Pression}
+
+\begin{table}[h]
+  \centering
+  \sffamily\small
+  \caption{Conversions courantes — Pression}
+  \label{tab:conv-pression}
+  \begin{tabular}{|l|c|l|}
+    \hline
+    \textbf{De} & \textbf{Vers} & \textbf{Facteur de conversion} \\
+    \hline
+    \si{\pascal (Pa)} & \si{\bar} & $\times 10^{-5}$ \\
+    bar & Pa & $\times 10^5$ \\
+    bar & \si{\kilogram\per\meter\squared (kgf/m²)} & $\times 10\,197{,}16$ \\
+    \si{\pascal (Pa)} & \si{\meter H2O (mH₂O)} & $\times 1{,}02 \times 10^{-4}$ \\
+    mH₂O & Pa & $\times 9\,810$ \\
+    bar & mH₂O & $\times 10{,}2$ \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\textbf{Exemple — Conversion Pa $\leftrightarrow$ bar} :
+
+Un détendeur hydrodynamique supporte une perte de charge $\Delta P = 25\,000~\mathrm{Pa}$.
+
+\[
+  \Delta P = 25\,000 \text{ Pa} = 25\,000 \times 10^{-5} \text{ bar} = 0{,}25 \text{ bar}
+\]
+
+\subsubsection{Débit volumique et débit massique}
+
+\begin{table}[h]
+  \centering
+  \sffamily\small
+  \caption{Conversions courantes — Débits}
+  \label{tab:conv-debit}
+  \begin{tabular}{|l|c|l|}
+    \hline
+    \textbf{De} & \textbf{Vers} & \textbf{Facteur de conversion} \\
+    \hline
+    \si{\meter\cubed\per\hour (m³/h)} & \si{\meter\cubed\per\second (m³/s)} & $\times 1/3\,600 \approx
+    2{,}778 \times 10^{-4}$ \\
+    m³/s & m³/h & $\times 3\,600$ \\
+    \si{\liter\per\second (L/s)} & m³/h & $\times 3{,}6$ \\
+    m³/h & L/s & $\times 1/3{,}6 \approx 0{,}2778$ \\
+    m³/h & L/min & $\times 1000/60 \approx 16{,}67$ \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\textbf{Relation débit massique / débit volumique} :
+
+\[
+  \dot{m} = \rho \cdot \dot{V}
+\]
+
+Avec $\rho$ densité (kg/m³).
+
+\textbf{Exemple — Conversion m³/h $\leftrightarrow$ m³/s} :
+
+Un extracteur d'air a un débit volumique $\dot{V} = 800~\mathrm{m^3/h}$.
+
+\begin{align*}
+  \dot{V} &= 800 \text{ m³/h} = 800 \times \frac{1}{3\,600} \text{ m³/s} \\
+  &= 800 \times 2{,}778 \times 10^{-4} \text{ m³/s} \\
+  &= 0{,}222 \text{ m³/s}
+\end{align*}
+
+Avec une densité air $\rho = 1{,}2~\mathrm{kg/m^3}$, le débit massique est :
+
+\[
+  \dot{m} = 1{,}2 \times 0{,}222 = 0{,}267 \text{ kg/s}
+\]
+
+\subsubsection{Température}
+
+\begin{table}[h]
+  \centering
+  \sffamily\small
+  \caption{Conversions courantes — Température}
+  \label{tab:conv-temp}
+  \begin{tabular}{|l|c|l|}
+    \hline
+    \textbf{De} & \textbf{Vers} & \textbf{Formule} \\
+    \hline
+    Celsius (°C) & Kelvin (K) & $T\,[\mathrm{K}] = \theta\,[\mathrm{°C}] + 273{,}15$ \\
+    Kelvin (K) & Celsius (°C) & $\theta\,[\mathrm{°C}] = T\,[\mathrm{K}] - 273{,}15$ \\
+    Celsius (°C) & Fahrenheit (°F) & $T\,[\mathrm{°F}] = \theta\,[\mathrm{°C}] \times \frac{9}{5} + 32$ \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\textbf{Remarque importante} : Il convient de distinguer \textbf{température absolue} (K, utilisée
+en thermodynamique) et \textbf{écart de température} (K ou °C, utilisé pour les différences).
+
+Une température $\theta = 20~\mathrm{°C}$ correspond à $T = 293{,}15~\mathrm{K}$.
+
+Un écart $\Delta T = 5~\mathrm{K} \leftrightarrow \Delta \theta = 5~\mathrm{°C}$.
+
+% ============================================================
+\section{Transformation d'équations et résolution}
+% ============================================================
+
+\subsection{Principes de manipulation algébrique}
+
+La résolution d'équations repose sur l'application rigoureuse d'opérations mathématiques
+identiques aux deux membres de l'égalité.
+
+\textbf{Règles fondamentales} :
+\begin{itemize}
+  \item Additionner/soustraire le même terme aux deux membres
+  \item Multiplier/diviser par le même terme non nul aux deux membres
+  \item Élever à la même puissance (avec attention aux racines)
+  \item Appliquer une fonction (log, exp, sin, …) aux deux membres
+\end{itemize}
+
+\subsection{Exemple 1 — Équation linéaire simple}
+
+\textbf{Problème} : Exprimer la température de sortie d'un radiateur en fonction des autres
+paramètres.
+
+Bilan énergétique du radiateur :
+
+\[
+  \dot{Q} = \dot{m} \cdot c_p \cdot (T_{\mathrm{in}} - T_{\mathrm{out}})
+\]
+
+Chercher $T_{\mathrm{out}}$ :
+
+\begin{align*}
+  \dot{Q} &= \dot{m} \cdot c_p \cdot (T_{\mathrm{in}} - T_{\mathrm{out}}) \\
+  \frac{\dot{Q}}{\dot{m} \cdot c_p} &= T_{\mathrm{in}} - T_{\mathrm{out}} \quad \text{(diviser par
+  $\dot{m} \cdot c_p$)} \\
+  T_{\mathrm{out}} &= T_{\mathrm{in}} - \frac{\dot{Q}}{\dot{m} \cdot c_p}
+\end{align*}
+
+\subsection{Exemple 2 — Équation non linéaire}
+
+\textbf{Problème} : Exprimer le diamètre d'une conduite en fonction du débit et de la vitesse.
+
+Formule de continuité :
+
+\[
+  \dot{V} = v \cdot A = v \cdot \pi \cdot \frac{d^2}{4}
+\]
+
+Chercher $d$ :
+
+\begin{align*}
+  \dot{V} &= v \cdot \pi \cdot \frac{d^2}{4} \\
+  \frac{4 \cdot \dot{V}}{v \cdot \pi} &= d^2 \quad \text{(isoler $d^2$)} \\
+  d &= \sqrt{\frac{4 \cdot \dot{V}}{v \cdot \pi}} \\
+  d &= 2 \cdot \sqrt{\frac{\dot{V}}{v \cdot \pi}}
+\end{align*}
+
+\subsection{Exemple 3 — Équation avec logarithme}
+
+\textbf{Problème} : Exprimer le nombre d'unités de transfert en fonction de l'efficacité d'un
+échangeur.
+
+Relation DTLM (Différence de Température Logarithmique Moyenne) :
+
+\[
+  \dot{Q} = U \cdot A \cdot \Delta T_{\mathrm{lm}}
+\]
+
+avec $\Delta T_{\mathrm{lm}} = \dfrac{\Delta T_1 - \Delta T_2}{\ln(\Delta T_1 / \Delta T_2)}$
+
+Pour certaines configurations, on utilise : $\varepsilon = 1 - \exp(-\mathrm{NUT})$
+
+Chercher $\mathrm{NUT}$ en fonction de $\varepsilon$ :
+
+\begin{align*}
+  \varepsilon &= 1 - \exp(-\mathrm{NUT}) \\
+  \varepsilon - 1 &= - \exp(-\mathrm{NUT}) \\
+  1 - \varepsilon &= \exp(-\mathrm{NUT}) \quad \text{(retirer les signes)} \\
+  \ln(1 - \varepsilon) &= -\mathrm{NUT} \quad \text{(appliquer ln)} \\
+  \mathrm{NUT} &= -\ln(1 - \varepsilon)
+\end{align*}
+
+% ============================================================
+\section{Exploitation de graphiques et abaques}
+% ============================================================
+
+\subsection{Lecture directe}
+
+Certaines données sont fournies graphiquement (courbes, nomogrammes, tables). Savoir extraire
+une valeur nécessite :
+
+\begin{itemize}
+  \item \textbf{Identifier les axes} : abscisse (x), ordonnée (y), unités
+  \item \textbf{Localiser le point} correspondant à la donnée cherchée
+  \item \textbf{Lire la valeur} avec la précision appropriée à l'échelle
+  \item \textbf{Respecter les unités} du graphique
+\end{itemize}
+
+\textbf{Exemple — Propriétés de l'eau} :
+
+Un abaque standard donne $\rho_{\mathrm{eau}}$ et $\nu_{\mathrm{eau}}$ en fonction de la
+température.
+
+À $T = 60°C$ : on lit $\rho = 983{,}2~\mathrm{kg/m^3}$ et $\nu = 4{,}74 \times
+10^{-7}~\mathrm{m^2/s}$.
+
+\subsection{Interpolation linéaire}
+
+Lorsque le point cherché se situe \textit{entre} deux points connus, on fait une interpolation
+linéaire :
+
+\[
+  y = y_1 + (y_2 - y_1) \times \frac{x - x_1}{x_2 - x_1}
+\]
+
+\textbf{Exemple — Déduction d'une valeur intermédiaire} :
+
+Tableau de viscosité cinématique de l'air (à 1 atm) :
+
+\begin{center}
+  \sffamily
+  \begin{tabular}{|c|c|}
+    \hline
+    $T\,[\mathrm{°C}]$ & $\nu\,[\times 10^{-5}~\mathrm{m^2/s}]$ \\
+    \hline
+    0 & 13{,}28 \\
+    20 & 15{,}89 \\
+    40 & 18{,}97 \\
+    \hline
+  \end{tabular}
+\end{center}
+
+Chercher $\nu$ à $T = 25°C$ :
+
+\begin{align*}
+  \nu(25) &= 15{,}89 + (18{,}97 - 15{,}89) \times \frac{25 - 20}{40 - 20} \\
+  &= 15{,}89 + 3{,}08 \times \frac{5}{20} \\
+  &= 15{,}89 + 0{,}77 \\
+  &= 16{,}66 \times 10^{-5}~\mathrm{m^2/s}
+\end{align*}
+
+\subsection{Lecture sur un réseau de courbes (diagramme de Mollier, …)}
+
+Les diagrammes complexes (psychrométrique, Mollier, Ashrae) permettent la détermination
+simultanée de plusieurs propriétés.
+
+\textbf{Méthode générale} :
+\begin{enumerate}
+  \item Localiser deux propriétés connues (ex : T et HR)
+  \item Suivre les isoçorbes/isobares/isothermes appropriées
+  \item Lire les propriétés secondaires au point d'intersection (ex : humidité absolue,
+        enthalpie)
+  \item Exprimer le résultat dans l'unité du diagramme
+\end{enumerate}
+
+% ============================================================
+\section{Exercices résolus}
+% ============================================================
+
+\subsection*{Exercice 1 — Vérification d'homogénéité}
+
+\textbf{Énoncé} : Vérifier l'homogénéité dimensionnelle de la formule de perte de charge en
+conduite :
+
+\[
+  \Delta P = \lambda \cdot \frac{\ell}{d} \cdot \frac{\rho \cdot v^2}{2}
+\]
+
+où $\lambda$ est un coefficient sans dimension (coefficient de frottement), $\ell$ la longueur
+(m), $d$ le diamètre (m), $\rho$ la masse volumique (kg/m³), $v$ la vitesse (m/s).
+
+\textbf{Solution} :
+
+\begin{align*}
+  [\Delta P] &= \mathrm{Pa} = \mathrm{kg \cdot m^{-1} \cdot s^{-2}} \\
+  [\lambda \cdot \frac{\ell}{d} \cdot \frac{\rho \cdot v^2}{2}] &= [1] \times [\mathrm{m/m}]
+  \times \frac{[\mathrm{kg/m^3}] \times [\mathrm{m/s}]^2}{[1]} \\
+  &= [\mathrm{kg \cdot m^{-3} \cdot m^2 \cdot s^{-2}}] \\
+  &= [\mathrm{kg \cdot m^{-1} \cdot s^{-2}}] \\
+  &= [\mathrm{Pa}]
+\end{align*}
+
+$\Rightarrow$ L'équation est homogène. ✓
+
+\subsection*{Exercice 2 — Conversion de débits}
+
+\textbf{Énoncé} : Une pompe de circulation a un débit nominal $Q = 2\,400~\mathrm{L/min}$.
+Exprimer ce débit en m³/h et en m³/s.
+
+\textbf{Solution} :
+
+\begin{align*}
+  Q &= 2\,400 \text{ L/min} \times \frac{1~\mathrm{m^3}}{1\,000~\mathrm{L}} \times
+  \frac{60~\mathrm{min}}{1~\mathrm{h}} \\
+  &= 2\,400 \times \frac{60}{1\,000}~\mathrm{m^3/h} \\
+  &= 144~\mathrm{m^3/h}
+\end{align*}
+
+Puis :
+
+\begin{align*}
+  Q &= 144~\mathrm{m^3/h} \times \frac{1~\mathrm{h}}{3\,600~\mathrm{s}} \\
+  &= 0{,}04~\mathrm{m^3/s}
+\end{align*}
+
+\subsection*{Exercice 3 — Résolution d'équation}
+
+\textbf{Énoncé} : On mesure une consommation énergétique annuelle $E = 45~\mathrm{kWh}$. La
+puissance moyenne est estimée à $\bar{P} = 3{,}5~\mathrm{kW}$. Combien de temps (en heures)
+l'équipement a-t-il fonctionné ?
+
+\textbf{Solution} :
+
+Relation : $E = \bar{P} \cdot t$
+
+Isoler $t$ :
+
+\[
+  t = \frac{E}{\bar{P}} = \frac{45}{3{,}5} = 12{,}86~\mathrm{h}
+\]
+
+Soit environ \textbf{12 h 52 min}.
+
+\subsection*{Exercice 4 — Interpolation sur un abaque}
+
+\textbf{Énoncé} : Soit l'abaque des propriétés de l'eau (pression atm.) :
+
+\begin{center}
+  \sffamily
+  \begin{tabular}{|c|c|c|}
+    \hline
+    $T\,[\mathrm{°C}]$ & $\rho\,[\mathrm{kg/m^3}]$ & $c_p\,[\mathrm{kJ/(kg \cdot K)}]$ \\
+    \hline
+    20 & 998{,}2 & 4{,}181 \\
+    40 & 992{,}2 & 4{,}179 \\
+    60 & 983{,}2 & 4{,}185 \\
+    \hline
+  \end{tabular}
+\end{center}
+
+Déterminer $\rho$ et $c_p$ à $T = 50°C$ par interpolation linéaire.
+
+\textbf{Solution} :
+
+Pour $\rho$ (entre 40°C et 60°C) :
+
+\begin{align*}
+  \rho(50) &= 992{,}2 + (983{,}2 - 992{,}2) \times \frac{50 - 40}{60 - 40} \\
+  &= 992{,}2 + (-9) \times \frac{10}{20} \\
+  &= 992{,}2 - 4{,}5 \\
+  &= 987{,}7~\mathrm{kg/m^3}
+\end{align*}
+
+Pour $c_p$ (entre 40°C et 60°C) :
+
+\begin{align*}
+  c_p(50) &= 4{,}179 + (4{,}185 - 4{,}179) \times \frac{50 - 40}{60 - 40} \\
+  &= 4{,}179 + 0{,}006 \times 0{,}5 \\
+  &= 4{,}182~\mathrm{kJ/(kg \cdot K)}
+\end{align*}
+
+% ============================================================
+\section{Synthèse et bonnes pratiques}
+% ============================================================
+
+\begin{tcolorbox}[colback=FedBlue!10, colframe=FedBlue, coltitle=white, title=Checklist — Analyse dimensionnelle et conversions]
+  Avant d'appliquer une formule ou un résultat de calcul :
+
+  \begin{itemize}
+    \item ✓ Vérifier l'homogénéité dimensionnelle de l'équation
+    \item ✓ S'assurer que toutes les variables sont exprimées dans les bonnes unités
+    \item ✓ Convertir les données d'entrée si nécessaire
+    \item ✓ Effectuer le calcul
+    \item ✓ Exprimer le résultat dans l'unité requise
+    \item ✓ Valider l'ordre de grandeur du résultat
+    \item ✓ Justifier chaque étape de la transformation d'équation pour éviter les erreurs
+  \end{itemize}
+\end{tcolorbox}
+
+\end{document}
