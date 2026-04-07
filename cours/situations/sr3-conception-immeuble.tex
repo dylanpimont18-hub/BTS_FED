@@ -1,0 +1,379 @@
+% ================================================================
+%  Situation Réelle 3 — Conception complète CVC d'un immeuble résidentiel R+4
+%  BTS FED — Option GCF — Semestre 3 / Fin d'année
+%  Chapitres mobilisés : TOUS (00 à 11) — Projet transversal
+% ================================================================
+
+\chapter{SR-3 — Conception complète CVC d'un immeuble résidentiel R+4}
+
+\begin{tcolorbox}[
+  enhanced, colback=FedGreen!8, colframe=FedGreen, arc=3pt,
+  fonttitle=\bfseries\sffamily\large, coltitle=white, colbacktitle=FedGreen,
+  title={Situation Réelle 3 — Fiche d'identité du projet},
+  width=\textwidth
+]
+\begin{tabular}{@{}ll@{\hspace{2cm}}ll@{}}
+  \textbf{Semestre} & 3 (fin d'année) &
+  \textbf{Durée} & 8 semaines \\[4pt]
+  \textbf{Groupe} & 2 à 3 étudiants &
+  \textbf{Chapitres} & 00 à 11 (transversal) \\[4pt]
+  \textbf{Note 1} & Dossier complet (coeff.\ 3) &
+  \textbf{Note 2} & Soutenance commission (coeff.\ 2) \\[4pt]
+  \textbf{Compétences} & \textbf{Toutes} C1 à C9 & & \\
+\end{tabular}
+\end{tcolorbox}
+
+\begin{attention}[Projet de fin d'année — Niveau professionnel attendu]
+  Ce projet constitue le \textbf{projet de synthèse} de la formation BTS FED GCF.
+  Le dossier technique doit atteindre un niveau proche d'une note de calcul professionnelle
+  (style bureau d'études), avec plan de principe, notes de calcul justifiées, sélections
+  de matériels sur catalogues réels et vérification réglementaire complète.
+\end{attention}
+
+\bigskip
+
+% ================================================================
+\section{Contexte professionnel}
+% ================================================================
+
+Vous êtes ingénieur d'études chez \textbf{FluidEnergy Bureau d'Études} (Bordeaux, 33).
+Un promoteur, \textbf{Gironde Habitat}, vous confie la conception complète des installations
+CVC, VMC et électriques CVC d'un \textbf{immeuble résidentiel R+4} neuf,
+situé à \textbf{Bordeaux Bastide} (zone H2a, latitude 44,8°N).
+
+Le programme impose des contraintes fortes sur le choix des équipements et le respect
+de la RE2020 dans sa version résidentielle.
+
+\subsection*{Description architecturale de l'immeuble}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[scale=0.9, >=Stealth, thick]
+
+    % ============ COUPE TRANSVERSALE ============
+    \node[font=\bfseries\small, FedBlue] at (6, 12.8) {Coupe transversale — Immeuble R+4 Gironde Habitat};
+
+    % === Sous-sol parking ===
+    \fill[gray!30] (0, -2.5) rectangle (12, 0);
+    \draw[gray!60, thick] (0,-2.5) rectangle (12,0);
+    \node[font=\small\bfseries, gray!70] at (6,-1.25) {Sous-sol — Parking 15 places};
+    % PAC géo dans SS
+    \draw[FedGreen, thick, fill=FedGreen!20, rounded corners=2pt]
+      (0.5,-2.2) rectangle (3.0,-0.5);
+    \node[FedGreen, font=\tiny\bfseries] at (1.75,-1.0) {PAC géoth.};
+    \node[FedGreen, font=\tiny] at (1.75,-1.4) {2×25 kW};
+    \node[FedGreen, font=\tiny] at (1.75,-1.7) {cascadées};
+    % Sonde géo
+    \draw[FedGreen, thick, ->] (1.75,-2.2) -- (1.75,-3.2)
+      node[below, font=\tiny] {Sondes \SI{100}{\metre}};
+    % Local technique SS
+    \draw[FedBlue!60, thick, fill=FedBlue!10, rounded corners=2pt]
+      (9.0,-2.2) rectangle (11.5,-0.5);
+    \node[FedBlue, font=\tiny\bfseries] at (10.25,-1.0) {Local tech.};
+    \node[FedBlue, font=\tiny] at (10.25,-1.4) {Chaufferie};
+    \node[FedBlue, font=\tiny] at (10.25,-1.7) {+ Nourrice};
+
+    % === RDC ===
+    \fill[FedBlue!8] (0,0) rectangle (12,2.5);
+    \draw[FedBlue!60] (0,0) rectangle (12,2.5);
+    % Entrée + local vélos + poussettes
+    \draw[brown!60, fill=brown!15] (4.5,0) rectangle (7.5,2.5);
+    \node[brown!80, font=\tiny] at (6,1.25) {Hall + locaux communs};
+    % 2 logements RDC
+    \draw[FedBlue!40, fill=white] (0.2,0.2) rectangle (4.3,2.3);
+    \node[FedBlue, font=\tiny] at (2.25,1.25) {T3 — \SI{62}{\metre\squared}};
+    \draw[FedBlue!40, fill=white] (7.7,0.2) rectangle (11.8,2.3);
+    \node[FedBlue, font=\tiny] at (9.75,1.25) {T3 — \SI{62}{\metre\squared}};
+    \node[right, font=\tiny\bfseries, FedBlue] at (12.1,1.25) {RDC};
+
+    % === R+1 à R+4 ===
+    \foreach \niveau/\label in {2.5/R+1, 5.0/R+2, 7.5/R+3, 10.0/R+4}{
+      \fill[FedBlue!5] (0,\niveau) rectangle (12,\niveau+2.3);
+      \draw[FedBlue!40] (0,\niveau) rectangle (12,\niveau+2.3);
+      % 4 logements par niveau
+      \draw[FedBlue!30, fill=white] (0.2,\niveau+0.2) rectangle (2.8,\niveau+2.1);
+      \draw[FedBlue!30, fill=white] (3.0,\niveau+0.2) rectangle (5.6,\niveau+2.1);
+      \draw[FedBlue!30, fill=white] (6.4,\niveau+0.2) rectangle (9.0,\niveau+2.1);
+      \draw[FedBlue!30, fill=white] (9.2,\niveau+0.2) rectangle (11.8,\niveau+2.1);
+      \node[FedBlue, font=\tiny] at (1.5,\niveau+1.15) {T2};
+      \node[FedBlue, font=\tiny] at (4.3,\niveau+1.15) {T3};
+      \node[FedBlue, font=\tiny] at (7.7,\niveau+1.15) {T3};
+      \node[FedBlue, font=\tiny] at (10.5,\niveau+1.15) {T2};
+      \node[right, font=\tiny\bfseries, FedBlue] at (12.1,\niveau+1.15) {\label};
+    }
+
+    % === Toiture ===
+    \fill[gray!20] (0,12.3) rectangle (12,12.8);
+    \draw[gray, thick] (0,12.3) -- (12,12.3);
+    % CTA toiture
+    \draw[FedOrange, thick, fill=FedOrange!15, rounded corners=2pt]
+      (4.5,12.3) rectangle (7.5,12.8);
+    \node[FedOrange, font=\tiny\bfseries] at (6,12.55) {CTA VMC collective};
+
+    % === Colonnes montantes (tirets) ===
+    \draw[FedOrange, thick, dashed] (3.2, -0.5) -- (3.2, 12.3);
+    \node[FedOrange, font=\tiny, rotate=90] at (3.35, 6) {Colonne chauffage};
+    \draw[FedBlue, thick, dashed] (8.8, -0.5) -- (8.8, 12.3);
+    \node[FedBlue, font=\tiny, rotate=90] at (8.65, 6) {Colonne ECS};
+
+    % === Légende ===
+    \draw[FedGreen, thick, fill=FedGreen!20] (0.2,-4.2) rectangle (1.2,-3.7);
+    \node[right, font=\tiny] at (1.3,-3.95) {PAC géothermique};
+    \draw[FedOrange, thick, dashed] (4.0,-3.95) -- (5.0,-3.95);
+    \node[right, font=\tiny] at (5.1,-3.95) {Colonne chauffage};
+    \draw[FedBlue, thick, dashed] (8.0,-3.95) -- (9.0,-3.95);
+    \node[right, font=\tiny] at (9.1,-3.95) {Colonne ECS};
+
+  \end{tikzpicture}
+  \caption{Coupe transversale de l'immeuble R+4 Gironde Habitat — Bordeaux (H2a) —
+    20 logements (2×T2 + 2×T3 par niveau R+1 à R+4, 2×T3 au RDC) —
+    PAC géothermique en sous-sol + colonnes montantes + VMC hygroB}
+  \label{fig:sr3-coupe-immeuble}
+\end{figure}
+
+\subsection*{Données du programme immobilier}
+
+\begin{center}
+\begin{tabular}{lrl}
+  \toprule
+  \textbf{Caractéristique} & \textbf{Valeur} & \textbf{Remarque} \\
+  \midrule
+  Nombre de logements & 20 & 4 T2 + 16 T3 (voir coupe) \\
+  Surface totale SHON & \SI{1380}{\metre\squared} & RE2020 résidentiel \\
+  Zones climatiques & H2a & $T_{ext,base} = \SI{-5}{\celsius}$ \\
+  Hauteur sous plafond & \SI{2.5}{\metre} & Logements / \SI{3.0}{\metre} SS \\
+  Sous-sol parking & 15 places & Ventilation mécanique imposée \\
+  \midrule
+  \textbf{Contraintes maître d'ouvrage} & & \\
+  \midrule
+  Production chaleur & PAC géothermique sondes & 2 unités cascadées \\
+  Chauffage & Plancher chauffant basse T° & Chaque logement \\
+  ECS & Chauffe-eau thermodynamique & 1 par logement \\
+  VMC & Hygroréglable de type B & NF EN 13141-8 \\
+  Tableau électrique CVC & 1 armoire dédiée par cage & Bilan de puissance obligatoire \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+% ================================================================
+\section{Schéma général de l'installation}
+% ================================================================
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[
+    >=Stealth, thick,
+    bloc/.style={draw, rounded corners=3pt, minimum width=2.5cm, minimum height=1.0cm,
+                 align=center, font=\scriptsize},
+    dep/.style={FedOrange, thick, ->},
+    ret/.style={FedBlue, thick, ->},
+    geo/.style={FedGreen, thick, ->},
+  ]
+
+    % === SOURCES (gauche) ===
+    \node[bloc, fill=FedGreen!20, draw=FedGreen, minimum height=1.4cm] (pac) at (0,4)
+      {PAC géo\\2×25 kW\\COP = 4,2};
+    \node[bloc, fill=brown!15, draw=brown!60] (sondes) at (0,1.5)
+      {Sondes\\géothermiques\\2×100 m};
+    \draw[geo, ->] (sondes.north) -- node[left, font=\tiny] {$T_{sol} = 13°C$} (pac.south);
+
+    % === CIRCUIT PRIMAIRE ===
+    \node[bloc, fill=FedBlue!10, draw=FedBlue] (tampon) at (4,4)
+      {Ballon\\tampon\\500 L};
+    \draw[dep] (pac.east) -- node[above, font=\tiny] {45°C} (tampon.west);
+    \draw[ret] (tampon.west|-tampon.south) -- node[below, font=\tiny] {35°C}
+      (pac.east|-pac.south);
+
+    % === NOURRICE / COLLECTEUR ===
+    \node[bloc, fill=FedOrange!15, draw=FedOrange, minimum width=3.0cm] (nourrice) at (8,4)
+      {Nourrice\\départ/retour};
+    \draw[dep] (tampon.east) -- (nourrice.west);
+    \draw[ret, bend right=20] (nourrice.south) to (tampon.east|-tampon.south);
+
+    % === CIRCUITS SECONDAIRES ===
+    % PCH logements
+    \node[bloc, fill=gray!10] (pch) at (12, 6)
+      {Colonnes PCH\\20 logements\\$\phi = 25$°C / 35°C};
+    % ECS
+    \node[bloc, fill=cyan!10, draw=cyan!60] (ecs) at (12, 4)
+      {CET\\20 logements\\200 L / logement};
+    % Ventilation parking
+    \node[bloc, fill=yellow!15, draw=yellow!60] (parking) at (12, 2)
+      {VMC parking\\SS — \SI{3000}{\metre\cubed\per\hour}};
+
+    \draw[dep, ->] (nourrice.north east) |- (pch.west);
+    \draw[dep, ->] (nourrice.east) -- (ecs.west);
+    \draw[dep, ->] (nourrice.south east) |- (parking.west);
+
+    % Retours
+    \draw[ret, ->] (pch.south) -- ++(0,-0.5) -| (nourrice.north);
+    \draw[ret, ->] (ecs.south) -- ++(0,-0.3) -| (nourrice.north|-nourrice.south);
+    \draw[ret, ->] (parking.north) -- ++(0,0.3) -| (nourrice.south);
+
+    % === VASE D'EXPANSION ===
+    \node[draw, circle, minimum size=0.7cm, fill=yellow!20, font=\tiny] (vase) at (4,6.5)
+      {VE};
+    \draw[gray, dashed] (vase) -- (tampon.north);
+    \node[font=\tiny, gray] at (4,7.0) {25 L};
+
+    % === COMPTAGE ===
+    \node[draw, diamond, fill=purple!10, font=\tiny, minimum size=0.8cm] (compt) at (8,6.5)
+      {Comptage\\calorimétrique};
+    \draw[purple, dashed] (compt) -- (nourrice.north);
+
+    % === RÉGULATION ===
+    \node[bloc, fill=purple!10, draw=purple!50, minimum width=2.0cm] (reg) at (0,7.5)
+      {Régulateur\\GTB\\BACnet IP};
+    \draw[purple, dashed, ->] (reg.south) -- (pac.north);
+    \draw[purple, dashed, ->] (reg.east) -| (nourrice.north|-compt) -- (compt.west);
+
+    % === LÉGENDE ===
+    \draw[dep] (0,-1.0) -- (1.2,-1.0) node[right, font=\tiny, black] {Départ chaud};
+    \draw[ret] (3.5,-1.0) -- (4.7,-1.0) node[right, font=\tiny, black] {Retour froid};
+    \draw[geo] (7.0,-1.0) -- (8.2,-1.0) node[right, font=\tiny, black] {Circuit géothermique};
+    \draw[purple, dashed] (10.5,-1.0) -- (11.7,-1.0) node[right, font=\tiny, black] {GTB / Régulation};
+
+  \end{tikzpicture}
+  \caption{Schéma général de l'installation CVC — Immeuble R+4 Bordeaux —
+    PAC géothermique 2×25 kW + ballon tampon 500 L + nourrice + colonnes PCH + CET + VMC parking}
+  \label{fig:sr3-schema-installation}
+\end{figure}
+
+% ================================================================
+\section{Cahier des charges}
+% ================================================================
+
+\begin{methode}[Livrables attendus — Note 1 : Dossier de conception complet]
+\textbf{À remettre en semaine 8 — Minimum 50 pages — Niveau note de calcul professionnelle}
+
+\begin{enumerate}
+  \item \textbf{Analyse dimensionnelle et cohérence des calculs} (ch. 00) :
+    \begin{itemize}
+      \item Vérification dimensionnelle des 3 formules principales utilisées dans le dossier
+      \item Tableau de synthèse des grandeurs, unités SI et ordres de grandeur attendus
+    \end{itemize}
+
+  \item \textbf{Bilan thermique complet} (ch. 01) :
+    \begin{itemize}
+      \item Calcul par type de logement (T2, T3) selon NF EN 12831
+      \item $U_{bat}$ et comparaison seuil RE2020 résidentiel
+      \item Déperditions totales bâtiment [\si{\kilo\watt}]
+    \end{itemize}
+
+  \item \textbf{PAC géothermique} (ch. 04) :
+    \begin{itemize}
+      \item Dimensionnement puissance, sélection modèle, calcul COP et SPF annuel
+      \item Dimensionnement des sondes géothermiques (longueur, résistance thermique du sol)
+      \item Vérification compatibilité avec le plancher chauffant (T° départ $\leq 45°C$)
+    \end{itemize}
+
+  \item \textbf{Réseau hydraulique} (ch. 02) :
+    \begin{itemize}
+      \item Dimensionnement des colonnes montantes et antennes de logement
+      \item Équilibrage hydraulique par vannes d'équilibrage (méthode index + $k_{v}$)
+      \item Vase d'expansion DTU 65.11 + sécurités (soupape, pressostat)
+      \item Sélection des circulateurs (ErP 2015 + adaptation vitesse)
+    \end{itemize}
+
+  \item \textbf{Plancher chauffant} (ch. 05) :
+    \begin{itemize}
+      \item Calcul de la densité de flux $\phi$ [\si{\watt\per\metre\squared}] et du pas de pose
+      \item Dimensionnement des boucles (longueur, $\Delta P$) par logement type
+      \item Vérification de la température de surface $\leq 29°C$ (NF EN 1264)
+    \end{itemize}
+
+  \item \textbf{VMC hygroréglable de type B} (ch. 03) :
+    \begin{itemize}
+      \item Débits hygroréglables par local (cuisine, salle de bain, WC)
+      \item Dimensionnement réseau collectif + gaine verticale en sous-pression
+      \item SFP réseau [\si{\watt\per\litre\per\second}] et classe énergétique
+    \end{itemize}
+
+  \item \textbf{Étude acoustique CVC} (ch. 09) :
+    \begin{itemize}
+      \item Niveau de puissance acoustique $L_w$ des équipements (PAC, VMC, circulateurs)
+      \item Vérification du niveau NC dans les logements (limite NRA : $\leq 30 dB(A)$ nuit)
+      \item Mesures constructives si dépassement (silencieux, plots antivibratoires)
+    \end{itemize}
+
+  \item \textbf{Électrotechnique CVC} (ch. 10) :
+    \begin{itemize}
+      \item Bilan de puissance installée et absorbée [\si{\kilo\watt}]
+      \item Schéma unifilaire de l'armoire CVC (disjoncteurs, contacteurs, variateurs)
+      \item Calcul de $\cos\varphi$ global et compensation éventuelle
+    \end{itemize}
+
+  \item \textbf{Bilan RE2020 complet} (ch. 08) :
+    \begin{itemize}
+      \item Calcul Bbio, Cep\textsubscript{nr}, Ic\textsubscript{énergie}
+      \item Attestation de prise en compte RE2020 (simulation Pleiades ou justification)
+      \item Vérification des 3 seuils réglementaires
+    \end{itemize}
+
+  \item \textbf{Budget et planning} :
+    \begin{itemize}
+      \item Devis estimatif par lot (génie thermique, VMC, électricité CVC)
+      \item Planning de chantier Gantt sur 8 semaines (gros œuvre terminé)
+    \end{itemize}
+\end{enumerate}
+\end{methode}
+
+\begin{methode}[Livrables attendus — Note 2 : Soutenance devant commission]
+\textbf{Durée : 30 min exposé + 15 min questions — Commission mixte : enseignant + professionnel invité}
+
+\begin{itemize}
+  \item Plan de principe A3 imprimé à apporter (schéma général de l'installation)
+  \item Présentation des choix technologiques et comparaison avec 2 alternatives justifiées :
+    \begin{itemize}
+      \item Alternative A : PAC géo vs PAC air/eau (COP, investissement, faisabilité)
+      \item Alternative B : PCH vs radiateurs basse T° (inertie, confort, coût)
+    \end{itemize}
+  \item Questions de jury sur \textbf{n'importe quel calcul du dossier} — préparation individuelle obligatoire
+  \item Mise en situation : le jury annonce une contrainte de chantier (ex : sondes géo impossibles) — adapter le projet en 5 minutes
+\end{itemize}
+\end{methode}
+
+% ================================================================
+\section{Grille d'évaluation}
+% ================================================================
+
+\begin{center}
+\begin{tabular}{p{6cm}ccp{4cm}}
+  \toprule
+  \textbf{Critère} & \textbf{Barème} & \textbf{Note} & \textbf{Indicateurs} \\
+  \midrule
+  \multicolumn{4}{l}{\textbf{Note 1 — Dossier de conception (20 pts)}} \\
+  \midrule
+  Bilan thermique + PAC géo & 4 pts & /4 & Puissances cohérentes, SPF calculé \\
+  Réseau hydraulique + PCH & 4 pts & /4 & Équilibrage, $\Delta P$, vase \\
+  VMC hygroB + acoustique & 3 pts & /3 & SFP, NC logements vérifiés \\
+  Électrotechnique CVC & 2 pts & /2 & Armoire, $\cos\varphi$ \\
+  RE2020 complet & 3 pts & /3 & 3 indicateurs, seuils respectés \\
+  Budget + planning & 2 pts & /2 & Cohérence €, Gantt structuré \\
+  Qualité professionnelle & 2 pts & /2 & Mise en page, schémas, vocabulaire \\
+  \midrule
+  \multicolumn{4}{l}{\textbf{Note 2 — Soutenance commission (20 pts)}} \\
+  \midrule
+  Exposé (clarté, structure) & 5 pts & /5 & Plan logique, gestion du temps \\
+  Maîtrise des calculs (jury) & 7 pts & /7 & Réponses exactes aux questions \\
+  Argumentation des choix & 5 pts & /5 & Alternatives comparées, pertinence \\
+  Réactivité situation imposée & 3 pts & /3 & Adaptation rapide et cohérente \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+% ================================================================
+\section{Ressources documentaires}
+% ================================================================
+
+\begin{itemize}
+  \item \textbf{Normes :} NF EN 12831, NF EN 14511 (PAC), NF EN 1264 (PCH), NF EN 13141-8 (VMC hygro B)
+  \item \textbf{DTU :} 65.11 (sécurités hydrauliques), 68.1 (VMC), 60.1 (plomberie)
+  \item \textbf{Réglementation :} RE2020 résidentiel (arrêté 04/08/2021), Décret F-Gas 2024
+  \item \textbf{Logiciels conseillés :} Pleiades+Comfie (RE2020), ClimaWin, Trace 700
+  \item \textbf{Catalogues :} Kensa (PAC géo), Grundfos (circulateurs), Zehnder (VMC), Giacomini (PCH)
+  \item \textbf{Données météo Bordeaux :} Fichier DRY METEONORM — station 33522 — 2 900 DJU
+  \item \textbf{Cours :} Tous les chapitres 00 à 11 du référentiel GCF
+\end{itemize}
+
+\finchapitre

@@ -1,0 +1,184 @@
+\documentclass[11pt, french, openany]{report}
+
+\input{preamble}
+
+\begin{document}
+
+% ============================================
+% PAGE DE TITRE — LIVRET SITUATIONS RÉELLES
+% Couleur identitaire : FedGreen
+% ============================================
+
+\begin{titlepage}
+    \begin{tikzpicture}[remember picture, overlay]
+        % Bande latérale gauche en FedGreen
+        \node[anchor=north west, inner sep=0pt] at (current page.north west) {
+            \begin{tcolorbox}[
+                enhanced, colback=FedGreen, colframe=FedGreen, arc=0pt, outer arc=0pt,
+                width=1.5cm, height=\paperheight, boxrule=0pt,
+                left=0pt, right=0pt, top=0pt, bottom=0pt
+            ]
+            \end{tcolorbox}
+        };
+
+        % Texte rotaté sur la bande latérale
+        \node[rotate=90, anchor=west, white] at ([xshift=0.85cm, yshift=2cm]current page.south west) {
+            \sffamily\Huge\bfseries SITUATIONS RÉELLES
+        };
+
+        % Contenu principal
+        \node[anchor=north west, text width=14cm] at ([xshift=3cm, yshift=-4cm]current page.north west) {
+            {\huge\sffamily\color{FedBlue} \textbf{BTS FLUIDES ÉNERGIES DOMOTIQUE}}\\[0.5cm]
+            {\large\sffamily OPTION A : GÉNIE CLIMATIQUE ET FLUIDIQUE}\\[2.5cm]
+
+            {\fontsize{40}{45}\sffamily\bfseries\selectfont LIVRET}\\[0.3cm]
+            {\fontsize{40}{45}\sffamily\bfseries\selectfont SITUATIONS}\\[0.3cm]
+            {\fontsize{40}{45}\sffamily\bfseries\color{FedGreen}\selectfont RÉELLES}\\[0.8cm]
+            {\color{FedGreen}\rule{10cm}{3pt}}\\[1cm]
+
+            {\large\sffamily\color{FedBlue}\bfseries Projets de groupe — 2 à 3 étudiants}\\[0.4cm]
+            {\normalsize\sffamily\color{gray}
+              3 projets sur l'année $\cdot$ 2 notes par projet $\cdot$ Soutenance orale}
+        };
+
+        % Encadré récapitulatif des 3 SR
+        \node[anchor=north west, text width=13cm] at ([xshift=3cm, yshift=-13.5cm]current page.north west) {
+            \begin{tcolorbox}[
+                enhanced, colback=FedGreen!8, colframe=FedGreen,
+                arc=3pt, boxrule=1pt
+            ]
+            \sffamily\small
+            \begin{tabular}{cll}
+              \textbf{SR-1} & Réhabilitation thermique — Maison individuelle & Semestre 1 \\[4pt]
+              \textbf{SR-2} & Climatisation et traitement d'air — Bureaux tertiaires & Semestre 2 \\[4pt]
+              \textbf{SR-3} & Conception CVC complète — Immeuble résidentiel R+4 & Semestre 3 \\
+            \end{tabular}
+            \end{tcolorbox}
+        };
+
+        % Informations au bas
+        \node[anchor=south west] at ([xshift=3cm, yshift=2cm]current page.south west) {
+            \sffamily
+            \begin{tabular}{ll}
+                \textbf{Établissement :} & Lycée Gaudier Brzeska \\
+                \textbf{Enseignant :} & M. Dylan PIMONT \\
+                \textbf{Module :} & Projets professionnels BTS FED GCF
+            \end{tabular}
+        };
+
+        % Décoration inférieure en FedGreen
+        \fill[FedGreen] (current page.south west)
+            rectangle ([yshift=8pt] current page.south east);
+    \end{tikzpicture}
+\end{titlepage}
+
+\newpage
+
+% ============================================
+% TABLE DES MATIÈRES
+% ============================================
+
+\tableofcontents
+\newpage
+
+% ============================================
+% INTRODUCTION AU LIVRET
+% ============================================
+
+\chapter*{Introduction — Comment utiliser ce livret ?}
+\addcontentsline{toc}{chapter}{Introduction}
+
+Ce livret regroupe les \textbf{trois Situations Réelles} du BTS FED option GCF.
+Chaque situation est un projet professionnel complet, ancré dans le réel du secteur
+du génie climatique et fluidique en France.
+
+\begin{tcolorbox}[
+  enhanced, colback=FedGreen!8, colframe=FedGreen, arc=3pt,
+  fonttitle=\bfseries\sffamily, coltitle=white, colbacktitle=FedGreen,
+  title={Distinction des 3 fascicules du cours BTS FED GCF}
+]
+\begin{center}
+\begin{tikzpicture}[>=Stealth, thick, scale=0.95]
+
+  % Fascicule 1 — Cours (bleu)
+  \draw[FedBlue, very thick, fill=FedBlue!10, rounded corners=5pt]
+    (0,0) rectangle (3.5,5.0);
+  \fill[FedBlue] (0,0) rectangle (0.5,5.0);
+  \node[white, rotate=90, font=\tiny\bfseries] at (0.25,2.5) {COURS};
+  \node[FedBlue, font=\small\bfseries] at (2.0,4.2) {Fascicule 1};
+  \node[FedBlue, font=\footnotesize] at (2.0,3.5) {\textbf{Référentiel de cours}};
+  \node[FedBlue, font=\tiny, align=center] at (2.0,2.5)
+    {12 chapitres\\Théorie + méthodes\\Exemples résolus};
+  \node[FedBlue!60, font=\tiny] at (2.0,1.3) {main.tex};
+  \node[FedBlue, font=\Large\bfseries] at (2.0,0.5) {\color{FedBlue}$\blacksquare$};
+
+  % Fascicule 2 — Exercices (orange)
+  \draw[FedOrange, very thick, fill=FedOrange!10, rounded corners=5pt]
+    (4.5,0) rectangle (8.0,5.0);
+  \fill[FedOrange] (4.5,0) rectangle (5.0,5.0);
+  \node[white, rotate=90, font=\tiny\bfseries] at (4.75,2.5) {EXOS};
+  \node[FedOrange, font=\small\bfseries] at (6.25,4.2) {Fascicule 2};
+  \node[FedOrange, font=\footnotesize] at (6.25,3.5) {\textbf{Livret d'exercices}};
+  \node[FedOrange, font=\tiny, align=center] at (6.25,2.5)
+    {12 séries d'exercices\\Corrigés détaillés\\Progression niveau A→C};
+  \node[FedOrange!60, font=\tiny] at (6.25,1.3) {livret-exercices.tex};
+  \node[FedOrange, font=\Large\bfseries] at (6.25,0.5) {\color{FedOrange}$\blacksquare$};
+
+  % Fascicule 3 — Situations (vert)
+  \draw[FedGreen, very thick, fill=FedGreen!10, rounded corners=5pt]
+    (9.0,0) rectangle (12.5,5.0);
+  \fill[FedGreen] (9.0,0) rectangle (9.5,5.0);
+  \node[white, rotate=90, font=\tiny\bfseries] at (9.25,2.5) {SR};
+  \node[FedGreen, font=\small\bfseries] at (10.75,4.2) {Fascicule 3};
+  \node[FedGreen, font=\footnotesize] at (10.75,3.5) {\textbf{Situations Réelles}};
+  \node[FedGreen, font=\tiny, align=center] at (10.75,2.5)
+    {3 projets annuels\\Groupe 2-3 étudiants\\2 notes + soutenance};
+  \node[FedGreen!60, font=\tiny] at (10.75,1.3) {livret-situations.tex};
+  \node[FedGreen, font=\Large\bfseries] at (10.75,0.5) {\color{FedGreen}$\blacksquare$};
+
+  % Flèches progression
+  \draw[->, gray, thick] (3.6,2.5) -- (4.4,2.5)
+    node[midway, above, font=\tiny, gray] {alimente};
+  \draw[->, gray, thick] (8.1,2.5) -- (8.9,2.5)
+    node[midway, above, font=\tiny, gray] {mobilise};
+
+\end{tikzpicture}
+\end{center}
+\end{tcolorbox}
+
+\subsection*{Modalités d'évaluation des Situations Réelles}
+
+\begin{center}
+\begin{tabular}{clccc}
+  \toprule
+  \textbf{SR} & \textbf{Titre} & \textbf{Semestre} & \textbf{Note 1} & \textbf{Note 2} \\
+  \midrule
+  SR-1 & Réhabilitation maison individuelle & 1 & Dossier (coeff.\ 3) & Oral (coeff.\ 2) \\
+  SR-2 & Tertiaire — CTA + GTB & 2 & Dossier (coeff.\ 3) & Oral + démo (coeff.\ 2) \\
+  SR-3 & Immeuble R+4 — Conception complète & 3 & Dossier (coeff.\ 3) & Commission (coeff.\ 2) \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\begin{attention}[Travail en groupe — Règles]
+  \begin{itemize}
+    \item Groupes de \textbf{2 à 3 étudiants maximum} — constitués en semaine 1
+    \item \textbf{Répartition du travail} documentée dans la première page du dossier
+    \item Les questions individuelles lors de la soutenance évaluent chaque étudiant séparément
+    \item Un plagiat ou dossier identique entre groupes entraîne la note de \textbf{0} pour les deux groupes
+  \end{itemize}
+\end{attention}
+
+\newpage
+
+% ============================================
+% SITUATIONS RÉELLES
+% ============================================
+
+\input{situations/sr1-rehabilitation-maison}
+
+\input{situations/sr2-climatisation-tertiaire}
+
+\input{situations/sr3-conception-immeuble}
+
+\end{document}

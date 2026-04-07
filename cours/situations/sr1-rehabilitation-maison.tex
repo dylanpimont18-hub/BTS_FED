@@ -1,0 +1,326 @@
+% ================================================================
+%  Situation Réelle 1 — Réhabilitation thermique d'une maison individuelle
+%  BTS FED — Option GCF — Semestre 1
+%  Chapitres mobilisés : 01 (thermique), 02 (hydraulique), 04 (production), 05 (émission)
+% ================================================================
+
+\chapter{SR-1 — Réhabilitation thermique d'une maison individuelle}
+
+\begin{tcolorbox}[
+  enhanced, colback=FedGreen!8, colframe=FedGreen, arc=3pt,
+  fonttitle=\bfseries\sffamily\large, coltitle=white, colbacktitle=FedGreen,
+  title={Situation Réelle 1 — Fiche d'identité du projet},
+  width=\textwidth
+]
+\begin{tabular}{@{}ll@{\hspace{2cm}}ll@{}}
+  \textbf{Semestre} & 1 &
+  \textbf{Durée} & 6 semaines \\[4pt]
+  \textbf{Groupe} & 2 à 3 étudiants &
+  \textbf{Chapitres} & 01, 02, 04, 05 \\[4pt]
+  \textbf{Note 1} & Dossier technique (coeff.\ 3) &
+  \textbf{Note 2} & Soutenance orale (coeff.\ 2) \\[4pt]
+  \textbf{Compétences} & C2-3, C3-3, C5-1, C8-3, C8-4 & & \\
+\end{tabular}
+\end{tcolorbox}
+
+\bigskip
+
+% ================================================================
+\section{Contexte professionnel}
+% ================================================================
+
+Vous êtes technicien supérieur GCF dans l'entreprise \textbf{ThermoPro SARL} (Grenoble, 38).
+Un particulier, M.\ et Mme Aubert, souhaite rénover leur maison individuelle construite
+en \textbf{1975} afin d'améliorer son étiquette DPE de \textbf{D} vers \textbf{B} et
+de remplacer la chaudière fioul existante par une \textbf{pompe à chaleur air/eau}.
+
+\subsection*{Description du bâtiment}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[scale=1.0, >=Stealth]
+
+    % --- Sol ---
+    \fill[gray!20] (-0.3,-0.3) rectangle (10.3, 0);
+    \draw[thick] (-0.3,0) -- (10.3,0);
+
+    % --- Murs extérieurs ---
+    \draw[thick, FedBlue, fill=FedBlue!10]
+      (0,0) rectangle (10,4.5);
+
+    % --- Toit ---
+    \draw[thick, FedBlue!80, fill=FedBlue!20]
+      (-0.5,4.5) -- (5,7) -- (10.5,4.5) -- cycle;
+
+    % --- Plancher intermédiaire (R+1) ---
+    \draw[FedOrange, thick] (0,2.2) -- (10,2.2);
+    \node[FedOrange, font=\footnotesize] at (5,2.0) {Plancher intermédiaire};
+
+    % --- Fenêtres RDC ---
+    \draw[FedBlue!60, fill=cyan!15, thick] (1,0.5) rectangle (2.5,1.8);
+    \draw[FedBlue!60, fill=cyan!15, thick] (4,0.5) rectangle (5.8,1.8);
+    \draw[FedBlue!60, fill=cyan!15, thick] (7.2,0.5) rectangle (8.8,1.8);
+    % --- Porte ---
+    \draw[brown!70, fill=brown!20, thick] (3.1,0) rectangle (3.9,2.0);
+    \draw[brown!70] (3.1,1.0) arc (180:0:0.4);
+
+    % --- Fenêtres R+1 ---
+    \draw[FedBlue!60, fill=cyan!15, thick] (1.5,2.6) rectangle (3,3.8);
+    \draw[FedBlue!60, fill=cyan!15, thick] (5,2.6) rectangle (6.5,3.8);
+    \draw[FedBlue!60, fill=cyan!15, thick] (7.5,2.6) rectangle (9,3.8);
+
+    % --- Velux ---
+    \draw[FedBlue!60, fill=cyan!20, thick] (3.5,5.2) rectangle (4.8,6.0);
+    \draw[FedBlue!60, fill=cyan!20, thick] (5.5,5.2) rectangle (6.8,6.0);
+
+    % --- Annotations ---
+    \node[font=\small\bfseries, FedBlue] at (5, 1.0) {RDC — Surface : \SI{60}{\metre\squared}};
+    \node[font=\small\bfseries, FedBlue] at (5, 3.3) {R+1 — Surface : \SI{60}{\metre\squared}};
+    \node[font=\small, FedBlue!80] at (5, 5.7) {Combles perdus};
+
+    % --- Côtes ---
+    \draw[<->, gray] (-0.1, 0) -- (-0.1, 4.5)
+      node[midway, left, font=\footnotesize] {\SI{5.5}{\metre}};
+    \draw[<->, gray] (0, -0.2) -- (10, -0.2)
+      node[midway, below, font=\footnotesize] {\SI{10}{\metre}};
+
+    % --- Isolation existante (hachures) ---
+    \foreach \y in {0.3, 0.7, 1.1, 1.5, 1.9, 2.4, 2.8, 3.2, 3.6, 4.0, 4.3}{
+      \draw[red!40, thin] (0,\y) -- (0.25, \y+0.2);
+      \draw[red!40, thin] (9.75,\y) -- (10,\y+0.2);
+    }
+    \node[red!60, font=\tiny, rotate=90] at (0.15, 2.5) {Laine verre 60mm};
+
+    % --- Chaudière fioul existante ---
+    \draw[FedRed, fill=FedRed!15, thick, rounded corners=2pt]
+      (0.5, -2.5) rectangle (2.5, -1.0);
+    \node[font=\footnotesize\bfseries, FedRed] at (1.5,-1.75) {Chaudière fioul};
+    \node[font=\tiny, FedRed] at (1.5,-2.1) {18 kW — η = 82\%};
+    \draw[FedRed, thick, ->] (1.5,-1.0) -- (1.5,-0.0);
+
+    % --- PAC future ---
+    \draw[FedGreen, fill=FedGreen!15, thick, rounded corners=2pt, dashed]
+      (7, -2.5) rectangle (9.5, -1.0);
+    \node[font=\footnotesize\bfseries, FedGreen] at (8.25,-1.6) {PAC air/eau};
+    \node[font=\tiny, FedGreen] at (8.25,-2.1) {à dimensionner};
+    \node[font=\tiny, FedGreen] at (8.25,-2.35) {A7/W35};
+
+    % --- Légende ---
+    \draw[FedRed, thick] (0.5,-3.2) -- (1.0,-3.2);
+    \node[right, font=\tiny] at (1.0,-3.2) {Existant (dépose)};
+    \draw[FedGreen, thick, dashed] (3.5,-3.2) -- (4.0,-3.2);
+    \node[right, font=\tiny] at (4.0,-3.2) {Projet};
+    \draw[red!40] (6.5,-3.2) -- (7.0,-3.2);
+    \node[right, font=\tiny] at (7.0,-3.2) {Isolation existante};
+
+  \end{tikzpicture}
+  \caption{Coupe schématique de la maison Aubert — Grenoble (H1c) — Construction 1975
+    — S\textsubscript{habitable} = \SI{120}{\metre\squared} — Chaudière fioul à remplacer par PAC air/eau}
+  \label{fig:sr1-coupe-maison}
+\end{figure}
+
+\subsection*{Données du bâtiment existant}
+
+\begin{center}
+\begin{tabular}{lllr}
+  \toprule
+  \textbf{Élément} & \textbf{Composition actuelle} & \textbf{U actuel} & \textbf{Proportion} \\
+  \midrule
+  Murs extérieurs & Parpaings 20 cm + enduits & \SI{1.8}{\watt\per\metre\squared\per\kelvin} & \SI{140}{\metre\squared} \\
+  Plancher bas & Dalle béton sur terre-plein & \SI{0.6}{\watt\per\metre\squared\per\kelvin} & \SI{60}{\metre\squared} \\
+  Toiture & Tuiles + laine de verre 60 mm & \SI{0.55}{\watt\per\metre\squared\per\kelvin} & \SI{65}{\metre\squared} \\
+  Fenêtres RDC & Simple vitrage bois & \SI{4.5}{\watt\per\metre\squared\per\kelvin} & \SI{9}{\metre\squared} \\
+  Fenêtres R+1 & Simple vitrage bois & \SI{4.5}{\watt\per\metre\squared\per\kelvin} & \SI{9}{\metre\squared} \\
+  Porte d'entrée & Bois plein & \SI{3.2}{\watt\per\metre\squared\per\kelvin} & \SI{2}{\metre\squared} \\
+  \midrule
+  \textbf{Pont thermique linéique} & Jonction mur/plancher & $\psi = \SI{0.8}{\watt\per\metre\per\kelvin}$ & \SI{40}{\metre} \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\begin{definition}[Données climatiques — Grenoble, zone H1c]
+  Température extérieure de base : $T_{ext,base} = \SI{-11}{\celsius}$ (NF EN 12831) \\
+  Température intérieure de confort : $T_{int} = \SI{19}{\celsius}$ \\
+  Degré-jours unifiés (DJU) : \textbf{2 900 DJU/an} (référence 18°C) \\
+  Ensoleillement annuel : \SI{1950}{\hour\per\year}
+\end{definition}
+
+% ================================================================
+\section{Schéma de principe de l'installation projetée}
+% ================================================================
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[
+    >=Stealth, thick,
+    bloc/.style={draw, rounded corners=3pt, minimum width=2.8cm, minimum height=1.0cm,
+                 align=center, font=\small},
+    tuyau/.style={draw, ->, thick},
+    dep/.style={FedOrange, thick},   % départ chaud
+    ret/.style={FedBlue, thick},     % retour froid
+  ]
+
+    % === PAC air/eau ===
+    \node[bloc, fill=FedGreen!15, draw=FedGreen] (pac) at (0,0)
+      {PAC air/eau\\{\footnotesize A7/W35}};
+
+    % === Ballon tampon ===
+    \node[bloc, fill=FedBlue!10, draw=FedBlue] (tampon) at (4,0)
+      {Ballon\\tampon\\{\footnotesize 300 L}};
+
+    % === Collecteur départ ===
+    \node[bloc, fill=FedOrange!15, draw=FedOrange, minimum width=3.5cm] (coll) at (8,0)
+      {Collecteur\\départ/retour};
+
+    % === Émetteurs ===
+    \node[bloc, fill=gray!10, draw=gray] (pch-rdc) at (11, 2.5)
+      {PCH RDC\\{\footnotesize 60 m²}};
+    \node[bloc, fill=gray!10, draw=gray] (rad-r1) at (11, -2.5)
+      {Radiateurs R+1\\{\footnotesize BT 45/40°C}};
+
+    % === Vase d'expansion ===
+    \node[draw, circle, minimum size=0.8cm, fill=yellow!20, font=\tiny] (vase) at (4, 2.5)
+      {VE};
+
+    % === Pompes de circulation ===
+    \node[draw, circle, minimum size=0.6cm, fill=gray!20, font=\tiny] (pompe1) at (2, 0.4)
+      {P1};
+    \node[draw, circle, minimum size=0.6cm, fill=gray!20, font=\tiny] (pompe2) at (6, 0.4)
+      {P2};
+
+    % === Connexions départ (orange) ===
+    \draw[dep, ->] (pac.east) -- node[above, font=\tiny] {55°C} (tampon.west);
+    \draw[dep, ->] (tampon.east) -- node[above, font=\tiny] {45°C} (coll.west);
+    \draw[dep, ->] (coll.north east) |- (pch-rdc.west);
+    \draw[dep, ->] (coll.south east) |- (rad-r1.west);
+
+    % === Connexions retour (bleu) ===
+    \draw[ret, ->] (pch-rdc.south) -- ++(0,-0.8) -| (coll.north);
+    \draw[ret, ->] (rad-r1.north) -- ++(0,0.8) -| (coll.south);
+    \draw[ret, ->] (coll.west|-tampon) -- node[below, font=\tiny] {35°C} (tampon.east|-tampon);
+    \draw[ret, ->] (tampon.west) -- node[below, font=\tiny] {40°C} (pac.east|-pac.south);
+
+    % === Vase d'expansion connexion ===
+    \draw[gray, dashed] (vase) -- (tampon.north);
+
+    % === Légende ===
+    \draw[dep, ->] (0,-4.2) -- (1.2,-4.2) node[right, font=\tiny, black] {Circuit départ chaud};
+    \draw[ret, ->] (3.5,-4.2) -- (4.7,-4.2) node[right, font=\tiny, black] {Circuit retour froid};
+    \node[draw, circle, minimum size=0.5cm, fill=gray!20, font=\tiny] at (7.5,-4.2) {P};
+    \node[right, font=\tiny] at (7.8,-4.2) {Circulateur};
+    \node[draw, circle, minimum size=0.5cm, fill=yellow!20, font=\tiny] at (9.5,-4.2) {VE};
+    \node[right, font=\tiny] at (9.8,-4.2) {Vase expansion};
+
+    % === Sonde extérieure ===
+    \node[draw, diamond, fill=purple!15, minimum size=0.5cm, font=\tiny] (sonde) at (-2, 2.0)
+      {$T_e$};
+    \draw[purple, dashed, ->] (sonde) -- (pac.north west);
+    \node[purple, font=\tiny, above] at (-1, 2.0) {Régulation};
+    \node[purple, font=\tiny, above] at (-1, 1.6) {climatique};
+
+  \end{tikzpicture}
+  \caption{Schéma hydraulique de principe — Installation PAC air/eau + ballon tampon + PCH RDC + radiateurs R+1
+    — Régulation climatique par sonde extérieure}
+  \label{fig:sr1-schema-hydraulique}
+\end{figure}
+
+% ================================================================
+\section{Cahier des charges}
+% ================================================================
+
+\begin{methode}[Livrables attendus — Note 1 : Dossier technique écrit]
+\textbf{À remettre en semaine 6 — Format PDF, 25 pages minimum}
+
+\begin{enumerate}
+  \item \textbf{Bilan thermique} selon NF EN 12831 :
+    \begin{itemize}
+      \item Calcul du coefficient $U$ de chaque paroi (formule de la résistance thermique équivalente)
+      \item Calcul des déperditions totales $\Phi_{dep}$ du bâtiment [\si{\watt}]
+      \item Calcul de $U_{bat}$ et comparaison avec le seuil RE2020
+      \item Identification des travaux d'isolation complémentaires recommandés
+    \end{itemize}
+
+  \item \textbf{Dimensionnement PAC air/eau} :
+    \begin{itemize}
+      \item Calcul de la puissance utile nécessaire en régime de base et en point de bivalence
+      \item Sélection d'un modèle constructeur (Daikin, Atlantic, Bosch) avec justification
+      \item Calcul du COP en condition A7/W35 et du SCOP annuel (méthode bin)
+      \item Dimensionnement du ballon tampon (volume, pertes thermiques)
+    \end{itemize}
+
+  \item \textbf{Réseau hydraulique} :
+    \begin{itemize}
+      \item Calcul des débits par circuit (plancher chauffant + radiateurs)
+      \item Calcul des pertes de charge (tuyauteries + émetteurs + vannes)
+      \item Sélection des circulateurs (courbe pompe/réseau, classe ErP)
+      \item Dimensionnement du vase d'expansion (DTU 65.11)
+    \end{itemize}
+
+  \item \textbf{Émetteurs} :
+    \begin{itemize}
+      \item Plancher chauffant RDC : calcul densité de flux, pas de pose, pertes de charge boucles
+      \item Radiateurs R+1 : sélection en régime basse température (45/40°C)
+    \end{itemize}
+
+  \item \textbf{Aspects économiques} :
+    \begin{itemize}
+      \item Devis estimatif par poste (€ HT)
+      \item Calcul des économies annuelles (fioul → PAC, sur base DJU)
+      \item Calcul du TRI avec et sans aides (MaPrimeRénov', éco-PTZ)
+    \end{itemize}
+\end{enumerate}
+\end{methode}
+
+\begin{methode}[Livrables attendus — Note 2 : Soutenance orale]
+\textbf{Durée : 20 min exposé + 10 min questions — Semaine 7}
+
+\begin{itemize}
+  \item Support visuel : diaporama (10 à 15 slides) + schéma hydraulique A3 imprimé
+  \item Chaque membre du groupe présente une partie du dossier
+  \item Questions individuelles obligatoires posées par le jury sur les calculs
+  \item Critères d'évaluation : clarté technique, rigueur des calculs, justification des choix
+\end{itemize}
+\end{methode}
+
+% ================================================================
+\section{Grille d'évaluation}
+% ================================================================
+
+\begin{center}
+\begin{tabular}{p{5cm}ccp{5cm}}
+  \toprule
+  \textbf{Critère} & \textbf{Barème} & \textbf{Note} & \textbf{Indicateurs de réussite} \\
+  \midrule
+  \multicolumn{4}{l}{\textbf{Note 1 — Dossier technique (20 pts)}} \\
+  \midrule
+  Bilan thermique & 5 pts & /5 & U corrects, déperditions cohérentes ±10\% \\
+  Dim. PAC & 4 pts & /4 & Puissance justifiée, modèle sélectionné \\
+  Réseau hydraulique & 4 pts & /4 & Débits, $\Delta P$, circulateur justifiés \\
+  Émetteurs & 3 pts & /3 & PCH et radiateurs dimensionnés \\
+  Aspect économique & 2 pts & /2 & TRI calculé, aides identifiées \\
+  Qualité rédactionnelle & 2 pts & /2 & Plan, syntaxe, figures légendées \\
+  \midrule
+  \multicolumn{4}{l}{\textbf{Note 2 — Soutenance orale (20 pts)}} \\
+  \midrule
+  Clarté de l'exposé & 5 pts & /5 & Structure logique, gestion du temps \\
+  Maîtrise technique & 8 pts & /8 & Réponses aux questions individuelles \\
+  Support visuel & 4 pts & /4 & Schémas clairs, lisibles \\
+  Travail d'équipe & 3 pts & /3 & Répartition équilibrée \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+% ================================================================
+\section{Ressources documentaires}
+% ================================================================
+
+\begin{itemize}
+  \item \textbf{Normes :} NF EN 12831 (calcul besoins chaleur), NF EN 14511 (PAC), DTU 65.11 (sécurités)
+  \item \textbf{Réglementation :} RE2020 — arrêté du 4 août 2021, Règlement (UE) 813/2013 (PAC)
+  \item \textbf{Aides financières :} MaPrimeRénov' (ANAH), éco-PTZ, TVA 5,5\%
+  \item \textbf{Logiciels conseillés :} Pleiades+Comfie (bilan thermique), ClimaWin (PAC)
+  \item \textbf{Catalogues constructeurs :} Daikin Altherma 3, Atlantic Extensa+, Buderus Logatherm
+  \item \textbf{Cours :} Chapitres 01 (thermique), 02 (hydraulique), 04 (production), 05 (distribution)
+\end{itemize}
+
+\finchapitre

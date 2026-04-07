@@ -1,0 +1,349 @@
+% ================================================================
+%  Situation Réelle 2 — Climatisation et traitement d'air d'un bâtiment tertiaire
+%  BTS FED — Option GCF — Semestre 2
+%  Chapitres mobilisés : 03 (aéraulique), 06 (climatisation), 07 (GTB), 08 (efficacité)
+% ================================================================
+
+\chapter{SR-2 — Climatisation et traitement d'air d'un bâtiment tertiaire}
+
+\begin{tcolorbox}[
+  enhanced, colback=FedGreen!8, colframe=FedGreen, arc=3pt,
+  fonttitle=\bfseries\sffamily\large, coltitle=white, colbacktitle=FedGreen,
+  title={Situation Réelle 2 — Fiche d'identité du projet},
+  width=\textwidth
+]
+\begin{tabular}{@{}ll@{\hspace{2cm}}ll@{}}
+  \textbf{Semestre} & 2 &
+  \textbf{Durée} & 6 semaines \\[4pt]
+  \textbf{Groupe} & 2 à 3 étudiants &
+  \textbf{Chapitres} & 03, 06, 07, 08 \\[4pt]
+  \textbf{Note 1} & Dossier technique (coeff.\ 3) &
+  \textbf{Note 2} & Soutenance + démo GTB (coeff.\ 2) \\[4pt]
+  \textbf{Compétences} & C2-1, C3-3, C5-2, C6-3, C7-4, C8-4 & & \\
+\end{tabular}
+\end{tcolorbox}
+
+\bigskip
+
+% ================================================================
+\section{Contexte professionnel}
+% ================================================================
+
+Vous êtes bureau d'études chez \textbf{AirTech Ingénierie} (Lyon, 69).
+Un promoteur immobilier vous confie la conception des installations CVC d'un
+\textbf{immeuble de bureaux} neuf situé à \textbf{Lyon Part-Dieu} (zone H1b),
+soumis à la réglementation \textbf{RE2020}.
+Le bâtiment est classé \textbf{ERP de catégorie 3}.
+
+\subsection*{Description du bâtiment}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[scale=0.85, >=Stealth, thick]
+
+    % ============= PLAN RDC =============
+    \node[font=\bfseries\small, FedBlue] at (5, 9.8) {Plan du plateau type — Niveaux R+1 et R+2};
+
+    % Contour extérieur
+    \draw[FedBlue, very thick, fill=FedBlue!5]
+      (0,0) rectangle (10,8);
+
+    % Couloir central
+    \draw[FedOrange, thick, fill=FedOrange!10]
+      (0,3.5) rectangle (10,4.5);
+    \node[FedOrange, font=\footnotesize] at (5,4.0) {Couloir de circulation};
+
+    % Bureau open-space gauche
+    \draw[FedBlue!50, fill=FedBlue!8]
+      (0.2,4.7) rectangle (4.8,7.8);
+    \node[FedBlue, font=\footnotesize\bfseries] at (2.5,6.5) {Open Space A};
+    \node[FedBlue, font=\tiny] at (2.5,6.0) {\SI{216}{\metre\squared}};
+    \node[FedBlue, font=\tiny] at (2.5,5.6) {40 postes};
+
+    % Bureau open-space droit
+    \draw[FedBlue!50, fill=FedBlue!8]
+      (5.2,4.7) rectangle (9.8,7.8);
+    \node[FedBlue, font=\footnotesize\bfseries] at (7.5,6.5) {Open Space B};
+    \node[FedBlue, font=\tiny] at (7.5,6.0) {\SI{216}{\metre\squared}};
+    \node[FedBlue, font=\tiny] at (7.5,5.6) {40 postes};
+
+    % Salles de réunion bas
+    \draw[FedGreen!60, fill=FedGreen!10]
+      (0.2,0.2) rectangle (2.8,3.3);
+    \node[FedGreen, font=\tiny\bfseries] at (1.5,1.75) {Salle Réunion 1};
+    \node[FedGreen, font=\tiny] at (1.5,1.3) {\SI{35}{\metre\squared}};
+
+    \draw[FedGreen!60, fill=FedGreen!10]
+      (3.0,0.2) rectangle (5.5,3.3);
+    \node[FedGreen, font=\tiny\bfseries] at (4.25,1.75) {Salle Réunion 2};
+    \node[FedGreen, font=\tiny] at (4.25,1.3) {\SI{38}{\metre\squared}};
+
+    \draw[FedGreen!60, fill=FedGreen!10]
+      (5.7,0.2) rectangle (7.8,3.3);
+    \node[FedGreen, font=\tiny\bfseries] at (6.75,1.75) {Salle Réunion 3};
+    \node[FedGreen, font=\tiny] at (6.75,1.3) {\SI{31}{\metre\squared}};
+
+    % Local technique
+    \draw[FedRed!60, fill=FedRed!10]
+      (8.0,0.2) rectangle (9.8,3.3);
+    \node[FedRed, font=\tiny\bfseries] at (8.9,1.75) {Local\\technique};
+    \node[FedRed, font=\tiny] at (8.9,1.2) {CTA + GTB};
+
+    % Bouches de soufflage (schématiques)
+    \foreach \x in {1.0, 2.0, 3.0, 3.8, 6.0, 7.0, 8.0, 9.0}{
+      \draw[cyan!60, fill=cyan!30] (\x, 7.5) circle (0.12);
+    }
+    \foreach \x in {1.0, 2.0, 3.0, 3.8, 6.0, 7.0, 8.0, 9.0}{
+      \draw[orange!60, fill=orange!30] (\x, 5.2) circle (0.12);
+    }
+
+    % Légende bouches
+    \draw[cyan!60, fill=cyan!30] (0.3, -0.6) circle (0.12);
+    \node[right, font=\tiny] at (0.45,-0.6) {Bouche soufflage};
+    \draw[orange!60, fill=orange!30] (3.0, -0.6) circle (0.12);
+    \node[right, font=\tiny] at (3.15,-0.6) {Bouche reprise};
+
+    % Côtes
+    \draw[<->, gray] (-0.2, 0) -- (-0.2, 8)
+      node[midway, left, font=\tiny] {\SI{20}{\metre}};
+    \draw[<->, gray] (0, -0.2) -- (10, -0.2)
+      node[midway, below, font=\tiny] {\SI{40}{\metre}};
+
+  \end{tikzpicture}
+  \caption{Plan du plateau de bureaux type (R+1 et R+2) — Surface totale par niveau : \SI{800}{\metre\squared}
+    — Local technique en angle pour la CTA — Lyon Part-Dieu, zone H1b}
+  \label{fig:sr2-plan-plateau}
+\end{figure}
+
+\subsection*{Données du bâtiment}
+
+\begin{center}
+\begin{tabular}{lrl}
+  \toprule
+  \textbf{Caractéristique} & \textbf{Valeur} & \textbf{Unité / Remarque} \\
+  \midrule
+  Surface totale chauffée/climatisée & \num{1600} & \si{\metre\squared} (2 niveaux × 800) \\
+  Hauteur sous plafond & \num{2.8} & \si{\metre} \\
+  Occupation maximale & 80 + 40 & personnes (open-space + salles) \\
+  Charge thermique interne & \num{40} & \si{\watt\per\metre\squared} (bureaux RE2020) \\
+  Vitrage (façades E et O) & \num{35} & \% de la surface de façade \\
+  Facteur solaire $g$ (vitrage) & \num{0.28} & — (traitement anti-solaire) \\
+  Renouvellement d'air neuf & \num{25} & \si{\metre\cubed\per\hour\per\person} (NF EN 16798) \\
+  Température intérieure été & \num{26} & \si{\celsius} \\
+  Température intérieure hiver & \num{19} & \si{\celsius} \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\begin{attention}[Exigence maître d'ouvrage]
+  Le maître d'ouvrage impose \textbf{obligatoirement} :
+  \begin{itemize}
+    \item Free-cooling aéraulique économiseur (bypass CTA si $T_{ext} < T_{int} - 2°C$)
+    \item Récupération de chaleur sur air extrait : rendement $\eta \geq 85\,\%$ (échangeur rotatif)
+    \item GTB de niveau 4 (BACS class C, EN 15232) avec supervision Web
+    \item Cep\textsubscript{nr} $\leq \SI{50}{\kilo\watt\hour_{ep}\per\metre\squared\per\year}$ (RE2020 tertiaire)
+  \end{itemize}
+\end{attention}
+
+% ================================================================
+\section{Schéma de principe CTA double flux}
+% ================================================================
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[
+    >=Stealth, thick,
+    composant/.style={draw, minimum width=2.0cm, minimum height=1.2cm,
+                      align=center, font=\scriptsize, rounded corners=2pt},
+    flux_s/.style={FedBlue, thick, ->},   % air soufflage
+    flux_e/.style={FedOrange, thick, ->}, % air extraction
+  ]
+
+    % ============ LIGNE SOUFFLAGE (haut) ============
+    % Prise d'air neuf
+    \node[composant, fill=cyan!10, draw=cyan!60] (pan) at (0, 3.5)
+      {Prise air\\neuf\\{\tiny filtre G4}};
+
+    % Échangeur récupérateur
+    \node[composant, fill=purple!10, draw=purple!60, minimum width=2.5cm, minimum height=2.5cm]
+      (echangeur) at (3.5, 2.5) {Échangeur\\rotatif\\{\tiny $\eta \geq 85\,\%$}};
+
+    % Filtre fin
+    \node[composant, fill=gray!10] (filtre) at (6.5, 3.5)
+      {Filtre\\F7};
+
+    % Batterie froide
+    \node[composant, fill=FedBlue!20, draw=FedBlue] (batt-f) at (9, 3.5)
+      {Batterie\\froide\\{\tiny groupe froid}};
+
+    % Batterie chaude
+    \node[composant, fill=FedOrange!20, draw=FedOrange] (batt-c) at (11.5, 3.5)
+      {Batterie\\chaude\\{\tiny PAC / chaudière}};
+
+    % Ventilateur soufflage
+    \node[draw, circle, minimum size=0.9cm, fill=FedBlue!15, font=\tiny] (vs) at (13.8, 3.5)
+      {$V_S$};
+
+    % Réseau soufflage
+    \node[composant, fill=FedBlue!8, draw=FedBlue!40, minimum width=2.2cm] (res-s) at (15.8, 3.5)
+      {Réseau\\soufflage\\{\tiny bouches}};
+
+    % ============ LIGNE EXTRACTION (bas) ============
+    % Réseau reprise
+    \node[composant, fill=FedOrange!8, draw=FedOrange!40, minimum width=2.2cm] (res-r) at (15.8, 1.5)
+      {Réseau\\reprise\\{\tiny bouches}};
+
+    % Ventilateur extraction
+    \node[draw, circle, minimum size=0.9cm, fill=FedOrange!15, font=\tiny] (ve) at (13.8, 1.5)
+      {$V_E$};
+
+    % Bypass free-cooling
+    \node[composant, fill=FedGreen!10, draw=FedGreen, minimum width=1.5cm] (bypass) at (11.0, 1.5)
+      {Bypass\\free-cooling\\{\tiny registre motorisé}};
+
+    % Rejet air vicié
+    \node[composant, fill=gray!10, draw=gray] (rejet) at (3.5, 0.5)
+      {Rejet\\air vicié\\{\tiny filtre antipollen}};
+
+    % ============ CONNEXIONS SOUFFLAGE (bleu) ============
+    \draw[flux_s] (pan.east) -- (echangeur.north west);
+    \draw[flux_s] (echangeur.north east) -- (filtre.west);
+    \draw[flux_s] (filtre.east) -- (batt-f.west);
+    \draw[flux_s] (batt-f.east) -- (batt-c.west);
+    \draw[flux_s] (batt-c.east) -- (vs.west);
+    \draw[flux_s] (vs.east) -- (res-s.west);
+
+    % ============ CONNEXIONS EXTRACTION (orange) ============
+    \draw[flux_e] (res-r.west) -- (ve.east);
+    \draw[flux_e] (ve.west) -- (bypass.east);
+    \draw[flux_e] (bypass.west) -- (echangeur.south east);
+    \draw[flux_e] (echangeur.south west) -- (rejet.east);
+
+    % ============ BYPASS FREE-COOLING (vert) ============
+    \draw[FedGreen, thick, dashed, ->]
+      (bypass.north) |- node[pos=0.3, above, font=\tiny, FedGreen]
+      {$T_{ext} < T_{int}-2°C$} (batt-f.south);
+
+    % ============ ANNOTATIONS TEMPÉRATURES ============
+    \node[font=\tiny, cyan!70!black] at (1.5, 4.2) {$T_{ext} = -11$ à $+38°C$};
+    \node[font=\tiny, FedBlue] at (7.5, 4.2) {$T_{souf} = 16°C$ (été)};
+    \node[font=\tiny, FedBlue] at (7.5, 3.85) {$T_{souf} = 22°C$ (hiver)};
+    \node[font=\tiny, FedOrange!70] at (1.5, 0.2) {$T_{rej} \approx T_{ext} + 5°C$};
+    \node[font=\tiny, FedOrange] at (11.0, 0.9) {$T_{rep} = 26°C$ (été)};
+
+    % ============ LÉGENDE ============
+    \draw[flux_s] (0, -0.5) -- (1.2, -0.5) node[right, font=\tiny, black] {Air neuf / soufflé};
+    \draw[flux_e] (3.5, -0.5) -- (4.7, -0.5) node[right, font=\tiny, black] {Air extrait / rejeté};
+    \draw[FedGreen, thick, dashed, ->] (7.0, -0.5) -- (8.2, -0.5)
+      node[right, font=\tiny, black] {Free-cooling (bypass)};
+
+  \end{tikzpicture}
+  \caption{Schéma de principe CTA double flux avec récupération échangeur rotatif ($\eta \geq 85\,\%$),
+    batteries froide et chaude, free-cooling par bypass — Bâtiment tertiaire Lyon, RE2020}
+  \label{fig:sr2-schema-cta}
+\end{figure}
+
+% ================================================================
+\section{Cahier des charges}
+% ================================================================
+
+\begin{methode}[Livrables attendus — Note 1 : Dossier technique écrit]
+\textbf{À remettre en semaine 6 — Format PDF, 30 pages minimum}
+
+\begin{enumerate}
+  \item \textbf{Bilan aéraulique} :
+    \begin{itemize}
+      \item Calcul des débits d'air neuf et de reprise selon NF EN 16798 et arrêté du 24/03/1982
+      \item Dimensionnement du réseau principal de gaines (vitesses, sections, pertes de charge)
+      \item Calcul du SFP (Specific Fan Power) en \si{\watt\per\litre\per\second}
+      \item Vérification de conformité avec la limite SFP RE2020
+    \end{itemize}
+
+  \item \textbf{Sélection et dimensionnement de la CTA} :
+    \begin{itemize}
+      \item Calcul des puissances thermiques (batterie froide, batterie chaude)
+      \item Calcul de la récupération de chaleur (gains en kWh/an)
+      \item Sélection d'une CTA constructeur (Airmaster, Carrier, Daikin) avec justification
+      \item Calcul des économies de free-cooling (heures/an sur données météo Lyon)
+    \end{itemize}
+
+  \item \textbf{Programme GTB} :
+    \begin{itemize}
+      \item Liste des points d'entrée/sortie (capteurs, actionneurs)
+      \item Stratégie de régulation : boucles PID, consignes saisonnières
+      \item Scénario de free-cooling : conditions de déclenchement et de rebasculement
+      \item Planning horaire type (semaine, week-end, vacances)
+      \item Architecture réseau (KNX, BACnet ou Modbus — à justifier)
+    \end{itemize}
+
+  \item \textbf{Bilan énergétique RE2020} :
+    \begin{itemize}
+      \item Calcul du Cep\textsubscript{nr} de référence et du projet [\si{\kilo\watt\hour_{ep}\per\metre\squared\per\year}]
+      \item Calcul du Bbio (indicateur besoin bioclimatique)
+      \item Calcul de l'Ic\textsubscript{énergie} (impact carbone)
+      \item Vérification des 3 seuils RE2020
+    \end{itemize}
+
+  \item \textbf{Démarche économique} :
+    \begin{itemize}
+      \item Coût d'installation estimatif (CTA, gaines, régulation, GTB)
+      \item Économies annuelles vs solution sans récupération ni free-cooling
+      \item Retour sur investissement
+    \end{itemize}
+\end{enumerate}
+\end{methode}
+
+\begin{methode}[Livrables attendus — Note 2 : Soutenance + démonstration GTB]
+\textbf{Durée : 20 min exposé + 10 min questions — Semaine 7}
+
+\begin{itemize}
+  \item Présentation des choix techniques face à 2 alternatives (ex : VRV vs CTA centralisée)
+  \item \textbf{Démonstration GTB obligatoire :} simuler en direct sur tableur (ou logiciel) :
+    \begin{itemize}
+      \item Scénario 1 : déclenchement free-cooling ($T_{ext} = 18°C$, $T_{int} = 24°C$)
+      \item Scénario 2 : alarme filtre colmaté (déséquilibre pression)
+    \end{itemize}
+  \item Questions individuelles sur les calculs de bilan aéraulique
+\end{itemize}
+\end{methode}
+
+% ================================================================
+\section{Grille d'évaluation}
+% ================================================================
+
+\begin{center}
+\begin{tabular}{p{5.5cm}ccp{4.5cm}}
+  \toprule
+  \textbf{Critère} & \textbf{Barème} & \textbf{Note} & \textbf{Indicateurs} \\
+  \midrule
+  \multicolumn{4}{l}{\textbf{Note 1 — Dossier technique (20 pts)}} \\
+  \midrule
+  Bilan aéraulique (débits, $\Delta P$, SFP) & 5 pts & /5 & Conformité NF EN 16798 \\
+  Dim. CTA + récupération & 4 pts & /4 & Puissances cohérentes, modèle justifié \\
+  Programme GTB & 4 pts & /4 & Points E/S complets, scénario free-cooling \\
+  Bilan RE2020 & 4 pts & /4 & Cep\textsubscript{nr} $\leq 50$, 3 indicateurs calculés \\
+  Qualité du dossier & 3 pts & /3 & Schémas légendés, rédaction pro \\
+  \midrule
+  \multicolumn{4}{l}{\textbf{Note 2 — Soutenance + démo GTB (20 pts)}} \\
+  \midrule
+  Exposé technique & 5 pts & /5 & Clarté, structure, gestion temps \\
+  Démonstration GTB & 6 pts & /6 & Scénarios corrects, réaction juste \\
+  Questions individuelles & 6 pts & /6 & Maîtrise des calculs propres \\
+  Argumentation des choix & 3 pts & /3 & Comparaison alternatives \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+% ================================================================
+\section{Ressources documentaires}
+% ================================================================
+
+\begin{itemize}
+  \item \textbf{Normes :} NF EN 16798 (aéraulique tertiaire), NF EN 15232 (GTB), NF EN 13053 (CTA)
+  \item \textbf{Réglementation :} RE2020 tertiaire, Arrêté du 24/03/1982 (aération), Décret tertiaire 2019
+  \item \textbf{Logiciels :} ClimaWin (bilan aéraulique), e-COSTIC (GTB), EnerCalc (RE2020)
+  \item \textbf{Catalogues :} Airmaster Duplex, Carrier AHU, Daikin Modular
+  \item \textbf{Cours :} Chapitres 03 (aéraulique), 06 (climatisation), 07 (GTB/régulation), 08 (RE2020)
+\end{itemize}
+
+\finchapitre
