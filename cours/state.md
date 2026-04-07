@@ -3,19 +3,19 @@
 Mis à jour automatiquement par l'agent à chaque run.
 
 ## Dernier run
-- Date : 2026-04-07
-- Action : **Chapitre 0 créé et pushé** — Analyse dimensionnelle (4 sections) + main.tex mis à jour + commit ef2e486c5
+- Date : 2026-04-07 (3ème run)
+- Action : **Exercices chapitre 0 enrichis** — 50 exercices / 10 thèmes (5-6 exos/thème) + commit 040f08b
 
 ## Prochain focus
 **Priorité 1** : Enrichir TOUS les chapitres avec schémas/diagrammes (actuellement insuffisant)
 **Priorité 2** : Révision complète des chapitres existants vers statut "révisé"
-**Priorité 3** : Tester compilation PDF du document complet (main.tex + 12 chapitres)
+**Priorité 3** : Tester compilation PDF du document complet
 
 ## Chapitres
 
 | # | Fichier | Titre | Statut | Score /5 | Notes |
 |---|---------|-------|--------|----------|-------|
-| 00 | 00-analyse-dimensionnelle.tex | Analyse dimensionnelle et remise à niveau | complet | 5 | Créé 2026-04-07 : 4 sections (homogénéité, conversions, transformations, graphiques) + 4 exercices résolus |
+| 00 | 00-analyse-dimensionnelle.tex | Analyse dimensionnelle et remise à niveau | complet | 5 | Créé 2026-04-07 : 4 sections + 50 exercices (10 thèmes) + corrections synthèse |
 | 01 | 01-bases-thermiques.tex | Bases de la thermique | complet | 5 | Enrichi 2026-04-03 : hygrothermie, flux linéique, 4 exemples résolus, exercices extraits |
 | 02 | 02-hydraulique.tex | Hydraulique des circuits | complet | 5 | Enrichi 2026-04-03 : tableau ρ/ν eau, vase d'expansion, 4 exemples résolus, exercices extraits |
 | 03 | 03-aeraulique.tex | Aéraulique | complet | 5 | Enrichi 2026-04-03 : SFP, VMC hygro, tableau économies variation vitesse, exercices extraits |
