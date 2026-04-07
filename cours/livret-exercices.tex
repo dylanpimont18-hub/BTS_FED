@@ -1,83 +1,48 @@
-\documentclass[12pt, a4paper, twoside]{report}
-\input{preamble}
+\documentclass[11pt, french, openany]{report}
 
-% Couleur d'accent propre au livret exercices (teal, distincte du bleu cours)
-\definecolor{exoaccent}{RGB}{0, 140, 120}
-\definecolor{exolight}{RGB}{230, 248, 245}
+\input{preamble}
 
 \begin{document}
 
 \begin{titlepage}
-  \pagecolor{exoaccent}
-  \color{white}
-  \begin{tikzpicture}[remember picture, overlay]
-    % Bande décorative en haut
-    \fill[btsaccent] (current page.north west)
-      rectangle ([yshift=-8pt] current page.north east);
-  \end{tikzpicture}
+    \begin{tikzpicture}[remember picture, overlay]
+        \node[anchor=north west, inner sep=0pt] at (current page.north west) {
+            \begin{tcolorbox}[
+                enhanced, colback=FedOrange, colframe=FedOrange, arc=0pt, outer arc=0pt,
+                width=1.5cm, height=\paperheight, boxrule=0pt, left=0pt, right=0pt, top=0pt, bottom=0pt
+            ]
+            \end{tcolorbox}
+        };
+        \node[rotate=90, anchor=west, white] at ([xshift=0.85cm, yshift=2cm]current page.south west) {
+            \sffamily\Huge\bfseries EXERCICES
+        };
+        \node[anchor=north west, text width=14cm] at ([xshift=3cm, yshift=-4cm]current page.north west) {
+            {\huge\sffamily\color{FedBlue} \textbf{BTS FLUIDES ÉNERGIES DOMOTIQUE}}\\[0.5cm]
+            {\large\sffamily OPTION A : GÉNIE CLIMATIQUE ET FLUIDIQUE}\\[2.5cm]
 
-  \centering
-  \vspace*{2.5cm}
+            {\fontsize{45}{50}\sffamily\bfseries\selectfont LIVRET D'EXERCICES}\\[0.8cm]
+            {\color{FedOrange}\rule{10cm}{3pt}}\\[1cm]
 
-  % Monogramme principal
-  {\fontsize{72}{72}\selectfont\bfseries BTS\par}
-  \vspace{0.15cm}
-  {\fontsize{36}{36}\selectfont\bfseries FED\par}
-  \vspace{0.4cm}
-  {\large\color{btsaccent}\rule{6cm}{1.5pt}\par}
-  \vspace{0.6cm}
-
-  % Option
-  {\Large\bfseries Option Génie Climatique et Fluidique\par}
-  \vspace{0.2cm}
-  {\normalsize\color{white!80!exoaccent}(GCF)\par}
-
-  \vspace{2cm}
-
-  % Boîte titre
-  \begin{tcolorbox}[
-    enhanced, arc=4mm,
-    colback=white, colframe=btsaccent,
-    leftrule=6pt, rightrule=0.5pt, toprule=0.5pt, bottomrule=0.5pt,
-    width=0.8\linewidth,
-    halign=center,
-    boxsep=10pt
-  ]
-    \color{exoaccent}
-    {\LARGE\bfseries Livret d'exercices\par}
-    \vspace{4pt}
-    {\large Énoncés et corrigés détaillés par chapitre\par}
-    \vspace{4pt}
-    {\normalsize Formation 2 ans — Formation initiale\par}
-  \end{tcolorbox}
-
-  \vfill
-
-  % Pied de page titre
-  {\small\color{white!70!exoaccent}\itshape
-    Généré et amélioré en continu par agent Claude Code\par}
-  \vspace{0.5cm}
-  {\normalsize\color{btsaccent}\bfseries\today\par}
-  \vspace{1cm}
-  \begin{tikzpicture}[remember picture, overlay]
-    % Bande décorative en bas
-    \fill[btsaccent] (current page.south west)
-      rectangle ([yshift=8pt] current page.south east);
-  \end{tikzpicture}
+            {\huge\sffamily MATHÉMATIQUES APPLIQUÉES}
+        };
+        \node[anchor=south west] at ([xshift=3cm, yshift=2cm]current page.south west) {
+            \sffamily
+            \begin{tabular}{ll}
+                \textbf{Établissement :} & Lycée Gaudier Brzeska \\
+                \textbf{Enseignant :} & M. Dylan PIMONT \\
+                \textbf{Module :} & Outils mathématiques pour le FED
+            \end{tabular}
+        };
+    \end{tikzpicture}
 \end{titlepage}
-\pagecolor{white}
-\color{black}
 
-\tableofcontents
 \newpage
 
-\input{exercices/01-exercices}
-\input{exercices/02-exercices}
-\input{exercices/03-exercices}
-\input{exercices/04-exercices}
-\input{exercices/05-exercices}
-\input{exercices/06-exercices}
-\input{exercices/07-exercices}
+\tableofcontents
+
+\newpage
+
+% À partir d'ici, ajouter vos exercices avec \input{exercices/XX-exercices.tex}
 \input{exercices/08-exercices}
 \input{exercices/09-exercices}
 \input{exercices/10-exercices}

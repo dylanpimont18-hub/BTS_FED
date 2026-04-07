@@ -3,16 +3,19 @@
 Mis à jour automatiquement par l'agent à chaque run.
 
 ## Dernier run
-- Date : 2026-04-06
-- Action : Enrichissement ch11 ébauche → complet — 3 études de cas chiffrées, pincement thermique défini, check-list RE2020
+- Date : 2026-04-07
+- Action : Ajout tâches — Chapitre 0 (analyse dimensionnelle) + augmentation schémas dans tous chapitres
 
 ## Prochain focus
-Tous les chapitres sont créés. Prochaine étape : enrichissement vers complet.
+**Priorité 1** : Créer chapitre 0 — Analyse dimensionnelle, équations aux dimensions, remise à niveau maths, transformations de formules, conversions
+**Priorité 2** : Enrichir TOUS les chapitres avec schémas/diagrammes (actuellement insuffisant)
+**Priorité 3** : Révision complète des chapitres existants vers statut "révisé"
 
 ## Chapitres
 
 | # | Fichier | Titre | Statut | Score /5 | Notes |
 |---|---------|-------|--------|----------|-------|
+| 00 | 00-analyse-dimensionnelle.tex | Analyse dimensionnelle et remise à niveau | absent | — | À créer : 1) Analyse dimensionnelle & homogénéité, 2) Conversions d'unités (W/kWh, Pa/bar, m³/h, K/°C), 3) Transformation & résolution d'équations, 4) Graphes & lecture de courbes/abaques |
 | 01 | 01-bases-thermiques.tex | Bases de la thermique | complet | 5 | Enrichi 2026-04-03 : hygrothermie, flux linéique, 4 exemples résolus, exercices extraits |
 | 02 | 02-hydraulique.tex | Hydraulique des circuits | complet | 5 | Enrichi 2026-04-03 : tableau ρ/ν eau, vase d'expansion, 4 exemples résolus, exercices extraits |
 | 03 | 03-aeraulique.tex | Aéraulique | complet | 5 | Enrichi 2026-04-03 : SFP, VMC hygro, tableau économies variation vitesse, exercices extraits |

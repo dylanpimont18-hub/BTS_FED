@@ -11,10 +11,15 @@ This is a documentation repository containing the official French BTS FED (Breve
 ## Content Structure
 
 ```
-Réferentiel_BTS_FED/
-├── 3851-referentiel-bts-fed-mars14.md       # Full curriculum reference (542 KB Markdown)
-├── 3851-referentiel-bts-fed-mars14_meta.json # Metadata for the document
-└── _page_81_Figure_5.jpeg                    # Diagram image
+context/
+├── gcf-recap.md                              # Extracted GCF reference (~25 KB)
+└── .gitkeep
+
+cours/
+├── main.tex, preamble.tex, livret-exercices.tex
+├── state.md                                  # Agent progress tracking
+├── chapitres/                                # 11 course chapters (LaTeX)
+└── exercices/                                # Exercise files (LaTeX)
 ```
 
 ## Document Scope
@@ -35,8 +40,7 @@ The document is structured around:
 
 All content is in French. The `.md` file was likely converted from a PDF — formatting may be imperfect in places due to the conversion process.
 
-## Fichiers à ne pas lire
+## Important Notes
 
-- `Réferentiel_BTS_FED/` — référentiel source, ignoré après extraction initiale.
-  Utiliser `context/gcf-recap.md` à la place pour tout contexte GCF.
-- `cours/chapitres/*.tex` — ne lire que les fichiers explicitement indiqués dans `cours/state.md` sous `prochain_focus`.
+- **Reference extraction complete** — The original 542 KB Réferentiel_BTS_FED has been extracted and archived. Use `context/gcf-recap.md` for all GCF context.
+- `cours/chapitres/*.tex` — Only read files explicitly indicated in [cours/state.md](cours/state.md#L15) under `prochain_focus`.
