@@ -1,0 +1,467 @@
+% ============================================================
+%  Exercices — Chapitre 00
+%  Analyse dimensionnelle et remise à niveau
+% ============================================================
+
+\section*{Chapitre 00 — Exercices}
+
+% ============================================================
+\subsection*{Exercice 1 — Vérification d'homogénéité}
+% ============================================================
+
+\textbf{(Niveau facile — Homogénéité simple)}
+
+Vérifier l'homogénéité dimensionnelle de chacune des équations suivantes :
+
+\begin{enumerate}[a)]
+  \item La formule de perte de charge en conduite circulaire :
+        \[
+          \Delta P = \lambda \cdot \frac{\ell}{d} \cdot \frac{\rho \cdot v^2}{2}
+        \]
+        où $\lambda$ (sans dimension), $\ell$ (m), $d$ (m), $\rho$ (kg/m³), $v$ (m/s).
+
+  \item L'équation du bilan thermique :
+        \[
+          \dot{Q} = h \cdot A \cdot \Delta T
+        \]
+        où $h$ est le coefficient d'échange thermique (W/(m²·K)), $A$ (m²), $\Delta T$ (K).
+
+  \item La velocité du son dans l'air :
+        \[
+          c = \sqrt{\frac{\gamma \cdot P}{\rho}}
+        \]
+        où $\gamma$ (sans dimension), $P$ (Pa), $\rho$ (kg/m³).
+
+  \item L'équation de Navier-Stokes appliquée à un écoulement stationnaire :
+        \[
+          \Delta P = \rho \cdot v^2
+        \]
+        (cette équation suggère une relation entre la perte de charge et l'énergie cinétique du fluide)
+
+  \item La puissance hydraulique d'une pompe :
+        \[
+          P_{\text{hyd}} = \dot{V} \times \Delta P
+        \]
+        où $\dot{V}$ (m³/s), $\Delta P$ (Pa).
+\end{enumerate}
+
+\textbf{Corrigé — Voir à la fin du livret}
+
+% ============================================================
+\subsection*{Exercice 2 — Conversions chaînées}
+% ============================================================
+
+\textbf{(Niveau facile — Pratique des conversions)}
+
+Convertir les grandeurs suivantes dans les unités demandées :
+
+\begin{enumerate}[a)]
+  \item $P = 15~\mathrm{kW}$ en W et en \si{\calorie\per\second}
+
+  \item $\dot{V} = 450~\mathrm{m^3/h}$ en m³/s et en L/min
+
+  \item $\Delta P = 2{,}5~\mathrm{bar}$ en Pa et en mH₂O
+
+  \item $T = 85~\mathrm{°C}$ en K et en °F
+
+  \item $\dot{m} = 1{,}8~\mathrm{kg/s}$ en g/s et en tonnes/h
+
+  \item Réciproquement : $0{,}035~\mathrm{m^3/s}$ en m³/h et en L/min
+
+  \item Un débit massique $\dot{m} = 250~\mathrm{kg/h}$ d'eau (ρ = 1000 kg/m³). Exprimer cela en m³/h et m³/s.
+\end{enumerate}
+
+\textbf{Corrigé — Voir à la fin du livret}
+
+% ============================================================
+\subsection*{Exercice 3 — Résolution d'équations}
+% ============================================================
+
+\textbf{(Niveau moyen — Isolation de variables)}
+
+Pour chaque équation, exprimer la variable encadrée :
+
+\begin{enumerate}[a)]
+  \item $\dot{Q} = \dot{m} \cdot c_p \cdot (T_{\text{in}} - T_{\text{out}})$ \quad $\Rightarrow$ \fbox{$T_{\text{out}}$}
+
+  \item $\Delta P = \lambda \cdot \dfrac{\ell}{d} \cdot \dfrac{\rho v^2}{2}$ \quad $\Rightarrow$ \fbox{$v$}
+
+  \item $S = \dfrac{\dot{Q}}{h \cdot \Delta T}$ \quad $\Rightarrow$ \fbox{$h$}
+
+  \item $\text{Re} = \dfrac{\rho \cdot v \cdot d}{\mu}$ \quad $\Rightarrow$ \fbox{$d$}
+
+  \item $P_{\text{hyd}} = \dot{V} \cdot \Delta P$ \quad $\Rightarrow$ \fbox{$\Delta P$}
+
+  \item L'équation d'une condensation : $\dot{m}_{\text{cond}} = \alpha \cdot A \cdot (T_{\text{sat}} - T_{\text{w}})$ \quad $\Rightarrow$ \fbox{$T_{\text{w}}$}
+\end{enumerate}
+
+\textbf{Corrigé — Voir à la fin du livret}
+
+% ============================================================
+\subsection*{Exercice 4 — Équations avec racines et puissances}
+% ============================================================
+
+\textbf{(Niveau moyen — Manipulations algébriques)}
+
+Exprimer la variable demandée à partir des équations suivantes :
+
+\begin{enumerate}[a)]
+  \item Continuité dans une conduite : $\dot{V} = v \cdot A = v \cdot \pi \cdot \dfrac{d^2}{4}$ \quad $\Rightarrow$ \fbox{$d$}
+
+  \item Vitesse du son : $c = \sqrt{\gamma \cdot R \cdot T}$ \quad $\Rightarrow$ \fbox{$T$}
+
+  \item Débit massique et vitesse : $\dot{m} = \rho \cdot v \cdot A$ avec $A = \pi (r_{\text{ext}}^2 - r_{\text{int}}^2)$ \quad 
+        $\Rightarrow$ \fbox{$r_{\text{ext}}$}
+
+  \item Énergie cinétique : $E_c = \dfrac{1}{2} \rho \cdot v \cdot \dot{V}$ (exprimer en fonction de $\dot{m}$) \quad $\Rightarrow$ 
+        \fbox{$E_c$}
+\end{enumerate}
+
+\textbf{Corrigé — Voir à la fin du livret}
+
+% ============================================================
+\subsection*{Exercice 5 — Vérification d'ordre de grandeur}
+% ============================================================
+
+\textbf{(Niveau facile — Sens physique)}
+
+Pour chaque situation, indiquer si le résultat obtenu est physiquement plausible :
+
+\begin{enumerate}[a)]
+  \item Puissance de chaudière : $\dot{Q} = 250\,000~\mathrm{W}$. C'est immense / normal / très faible pour un petit bâtiment ?
+
+  \item Vitesse d'air dans une conduite d'aération : $v = 0{,}5~\mathrm{m/s}$. C'est rapide / lent / critique selon les normes ?
+
+  \item Débit d'eau chaude sanitaire : $\dot{V} = 0{,}04~\mathrm{m^3/s} = 144~\mathrm{m^3/h}$. C'est excessif / normal pour un immeuble de bureaux ?
+
+  \item Différence de température aux bornes d'un échangeur : $\Delta T = -5~\mathrm{K}$. Cela a-t-il du sens physique ? Pourquoi ?
+\end{enumerate}
+
+\textbf{Corrigé — Voir à la fin du livret}
+
+% ============================================================
+\subsection*{Exercice 6 — Interpolation linéaire simple}
+% ============================================================
+
+\textbf{(Niveau facile — Exploitation d'abaque)}
+
+Soit le tableau simplifié des propriétés thermophysiques de l'eau à pression atmosphérique :
+
+\begin{center}
+  \sffamily\small
+  \begin{tabular}{|c|c|c|c|}
+    \hline
+    \textbf{$T$ (°C)} & \textbf{$\rho$ (kg/m³)} & \textbf{$c_p$ (kJ/(kg·K))} & \textbf{$\mu$ (Pa·s)} \\
+    \hline
+    20 & 998{,}2 & 4{,}182 & $1{,}002 \times 10^{-3}$ \\
+    40 & 992{,}2 & 4{,}179 & $0{,}653 \times 10^{-3}$ \\
+    60 & 983{,}2 & 4{,}185 & $0{,}466 \times 10^{-3}$ \\
+    \hline
+  \end{tabular}
+\end{center}
+
+Par interpolation linéaire, déterminer $\rho$, $c_p$ et $\mu$ à :
+
+\begin{enumerate}[a)]
+  \item $T = 30~\mathrm{°C}$
+
+  \item $T = 50~\mathrm{°C}$
+
+  \item $T = 55~\mathrm{°C}$
+\end{enumerate}
+
+\textbf{Corrigé — Voir à la fin du livret}
+
+% ============================================================
+\subsection*{Exercice 7 — Cas applicatif — Dimensionnement d'une pompe}
+% ============================================================
+
+\textbf{(Niveau moyen — Synthèse)}
+
+Une pompe de circulation doit assurer un débit $Q = 780~\mathrm{L/min}$ à travers un circuit de
+chauffage. La perte de charge totale du circuit est estimée à $\Delta P = 18\,000~\mathrm{Pa}$.
+
+\begin{enumerate}[a)]
+  \item Convertir le débit en m³/h et en m³/s.
+
+  \item Convertir la perte de charge en bar et en mH₂O.
+
+  \item Calculer la puissance hydraulique fournie par la pompe (formule : $P_{\text{hyd}} = \dot{V} \times 
+        \Delta P$).
+
+  \item Exprimer cette puissance en kW et en kWh/h (vérifier l'homogénéité).
+
+  \item Si la puissance mécanique absorbée par le moteur est $P_{\text{mec}} = 12~\mathrm{kW}$, calculer le
+        rendement global $\eta = \dfrac{P_{\text{hyd}}}{P_{\text{mec}}}$. Est-il plausible (rendement
+        hydraulique + mécanique ≈ 75-85\,%) ?
+\end{enumerate}
+
+\textbf{Corrigé — Voir à la fin du livret}
+
+% ============================================================
+\subsection*{Exercice 8 — Analyse dimensionnelle — Méthode par exposants}
+% ============================================================
+
+\textbf{(Niveau difficile — Approche systématique)}
+
+On cherche à exprimer la perte de charge $\Delta P$ en fonction de variables dimensionnellement indépendantes :
+$\rho$ (densité, kg/m³), $v$ (vitesse, m/s), $\ell$ (longueur, m), $d$ (diamètre, m).
+
+On suppose : $\Delta P = k \cdot \rho^\alpha \cdot v^\beta \cdot \ell^\gamma \cdot d^\delta$
+
+où $k$ est une constante sans dimension.
+
+\begin{enumerate}[a)]
+  \item Analyser les dimensions de chaque terme :
+        \begin{align*}
+          [\Delta P] &= \quad ? \\
+          [\rho^\alpha] &= \quad ? \\
+          [v^\beta] &= \quad ? \\
+          [\ell^\gamma] &= \quad ? \\
+          [d^\delta] &= \quad ?
+        \end{align*}
+
+  \item En écrivant l'homogénéité : $[\mathrm{Pa}] = [\mathrm{kg/m^3}]^\alpha \cdot [\mathrm{m/s}]^\beta \cdot
+        [\mathrm{m}]^\gamma \cdot [\mathrm{m}]^\delta$, déterminer les exposants $\alpha$, $\beta$, $\gamma$,
+        $\delta$.
+
+  \item En déduire la forme fonctionnelle de $\Delta P$.
+
+  \item Comparer avec la formule de Darcy-Weisbach : $\Delta P = \lambda \cdot \dfrac{\ell}{d} \cdot \dfrac{\rho v^2}{2}$. 
+        Que remarquez-vous ?
+\end{enumerate}
+
+\textbf{Corrigé — Voir à la fin du livret}
+
+% ============================================================
+\subsection*{Exercice 9 — Lecture de graphique (simulation)}
+% ============================================================
+
+\textbf{(Niveau facile — Interprétation de courbes)}
+
+\textit{Vous disposez d'un graphique montrant le coefficient de frottement $\lambda$ en fonction du nombre de Reynolds
+$\mathrm{Re}$ (diagramme de Moody simplifié).}
+
+Pour une conduite lisse, les valeurs approchées sont :
+
+\begin{center}
+  \sffamily\small
+  \begin{tabular}{|c|c|}
+    \hline
+    $\mathrm{Re}$ & $\lambda$ \\
+    \hline
+    $10^3$ & 0{,}064 \\
+    $10^4$ & 0{,}031 \\
+    $10^5$ & 0{,}012 \\
+    \hline
+  \end{tabular}
+\end{center}
+
+\begin{enumerate}[a)]
+  \item Déterminer $\lambda$ par interpolation linéaire en $\log-\log$ pour $\mathrm{Re} = 5 \times 10^3$ et
+        $\mathrm{Re} = 2 \times 10^4$.
+
+  \item Comment varie qualitativement $\lambda$ avec $\mathrm{Re}$ ? (décroissant, croissant, constant ?)
+
+  \item Que se passe-t-il pour $\mathrm{Re}$ très grand (turbulent complet) ?
+\end{enumerate}
+
+\textbf{Corrigé — Voir à la fin du livret}
+
+% ============================================================
+\subsection*{Exercice 10 — Erreur fréquente — Homogénéité}
+% ============================================================
+
+\textbf{(Niveau moyen — Détection d'erreur)}
+
+Un technicien propose la formule suivante pour calculer la vitesse moyenne dans une conduite :
+
+\[
+  v_{\text{moy}} = \dot{m} + \dot{V}
+\]
+
+où $\dot{m}$ (kg/s) et $\dot{V}$ (m³/s).
+
+\begin{enumerate}[a)]
+  \item Analyser les dimensions de chaque terme. Cette équation est-elle dimensionnellement homogène ?
+
+  \item Expliquer pourquoi c'est une erreur physique grave.
+
+  \item Donner la bonne formule reliant $v_{\text{moy}}$, $\dot{V}$ et $A$ (section).
+\end{enumerate}
+
+\textbf{Corrigé — Voir à la fin du livret}
+
+\newpage
+
+% ============================================================
+%  CORRIGÉS
+% ============================================================
+
+\section*{Corrigés — Chapitre 00}
+
+\subsection*{Correction Ex. 1 — Vérification d'homogénéité}
+
+\textbf{a)} $\Delta P = \lambda \cdot \dfrac{\ell}{d} \cdot \dfrac{\rho v^2}{2}$
+
+$[\mathrm{Pa}] = [1] \cdot [\mathrm{m/m}] \cdot [\mathrm{kg/m^3} \cdot \mathrm{(m/s)^2}]$
+$= [\mathrm{kg \cdot m^{-1} \cdot s^{-2}}] = [\mathrm{Pa}]$ ✓
+
+\textbf{b)} $\dot{Q} = h \cdot A \cdot \Delta T$
+
+$[\mathrm{W}] = [\mathrm{W/(m^2 \cdot K)}] \cdot [\mathrm{m^2}] \cdot [\mathrm{K}]$
+$= [\mathrm{W}]$ ✓
+
+\textbf{c)} $c = \sqrt{\gamma \cdot P / \rho}$
+
+$[\mathrm{m/s}] = \sqrt{[1] \cdot [\mathrm{Pa} / (\mathrm{kg/m^3})]}$
+$= \sqrt{[\mathrm{kg \cdot m^{-1} \cdot s^{-2}} / \mathrm{kg \cdot m^{-3}}]}$
+$= \sqrt{[\mathrm{m^2/s^2}]} = [\mathrm{m/s}]$ ✓
+
+\textbf{d)} $\Delta P = \rho \cdot v^2$
+
+$[\mathrm{Pa}] = [\mathrm{kg/m^3}] \cdot [\mathrm{(m/s)^2}] = [\mathrm{kg \cdot m^{-1} \cdot s^{-2}}] = [\mathrm{Pa}]$ ✓
+(Cela représente l'énergie cinétique volumique)
+
+\textbf{e)} $P = \dot{V} \times \Delta P$
+
+$[\mathrm{W}] = [\mathrm{m^3/s}] \cdot [\mathrm{Pa}] = [\mathrm{m^3 \cdot kg \cdot m^{-1} \cdot s^{-3}}] = [\mathrm{kg \cdot m^2 \cdot s^{-3}}] = [\mathrm{W}]$ ✓
+
+\subsection*{Correction Ex. 2 — Conversions}
+
+\textbf{a)} $P = 15~\mathrm{kW} = 15\,000~\mathrm{W} = 15\,000 / 4{,}1868 \approx 3\,580~\mathrm{cal/s}$
+
+\textbf{b)} $\dot{V} = 450~\mathrm{m^3/h} = 450 / 3\,600 = 0{,}125~\mathrm{m^3/s} = 450 \times 1000 / 60 = 7\,500~
+\mathrm{L/min}$
+
+\textbf{c)} $\Delta P = 2{,}5~\mathrm{bar} = 2{,}5 \times 10^5~\mathrm{Pa} = 2{,}5 \times 10 \approx 25{,}5~
+\mathrm{mH_2O}$
+
+\textbf{d)} $T = 85~\mathrm{°C} = 85 + 273{,}15 = 358{,}15~\mathrm{K} = 85 \times 9/5 + 32 = 185~\mathrm{°F}$
+
+\textbf{e)} $\dot{m} = 1{,}8~\mathrm{kg/s} = 1{,}800~\mathrm{g/s} = 1{,}8 \times 3\,600 = 6\,480~\mathrm{tonnes/h}$
+
+\textbf{f)} $0{,}035~\mathrm{m^3/s} = 0{,}035 \times 3\,600 = 126~\mathrm{m^3/h} = 126 \times 1000/60 = 2\,100~
+\mathrm{L/min}$
+
+\textbf{g)} $\dot{m} = 250~\mathrm{kg/h} \Rightarrow \dot{V} = 250/1000 = 0{,}25~\mathrm{m^3/h} = 0{,}25/3\,600 \approx
+6{,}94 \times 10^{-5}~\mathrm{m^3/s}$
+
+\subsection*{Correction Ex. 3 — Résolution}
+
+\textbf{a)} $T_{\text{out}} = T_{\text{in}} - \dfrac{\dot{Q}}{\dot{m} \cdot c_p}$
+
+\textbf{b)} $v = \sqrt{\dfrac{2 \cdot \Delta P \cdot d}{\lambda \cdot \ell \cdot \rho}}$
+
+\textbf{c)} $h = \dfrac{\dot{Q}}{A \cdot \Delta T}$
+
+\textbf{d)} $d = \dfrac{\mathrm{Re} \cdot \mu}{\rho \cdot v}$
+
+\textbf{e)} $\Delta P = \dfrac{P_{\text{hyd}}}{\dot{V}}$
+
+\textbf{f)} $T_{\text{w}} = T_{\text{sat}} - \dfrac{\dot{m}_{\text{cond}}}{\alpha \cdot A}$
+
+\subsection*{Correction Ex. 4 — Équations complexes}
+
+\textbf{a)} $d = 2 \sqrt{\dfrac{\dot{V}}{v \cdot \pi}}$
+
+\textbf{b)} $T = \dfrac{c^2}{\gamma \cdot R}$
+
+\textbf{c)} $r_{\text{ext}} = \sqrt{r_{\text{int}}^2 + \dfrac{\dot{m}}{\rho \cdot v \cdot \pi}}$
+
+\textbf{d)} $E_c = \dfrac{\dot{m} \cdot v^2}{2}$
+
+\subsection*{Correction Ex. 5 — Ordre de grandeur}
+
+\textbf{a)} $250~\mathrm{kW}$ est immense pour un petit bâtiment (résidentiel : 10-50 kW). Normal pour immeuble de
+bureaux.
+
+\textbf{b)} $0{,}5~\mathrm{m/s}$ est lent (normes VMC : 2-4 m/s, conduits : 4-6 m/s).
+
+\textbf{c)} $144~\mathrm{m^3/h}$ est excessif pour un immeuble de bureaux (normal : 20-60 m³/h).
+
+\textbf{d)} $\Delta T = -5~\mathrm{K}$ n'a pas de sens physique (échange thermique impliquerait transfert d'énergie
+spontané du froid vers le chaud).
+
+\subsection*{Correction Ex. 6 — Interpolation}
+
+\textbf{a)} À $T = 30~\mathrm{°C}$ (milieu entre 20 et 40) :
+\begin{align*}
+  \rho(30) &= 998{,}2 + (992{,}2 - 998{,}2) \times 0{,}5 = 995{,}2~\mathrm{kg/m^3} \\
+  c_p(30) &= 4{,}182 + (4{,}179 - 4{,}182) \times 0{,}5 \approx 4{,}1805~\mathrm{kJ/(kg \cdot K)} \\
+  \mu(30) &= 1{,}002 \times 10^{-3} + (0{,}653 - 1{,}002) \times 10^{-3} \times 0{,}5 \approx 0{,}8275 \times 10^{-3}~\mathrm{Pa \cdot s}
+\end{align*}
+
+\textbf{b)} À $T = 50~\mathrm{°C}$ (entre 40 et 60, ratio 0,5) :
+\begin{align*}
+  \rho(50) &\approx 987{,}7~\mathrm{kg/m^3} \\
+  c_p(50) &\approx 4{,}182~\mathrm{kJ/(kg \cdot K)} \\
+  \mu(50) &\approx 0{,}5595 \times 10^{-3}~\mathrm{Pa \cdot s}
+\end{align*}
+
+\textbf{c)} À $T = 55~\mathrm{°C}$ (entre 40 et 60, ratio 0,75) : appliquer formule similaire
+
+\subsection*{Correction Ex. 7 — Cas applicatif}
+
+\textbf{a)} $Q = 780~\mathrm{L/min} = 780 \times 60 / 1000 = 46{,}8~\mathrm{m^3/h} = 46{,}8 / 3\,600 = 0{,}013~
+\mathrm{m^3/s}$
+
+\textbf{b)} $\Delta P = 18\,000~\mathrm{Pa} = 0{,}18~\mathrm{bar} = 18\,000 / 10\,000 \approx 1{,}8~\mathrm{mH_2O}$
+
+\textbf{c)} $P_{\text{hyd}} = 0{,}013 \times 18\,000 = 234~\mathrm{W}$
+
+\textbf{d)} $234~\mathrm{W} = 0{,}234~\mathrm{kW} = 0{,}234~\mathrm{kWh/h}$
+
+\textbf{e)} $\eta = 234 / 12\,000 = 1{,}95\,\%$ — Ce rendement est très faible et anormal (devrait être 75-85\%). 
+Il y a une erreur : probablement $P_{\text{mec}}$ en W, pas kW. Correction : $\eta = 234 / 12 = 19{,}5\,\%$ (encore trop bas) 
+ou le débit est mal converti.
+
+\subsection*{Correction Ex. 8 — Analyse dimensionnelle systématique}
+
+\textbf{a)} 
+\begin{align*}
+  [\Delta P] &= \mathrm{kg \cdot m^{-1} \cdot s^{-2}} \\
+  [\rho^\alpha] &= \mathrm{(kg \cdot m^{-3})^\alpha} = \mathrm{kg^\alpha \cdot m^{-3\alpha}} \\
+  [v^\beta] &= \mathrm{(m \cdot s^{-1})^\beta} = \mathrm{m^\beta \cdot s^{-\beta}} \\
+  [\ell^\gamma] &= \mathrm{m^\gamma} \\
+  [d^\delta] &= \mathrm{m^\delta}
+\end{align*}
+
+\textbf{b)} Homogénéité : $\mathrm{kg^1 \cdot m^{-1} \cdot s^{-2}} = \mathrm{kg^\alpha \cdot m^{-3\alpha + \beta + \gamma + \delta} \cdot s^{-\beta}}$
+
+Par identification :
+\begin{align*}
+  \text{kg} : \quad \alpha &= 1 \\
+  \text{s} : \quad -\beta &= -2 \Rightarrow \beta = 2 \\
+  \text{m} : \quad -1 &= -3 + 2 + \gamma + \delta \Rightarrow \gamma + \delta = 0
+\end{align*}
+
+On choisit $\gamma = 1$ (influence de la longueur), alors $\delta = -1$.
+
+\textbf{c)} $\Delta P = k \cdot \rho^1 \cdot v^2 \cdot \ell^1 \cdot d^{-1} = k \cdot \rho \cdot v^2 \cdot \dfrac{\ell}{d}$
+
+\textbf{d)} Comparaison avec Darcy : $\Delta P = \lambda \cdot \dfrac{\ell}{d} \cdot \dfrac{\rho v^2}{2}$. 
+Le coefficient $\lambda/2$ remplace la constante adimensionnelle $k$. L'analyse dimensionnelle ne peut pas déterminer 
+$\lambda$ (c'est un coefficient empirique).
+
+\subsection*{Correction Ex. 9 — Lecture de graphique}
+
+\textbf{a)} En interpolation linéaire en $\log-\log$ entre $(10^3, 0{,}064)$ et $(10^4, 0{,}031)$ :
+
+Pour $\mathrm{Re} = 5 \times 10^3$ (log 3,7) : $\lambda \approx 0{,}046$
+
+Pour $\mathrm{Re} = 2 \times 10^4$ (log 4,3) : $\lambda \approx 0{,}020$
+
+\textbf{b)} $\lambda$ décroît avec $\mathrm{Re}$ (régime lisse).
+
+\textbf{c)} En turbulent complet, $\lambda$ devient constant (plateau).
+
+\subsection*{Correction Ex. 10 — Erreur fréquente}
+
+\textbf{a)} $[\dot{m}] = \mathrm{kg/s}$ et $[\dot{V}] = \mathrm{m^3/s}$. 
+On ne peut pas ajouter : dimensions différentes. L'équation n'est pas homogène. ✗
+
+\textbf{b)} C'est une erreur grave car elle mélange des quantités physiquement différentes (masse et volume).
+
+\textbf{c)} Bonne formule : $v_{\text{moy}} = \dfrac{\dot{V}}{A}$ ou $v_{\text{moy}} = \dfrac{\dot{m}}{\rho \cdot A}$ (où $A$ est 
+la section)
