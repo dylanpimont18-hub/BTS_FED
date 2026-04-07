@@ -649,3 +649,330 @@ T_{\text{retour}} = \frac{18\,000}{4\,908} \approx \mathbf{3{,}7\,\text{ans}}
 \begin{attention}
 La RE2020 évolue par paliers successifs (2025, 2028, 2031) avec des seuils de Cep,nr et d'IC\textsubscript{construction} de plus en plus contraignants. Le technicien GCF doit veiller à se référer aux seuils en vigueur à la date de dépôt du permis de construire, disponibles sur le site officiel \texttt{rt-re2020.fr}.
 \end{attention}
+
+% ============================================================
+\section{Diagrammes et représentations graphiques}
+% ============================================================
+
+\subsection{Diagramme de Sankey simplifié d'un bâtiment résidentiel}
+
+Le diagramme de Sankey ci-dessous illustre les flux d'énergie primaire d'un logement type (chaudière gaz) : de l'énergie primaire consommée aux usages finaux, en passant par les pertes des systèmes et de l'enveloppe.
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+      >=Stealth,
+      node distance=0pt,
+      every node/.style={font=\small},
+      flux/.style={draw, fill=#1, minimum height=#2, minimum width=2.2cm, inner sep=3pt, align=center},
+    ]
+
+    % --- Colonne 1 : énergie primaire ---
+    \node[flux=FedBlue!80!black, minimum height=4cm, minimum width=2.5cm] (EP) at (0,0)
+      {\textcolor{white}{\textbf{Énergie\\primaire\\100~\%\\(gaz)}}};
+
+    % --- Colonne 2 : énergie finale après génération ---
+    \node[flux=FedBlue!50, minimum height=3.2cm, minimum width=2.2cm, right=2.5cm of EP.north east, anchor=north west] (EF)
+      {\textbf{Énergie\\finale\\chaudière\\$\eta=0{,}94$}};
+    % Perte génération
+    \node[flux=FedRed!70, minimum height=0.7cm, minimum width=2.2cm, below=0.05cm of EF.south west, anchor=north west] (PG)
+      {\textcolor{white}{Pertes chaudière 6~\%}};
+
+    % --- Colonne 3 : usages finaux ---
+    \node[flux=FedGreen!70, minimum height=1.6cm, minimum width=2.2cm, right=2.5cm of EF.north east, anchor=north west] (CH)
+      {\textbf{Chauffage\\~65~\%}};
+    \node[flux=FedGreen!40, minimum height=0.8cm, minimum width=2.2cm, below=0.05cm of CH.south west, anchor=north west] (ECS)
+      {ECS\\20~\%};
+    \node[flux=FedOrange!60, minimum height=0.5cm, minimum width=2.2cm, below=0.05cm of ECS.south west, anchor=north west] (AUX)
+      {Auxiliaires\\5~\%};
+    \node[flux=FedRed!50, minimum height=0.4cm, minimum width=2.2cm, below=0.05cm of AUX.south west, anchor=north west] (PD)
+      {\footnotesize Pertes dist.~4~\%};
+
+    % --- Flèches ---
+    \draw[->, line width=3pt, FedBlue!60]
+      (EP.east) -- node[above, midway, font=\footnotesize]{100~\%} ++(2.5,0);
+    \draw[->, line width=2.5pt, FedBlue!50]
+      (EF.east) -- ++(2.5,0);
+    \draw[->, line width=1pt, FedRed!80]
+      (PG.east) -- ++(1.5,0) node[right]{\footnotesize $\rightarrow$ fumées};
+
+    % --- Légende ---
+    \node[below=1.2cm of PD.south, anchor=north, font=\footnotesize, align=center]
+      {Logement 120~m², zone H1a — chaudière gaz condensation ($\eta_{\text{syst}}=0{,}94$)};
+
+  \end{tikzpicture}
+  \caption{Diagramme de Sankey simplifié — flux d'énergie primaire d'un logement résidentiel (chaudière gaz)}
+  \label{fig:sankey-batiment}
+\end{figure}
+
+\subsection{Pyramide des indicateurs RE2020}
+
+La figure suivante représente la hiérarchie des indicateurs RE2020 : le Bbio caractérise la qualité du bâti (base), le Cep,nr quantifie les consommations d'énergie non renouvelable, et l'IC\textsubscript{énergie} traduit l'empreinte carbone globale sur 50 ans.
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[>=Stealth, every node/.style={font=\small}]
+
+    % Niveau 1 (base) — Bbio
+    \fill[FedBlue!70]
+      (-4.5,-0.5) -- (4.5,-0.5) -- (3.2,0.8) -- (-3.2,0.8) -- cycle;
+    \node[text=white, font=\bfseries\small] at (0, 0.15)
+      {Bbio — Besoin bioclimatique (sans unité)};
+    \node[font=\footnotesize, align=center] at (0,-1.0)
+      {Qualité de l'enveloppe, inertie, apports solaires\\
+       \textbf{Bbio $\leq$ Bbio\textsubscript{max} $\times$ M\textsubscript{zone} $\times$ M\textsubscript{alt} $\times$ M\textsubscript{surface}}};
+
+    % Niveau 2 — Cep,nr
+    \fill[FedOrange!80]
+      (-3.2,0.9) -- (3.2,0.9) -- (1.9,2.2) -- (-1.9,2.2) -- cycle;
+    \node[text=white, font=\bfseries\small] at (0, 1.55)
+      {Cep,nr [\si{\kWh_{ep,nr}/m^2/an}]};
+    \node[font=\footnotesize, align=center] at (0, 3.0)
+      {Consommation énergie primaire non renouvelable\\
+       \textbf{Cep,nr $\leq$ 35 à 70~\si{\kWh_{ep,nr}/m^2/an}} selon zone};
+
+    % Niveau 3 (sommet) — IC_énergie
+    \fill[FedGreen!70]
+      (-1.9,2.3) -- (1.9,2.3) -- (0.6,3.4) -- (-0.6,3.4) -- cycle;
+    \node[text=white, font=\bfseries\footnotesize, align=center] at (0, 2.85)
+      {IC\textsubscript{én.}\\[\si{kgCO_2eq}]};
+    \node[font=\footnotesize, align=center] at (0, 4.3)
+      {IC\textsubscript{énergie} [\si{\kgCO_2eq/m^2}]\\
+       Émissions GES énergie sur 50 ans};
+
+    % Flèche DH (latérale)
+    \draw[->, thick, FedRed!80] (4.8, 0.15) -- (3.3, 0.15)
+      node[left, font=\footnotesize]{\textcolor{FedRed!80}{}};
+    \node[right, font=\footnotesize, FedRed!80, align=left] at (4.85, 0.15)
+      {DH $\leq$ 1\,250\,\si{\degreeCelsius\cdot h}\\(confort été)};
+
+    % Flèche IC_construction (latérale)
+    \draw[->, thick, FedGreen!60] (-4.8, 1.55) -- (-3.3, 1.55);
+    \node[left, font=\footnotesize, FedGreen!60, align=right] at (-4.85, 1.55)
+      {IC\textsubscript{construction}\\[\si{kgCO_2eq/m^2}]\\(matériaux)};
+
+    % Titre
+    \node[font=\bfseries, align=center] at (0, 5.1)
+      {Hiérarchie des indicateurs RE2020};
+
+  \end{tikzpicture}
+  \caption{Pyramide des indicateurs réglementaires RE2020 — du bâti (Bbio) aux consommations (Cep,nr) et à l'empreinte carbone (IC\textsubscript{énergie})}
+  \label{fig:pyramide-re2020}
+\end{figure}
+
+\subsection{Comparaison BBC RT2012 / RE2020 — niveaux Cep}
+
+Ce diagramme en barres illustre l'évolution des exigences réglementaires en énergie primaire : du label BBC (2007) jusqu'aux seuils RE2020 par paliers.
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[>=Stealth, every node/.style={font=\small}]
+
+    % Axes
+    \draw[->] (-0.3, 0) -- (10.8, 0) node[right]{\footnotesize Réglementation / Label};
+    \draw[->] (0, -0.3) -- (0, 6.8) node[above, align=center]{\footnotesize Cep ou Cep,nr\\\footnotesize [\si{\kWh_{ep}/m^2/an}]};
+
+    % Graduations axe Y (chaque 0.5 cm = 10 kWh)
+    \foreach \y/\val in {0/0, 1/20, 2/40, 3/60, 4/80, 5/100, 6/120}{
+      \draw (-0.15, \y) -- (0.15, \y);
+      \node[left, font=\footnotesize] at (-0.2, \y) {\val};
+    }
+
+    % Barres (largeur 1.2cm, positions en x)
+    % BBC 2007 : Cep <= 50 kWh_ep -> 2.5 cm
+    \fill[FedBlue!80] (1.0, 0) rectangle (2.2, 2.5)
+      node[above, font=\footnotesize\bfseries, midway, xshift=0pt, yshift=1.5cm]{\textcolor{FedBlue!80}{$\leq 50$}};
+    \node[below, font=\footnotesize, align=center] at (1.6, -0.3) {BBC\\2007};
+
+    % RT2012 : Cep <= 50 kWh_ep -> 2.5 cm (même exigence de base)
+    \fill[FedBlue!60] (3.0, 0) rectangle (4.2, 2.5)
+      node[above, font=\footnotesize\bfseries, midway, xshift=0pt, yshift=1.5cm]{\textcolor{FedBlue!60}{$\leq 50$}};
+    \node[below, font=\footnotesize, align=center] at (3.6, -0.3) {RT2012\\(BBC obligatoire)};
+
+    % RE2020 Cep,nr zone H1a : <= 65 kWh_ep,nr -> 3.25 cm
+    \fill[FedOrange!80] (5.0, 0) rectangle (6.2, 3.25)
+      node[above, font=\footnotesize\bfseries, midway, xshift=0pt, yshift=1.5cm]{\textcolor{FedOrange!80}{$\leq 65$}};
+    \node[below, font=\footnotesize, align=center] at (5.6, -0.3) {RE2020\\H1a (2022)};
+
+    % RE2020 palier 2025 : Cep,nr renforcé ~ 50
+    \fill[FedOrange!60] (7.0, 0) rectangle (8.2, 2.5)
+      node[above, font=\footnotesize\bfseries, midway, xshift=0pt, yshift=1.5cm]{\textcolor{FedOrange!60}{$\leq 50$}};
+    \node[below, font=\footnotesize, align=center] at (7.6, -0.3) {RE2020\\palier 2025};
+
+    % BEPOS / Effinergie+ : Cep,nr <= 0 -> barre symbolique à 0.15 cm
+    \fill[FedGreen!70] (9.0, 0) rectangle (10.2, 0.15);
+    \node[above, font=\footnotesize\bfseries] at (9.6, 0.2){\textcolor{FedGreen!70}{$\approx 0$}};
+    \node[below, font=\footnotesize, align=center] at (9.6, -0.3) {BEPOS\\Effinergie+};
+
+    % Ligne de référence RE2020 seuil maxi
+    \draw[dashed, FedRed!80, thick] (-0.1, 3.5) -- (10.5, 3.5)
+      node[right, font=\footnotesize, FedRed!80]{Seuil RT2012 non labellisé ($\leq 70$)};
+
+    % Note
+    \node[font=\footnotesize, align=left] at (5.0, 6.5)
+      {\textit{Cep en \si{\kWh_{ep}/m^2/an} — logement zone H1a, surface $\geq 100$~m²}};
+
+  \end{tikzpicture}
+  \caption{Évolution des exigences réglementaires en énergie primaire : BBC (2007), RT2012, RE2020 et BEPOS}
+  \label{fig:comparatif-bbc-re2020}
+\end{figure}
+
+% ============================================================
+\section{Exercices}
+% ============================================================
+
+\begin{exercice}[title=Exercice 1 — Indicateurs RE2020 et conformité]
+
+Un bureau de 350~m² (zone H1b, Lyon) est équipé d'une PAC air/eau (SCOP = 3,8) pour le chauffage et d'une chaudière gaz condensation pour l'ECS ($\eta_{\text{syst}} = 0{,}90$).
+
+\textbf{Données :}
+\begin{itemize}
+  \item Besoin chauffage : $Q_{\text{ch}} = \SI{28\,000}{\kWh \per \year}$
+  \item Besoin ECS : $Q_{\text{ECS}} = \SI{5\,600}{\kWh \per \year}$
+  \item $\text{fep,nr}(\text{élec}) = 2{,}3$ ; fraction non renouvelable PAC air/eau : $f_{\text{nr}} = 0{,}60$
+  \item $\text{fep,nr}(\text{gaz}) = 1{,}0$
+  \item Seuil Cep,nr en zone H1b pour bureaux : $\leq \SI{60}{\kWh_{ep,nr} \per \m^2 \per \year}$
+\end{itemize}
+
+\textbf{Questions :}
+\begin{enumerate}
+  \item Calculer la consommation en énergie finale de chaque système.
+  \item Calculer le Cep,nr du bâtiment.
+  \item Le bâtiment est-il conforme à la RE2020 ?
+  \item Quelle modification du système permettrait d'améliorer le Cep,nr ?
+\end{enumerate}
+
+\tcblower
+\textbf{Corrigé :}
+
+\textbf{1. Consommations en énergie finale :}
+\[
+C_{\text{ef,ch}} = \frac{Q_{\text{ch}}}{\text{SCOP}} = \frac{28\,000}{3{,}8} = \SI{7\,368}{\kWh \per \year}
+\]
+\[
+C_{\text{ef,ECS}} = \frac{Q_{\text{ECS}}}{\eta_{\text{syst,gaz}}} = \frac{5\,600}{0{,}90} = \SI{6\,222}{\kWh \per \year}
+\]
+
+\textbf{2. Calcul du Cep,nr :}
+
+Contribution PAC (électricité) :
+\[
+\text{Cep,nr}_{\text{PAC}} = \frac{C_{\text{ef,ch}} \times \text{fep,nr} \times f_{\text{nr}}}{S_{\text{ref}}}
+= \frac{7\,368 \times 2{,}3 \times 0{,}60}{350} = \frac{10\,169}{350} = \SI{29{,}1}{\kWh_{ep,nr} \per \m^2 \per \year}
+\]
+
+Contribution chaudière gaz (ECS) :
+\[
+\text{Cep,nr}_{\text{gaz}} = \frac{C_{\text{ef,ECS}} \times \text{fep,nr}(\text{gaz})}{S_{\text{ref}}}
+= \frac{6\,222 \times 1{,}0}{350} = \SI{17{,}8}{\kWh_{ep,nr} \per \m^2 \per \year}
+\]
+
+Total :
+\[
+\text{Cep,nr} = 29{,}1 + 17{,}8 = \SI{46{,}9}{\kWh_{ep,nr} \per \m^2 \per \year}
+\]
+
+\textbf{3. Conformité RE2020 :}
+$46{,}9 < 60 \; \si{\kWh_{ep,nr} \per \m^2 \per \year}$ \quad \checkmark \quad Le bâtiment est \textbf{conforme} à la RE2020.
+
+\textbf{4. Amélioration possible :}
+Remplacer la chaudière gaz ECS par une PAC thermodynamique dédiée ECS (COP $\approx 2{,}5$) réduirait la contribution ECS au Cep,nr d'environ 30~\%, en supprimant la consommation de gaz fossile.
+
+\end{exercice}
+
+\begin{exercice}[title=Exercice 2 — DPE et classe énergétique]
+
+Un appartement de 75~m² présente les caractéristiques suivantes :
+\begin{itemize}
+  \item Consommation énergie primaire : \SI{195}{\kWh_{ep} \per \m^2 \per \year}
+  \item Émissions de GES : \SI{45}{\kgCO_2eq \per \m^2 \per \year}
+\end{itemize}
+
+\textbf{Questions :}
+\begin{enumerate}
+  \item Quelle est la classe DPE énergie de cet appartement ?
+  \item Quelle est la classe DPE GES ?
+  \item Quelle est la classe DPE retenue ? Justifier.
+  \item Quels travaux prioritaires recommanderiez-vous pour atteindre la classe C ?
+\end{enumerate}
+
+\tcblower
+\textbf{Corrigé :}
+
+\textbf{1. Classe DPE énergie :}
+
+D'après le tableau des seuils DPE 2021 : $180 < 195 \leq 250$ $\Rightarrow$ \textbf{Classe D}.
+
+\textbf{2. Classe DPE GES :}
+
+$30 < 45 \leq 50$ $\Rightarrow$ \textbf{Classe D}.
+
+\textbf{3. Classe DPE retenue :}
+
+La classe retenue est la \textbf{moins favorable} des deux. Les deux classes sont D, donc la classe DPE est \textbf{D}.
+
+\textbf{4. Travaux pour atteindre la classe C :}
+
+Pour passer de D à C, il faut atteindre $\leq 180\;\si{\kWh_{ep} \per \m^2 \per \year}$ et $\leq 30\;\si{\kgCO_2eq \per \m^2 \per \year}$. Les actions prioritaires sont :
+\begin{itemize}
+  \item Isolation des combles et des parois (gain estimé : $-20$ à $-30$~\% sur les besoins).
+  \item Remplacement du système de chauffage (chaudière ancienne $\rightarrow$ PAC ou chaudière gaz condensation).
+  \item Installation d'une VMC double flux pour récupérer la chaleur de l'air extrait.
+  \item Remplacement des fenêtres simple vitrage par double vitrage faible émissivité.
+\end{itemize}
+
+\end{exercice}
+
+\begin{exercice}[title=Exercice 3 — Temps de retour sur investissement PAC]
+
+Un gestionnaire de bâtiment tertiaire (bureaux, 500~m², zone H2a — Bordeaux) souhaite remplacer sa chaudière gaz fioul (rendement 78~\%) par une PAC air/eau (SCOP = 3,2). Le besoin en chauffage annuel est de $\SI{40\,000}{\kWh \per \year}$.
+
+\textbf{Données économiques :}
+\begin{itemize}
+  \item Prix du fioul : \SI{0{,}12}{\euro \per \kWh}
+  \item Prix de l'électricité : \SI{0{,}18}{\euro \per \kWh}
+  \item Coût d'installation PAC (après MaPrimeRénov' et CEE) : \SI{14\,000}{\euro}
+\end{itemize}
+
+\textbf{Questions :}
+\begin{enumerate}
+  \item Calculer la consommation annuelle en énergie finale de la chaudière fioul.
+  \item Calculer la consommation annuelle en électricité de la PAC.
+  \item Calculer les coûts annuels de chaque solution.
+  \item Calculer le temps de retour sur investissement.
+\end{enumerate}
+
+\tcblower
+\textbf{Corrigé :}
+
+\textbf{1. Consommation fioul (chaudière existante) :}
+\[
+C_{\text{ef,fioul}} = \frac{Q_{\text{ch}}}{\eta} = \frac{40\,000}{0{,}78} = \SI{51\,282}{\kWh \per \year}
+\]
+
+\textbf{2. Consommation électrique PAC :}
+\[
+C_{\text{ef,élec,PAC}} = \frac{Q_{\text{ch}}}{\text{SCOP}} = \frac{40\,000}{3{,}2} = \SI{12\,500}{\kWh \per \year}
+\]
+
+\textbf{3. Coûts annuels :}
+\[
+\text{Coût fioul} = 51\,282 \times 0{,}12 = \SI{6\,154}{\euro \per \year}
+\]
+\[
+\text{Coût PAC} = 12\,500 \times 0{,}18 = \SI{2\,250}{\euro \per \year}
+\]
+
+\textbf{4. Temps de retour sur investissement :}
+\[
+\Delta C_{\text{annuel}} = 6\,154 - 2\,250 = \SI{3\,904}{\euro \per \year}
+\]
+\[
+TRI = \frac{C_{\text{invest}}}{\Delta C_{\text{annuel}}} = \frac{14\,000}{3\,904} \approx \mathbf{3{,}6\,\text{ans}}
+\]
+
+\textbf{Conclusion :} Avec un TRI de moins de 4 ans, l'investissement dans la PAC est très rentable. De plus, le bâtiment bénéficiera d'une réduction du Cep,nr, améliorant sa conformité réglementaire et la valeur verte du bâtiment.
+
+\end{exercice}
+
+\finchapitre

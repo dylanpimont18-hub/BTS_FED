@@ -655,3 +655,309 @@ Pompes de distribution : $P_{pompes} = \SI{2{,}0}{\kilo\watt}$ (deux pompes en p
 
   \item[NF EN 15251] Critères d'ambiance intérieure été : température opérative maximale selon catégorie (I : 25\,°C, II : 26\,°C, III : 27\,°C) pour les bâtiments non refroidis mécaniquement.
 \end{description}
+
+% ============================================================
+\section{Centrale de Traitement d'Air (CTA)}
+% ============================================================
+
+\subsection{Principe et composition fonctionnelle}
+
+Une \textbf{Centrale de Traitement d'Air (CTA)} est un équipement qui conditionne l'air neuf (ou un mélange air neuf/air repris) avant soufflage dans les locaux. Elle assure filtration, chauffage ou refroidissement, humidification et débit réglable.
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+    x=1cm, y=1cm,
+    bloc/.style={rectangle, draw=FedBlue, fill=FedBlue!12, minimum width=1.6cm,
+                 minimum height=1.0cm, align=center, font=\footnotesize\bfseries},
+    fleche/.style={->, >=Stealth, thick, FedBlue},
+    etiq/.style={font=\tiny, FedBlue!80!black, align=center}
+  ]
+
+    % Flux d'air : de gauche à droite
+    % Blocs espacés de 2 cm, y=0
+    % 1 Prise d'air neuf (0,0)
+    % 2 Filtre (2,0)
+    % 3 Récupérateur (4,0)
+    % 4 Batterie chaude (6,0)
+    % 5 Humidificateur (8,0)
+    % 6 Batterie froide (10,0)
+    % 7 Ventilateur soufflage (12,0)
+    % 8 Sortie (14,0)
+
+    % Flèche d'entrée air neuf
+    \draw[fleche] (-1.2, 0) -- (-0.05, 0);
+    \node[left, font=\scriptsize, FedBlue] at (-1.2, 0) {Air neuf};
+
+    % Blocs
+    \node[bloc] (filtre) at (1.2, 0) {Filtre\\G4/F7};
+    \node[bloc] (recup)  at (3.4, 0) {Récup.\\chaleur};
+    \node[bloc, fill=FedOrange!18, draw=FedOrange] (chaud) at (5.6, 0) {Batterie\\chaude};
+    \node[bloc, fill=FedGreen!18, draw=FedGreen]   (humif) at (7.8, 0) {Humidi-\\ficateur};
+    \node[bloc, fill=FedBlue!25, draw=FedBlue]     (froid) at (10.0,0) {Batterie\\froide};
+    \node[bloc, fill=FedOrange!10, draw=FedOrange] (vent)  at (12.2,0) {Ventil.\\soufflage};
+
+    % Flèches entre blocs
+    \foreach \a/\b in {filtre/recup, recup/chaud, chaud/humif, humif/froid, froid/vent}{
+      \draw[fleche] (\a.east) -- (\b.west);
+    }
+
+    % Flèche de sortie
+    \draw[fleche] (vent.east) -- ++(1.2, 0);
+    \node[right, font=\scriptsize, FedBlue] at (13.4, 0) {Air\\soufflé};
+
+    % Étiquettes sous chaque bloc
+    \node[etiq] at (1.2, -0.85)  {Élim.\\particules};
+    \node[etiq] at (3.4, -0.85)  {Échange air\\repris/neuf};
+    \node[etiq, FedOrange!80!black] at (5.6, -0.85) {Préchauffage\\hiver};
+    \node[etiq, FedGreen!70!black] at (7.8, -0.85)  {Ajout vapeur\\hiver};
+    \node[etiq] at (10.0,-0.85)  {Refroid.\\déshumid.};
+    \node[etiq, FedOrange!80!black] at (12.2,-0.85) {Mise en\\mouvement};
+
+    % Flèche air repris (retour)
+    \draw[->, >=Stealth, dashed, gray!70, thick]
+      (14.6, -1.8) -- (-1.0, -1.8)
+      node[midway, below, font=\scriptsize, gray!70] {Air repris (retour locaux)};
+    \draw[->, >=Stealth, dashed, gray!70] (-1.0,-1.8) -- (-1.0,-0.1);
+
+    % Légende couleurs
+    \node[rectangle, fill=FedOrange!18, draw=FedOrange, font=\tiny, inner sep=2pt]
+      at (3.0, -2.8) {Thermique};
+    \node[rectangle, fill=FedGreen!18, draw=FedGreen, font=\tiny, inner sep=2pt]
+      at (5.2, -2.8) {Hydrique};
+    \node[rectangle, fill=FedBlue!25, draw=FedBlue, font=\tiny, inner sep=2pt]
+      at (7.2, -2.8) {Refroidissement};
+
+  \end{tikzpicture}
+  \caption{Schéma fonctionnel d'une CTA — séquence de traitement de l'air neuf}
+  \label{fig:schema_cta}
+\end{figure}
+
+\begin{table}[H]
+  \centering
+  \caption{Fonctions d'une CTA et régulation associée}
+  \begin{tabular}{p{3cm}p{4.5cm}p{4cm}}
+    \toprule
+    Fonction & Grandeur régulée & Actionneur \\
+    \midrule
+    Filtration & Perte de charge (alarme encrassement) & Pressostat différentiel \\
+    Récupération chaleur & Rendement $\geq$ 70\,\% (RE2020) & Bypass registre \\
+    Chauffage & Température soufflage (ex. 20\,°C) & Vanne 3 voies batterie eau \\
+    Humidification & Humidité relative (ex. 40–60\,\%) & Vanne vapeur ou by-pass \\
+    Refroidissement/déshumidification & Température et $H_r$ soufflage & Vanne 3 voies batterie froide \\
+    Ventilation & Débit d'air neuf (m³/h) & Variateur de vitesse (VSV) \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% ============================================================
+\section{Diagramme psychrométrique — Traitement de l'air}
+% ============================================================
+
+\subsection{Rappels et lecture du diagramme de l'air humide}
+
+Le \textbf{diagramme psychrométrique} (ou diagramme de l'air humide) représente l'état thermodynamique de l'air humide à pression atmosphérique (101,325\,kPa). Ses axes principaux sont la \textbf{température sèche} $T_s$ (°C) en abscisse et l'\textbf{humidité spécifique} $w$ (g\textsubscript{vapeur}/kg\textsubscript{air sec}) en ordonnée.
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[x=0.38cm, y=0.45cm, >=Stealth]
+
+    % ---- Axes ----
+    \draw[thick,->] (0,0) -- (32,0)
+      node[right, font=\small] {$T_s$ (°C)};
+    \draw[thick,->] (0,0) -- (0,24)
+      node[above, font=\small] {$w$ (g/kg\textsubscript{as})};
+
+    % Graduations axe X : 0 à 30°C tous les 5°C
+    \foreach \t/\x in {0/0,5/5,10/10,15/15,20/20,25/25,30/30}{
+      \draw (\x, -0.2) -- (\x, 0);
+      \node[below, font=\tiny] at (\x,0) {\t};
+    }
+    % Graduation axe Y : 0 à 22 g/kg tous les 2
+    \foreach \w/\y in {0/0,2/2,4/4,6/6,8/8,10/10,12/12,14/14,16/16,18/18,20/20,22/22}{
+      \draw (-0.2,\y) -- (0,\y);
+      \node[left, font=\tiny] at (0,\y) {\w};
+    }
+
+    % Grille légère
+    \foreach \x in {0,5,10,15,20,25,30}{
+      \draw[gray!25] (\x,0) -- (\x,23);
+    }
+    \foreach \y in {0,2,4,6,8,10,12,14,16,18,20,22}{
+      \draw[gray!25] (0,\y) -- (31,\y);
+    }
+
+    % ---- Courbe de saturation HR=100% ----
+    % Valeurs approchées w_sat(T) en g/kg :
+    % T=0  → w≈3.8  ; T=5  → w≈5.5  ; T=10 → w≈7.7
+    % T=15 → w≈10.7 ; T=20 → w≈14.8 ; T=25 → w≈20.1 ; T=28 → w≈24
+    \draw[FedBlue, very thick]
+      (0, 3.8) .. controls (3,4.5) and (6,6.0) ..
+      (10, 7.7) .. controls (13,9.0) and (16,11.5) ..
+      (20, 14.8) .. controls (23,17.5) and (27,21.0) ..
+      (30, 24.0);
+    \node[FedBlue, font=\tiny\bfseries, rotate=55] at (26.5, 22.5)
+      {$HR = 100\,\%$};
+
+    % ---- Courbes HR = 50% et HR = 30% ----
+    % w_50(T) ≈ w_sat(T)/2
+    \draw[FedBlue!60, dashed]
+      (0, 1.9) .. controls (6,3.0) and (12,5.2) ..
+      (20, 7.4) .. controls (25,10.0) and (28,12.0) ..
+      (30, 12.0);
+    \node[FedBlue!70, font=\tiny, rotate=30] at (26, 11.5) {$HR=50\,\%$};
+
+    \draw[FedBlue!40, dashed]
+      (0, 1.1) .. controls (6,1.8) and (12,3.1) ..
+      (20, 4.4) .. controls (26,6.0) and (29,7.0) ..
+      (30, 7.2);
+    \node[FedBlue!50, font=\tiny, rotate=25] at (26, 6.5) {$HR=30\,\%$};
+
+    % ---- Points caractéristiques ----
+    % Point A : Air repris (22°C, w=9 g/kg, HR≈50%)
+    \filldraw[FedOrange] (22, 9) circle (3.5pt);
+    \node[above right, font=\small\bfseries, FedOrange] at (22,9)
+      {A — Air repris};
+    \node[below right, font=\tiny, FedOrange] at (22,8.2)
+      {$T_s=22$°C, $w=9$\,g/kg};
+
+    % Point B : Air soufflé refroidi/déshumidifié (13°C, w=7 g/kg)
+    \filldraw[FedGreen] (13, 7) circle (3.5pt);
+    \node[above left, font=\small\bfseries, FedGreen] at (13,7)
+      {B — Air soufflé};
+    \node[below left, font=\tiny, FedGreen] at (13,6.2)
+      {$T_s=13$°C, $w=7$\,g/kg};
+
+    % Point C : Air extérieur chaud (34°C, w=15 g/kg)
+    \filldraw[FedRed] (34,15) circle (3.5pt) node[right, font=\tiny\bfseries, FedRed]
+      {C — Ext. été\\$T_s=34$°C, $w=15$};
+
+    % Flèche A→B : refroidissement + déshumidification (batterie froide)
+    \draw[->, very thick, FedBlue, dashed]
+      (22,9) -- (13,7)
+      node[midway, above, font=\tiny, FedBlue, sloped]
+        {Refroidissement + déshumidification};
+
+    % Flèche C→A : mélange air neuf/repris ou séquence traitement
+    \draw[->, thick, FedRed!70, dashed]
+      (30,15) -- (22,9)
+      node[midway, below, font=\tiny, FedRed!80, sloped]
+        {Mélange ou traitement};
+
+    % Légende
+    \node[fill=FedOrange!15, draw=FedOrange, rounded corners, font=\tiny,
+          inner sep=3pt, align=left] at (6, 19) {
+      \textbf{Légende}\\
+      A = Air repris ambiance\\
+      B = Air soufflé (batterie froide)\\
+      C = Air extérieur été
+    };
+
+  \end{tikzpicture}
+  \caption{Diagramme psychrométrique simplifié — traitement d'air été (points A, B, C)}
+  \label{fig:diag_psychro}
+\end{figure}
+
+\begin{definition}[title=Humidité spécifique et enthalpie de l'air humide]
+\begin{align}
+  w &= \frac{m_{vapeur}}{m_{air\,sec}} \qquad \left[\text{kg}_v/\text{kg}_{as}\right]\\
+  h &= c_{pa}\,T + w\,(l_0 + c_{pv}\,T) \approx 1{,}006\,T + w\,(2501 + 1{,}86\,T) \qquad \left[\si{\kilo\joule\per\kilogram_{as}}\right]
+\end{align}
+avec $c_{pa} \approx 1{,}006$\,kJ/(kg·K), $l_0 = 2501$\,kJ/kg (chaleur latente à 0\,°C), $c_{pv} \approx 1{,}86$\,kJ/(kg·K).
+\end{definition}
+
+% ============================================================
+\section{Free-cooling aéraulique — schéma de principe}
+% ============================================================
+
+\subsection{Principe de l'économiseur à registres}
+
+Le free-cooling aéraulique consiste à augmenter la proportion d'air extérieur dans la CTA lorsque sa température est inférieure à la consigne du local. Des \textbf{registres motorisés} pilotés par une sonde comparent $T_{ext}$ et $T_{int}$.
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+    x=1cm, y=1cm, >=Stealth,
+    bloc/.style={rectangle, draw=FedBlue, fill=FedBlue!10,
+                 minimum width=1.8cm, minimum height=1.0cm,
+                 align=center, font=\footnotesize},
+    reg/.style={rectangle, draw=FedOrange, fill=FedOrange!15,
+                minimum width=0.5cm, minimum height=0.9cm,
+                align=center, font=\tiny\bfseries, FedOrange},
+    sonde/.style={circle, draw=FedGreen, fill=FedGreen!20,
+                  minimum size=0.6cm, font=\tiny\bfseries, FedGreen}
+  ]
+
+    % Boîte CTA
+    \draw[thick, FedBlue, rounded corners=4pt]
+      (2.0, -0.8) rectangle (10.5, 3.2);
+    \node[FedBlue, font=\footnotesize\bfseries] at (6.25, 3.5) {CTA};
+
+    % Conduit air neuf (gauche, haut)
+    \draw[thick] (0, 2.2) -- (2.0, 2.2);
+    \node[left, font=\scriptsize] at (0, 2.2) {Air neuf\\$T_{ext}$};
+
+    % Conduit air repris (gauche, bas)
+    \draw[thick] (0, 0.4) -- (2.0, 0.4);
+    \node[left, font=\scriptsize] at (0, 0.4) {Air repris\\$T_{int}$};
+
+    % Registre air neuf
+    \node[reg] (rAN) at (2.5, 2.2) {R1};
+
+    % Registre air repris
+    \node[reg] (rAR) at (2.5, 0.4) {R2};
+
+    % Mélange → CTA
+    \draw[thick, ->] (2.75, 2.2) -- (4.0, 1.3);
+    \draw[thick, ->] (2.75, 0.4) -- (4.0, 1.3);
+
+    % Bloc filtre + traitement
+    \node[bloc] (cta) at (5.8, 1.3) {Filtre\\+ Batterie\\+ Ventil.};
+
+    % Sortie soufflage
+    \draw[thick, ->] (6.7, 1.3) -- (10.5, 1.3);
+    \draw[thick, ->] (10.5, 1.3) -- (11.8, 1.3);
+    \node[right, font=\scriptsize] at (11.8, 1.3) {Air soufflé\\locaux};
+
+    % Registre rejet (haut droite)
+    \node[reg] (rRejet) at (8.5, 2.8) {R3};
+    \draw[thick] (8.5, 1.3) -- (8.5, 2.5);
+    \draw[thick, ->] (8.5, 3.1) -- (8.5, 4.0)
+      node[above, font=\scriptsize] {Rejet air vicié};
+
+    % Sondes
+    \node[sonde] (sext) at (-0.5, 2.2) {$T_e$};
+    \node[sonde] (sint) at (-0.5, 0.4) {$T_i$};
+
+    % Régulateur
+    \draw[thick, FedGreen, dashed] (-0.5, 1.3) ellipse (0.5cm and 1.3cm);
+    \node[font=\tiny\bfseries, FedGreen] at (-0.5, 1.3) {Régul.};
+
+    % Lien régulateur → registres
+    \draw[dashed, FedGreen, ->] (-0.2, 1.3) -- (2.2, 2.2)
+      node[midway, above, font=\tiny, sloped, FedGreen] {};
+    \draw[dashed, FedGreen, ->] (-0.2, 1.3) -- (2.2, 0.4);
+
+    % Condition de basculement
+    \node[fill=FedOrange!10, draw=FedOrange, rounded corners, font=\tiny,
+          inner sep=4pt, align=center] at (6.0, -1.6) {
+      \textbf{Free-cooling activé} si $T_{ext} < T_{int} - \Delta T_{seuil}$ (typiq. $\Delta T = 2$\,K)\\
+      R1 s'ouvre, R2 se ferme, R3 s'ouvre (rejet air repris)
+    };
+
+  \end{tikzpicture}
+  \caption{Schéma de principe du free-cooling aéraulique à économiseur (registres R1/R2/R3)}
+  \label{fig:free_cooling}
+\end{figure}
+
+\begin{methode}[title=Critère d'activation du free-cooling aéraulique]
+Le régulateur compare en permanence la température extérieure $T_{ext}$ et la température intérieure $T_{int}$ :
+\begin{itemize}
+  \item Si $T_{ext} < T_{int} - 2\,\text{K}$ : \textbf{mode free-cooling} — R1 (air neuf) s'ouvre à 100\,\%, R2 (recirculation) se ferme, R3 (rejet) s'ouvre.
+  \item Si $T_{ext} \geq T_{int}$ : \textbf{mode refroidissement mécanique} — R1 au débit minimal réglementaire, R2 en recirculation, cycle frigorifique actif.
+\end{itemize}
+
+\textbf{Économies potentielles :} jusqu'à 60--70\,\% des heures de fonctionnement en free-cooling pour les bâtiments tertiaires en France (hors zones côtières très chaudes).
+\end{methode}
+
+\finchapitre

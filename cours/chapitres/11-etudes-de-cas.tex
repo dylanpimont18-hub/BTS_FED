@@ -47,6 +47,65 @@ Le technicien supérieur GCF est régulièrement amené à produire des études 
   numériques et la sélection du matériel. Elle doit être \textbf{traçable, vérifiable et justifiée}.
 \end{definition}
 
+% --- Organigramme de la démarche de dimensionnement CVC ---
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+    font=\small,
+    etape/.style={draw=FedBlue, fill=FedBlue!12, rectangle, rounded corners=4pt,
+                  minimum width=5.8cm, minimum height=0.85cm, align=center,
+                  text=black, thick},
+    decision/.style={draw=FedOrange, fill=FedOrange!15, diamond, aspect=2.8,
+                     minimum width=5.2cm, minimum height=0.85cm, align=center,
+                     text=black, thick, font=\footnotesize},
+    result/.style={draw=FedGreen, fill=FedGreen!15, rectangle, rounded corners=4pt,
+                   minimum width=5.8cm, minimum height=0.85cm, align=center,
+                   text=black, thick},
+    fleche/.style={-Latex, thick, draw=FedBlue!70},
+    node distance=0.45cm
+  ]
+
+  % --- Étapes verticales ---
+  \node[etape]   (e1) {1. Collecte des données};
+  \node[etape,   below=of e1] (e2) {2. Bilan thermique d'hiver (NF EN 12831)};
+  \node[etape,   below=of e2] (e3) {3. Bilan de refroidissement d'été};
+  \node[etape,   below=of e3] (e4) {4. Sélection des générateurs (PAC, chaudière, GF)};
+  \node[etape,   below=of e4] (e5) {5. Dimensionnement réseau hydraulique};
+  \node[etape,   below=of e5] (e6) {6. Dimensionnement réseau aéraulique / CTA};
+  \node[etape,   below=of e6] (e7) {7. Choix des émetteurs};
+  \node[etape,   below=of e7] (e8) {8. Régulation et GTB};
+  \node[decision,below=of e8] (d1) {Conformité RE2020 vérifiée ?};
+  \node[result,  below=of d1] (e9) {9. Note de calcul finalisée};
+
+  % --- Flèches principales ---
+  \foreach \from/\to in {e1/e2, e2/e3, e3/e4, e4/e5, e5/e6, e6/e7, e7/e8, e8/d1, d1/e9}{
+    \draw[fleche] (\from) -- (\to);
+  }
+
+  % --- Branche "Non" : retour vers générateurs ---
+  \draw[fleche, draw=FedRed, dashed]
+    (d1.east) -- ++(1.8,0)
+    node[midway, above, font=\scriptsize, text=FedRed]{Non}
+    -- ++(0, 5.8)
+    |- (e4.east);
+
+  % --- Label "Oui" ---
+  \node[font=\scriptsize, text=FedGreen, right=2pt] at (d1.south) {Oui};
+
+  % --- Annotations latérales ---
+  \node[font=\scriptsize, text=FedBlue!70, right=0.9cm, align=left] at (e2.east)
+    {$\Phi_{ch} = (H_T+H_V)\cdot\Delta T$};
+  \node[font=\scriptsize, text=FedBlue!70, right=0.9cm, align=left] at (e5.east)
+    {Darcy-Weisbach, $\Delta P$, pompes};
+  \node[font=\scriptsize, text=FedBlue!70, right=0.9cm, align=left] at (e6.east)
+    {SFP, $q_v$, gaines};
+
+  \end{tikzpicture}
+  \caption{Organigramme de la démarche de dimensionnement CVC : des données d'entrée
+    jusqu'à la note de calcul finalisée. La boucle de correction (en rouge, pointillé)
+    s'applique si la vérification réglementaire RE2020 n'est pas satisfaite.}
+\end{figure}
+
 \subsection{Notion de pincement thermique}
 
 \begin{definition}[title={Pincement thermique (temperature pinch)}]
@@ -770,3 +829,5 @@ acoustique et hydraulique.
   Le R-410A (GWP\,=\,2\,088) est \textbf{interdit pour les équipements neufs} depuis le
   1\textsuperscript{er} janvier 2025 ; privilégier R-32 (GWP\,=\,675) ou R-290 (GWP\,=\,3).
 \end{attention}
+
+\finchapitre

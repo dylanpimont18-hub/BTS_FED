@@ -89,6 +89,42 @@ Seuil de douleur & 120 & Dangereux \\
 \end{tabular}
 \end{center}
 
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[x=0.12cm, y=0.5cm]
+    % Axe vertical (dB)
+    \draw[thick, -Stealth] (0,0) -- (0,13.5) node[above, font=\small\bfseries] {$L_p$ (dB)};
+    % Graduations et barres horizontales
+    \foreach \y/\lab in {0/0, 3/30, 5/50, 6/60, 7.5/75, 9/90, 10/100, 12/120}{
+      \draw[gray!40] (0,\y) -- (110,\y);
+      \node[left, font=\footnotesize] at (0,\y) {\lab};
+    }
+    % Barres colorées par niveau
+    % Silence / chambre (0-30) — FedGreen
+    \fill[FedGreen!70] (2,0) rectangle (18,3);
+    \node[font=\tiny, text=white, rotate=90, anchor=south] at (10,1.5) {Silence / nuit};
+    % Bureau calme (30-50) — FedBlue!60
+    \fill[FedBlue!60] (20,3) rectangle (36,5);
+    \node[font=\tiny, text=white, rotate=90, anchor=south] at (28,4) {Bureau calme};
+    % Conversation (50-60) — FedBlue
+    \fill[FedBlue] (38,5) rectangle (54,6);
+    \node[font=\tiny, text=white, rotate=90, anchor=south] at (46,5.5) {Conversation};
+    % Local technique (60-90) — FedOrange
+    \fill[FedOrange!80] (56,6) rectangle (72,9);
+    \node[font=\tiny, text=white, rotate=90, anchor=south] at (64,7.5) {Local technique};
+    % Machinerie (90-100) — FedRed!80
+    \fill[FedRed!80] (74,9) rectangle (90,10);
+    \node[font=\tiny, text=white, rotate=90, anchor=south] at (82,9.5) {Machinerie};
+    % Seuil douleur (120) — FedRed
+    \fill[FedRed] (92,10) rectangle (108,12);
+    \node[font=\tiny, text=white, rotate=90, anchor=south] at (100,11) {Seuil douleur};
+    % Axe horizontal fictif
+    \draw[thick] (0,0) -- (110,0);
+  \end{tikzpicture}
+  \caption{Échelle des niveaux sonores courants — repères pratiques pour le technicien GCF}
+  \label{fig:echelle-db}
+\end{figure}
+
 \subsection{Addition de sources sonores}
 
 \begin{methode}
@@ -328,6 +364,59 @@ Diffuseur basse vitesse & 1,5--2,5 & Locaux calmes \\
 Chaque réduction de vitesse de 20~\% dans une gaine réduit le bruit auto-induit de environ 6~dB. Le surdimensionnement des gaines est la première mesure acoustique à adopter.
 \end{attention}
 
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+      node distance=0pt,
+      gaine/.style={draw=FedBlue, very thick, fill=FedBlue!10, minimum height=1cm},
+      att/.style={draw=FedOrange, thick, fill=FedOrange!15, font=\scriptsize, align=center,
+                  minimum width=1.8cm, minimum height=0.7cm},
+      label above/.style={font=\scriptsize, above=4pt},
+      arrow/.style={-Stealth, thick, FedBlue}
+    ]
+    % Source (ventilateur)
+    \node[draw=FedRed, thick, fill=FedRed!15, rounded corners=4pt,
+          minimum width=1.8cm, minimum height=1.2cm, align=center, font=\scriptsize\bfseries]
+      (vent) at (0,0) {Ventilateur\\$L_w$};
+    % Gaine principale
+    \draw[gaine] (1.0,-0.5) rectangle (3.5,0.5);
+    \node[font=\scriptsize, FedBlue!80] at (2.25,0) {Gaine princ.};
+    % Coude 90°
+    \node[att, draw=FedOrange] (coude) at (4.6,0) {Coude 90°\\$-3$ à $-4$\,dB};
+    % Gaine secondaire gauche
+    \draw[gaine] (5.8,-0.5) rectangle (8.0,0.5);
+    \node[font=\scriptsize, FedBlue!80] at (6.9,0) {Gaine sec.};
+    % Bifurcation (piquage)
+    \node[att, draw=FedOrange] (piq) at (9.2,0) {Piquage\\$-6$\,dB};
+    % Branche principale après piquage
+    \draw[gaine] (10.4,-0.5) rectangle (12.2,0.5);
+    % Silencieux
+    \node[att, draw=FedGreen, fill=FedGreen!15] (sil) at (13.4,0) {Silencieux\\$-15$ à $-25$\,dB};
+    % Terminal
+    \draw[arrow] (14.5,-0.02) -- (15.6,-0.02);
+    \node[draw=FedGreen, thick, fill=FedGreen!20, rounded corners=3pt,
+          minimum width=1.5cm, minimum height=0.8cm, font=\scriptsize\bfseries, align=center]
+      (term) at (16.5,0) {Terminal\\diffuseur};
+    % Piquage secondaire vers le bas
+    \draw[arrow] (9.2,-0.5) -- (9.2,-1.6);
+    \node[att, draw=FedOrange] at (9.2,-2.3) {Branche\\secondaire};
+    % Flèches de flux
+    \draw[arrow] (vent.east) -- (1.0,0);
+    \draw[arrow] (3.5,0) -- (coude.west);
+    \draw[arrow] (coude.east) -- (5.8,0);
+    \draw[arrow] (8.0,0) -- (piq.west);
+    \draw[arrow] (piq.east) -- (10.4,0);
+    \draw[arrow] (12.2,0) -- (sil.west);
+    \draw[arrow] (sil.east) -- (15.6,0);
+    % Annotations niveaux
+    \node[font=\scriptsize, FedRed] at (0, 1.2) {$L_w$\,=\,85\,dB (ex.)};
+    \node[font=\scriptsize, FedOrange] at (6.9, 1.0) {$-0{,}5$\,dB/m (flex)};
+    \node[font=\scriptsize, FedGreen] at (16.5, 1.0) {Ambiance\,$\leq$\,NC\,35};
+  \end{tikzpicture}
+  \caption{Propagation sonore dans un réseau aéraulique — chaîne des atténuations de la source au local desservi}
+  \label{fig:reseau-gaines}
+\end{figure}
+
 \subsection{Bruit des terminaux et diffuseurs}
 
 Les terminaux (bouches, grilles, diffuseurs, inducteurs) ont une courbe NC (\textit{Noise Criteria}) ou NR (\textit{Noise Rating}) fournie par le constructeur en fonction du débit. Le dimensionnement acoustique consiste à choisir le terminal pour que son niveau NC soit inférieur à l'exigence du local :
@@ -475,6 +564,45 @@ Atténuation (dB) & 5 & 12 & 20 & 25 & 22 & 18 \\
 \bottomrule
 \end{tabular}
 \end{center}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[scale=1.0]
+    % ---- Parois de la gaine (enveloppe extérieure) ----
+    \fill[FedBlue!15] (0,0) rectangle (8,3);
+    \draw[FedBlue, very thick] (0,0) rectangle (8,3);
+    % ---- Baffles absorbants (5 lames) ----
+    \foreach \x in {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0}{
+      \fill[FedGreen!50] (\x-0.15, 0) rectangle (\x+0.15, 3);
+      \draw[FedGreen!80, thin] (\x-0.15, 0) rectangle (\x+0.15, 3);
+    }
+    % ---- Canaux libres entre baffles — hachures pour symboliser laine ----
+    \foreach \x in {0.0, 1.15, 2.15, 3.15, 4.15, 5.15, 6.15, 7.15}{
+      \fill[FedBlue!5] (\x+0.01, 0.02) rectangle (\x+0.84, 2.98);
+    }
+    % ---- Flèches d'air (écoulement) ----
+    \foreach \y in {0.5, 1.5, 2.5}{
+      \draw[-Stealth, thick, FedOrange] (-0.8, \y) -- (-0.05, \y);
+      \draw[-Stealth, thick, FedOrange] (8.05, \y) -- (8.8, \y);
+    }
+    % ---- Cotes ----
+    \draw[|<->|, thin] (0,-0.5) -- (8,-0.5) node[midway, below, font=\scriptsize] {Longueur active $L$};
+    \draw[|<->|, thin] (-0.5,0) -- (-0.5,3) node[midway, left, font=\scriptsize, align=right] {Hauteur\\de gaine};
+    \draw[|<->|, thin, FedGreen] (1.15,3.4) -- (2.0,3.4) node[midway, above, font=\tiny] {$d$\,(canal libre)};
+    % ---- Légende baffles ----
+    \fill[FedGreen!50] (9.2, 2.2) rectangle (9.6, 2.6);
+    \draw[FedGreen!80] (9.2, 2.2) rectangle (9.6, 2.6);
+    \node[right, font=\scriptsize] at (9.65, 2.4) {Baffle absorbant};
+    \node[right, font=\scriptsize] at (9.65, 1.8) {(laine de verre/mousse)};
+    \draw[-Stealth, thick, FedOrange] (9.2, 1.2) -- (9.6, 1.2);
+    \node[right, font=\scriptsize] at (9.65, 1.2) {Flux d'air};
+    % ---- Titre interne ----
+    \node[font=\footnotesize\bfseries, FedBlue] at (4, -1.1)
+      {Plus $d$ est faible, plus l'atténuation en basses fréquences est efficace};
+  \end{tikzpicture}
+  \caption{Coupe transversale d'un silencieux à baffles — principe de fonctionnement par absorption dans les canaux}
+  \label{fig:silencieux-baffles}
+\end{figure}
 
 \subsection{Plénum acoustique}
 
@@ -682,3 +810,5 @@ La Réglementation Environnementale 2020 (RE2020), en vigueur depuis le 1\textsu
   \item Prévoir la réception acoustique par mesures (contrôle $D_{nT,w}$ in situ).
 \end{enumerate}
 \end{methode}
+
+\finchapitre

@@ -652,6 +652,256 @@ Ce SFP est élevé — vérifier si des filtres colmatés ou des coudes sans aub
 \end{exemple}
 
 % ============================================================
+\section{Diagrammes et schémas techniques}
+% ============================================================
+
+% --- Schéma réseau de gaines soufflage/reprise ---
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+    font=\small,
+    gaine/.style={draw=FedBlue, very thick, fill=FedBlue!10},
+    noeud/.style={draw=FedBlue, fill=FedBlue!30, circle, minimum size=6pt, inner sep=0pt},
+    bouche/.style={draw=FedOrange, fill=FedOrange!20, rectangle, minimum width=14pt, minimum height=8pt},
+    reprise/.style={draw=FedGreen, fill=FedGreen!20, rectangle, minimum width=14pt, minimum height=8pt},
+    vmc/.style={draw=FedBlue, fill=FedBlue!20, rectangle, minimum width=36pt, minimum height=22pt},
+    fleche/.style={->, >=Stealth, thick},
+  ]
+
+    % --- CTA / VMC centrale ---
+    \node[vmc] (cta) at (0,0) {\textbf{CTA}};
+
+    % ---- RÉSEAU SOUFFLAGE (haut) ----
+    % Gaine principale soufflage
+    \draw[gaine] (0.9, 0.3) -- (7.5, 0.3) -- (7.5, 0.7) -- (0.9, 0.7);
+    \node[above] at (4.2, 0.7) {\textcolor{FedBlue}{\footnotesize Gaine soufflage}};
+
+    % Dérivation 1 (nœud N1)
+    \node[noeud] (N1) at (2.5, 0.5) {};
+    \draw[gaine] (2.5, 0.7) -- (2.5, 1.5) -- (2.9, 1.5) -- (2.9, 0.7);
+    \node[bouche] (B1) at (2.7, 1.7) {};
+    \draw[fleche, FedOrange] (2.7, 1.5) -- (2.7, 1.7);
+    \node[above, FedOrange] at (2.7, 1.85) {\footnotesize B1};
+
+    % Dérivation 2 (nœud N2)
+    \node[noeud] (N2) at (5.0, 0.5) {};
+    \draw[gaine] (5.0, 0.7) -- (5.0, 1.5) -- (5.4, 1.5) -- (5.4, 0.7);
+    \node[bouche] (B2) at (5.2, 1.7) {};
+    \draw[fleche, FedOrange] (5.2, 1.5) -- (5.2, 1.7);
+    \node[above, FedOrange] at (5.2, 1.85) {\footnotesize B2};
+
+    % Bouche terminale (extrémité branche index)
+    \node[noeud] (N3) at (7.3, 0.5) {};
+    \draw[gaine] (7.3, 0.7) -- (7.3, 1.5) -- (7.7, 1.5) -- (7.7, 0.7);
+    \node[bouche] (B3) at (7.5, 1.7) {};
+    \draw[fleche, FedOrange] (7.5, 1.5) -- (7.5, 1.7);
+    \node[above, FedOrange] at (7.5, 1.85) {\footnotesize B3 (\textit{index})};
+
+    % Débits et annotations
+    \node[FedBlue] at (1.7, 0.1) {\scriptsize $q_{v,1}+q_{v,2}+q_{v,3}$};
+    \node[FedBlue] at (6.2, 0.1) {\scriptsize $q_{v,3}$};
+
+    % ---- RÉSEAU REPRISE (bas) ----
+    \draw[gaine, draw=FedGreen, fill=FedGreen!10] (0.9,-0.3) -- (7.5,-0.3) -- (7.5,-0.7) -- (0.9,-0.7);
+    \node[below] at (4.2,-0.7) {\textcolor{FedGreen}{\footnotesize Gaine reprise}};
+
+    % Bouches de reprise
+    \foreach \xr/\lbl in {2.5/R1, 5.0/R2, 7.3/R3}{
+      \draw[gaine, draw=FedGreen, fill=FedGreen!10] (\xr,-0.7) -- (\xr,-1.5) -- (\xr+0.4,-1.5) -- (\xr+0.4,-0.7);
+      \node[reprise] at (\xr+0.2,-1.7) {};
+      \draw[fleche, FedGreen] (\xr+0.2,-1.7) -- (\xr+0.2,-1.5);
+      \node[below, FedGreen] at (\xr+0.2,-1.85) {\footnotesize \lbl};
+    }
+
+    % Flèche air soufflé
+    \draw[fleche, FedBlue, very thick] (0.9, 0.5) -- (0.5, 0.5);
+    % Flèche air repris
+    \draw[fleche, FedGreen, very thick] (0.5,-0.5) -- (0.9,-0.5);
+
+    % Registre équilibrage sur B1
+    \node[draw=FedOrange, fill=FedOrange!10, rotate=90, minimum width=8pt, minimum height=4pt] at (2.7,1.1) {};
+    \node[right, FedOrange] at (2.95,1.1) {\scriptsize Registre};
+
+  \end{tikzpicture}
+  \caption{Schéma de principe d'un réseau de gaines soufflage/reprise avec nœuds de dérivation (B3 = branche index)}
+  \label{fig:reseau_gaines}
+\end{figure}
+
+% --- Courbe caractéristique ventilateur / réseau ---
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[x=0.055cm, y=0.048cm, font=\small]
+
+    % Axes
+    \draw[->, thick] (0,0) -- (115,0) node[right] {$q_v$ (\si{\cubic\metre\per\hour})};
+    \draw[->, thick] (0,0) -- (0,115) node[above] {$\Delta P$ (\si{\pascal})};
+
+    % Graduations axe X (débit)
+    \foreach \xv/\xl in {0/0, 20/400, 40/800, 60/1200, 80/1600, 100/2000}{
+      \draw (\xv,0) -- (\xv,-2) node[below] {\footnotesize \xl};
+    }
+    % Graduations axe Y (pression)
+    \foreach \yv/\yl in {0/0, 20/100, 40/200, 60/300, 80/400, 100/500}{
+      \draw (0,\yv) -- (-2,\yv) node[left] {\footnotesize \yl};
+    }
+
+    % --- Courbe ventilateur à n1 (pleine vitesse) ---
+    % ΔP_max débit nul ≈ 500 Pa (ordonnée origine), débit max ≈ 2400 m³/h (0 Pa)
+    % Courbe : ΔP = 500*(1 - (qv/2400)^1.8) approximation
+    % Points : qv=0 -> DP=500(100), qv=400(20)->DP=486(97.2), qv=800(40)->DP=455(91),
+    %          qv=1200(60)->DP=400(80), qv=1600(80)->DP=320(64), qv=2000(100)->DP=210(42), qv=2400(120)->DP=0
+    \draw[FedBlue, very thick]
+      (0,100)
+      .. controls (15,99) and (30,97) ..
+      (40,91)
+      .. controls (52,84) and (60,80) ..
+      (60,80)
+      .. controls (72,68) and (80,64) ..
+      (80,64)
+      .. controls (90,51) and (95,45) ..
+      (100,42)
+      .. controls (108,28) and (114,10) ..
+      (116,0);
+    \node[FedBlue, align=left] at (10,106) {\footnotesize Courbe ventilateur $n_1$};
+
+    % --- Courbe ventilateur à n2=0.8*n1 (lois similitude) ---
+    % ΔP2 = DP1*(0.8)^2 = 0.64*DP1 ; qv2 = qv1*0.8
+    % Points: (0,64) (32,58.2) (48,58.2->43.7 en échelle) ...
+    % qv: 0->0, 20->16, 40->32, 60->48, 80->64, 100->80, 116->92.8
+    % DP: 100->64, 97.2->62.2, 91->58.2, 80->51.2, 64->41, 42->26.9, 0->0
+    \draw[FedBlue!60, thick, dashed]
+      (0,64)
+      .. controls (12,63) and (24,62) ..
+      (32,58.2)
+      .. controls (40,54) and (46,52) ..
+      (48,51.2)
+      .. controls (57,44) and (63,41) ..
+      (64,41)
+      .. controls (72,33) and (76,29) ..
+      (80,26.9)
+      .. controls (86,18) and (90,7) ..
+      (92,0);
+    \node[FedBlue!70] at (12,57) {\footnotesize $n_2 = 0{,}8\,n_1$};
+
+    % --- Courbe réseau R (parabolique ΔP = k*qv²) ---
+    % Point de fonctionnement nominal : qv=1600 m³/h (80), DP=300 Pa (60)
+    % k = 300/1600² = 1.172e-4
+    % DP(qv): 0->0, 400->18.8(3.75), 800->75(15), 1200->168.8(33.75), 1600->300(60), 2000->468.8(93.75)
+    \draw[FedOrange, very thick]
+      (0,0)
+      .. controls (10,1) and (20,5) ..
+      (20,3.75)
+      .. controls (30,8.5) and (37,12) ..
+      (40,15)
+      .. controls (50,24) and (56,30) ..
+      (60,33.75)
+      .. controls (70,46) and (76,55) ..
+      (80,60)
+      .. controls (88,72) and (92,84) ..
+      (100,93.75);
+    \node[FedOrange] at (102,97) {\footnotesize Réseau};
+
+    % --- Point de fonctionnement nominal (intersection courbe vent n1 / réseau) ---
+    % x=80 (1600 m³/h), y=60 (300 Pa) — approximatif
+    \filldraw[FedRed] (80,60) circle (4pt);
+    \draw[FedRed, dashed, thin] (80,60) -- (80,0) node[below, FedRed] {\footnotesize $q_{v,nom}$};
+    \draw[FedRed, dashed, thin] (80,60) -- (0,60) node[left, FedRed] {\footnotesize $\Delta P_{nom}$};
+    \node[FedRed, above right] at (80,62) {\footnotesize \textbf{PF nominal}};
+
+    % --- Point de fonctionnement à n2 (intersection courbe n2 / réseau) ---
+    % Réseau : DP = k*qv² ; courbe n2 : même profil mais *0.64, abscisses *0.8
+    % Nouvelles lois de similitude => PF à vitesse réduite se déplace sur la parabole de similitude
+    % Parabole similitude : DP = k_sim * qv² avec k_sim = DP_nom/qv_nom² = 60/80² = 0.009375
+    % intersection réseau (DP= 0.009375*qv²) et réseau (DP=0.009375*qv²) => même courbe (par définition)
+    % donc PF à n2 : qv2 = 0.8*80=64, DP2 = 0.64*60=38.4
+    \filldraw[FedBlue!60] (64,38.4) circle (3.5pt);
+    \draw[FedBlue!60, dashed, thin] (64,38.4) -- (64,0) node[below, FedBlue!70] {\footnotesize $q_{v,2}$};
+    \draw[FedBlue!60, dashed, thin] (64,38.4) -- (0,38.4) node[left, FedBlue!70] {\footnotesize $\Delta P_2$};
+    \node[FedBlue!80, above right] at (64,40) {\footnotesize PF à $n_2$};
+
+    % --- Parabole de similitude (DP = cte * qv²) ---
+    \draw[gray!60, thick, dash dot]
+      (0,0)
+      .. controls (40,14.6) and (60,33.3) ..
+      (80,60);
+    \node[gray!70, rotate=35] at (55,28) {\footnotesize Parabole similitude};
+
+  \end{tikzpicture}
+  \caption{Courbe caractéristique ventilateur/réseau et point de fonctionnement — effet de la variation de vitesse ($n_2 = 0{,}8\,n_1$)}
+  \label{fig:courbe_ventilateur}
+\end{figure}
+
+% --- Schéma VMC double flux avec échangeur récupérateur ---
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+    font=\small,
+    composant/.style={draw=FedBlue, fill=FedBlue!10, rectangle, rounded corners=3pt,
+                      minimum width=44pt, minimum height=22pt, align=center},
+    echangeur/.style={draw=FedBlue, fill=FedBlue!20, rectangle, minimum width=48pt, minimum height=48pt},
+    ventilo/.style={draw=FedOrange, fill=FedOrange!15, circle, minimum size=24pt},
+    fleche_chaud/.style={->, >=Stealth, very thick, FedOrange},
+    fleche_froid/.style={->, >=Stealth, very thick, FedBlue!70},
+    fleche_ext/.style={->, >=Stealth, very thick, FedGreen},
+    fleche_ext_rej/.style={->, >=Stealth, very thick, gray},
+  ]
+
+    % ---- ÉCHANGEUR RÉCUPÉRATEUR (centre) ----
+    \node[echangeur] (ech) at (5.5,0) {};
+    \node[align=center, FedBlue] at (5.5,0) {\footnotesize \textbf{Échangeur}\\[-2pt]\footnotesize \textbf{récupérateur}\\[-2pt]\footnotesize $\eta_r \geq 75\,\%$};
+    % Séparation intérieure de l'échangeur (flux croisés)
+    \draw[FedBlue, thin] (4.9, -1.2) -- (6.1, 1.2);
+
+    % ---- AIR EXTÉRIEUR (flux froid entrant) ----
+    % Entrée air extérieur gauche-haut
+    \node[composant, draw=FedGreen, fill=FedGreen!10] (filtre) at (2.0, 1.2) {\footnotesize Filtre G4/F7};
+    \node[ventilo, draw=FedOrange, fill=FedOrange!10] (vsouf) at (8.5, 1.2) {\scriptsize $V_S$};
+    \node[composant, draw=FedBlue, fill=FedBlue!10] (local) at (11.2, 1.2) {\footnotesize Local\\[-2pt]\footnotesize (soufflage)};
+
+    % Flèches flux air neuf (froid -> chauffé par échangeur -> soufflé)
+    \draw[fleche_ext] (-0.2, 1.2) -- (0.7, 1.2) node[midway, above] {\footnotesize Air ext. $T_e$};
+    \draw[fleche_ext] (0.7, 1.2) -- (filtre.west);
+    \draw[fleche_froid, FedGreen!80] (filtre.east) -- (4.3, 1.2);
+    \draw[fleche_froid, FedGreen!80] (4.3, 1.2) -- (4.3, 0.6);
+    % Traversée échangeur (air neuf se réchauffe)
+    \draw[fleche_chaud, FedOrange!70] (6.7, 0.6) -- (6.7, 1.2);
+    \draw[fleche_chaud, FedOrange!70] (6.7, 1.2) -- (vsouf.west);
+    \draw[fleche_chaud, FedOrange!70] (vsouf.east) -- (local.west);
+    \node[above, FedOrange] at (9.0, 1.55) {\footnotesize $T_s > T_e$};
+
+    % ---- AIR VICIÉ EXTRAIT (flux chaud sortant) ----
+    \node[ventilo, draw=FedBlue, fill=FedBlue!10] (vext) at (2.5, -1.2) {\scriptsize $V_E$};
+    \node[composant, draw=FedGreen, fill=FedGreen!10] (bouext) at (5.5, -2.4) {\footnotesize Bouches\\[-2pt]\footnotesize extraction};
+    % Extrait des locaux
+    \draw[fleche_chaud, FedOrange!60] (11.2,-1.2) -- (11.2,-1.2) {};
+    \node[composant, draw=FedOrange, fill=FedOrange!10] (local2) at (11.2,-1.2) {\footnotesize Local\\[-2pt]\footnotesize (extraction)};
+    \draw[fleche_chaud, FedOrange!60] (local2.west) -- (7.7,-1.2);
+    % Traversée échangeur (air vicié cède sa chaleur)
+    \draw[fleche_chaud, FedOrange!60] (7.7,-1.2) -- (7.7,-0.6);
+    \draw[fleche_froid, FedBlue!60] (6.7,-0.6) -- (6.7,-1.2);
+    \draw[fleche_froid, FedBlue!60] (4.3,-1.2) -- (vext.east);
+    \draw[fleche_ext_rej] (vext.west) -- (0.7,-1.2);
+    \draw[fleche_ext_rej] (0.7,-1.2) -- (-0.2,-1.2) node[midway, below] {\footnotesize Rejet ext. $T_{rej}$};
+
+    % Bouches extraction
+    \draw[fleche_chaud, FedOrange!50, dashed] (bouext.north) -- (5.5,-0.6);
+    \draw[fleche_chaud, FedOrange!50, dashed] (5.5,-0.6) -- (7.7,-0.6);
+
+    % ---- ANNOTATIONS TEMPERATURES ----
+    \node[FedOrange, align=center] at (5.5, -3.2) {\footnotesize $T_{int} \approx 20\,°C$};
+    \node[FedGreen, align=center] at (-0.2, 0.6) {\footnotesize $T_e \approx -5\,°C$};
+    \node[gray] at (-0.2,-1.8) {\footnotesize $T_{rej} \approx 2\,°C$};
+
+    % Légende rendement
+    \draw[|-|, FedBlue, thin] (3.5,-3.0) -- (7.5,-3.0);
+    \node[FedBlue] at (5.5,-3.5) {\footnotesize $\eta_r = \dfrac{T_s - T_e}{T_{int} - T_e} \times 100$};
+
+  \end{tikzpicture}
+  \caption{Schéma de principe d'une VMC double flux avec échangeur récupérateur de chaleur (flux croisés)}
+  \label{fig:vmc_double_flux}
+\end{figure}
+
+% ============================================================
 \section{Éléments de réglementation}
 % ============================================================
 
@@ -672,3 +922,5 @@ Ce SFP est élevé — vérifier si des filtres colmatés ou des coudes sans aub
 
   \item[NF S61-937] Systèmes de désenfumage — conception et mise en œuvre. Prescrit les débits d'extraction de fumée et les vitesses maximales dans les conduits de désenfumage (jusqu'à 15\,m/s).
 \end{description}
+
+\finchapitre

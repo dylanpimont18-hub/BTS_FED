@@ -69,13 +69,13 @@ Les composants types d'une boucle fermée sont :
 \begin{tikzpicture}[
   >=Stealth,
   bloc/.style={
-    draw=btsprimary, fill=btssecondary,
+    draw=FedBlue, fill=FedBlue!15,
     rounded corners=4pt,
     minimum width=2.6cm, minimum height=0.9cm,
     text centered, font=\small
   },
   comparateur/.style={
-    draw=btsprimary, fill=white,
+    draw=FedBlue, fill=white,
     circle, minimum size=0.8cm,
     font=\small\bfseries
   },
@@ -99,7 +99,7 @@ Les composants types d'une boucle fermée sont :
 \node[bloc] (capt) at (5.4,-2.2) {Capteur\\(sonde T°)};
 
 % Perturbation
-\node[font=\footnotesize\itshape, color=red!70!black] (pert) at (10.8,1.8) {Perturbation};
+\node[font=\footnotesize\itshape, color=FedRed] (pert) at (10.8,1.8) {Perturbation};
 
 % --- Flèches chaîne directe ---
 \draw[fl] (cons)  -- (comp);
@@ -114,7 +114,7 @@ Les composants types d'une boucle fermée sont :
 \draw[fl] (capt.west) -| (comp.south);
 
 % --- Perturbation sur le processus ---
-\draw[fl, dashed, color=red!70!black] (pert) -- (proc.north);
+\draw[fl, dashed, color=FedRed] (pert) -- (proc.north);
 
 % --- Labels +/- sur comparateur ---
 \node[lbl, above left=1pt and 1pt of comp] {$+$};
@@ -201,6 +201,56 @@ où $T_d$ est le \textbf{temps dérivé} [\si{\second}] (anticipation sur la vit
   D & Amortit les oscillations, anticipe & Amplifie le bruit de mesure \\
   \bottomrule
 \end{tabular}
+
+% --- Schéma C — Courbes de réponse PID à un échelon ---
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=0.7cm, y=0.9cm]
+  % Axes
+  \draw[->, thick] (0,0) -- (11,0) node[right, font=\small] {Temps $t$};
+  \draw[->, thick] (0,0) -- (0,2.8) node[above, font=\small] {Grandeur réglée $y$};
+
+  % Consigne (échelon à t=1)
+  \draw[gray!50, dashed, thick] (1,0) -- (1,2.0) -- (10.5,2.0);
+  \node[gray, font=\footnotesize, anchor=west] at (10.6,2.0) {Consigne $w$};
+  \draw[gray!40, thin] (0,2.0) -- (1,2.0);
+  \node[gray, font=\footnotesize, anchor=east] at (-0.1,2.0) {$w$};
+
+  % Courbe P seule — erreur statique résiduelle
+  \draw[FedOrange, thick, domain=1:10.5, samples=60]
+    plot (\x, {2.0 * (1 - exp(-(\x-1)/1.8))  * 0.78 });
+  \node[FedOrange, font=\scriptsize\bfseries, anchor=west] at (10.55, 1.55)
+    {P (écart statique)};
+
+  % Courbe PI — pas de dépassement ou léger
+  \draw[FedGreen, thick, domain=1:10.5, samples=80]
+    plot (\x, {2.0*(1 - exp(-(\x-1)/1.5)*(1 + (\x-1)/1.5))});
+  \node[FedGreen, font=\scriptsize\bfseries, anchor=west] at (10.55, 1.93)
+    {PI (sans écart)};
+
+  % Courbe PID — dépassement + retour rapide
+  \draw[FedBlue, thick, domain=1:10.5, samples=100]
+    plot (\x, {2.0*(1 - exp(-(\x-1)/0.9)*( cos(deg(1.8*(\x-1))) + 0.55*sin(deg(1.8*(\x-1)))))});
+  \node[FedBlue, font=\scriptsize\bfseries, anchor=west] at (10.55, 2.05)
+    {PID (dépassement)};
+
+  % Annotation dépassement
+  \draw[FedBlue, thin, <->] (2.75,2.0) -- (2.75,2.42)
+    node[midway, right, font=\scriptsize, FedBlue] {dép.};
+
+  % Annotation temps de réponse PI (à 95%)
+  \draw[FedGreen, thin, dotted] (0,1.9) -- (10.5,1.9);
+  \draw[FedGreen, thin, <->] (1,0) -- (5.0,0)
+    node[midway, below, font=\scriptsize, FedGreen] {$t_{95\%}$};
+  \draw[FedGreen, thin, dotted] (5.0,0) -- (5.0,1.9);
+
+  % Origine
+  \node[font=\footnotesize] at (0,0) [below left] {0};
+\end{tikzpicture}
+\caption{Schéma C — Réponse à un échelon de consigne : comparaison P, PI et PID
+         (dépassement, temps de réponse, erreur statique)}
+\label{fig:reponse-pid}
+\end{figure}
 
 \vspace{0.5em}
 \begin{attention}
@@ -320,22 +370,22 @@ où :
 
   % --- Courbe 1 : Radiateurs (pente forte) ---
   % Points : T_ext=-10,T_dep=70 → (0,45) ; T_ext=18,T_dep=30 → (28,5)
-  \draw[btsprimary, line width=1.8pt] (0,45) -- (28,5);
-  \node[btsprimary, font=\footnotesize\bfseries, anchor=south west] at (0,45)
+  \draw[FedBlue, line width=1.8pt] (0,45) -- (28,5);
+  \node[FedBlue, font=\footnotesize\bfseries, anchor=south west] at (0,45)
     {Radiateurs};
 
   % --- Courbe 2 : Plancher chauffant (pente douce) ---
   % Points : T_ext=-10,T_dep=45 → (0,20) ; T_ext=18,T_dep=28 → (28,3)
-  \draw[btsaccent, line width=1.8pt, dashed] (0,20) -- (28,3);
-  \node[btsaccent, font=\footnotesize\bfseries, anchor=north west] at (0,20)
+  \draw[FedOrange, line width=1.8pt, dashed] (0,20) -- (28,3);
+  \node[FedOrange, font=\footnotesize\bfseries, anchor=north west] at (0,20)
     {Plancher chauffant};
 
   % --- Point de bivalence PAC ---
   % T_ext=-2 → x=8 ; T_dep=50 → y=25
-  \filldraw[red!70!black] (8,25) circle (0.6ex);
-  \draw[red!70!black, thin, ->, shorten >=2pt]
+  \filldraw[FedRed] (8,25) circle (0.6ex);
+  \draw[FedRed, thin, ->, shorten >=2pt]
     (8,25) -- ++(5,6)
-    node[anchor=south west, font=\footnotesize, color=red!70!black,
+    node[anchor=south west, font=\footnotesize, color=FedRed,
          align=left]
       {Point de bivalence PAC\\$T_{ext}=-2$°C, $T_{dep}=50$°C};
 
@@ -345,9 +395,9 @@ où :
     {Coupure (18°C)};
 
   % --- Légende ---
-  \draw[btsprimary, line width=1.5pt] (16,50) -- (20,50);
+  \draw[FedBlue, line width=1.5pt] (16,50) -- (20,50);
   \node[right, font=\footnotesize] at (20.3,50) {Radiateurs};
-  \draw[btsaccent, line width=1.5pt, dashed] (16,46) -- (20,46);
+  \draw[FedOrange, line width=1.5pt, dashed] (16,46) -- (20,46);
   \node[right, font=\footnotesize] at (20.3,46) {Plancher chauffant};
 
 \end{tikzpicture}
@@ -702,3 +752,5 @@ La \textbf{Réglementation Environnementale 2020} (RE2020), entrée en vigueur l
     \item Rédiger le procès-verbal de mise en service (PV de recette GTB).
   \end{enumerate}
 \end{methode}
+
+\finchapitre

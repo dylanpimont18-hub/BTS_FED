@@ -4,8 +4,13 @@
 
 \begin{document}
 
+% ============================================
+% PAGE DE TITRE
+% ============================================
+
 \begin{titlepage}
     \begin{tikzpicture}[remember picture, overlay]
+        % Bande latérale gauche en FedBlue
         \node[anchor=north west, inner sep=0pt] at (current page.north west) {
             \begin{tcolorbox}[
                 enhanced, colback=FedBlue, colframe=FedBlue, arc=0pt, outer arc=0pt,
@@ -13,63 +18,69 @@
             ]
             \end{tcolorbox}
         };
+        
+        % Texte rotaté sur la bande latérale
         \node[rotate=90, anchor=west, white] at ([xshift=0.85cm, yshift=2cm]current page.south west) {
-            \sffamily\Huge\bfseries MATHÉMATIQUES
+            \sffamily\Huge\bfseries RÉFÉRENTIEL
         };
+        
+        % Contenu principal
         \node[anchor=north west, text width=14cm] at ([xshift=3cm, yshift=-4cm]current page.north west) {
+            % Titre département/diploma
             {\huge\sffamily\color{FedBlue} \textbf{BTS FLUIDES ÉNERGIES DOMOTIQUE}}\\[0.5cm]
             {\large\sffamily OPTION A : GÉNIE CLIMATIQUE ET FLUIDIQUE}\\[2.5cm]
 
-            {\fontsize{45}{50}\sffamily\bfseries\selectfont COURS \& EXERCICES}\\[0.8cm]
+            % Titre principal en gros
+            {\fontsize{45}{50}\sffamily\bfseries\selectfont RÉFÉRENTIEL}\\[0.3cm]
+            {\fontsize{45}{50}\sffamily\bfseries\selectfont PROFESSIONNEL}\\[0.8cm]
             {\color{FedOrange}\rule{10cm}{3pt}}\\[1cm]
 
-            {\huge\sffamily MATHÉMATIQUES APPLIQUÉES}
+            % Sous-titre
+            {\large\sffamily\color{FedBlue}\bfseries Compétences et activités professionnelles}
         };
+        
+        % Informations au bas
         \node[anchor=south west] at ([xshift=3cm, yshift=2cm]current page.south west) {
             \sffamily
             \begin{tabular}{ll}
                 \textbf{Établissement :} & Lycée Gaudier Brzeska \\
                 \textbf{Enseignant :} & M. Dylan PIMONT \\
-                \textbf{Module :} & Outils mathématiques pour le FED
+                \textbf{Module :} & Référentiel professionnel BTS FED
             \end{tabular}
         };
+        
+        % Décoration inférieure
+        \fill[FedOrange] (current page.south west)
+            rectangle ([yshift=8pt] current page.south east);
     \end{tikzpicture}
 \end{titlepage}
 
 \newpage
 
-% À partir d'ici, ajouter vos chapitres avec \input{chapitres/XX-nom.tex}
-
-\end{document}
-  {\small\color{white!70!btsprimary}\itshape
-    Généré et amélioré en continu par agent Claude Code\par}
-  \vspace{0.5cm}
-  {\normalsize\color{btsaccent}\bfseries\today\par}
-  \vspace{1cm}
-  \begin{tikzpicture}[remember picture, overlay]
-    % Bande décorative accent en bas
-    \fill[btsaccent] (current page.south west)
-      rectangle ([yshift=8pt] current page.south east);
-  \end{tikzpicture}
-\end{titlepage}
-\pagecolor{white}
-\color{black}
+% ============================================
+% TABLE DES MATIÈRES
+% ============================================
 
 \tableofcontents
 \newpage
 
-% % Chapitres — générés et \input{} ajoutés progressivement par l'agent
+% ============================================
+% CHAPITRES
+% ============================================
+
+% À partir d'ici, ajouter les chapitres avec \input{chapitres/XX-nom.tex}
+
 \input{chapitres/00-analyse-dimensionnelle}
-% \input{chapitres/01-bases-thermiques}
-% \input{chapitres/02-hydraulique}
-% \input{chapitres/03-aeraulique}
-% \input{chapitres/04-production-chaleur}
-% \input{chapitres/05-distribution-emission}
-% \input{chapitres/06-climatisation}
-% \input{chapitres/07-regulation-gtb}
-% \input{chapitres/08-efficacite-energetique}
-% \input{chapitres/09-acoustique}
-% \input{chapitres/10-electrotechnique}
+\input{chapitres/01-bases-thermiques}
+\input{chapitres/02-hydraulique}
+\input{chapitres/03-aeraulique}
+\input{chapitres/04-production-chaleur}
+\input{chapitres/05-distribution-emission}
+\input{chapitres/06-climatisation}
+\input{chapitres/07-regulation-gtb}
+\input{chapitres/08-efficacite-energetique}
+\input{chapitres/09-acoustique}
+\input{chapitres/10-electrotechnique}
 \input{chapitres/11-etudes-de-cas}
 
 \end{document}

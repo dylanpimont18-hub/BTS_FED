@@ -133,6 +133,60 @@ une installation CVC :
   \end{tabular}
 \end{table}
 
+% ------------------------------------------------------------
+% Diagramme TikZ — Les 3 modes de transfert thermique
+% ------------------------------------------------------------
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+      >=Stealth,
+      font=\small,
+      bloc/.style={rectangle, rounded corners=4pt, minimum width=2.8cm,
+                   minimum height=1.0cm, align=center, text=white},
+    ]
+
+    % --- Conduction ---
+    \node[bloc, fill=FedBlue]  (cond) at (0,0)
+      {\textbf{Conduction}\\solide / fluide repos};
+    \draw[->, FedBlue, line width=1.2pt]
+      (-2.2,0) -- node[above, FedBlue]{\(\lambda\)} (-0.1,0);
+    \node[above=0.55cm of cond, FedBlue]
+      {\(\dot{Q}=\lambda S\Delta T / e\)};
+
+    % --- Convection ---
+    \node[bloc, fill=FedOrange] (conv) at (5,0)
+      {\textbf{Convection}\\fluide en mouvement};
+    % flèches de mouvement de fluide
+    \foreach \y in {0.3, 0, -0.3} {
+      \draw[->, FedOrange, line width=0.8pt]
+        (3.0,\y) -- (3.8,\y);
+    }
+    \node[above=0.55cm of conv, FedOrange]
+      {\(\dot{Q}=h\,S\Delta T\)};
+
+    % --- Rayonnement ---
+    \node[bloc, fill=FedRed]   (ray)  at (10,0)
+      {\textbf{Rayonnement}\\ondes électromagnétiques};
+    % zigzag symbolisant ondes IR
+    \draw[FedRed, line width=1.2pt,
+          decorate, decoration={snake, amplitude=2pt, segment length=6pt}]
+      (7.9,0) -- (8.9,0);
+    \node[above=0.55cm of ray, FedRed]
+      {\(\dot{Q}=\varepsilon\sigma T^4 S\)};
+
+    % Support matériel OUI/NON
+    \node[below=0.6cm of cond, FedBlue, font=\footnotesize]
+      {Support matériel~: \textbf{oui}};
+    \node[below=0.6cm of conv, FedOrange, font=\footnotesize]
+      {Support matériel~: \textbf{oui}};
+    \node[below=0.6cm of ray, FedRed, font=\footnotesize]
+      {Support matériel~: \textbf{non}};
+
+  \end{tikzpicture}
+  \caption{Les trois modes de transfert thermique et leurs formules clés}
+  \label{fig:modes_transfert}
+\end{figure}
+
 % ============================================================
 \section{Conduction thermique}
 % ============================================================
@@ -257,6 +311,108 @@ Le flux thermique total traversant une paroi de surface \(S\) est alors :
     \item \textbf{Vérifier} la conformité vis-à-vis de la réglementation (RE2020).
   \end{enumerate}
 \end{methode}
+
+% ------------------------------------------------------------
+% Diagramme TikZ — Paroi multicouche et analogie électrique
+% ------------------------------------------------------------
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+      >=Stealth, font=\small,
+      couche/.style={rectangle, minimum width=1.4cm, minimum height=3.0cm,
+                     align=center, draw=black, line width=0.6pt},
+      res/.style={rectangle, minimum width=1.2cm, minimum height=0.55cm,
+                  align=center, draw=FedBlue, fill=FedBlue!15,
+                  line width=0.8pt, font=\footnotesize},
+    ]
+
+    % ---- Représentation physique de la paroi ----
+    % Couche de convection intérieure (fond)
+    \fill[FedOrange!20] (-1.0,-1.5) rectangle (0.0,1.5);
+    \node[align=center, font=\footnotesize] at (-0.5,0)
+      {\(h_i\)\\conv.\\int.};
+
+    % Couche 1 — enduit plâtre
+    \fill[gray!30] (0.0,-1.5) rectangle (0.8,1.5);
+    \draw (0.0,-1.5) rectangle (0.8,1.5);
+    \node[align=center, font=\footnotesize] at (0.4,0)
+      {Pl\^{a}tre\\$e_1$};
+
+    % Couche 2 — béton
+    \fill[gray!60] (0.8,-1.5) rectangle (2.2,1.5);
+    \draw (0.8,-1.5) rectangle (2.2,1.5);
+    \node[align=center, font=\footnotesize] at (1.5,0)
+      {Béton\\$e_2$};
+
+    % Couche 3 — isolant (couleur verte)
+    \fill[FedGreen!30] (2.2,-1.5) rectangle (3.6,1.5);
+    \draw (2.2,-1.5) rectangle (3.6,1.5);
+    \node[align=center, font=\footnotesize] at (2.9,0)
+      {Isolant\\$e_3,\lambda_3$};
+
+    % Couche 4 — enduit ext.
+    \fill[gray!40] (3.6,-1.5) rectangle (4.2,1.5);
+    \draw (3.6,-1.5) rectangle (4.2,1.5);
+    \node[align=center, font=\footnotesize] at (3.9,0)
+      {End.\\ext.};
+
+    % Couche convection extérieure
+    \fill[FedBlue!15] (4.2,-1.5) rectangle (5.2,1.5);
+    \node[align=center, font=\footnotesize] at (4.7,0)
+      {\(h_e\)\\conv.\\ext.};
+
+    % Températures
+    \node[left,  font=\small, FedOrange] at (-1.2, 0) {\(T_i\)};
+    \node[right, font=\small, FedBlue]   at  (5.4, 0) {\(T_e\)};
+    \draw[->, FedOrange, line width=1.2pt] (-1.6, 0) -- (-1.1, 0);
+
+    % ---- Analogie électrique (en dessous) ----
+    % Chaque résistance est dessinée avec coordonnées absolues
+    % Chaîne : Ti --[Rsi]-- o --[R1]-- o --[R2]-- o --[R3]-- o --[R4]-- o --[Rse]-- Te
+    % Positions x des bornes gauches : -1.2, -0.5, 1.0, 2.2, 3.6, 4.8 ; largeur boîte=0.8
+    \node[font=\small, FedBlue] at (2.1,-2.2) {Analogie électrique : résistances en série};
+
+    % Fil d'entrée
+    \node[left, FedOrange, font=\small]  at (-1.4,-3.4) {\(T_i\)};
+    \draw[FedOrange, line width=1.2pt] (-1.4,-3.4) -- (-0.9,-3.4);
+    % Rsi
+    \draw[FedOrange, fill=FedOrange!15, line width=0.8pt]
+      (-0.9,-3.67) rectangle (-0.1,-3.13);
+    \node[font=\footnotesize, FedOrange] at (-0.5,-3.4) {\(R_{si}\)};
+    \draw[gray!70, line width=1.2pt] (-0.1,-3.4) -- (0.6,-3.4);
+    % R1
+    \draw[gray!70, fill=FedBlue!10, line width=0.8pt]
+      (0.6,-3.67) rectangle (1.4,-3.13);
+    \node[font=\footnotesize] at (1.0,-3.4) {\(R_1\)};
+    \draw[gray!70, line width=1.2pt] (1.4,-3.4) -- (2.1,-3.4);
+    % R2
+    \draw[gray!70, fill=FedBlue!10, line width=0.8pt]
+      (2.1,-3.67) rectangle (2.9,-3.13);
+    \node[font=\footnotesize] at (2.5,-3.4) {\(R_2\)};
+    \draw[gray!70, line width=1.2pt] (2.9,-3.4) -- (3.4,-3.4);
+    % R3 (isolant — en vert, boîte plus large)
+    \draw[FedGreen, fill=FedGreen!15, line width=0.8pt]
+      (3.4,-3.67) rectangle (4.4,-3.13);
+    \node[font=\footnotesize, FedGreen] at (3.9,-3.4) {\(R_3\)};
+    \draw[gray!70, line width=1.2pt] (4.4,-3.4) -- (4.9,-3.4);
+    % R4
+    \draw[gray!70, fill=FedBlue!10, line width=0.8pt]
+      (4.9,-3.67) rectangle (5.7,-3.13);
+    \node[font=\footnotesize] at (5.3,-3.4) {\(R_4\)};
+    \draw[FedBlue, line width=1.2pt] (5.7,-3.4) -- (6.2,-3.4);
+    % Rse
+    \draw[FedBlue, fill=FedBlue!15, line width=0.8pt]
+      (6.2,-3.67) rectangle (7.0,-3.13);
+    \node[font=\footnotesize, FedBlue] at (6.6,-3.4) {\(R_{se}\)};
+    % Fil de sortie
+    \draw[FedBlue, line width=1.2pt] (7.0,-3.4) -- (7.5,-3.4);
+    \node[right, FedBlue, font=\small]  at (7.5,-3.4) {\(T_e\)};
+
+  \end{tikzpicture}
+  \caption{Paroi multicouche et analogie électrique des résistances thermiques en série
+    (\(R_{tot}=R_{si}+R_1+R_2+R_3+R_4+R_{se}\))}
+  \label{fig:paroi_multicouche}
+\end{figure}
 
 \subsection{Thermique des réseaux de distribution — flux linéique}
 
@@ -766,3 +922,76 @@ thermiquement homogènes. Elle fixe notamment les valeurs des résistances super
   \item[NF EN ISO 10211] Ponts thermiques dans les bâtiments — calcul des flux thermiques et des températures de surface. Utilisée pour déterminer les coefficients linéiques $\Psi$.
   \item[NF EN 13829 / ISO 9972] Mesure de la perméabilité à l'air des bâtiments — essai de pressurisation (porte Blower Door). Obligatoire en RE2020.
 \end{description}
+
+% ------------------------------------------------------------
+% Diagramme TikZ — Courbe de chauffe de l'eau (chaleur sensible + latente)
+% ------------------------------------------------------------
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[>=Stealth, font=\small]
+
+    % Axes
+    \draw[->, line width=1.0pt] (0,0) -- (10.5,0)
+      node[right] {Énergie apportée \(Q\) [\si{\kilo\joule}]};
+    \draw[->, line width=1.0pt] (0,0) -- (0,5.5)
+      node[above] {Température \(T\) [\si{\degreeCelsius}]};
+
+    % Graduations T
+    \foreach \y/\lab in {0.5/-50, 1.0/0, 3.5/100, 5.0/200} {
+      \draw (0,\y) -- (-0.1,\y) node[left, font=\footnotesize] {\lab};
+    }
+    % Graduations Q fictives (relatives)
+    \foreach \x/\xlab in {1.0/0, 2.5/209, 5.0/250, 7.5/669, 8.5/2{,}256, 9.5/2{,}500} {
+      \draw (\x,0) -- (\x,-0.15) node[below, font=\tiny, rotate=35, anchor=east] {};
+    }
+
+    % Zone 1 : glace — chaleur sensible (T: -50 → 0 °C)
+    \fill[FedBlue!15] (1.0,0) -- (2.5,1.0) -- (2.5,0) -- cycle;
+    \draw[FedBlue, line width=1.8pt] (1.0,0.5) -- (2.5,1.0);
+    \node[FedBlue, font=\footnotesize, align=center] at (1.75,0.5)
+      {Glace\\$c_p=2{,}09$};
+
+    % Zone 2 : fusion (palier 0 °C)
+    \fill[FedGreen!15] (2.5,1.0) rectangle (5.0,1.2);
+    \draw[FedGreen, line width=1.8pt] (2.5,1.0) -- (5.0,1.0);
+    \node[FedGreen, font=\footnotesize, align=center] at (3.75,1.35)
+      {Fusion : $L_f=\SI{334}{\kilo\joule\per\kilogram}$};
+    \draw[<->, FedGreen, dashed] (2.5,1.7) -- (5.0,1.7)
+      node[midway, above, font=\footnotesize] {};
+
+    % Zone 3 : eau liquide — chaleur sensible (T: 0 → 100 °C)
+    \fill[FedOrange!15] (5.0,0.9) -- (7.5,3.5) -- (7.5,0) -- (5.0,0) -- cycle;
+    \draw[FedOrange, line width=1.8pt] (5.0,1.0) -- (7.5,3.5);
+    \node[FedOrange, font=\footnotesize, align=center] at (6.25,1.8)
+      {Eau liquide\\$c_p=4{,}18$};
+
+    % Zone 4 : vaporisation (palier 100 °C)
+    \fill[FedRed!15] (7.5,3.5) rectangle (8.5,3.7);
+    \draw[FedRed, line width=1.8pt] (7.5,3.5) -- (8.5,3.5);
+    \node[FedRed, font=\footnotesize, align=center] at (8.0,3.9)
+      {Vaporisation\\$L_v=\SI{2256}{\kilo\joule\per\kilogram}$};
+    \draw[<->, FedRed, dashed] (7.5,4.3) -- (8.5,4.3)
+      node[midway, above, font=\tiny] {};
+
+    % Zone 5 : vapeur surchauffée
+    \draw[FedRed!70!black, line width=1.8pt, dashed] (8.5,3.5) -- (9.8,4.5);
+    \node[FedRed!70!black, font=\footnotesize, align=center] at (9.4,4.0)
+      {Vapeur};
+
+    % Annotations des paliers
+    \draw[dashed, gray] (2.5,1.0) -- (2.5,0) node[below, font=\footnotesize] {0\,°C};
+    \draw[dashed, gray] (7.5,3.5) -- (7.5,0) node[below, font=\footnotesize] {100\,°C};
+
+    % Accolades chaleur sensible vs latente
+    \node[FedBlue,  font=\footnotesize, right] at (0.2, 4.8)
+      {\textbf{Chaleur sensible} : \(\Delta T \neq 0\), état inchangé};
+    \node[FedGreen, font=\footnotesize, right] at (0.2, 4.3)
+      {\textbf{Chaleur latente} : \(\Delta T = 0\), changement d'état};
+
+  \end{tikzpicture}
+  \caption{Courbe de chauffe de l'eau (1\,kg, pression atmosphérique) — alternance de chaleur
+    sensible (\(\Delta T \neq 0\)) et de chaleur latente (paliers de changement d'état)}
+  \label{fig:courbe_chauffe}
+\end{figure}
+
+\finchapitre

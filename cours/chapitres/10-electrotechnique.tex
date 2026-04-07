@@ -749,3 +749,166 @@ Tout équipement électrique mis sur le marché européen doit porter le \textbf
   \item \textbf{Directive CEM} (2014/30/UE) : compatibilité électromagnétique (particulièrement critique pour les VFD).
   \item \textbf{Directive Écoconception} (2009/125/CE) et règlements associés pour les moteurs.
 \end{itemize}
+
+% ============================================================
+\section{Illustrations et diagrammes}
+% ============================================================
+
+\subsection{Triangle des puissances}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=Stealth, thick, scale=1.2]
+    % Vecteur S (hypoténuse)
+    \draw[->, color=FedBlue, line width=2pt] (0,0) -- (4,0)
+      node[midway, below=6pt, color=FedBlue, font=\bfseries] {$P$ (W)};
+    % Vecteur Q (vertical)
+    \draw[->, color=FedOrange, line width=2pt] (4,0) -- (4,2.5)
+      node[midway, right=6pt, color=FedOrange, font=\bfseries] {$Q$ (var)};
+    % Vecteur S (hypoténuse)
+    \draw[->, color=FedRed, line width=2pt] (0,0) -- (4,2.5)
+      node[midway, above left=2pt, color=FedRed, font=\bfseries] {$S$ (VA)};
+    % Angle phi
+    \draw[color=FedGreen, thin] (0.9,0) arc[start angle=0, end angle=32, radius=0.9];
+    \node[color=FedGreen, font=\small] at (1.3,0.18) {$\varphi$};
+    % Angle droit en bas à droite
+    \draw[gray, thin] (3.85,0) -- (3.85,0.15) -- (4,0.15);
+    % Formules
+    \node[font=\small, align=left] at (6.8, 1.25) {%
+      $S^2 = P^2 + Q^2$\\[4pt]
+      $\cos\varphi = \dfrac{P}{S}$\\[6pt]
+      $\tan\varphi = \dfrac{Q}{P}$};
+  \end{tikzpicture}
+  \caption{Triangle des puissances en courant alternatif — $P$ : puissance active (bleue), $Q$ : puissance réactive (orange), $S$ : puissance apparente (rouge), $\varphi$ : déphasage courant/tension (vert).}
+  \label{fig:triangle-puissances}
+\end{figure}
+
+\subsection{Schéma unifilaire d'une armoire électrique CVC}
+
+La figure~\ref{fig:armoire-cvc} représente l'architecture typique d'une armoire électrique CVC triphasée 400\,V.
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=Stealth, thick,
+      boite/.style={draw, rectangle, minimum width=1.8cm, minimum height=0.7cm,
+                    align=center, font=\small},
+      depart/.style={draw, rectangle, minimum width=2.2cm, minimum height=0.7cm,
+                     align=center, font=\scriptsize, fill=FedBlue!10},
+      ligne/.style={draw, ->, color=FedBlue}]
+
+    % Jeu de barres (arrivée réseau)
+    \node[draw, fill=FedBlue!20, minimum width=8.5cm, minimum height=0.5cm,
+          font=\small\bfseries, color=FedBlue] (jdb) at (0,0)
+      {Jeu de barres triphasé L1 -- L2 -- L3 / N / PE \quad 400\,V 50\,Hz};
+
+    % Disjoncteur général
+    \node[boite, fill=FedOrange!15, below=0.8cm of jdb] (dg)
+      {Disjoncteur général\\$Q_0$ — 32\,A cbe D\\Icc $\geq$ 10\,kA};
+    \draw[ligne] (jdb.south) -- (dg.north);
+
+    % Répartiteur interne
+    \node[draw, fill=gray!10, minimum width=8.5cm, minimum height=0.4cm,
+          font=\small, below=0.6cm of dg] (repartiteur)
+      {Répartiteur interne — départs moteurs};
+    \draw[ligne] (dg.south) -- (repartiteur.north);
+
+    % Départ 1 — Ventilateur soufflage
+    \node[depart, below left=1.0cm and 3.0cm of repartiteur] (d1)
+      {$Q_1$ disj. moteur\\5,5\,kW / 10\,A\\+ Contacteur $KM_1$\\+ Relais th. $F_1$};
+    \draw[ligne] (repartiteur.south west) ++(1.5,0) -- (d1.north);
+    \node[font=\tiny, below=0.1cm of d1, color=FedGreen] {Vent. soufflage};
+
+    % Départ 2 — Ventilateur reprise
+    \node[depart, below=1.0cm of repartiteur] (d2)
+      {$Q_2$ disj. moteur\\3,0\,kW / 6,3\,A\\+ Contacteur $KM_2$\\+ Relais th. $F_2$};
+    \draw[ligne] (repartiteur.south) -- (d2.north);
+    \node[font=\tiny, below=0.1cm of d2, color=FedGreen] {Vent. reprise};
+
+    % Départ 3 — Pompe
+    \node[depart, below right=1.0cm and 3.0cm of repartiteur] (d3)
+      {$Q_3$ disj. moteur\\1,5\,kW / 3,2\,A\\+ Contacteur $KM_3$\\+ Relais th. $F_3$};
+    \draw[ligne] (repartiteur.south east) ++(-1.5,0) -- (d3.north);
+    \node[font=\tiny, below=0.1cm of d3, color=FedGreen] {Pompe batterie};
+
+    % DDR
+    \node[boite, fill=FedRed!10, right=1.2cm of dg] (ddr)
+      {DDR 30\,mA\\Circuits\\commande};
+    \draw[ligne] (jdb.south east) ++(-1.0,0) |- (ddr.north);
+    \node[font=\tiny, below=0.1cm of ddr, color=FedRed] {Protection personnes};
+
+  \end{tikzpicture}
+  \caption{Schéma unifilaire simplifié d'une armoire électrique CVC triphasée 400\,V : disjoncteur général $Q_0$, trois départs moteurs avec disjoncteur moteur, contacteur et relais thermique, et un départ différentiel 30\,mA pour les circuits de commande.}
+  \label{fig:armoire-cvc}
+\end{figure}
+
+\subsection{Courbes intensité-temps : fusible aM vs disjoncteur magnétothermique}
+
+La figure~\ref{fig:courbes-protection} illustre les zones de déclenchement caractéristiques d'un fusible de type aM et d'un disjoncteur magnétothermique utilisés en protection moteur CVC.
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=Stealth, thick, xscale=1.0, yscale=0.9]
+    % Axes
+    \draw[->] (0,0) -- (7.5,0) node[right, font=\small] {$I / I_n$};
+    \draw[->] (0,0) -- (0,6.5) node[above, font=\small] {$t$ (s)};
+
+    % Graduation axe X
+    \foreach \x/\lab in {1/1, 2/2, 3/3, 4/4, 5/5, 6/6, 7/7} {
+      \draw (\x, -0.1) -- (\x, 0.1);
+      \node[below, font=\tiny] at (\x, -0.1) {\lab};
+    }
+    % Graduation axe Y
+    \foreach \y/\lab in {1/10, 2/100, 3/1000, 4/3600, 5/36000} {
+      \draw (-0.1, \y) -- (0.1, \y);
+      \node[left, font=\tiny] at (-0.1, \y) {\lab};
+    }
+    \node[left, font=\tiny, rotate=90] at (-0.8, 3) {$t$ (s) — échelle log};
+
+    % Courbe fusible aM (déclenchement tardif en surcharge, rapide en cc)
+    % Zone de non-déclenchement (zone blanche sous la courbe)
+    \draw[color=FedOrange, line width=2pt]
+      (1.2, 5.5) .. controls (2.0, 5.0) and (3.0, 4.0) ..
+      (4.5, 3.0) .. controls (5.5, 2.2) and (6.0, 1.5) .. (7.0, 0.8);
+    \node[color=FedOrange, font=\small\bfseries, right] at (7.0, 0.9)
+      {Fusible aM};
+
+    % Fusible aM zone de tolérance (bande)
+    \draw[color=FedOrange, dashed, line width=1pt]
+      (1.0, 5.8) .. controls (2.0, 5.4) and (3.2, 4.3) ..
+      (4.8, 3.3) .. controls (5.8, 2.5) and (6.3, 1.8) .. (7.2, 1.1);
+
+    % Courbe disjoncteur magnétothermique
+    % Zone thermique (inclinaison modérée)
+    \draw[color=FedBlue, line width=2pt]
+      (1.1, 3.8) .. controls (1.5, 3.5) and (2.0, 3.0) ..
+      (3.0, 2.5) .. controls (3.8, 2.0) and (4.2, 1.5) .. (4.6, 1.2);
+    % Déclenchement magnétique instantané (chute verticale)
+    \draw[color=FedBlue, line width=2pt]
+      (4.6, 1.2) -- (4.6, 0.05);
+    \draw[color=FedBlue, line width=2pt]
+      (4.6, 0.05) -- (7.2, 0.05);
+    \node[color=FedBlue, font=\small\bfseries] at (3.2, 1.0)
+      {Disjoncteur MT};
+    % Flèche zone magnétique
+    \draw[->, color=FedBlue, thin] (5.0, 0.6) -- (4.7, 0.1);
+    \node[color=FedBlue, font=\tiny, right] at (5.0, 0.6) {zone magnétique};
+
+    % Zone de démarrage moteur (pointe admissible)
+    \fill[FedGreen!20] (1.0, 0) rectangle (4.0, 2.2);
+    \draw[color=FedGreen, dashed] (1.0, 0) rectangle (4.0, 2.2);
+    \node[color=FedGreen!70!black, font=\tiny, align=center] at (2.5, 1.1)
+      {Zone démarrage\\moteur (5--8$\times I_n$)};
+
+    % Légende
+    \draw[color=FedOrange, line width=1.5pt] (0.3,6.2) -- (1.1,6.2);
+    \node[right, font=\tiny, color=FedOrange] at (1.1,6.2)
+      {Fusible aM — laisse passer la pointe de démarrage};
+    \draw[color=FedBlue, line width=1.5pt] (0.3,5.8) -- (1.1,5.8);
+    \node[right, font=\tiny, color=FedBlue] at (1.1,5.8)
+      {Disjoncteur magnétothermique — protection surcharge + cc};
+  \end{tikzpicture}
+  \caption{Courbes intensité-temps (échelle log) : fusible aM (orange) vs disjoncteur magnétothermique (bleu). La zone verte représente la pointe de courant admissible au démarrage moteur ($5$ à $8 \times I_n$). Le fusible aM tolère cette pointe ; le déclencheur magnétique du disjoncteur est réglé au-delà de cette zone.}
+  \label{fig:courbes-protection}
+\end{figure}
+
+\finchapitre

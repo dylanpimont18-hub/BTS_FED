@@ -36,6 +36,75 @@ La transition vers les pompes à chaleur (PAC) impose une réflexion systématiq
 \section{Topologies des réseaux de distribution}
 % ============================================================
 
+% --- Figure 1 : Schéma circuit bitube avec vanne 3 voies et robinets thermostatiques ---
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+    >=Stealth,
+    every node/.style={font=\small},
+    pipe/.style={line width=1.5pt},
+    hotpipe/.style={pipe, color=FedOrange},
+    coldpipe/.style={pipe, color=FedBlue},
+    box/.style={draw, fill=white, minimum width=1.4cm, minimum height=0.8cm, align=center},
+    valve/.style={draw, fill=FedGreen!30, circle, minimum size=0.5cm, inner sep=0pt},
+    rad/.style={draw=FedOrange, fill=FedOrange!15, minimum width=1.1cm, minimum height=1.6cm, align=center, rounded corners=2pt}
+  ]
+
+    % Chaudière / PAC
+    \node[draw=FedBlue, fill=FedBlue!15, minimum width=1.6cm, minimum height=1.2cm, align=center, rounded corners=4pt] (prod) at (0,0) {\textbf{Chaudière}\\\textbf{/ PAC}};
+
+    % Pompe de circulation
+    \node[draw, circle, fill=FedOrange!20, minimum size=0.8cm, right=1.2cm of prod] (pump) {$\circlearrowleft$};
+
+    % Vanne 3 voies mélange
+    \node[valve, right=1.0cm of pump, minimum size=0.8cm, fill=FedGreen!30] (v3v) {};
+    \node[above=0.05cm of v3v, font=\tiny] {V3V};
+
+    % Collecteur départ (nourrice)
+    \node[draw, fill=FedOrange!25, minimum width=0.3cm, minimum height=3.6cm] (coll_dep) at (5.5, 0) {};
+    \node[right=0.05cm of coll_dep, font=\tiny, rotate=90, anchor=south] {Nourrice départ};
+
+    % Collecteur retour
+    \node[draw, fill=FedBlue!25, minimum width=0.3cm, minimum height=3.6cm] (coll_ret) at (8.2, 0) {};
+    \node[right=0.05cm of coll_ret, font=\tiny, rotate=90, anchor=south] {Nourrice retour};
+
+    % Tuyau départ principal (orange)
+    \draw[hotpipe, ->] (prod.east) -- (pump.west);
+    \draw[hotpipe, ->] (pump.east) -- (v3v.west);
+    \draw[hotpipe, ->] (v3v.east) -- (5.35, 0) node[above, midway, font=\tiny] {Départ 45–55°C};
+
+    % Tuyau retour principal (bleu)
+    \draw[coldpipe, ->] (8.35, 0) -- (v3v.south |- 0, -1.8) -- (v3v.south |- prod.west) -- +(-0.3,0) node[below, font=\tiny] {Retour};
+    \draw[coldpipe] (8.35,0) -- (prod.east |- 0, -1.8) -- (prod.south |- 0,-1.8) -- (prod.south);
+
+    % Radiateur 1
+    \node[rad] (rad1) at (6.85, 1.4) {Rad 1};
+    % robinet thermostatique entrée (symbole simplifié)
+    \node[valve, fill=FedRed!30, minimum size=0.4cm] (rt1) at (6.1, 1.4) {};
+    \node[above=0.0cm of rt1, font=\tiny] {RT};
+    \draw[hotpipe, ->] (5.5, 1.4) -- (rt1.west);
+    \draw[hotpipe, ->] (rt1.east) -- (rad1.west);
+    \draw[coldpipe, ->] (rad1.east) -- (8.2, 1.4);
+
+    % Radiateur 2
+    \node[rad] (rad2) at (6.85, -1.4) {Rad 2};
+    \node[valve, fill=FedRed!30, minimum size=0.4cm] (rt2) at (6.1, -1.4) {};
+    \node[above=0.0cm of rt2, font=\tiny] {RT};
+    \draw[hotpipe, ->] (5.5, -1.4) -- (rt2.west);
+    \draw[hotpipe, ->] (rt2.east) -- (rad2.west);
+    \draw[coldpipe, ->] (rad2.east) -- (8.2, -1.4);
+
+    % Légende
+    \draw[hotpipe] (0, -2.8) -- ++(1.0, 0) node[right] {Eau chaude (départ)};
+    \draw[coldpipe] (5, -2.8) -- ++(1.0, 0) node[right] {Eau froide (retour)};
+    \node[valve, fill=FedRed!30, minimum size=0.4cm] at (3.8,-2.8) {};
+    \node[right=0.3cm] at (3.8,-2.8) {Robinet thermostatique (RT)};
+
+  \end{tikzpicture}
+  \caption{Schéma de principe d'un circuit bitube avec vanne 3 voies et robinets thermostatiques}
+  \label{fig:circuit-bitube-v3v}
+\end{figure}
+
 \subsection{Réseau bitube}
 
 \begin{definition}[title=Réseau bitube]
@@ -277,6 +346,66 @@ Où $B$ est un coefficient dépendant du revêtement de sol (résistance thermiq
 Sous un parquet massif ($R_{revêt} > 0{,}15$\,m²K/W), la puissance surfacique maximale chute fortement. Vérifier la compatibilité du revêtement avant de valider le dimensionnement (label « Compatible plancher chauffant »).
 \end{attention}
 
+% --- Figure 2 : Schéma de principe plancher chauffant hydraulique ---
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+    >=Stealth,
+    every node/.style={font=\small},
+    pipe/.style={line width=1.4pt},
+    hotpipe/.style={pipe, color=FedOrange},
+    coldpipe/.style={pipe, color=FedBlue},
+    looppipe/.style={pipe, color=FedGreen}
+  ]
+
+    % --- Collecteur (nourrice) départ ---
+    \draw[fill=FedOrange!30, draw=FedOrange, line width=1.5pt]
+      (0, 0.25) rectangle (5, 0.55);
+    \node[above=0.1cm] at (2.5, 0.55) {\textbf{Collecteur départ} (35–40°C)};
+
+    % --- Collecteur retour ---
+    \draw[fill=FedBlue!30, draw=FedBlue, line width=1.5pt]
+      (0, -0.55) rectangle (5, -0.25);
+    \node[below=0.1cm] at (2.5, -0.55) {\textbf{Collecteur retour} (28–35°C)};
+
+    % --- 3 boucles de plancher ---
+    % Boucle 1 (gauche)
+    \draw[looppipe, ->] (0.8, 0.25) -- (0.8, -1.2) -- (0.4, -1.2) -- (0.4, -3.8) --
+      (2.8, -3.8) -- (2.8, -1.2) -- (1.2, -1.2) -- (1.2, -0.25);
+    \node[font=\tiny, FedGreen] at (1.6, -2.5) {Boucle 1};
+
+    % Boucle 2 (centre)
+    \draw[looppipe, ->] (2.3, 0.25) -- (2.3, -1.4) -- (1.9, -1.4) -- (1.9, -4.4) --
+      (4.0, -4.4) -- (4.0, -1.4) -- (2.7, -1.4) -- (2.7, -0.25);
+    \node[font=\tiny, FedGreen] at (3.4, -3.0) {Boucle 2};
+
+    % Boucle 3 (droite)
+    \draw[looppipe, ->] (3.8, 0.25) -- (3.8, -1.6) -- (3.4, -1.6) -- (3.4, -5.0) --
+      (5.2, -5.0) -- (5.2, -1.6) -- (4.2, -1.6) -- (4.2, -0.25);
+    \node[font=\tiny, FedGreen] at (4.9, -3.5) {Boucle 3};
+
+    % --- Dalle (représentation) ---
+    \draw[dashed, gray, rounded corners=3pt] (-0.2, -1.0) rectangle (5.8, -5.4);
+    \node[gray, font=\tiny] at (2.9, -5.2) {Dalle béton (avec tubes noyés, pas $p$ = 100–300 mm)};
+
+    % --- Alimentation depuis PAC/chaudière ---
+    \draw[hotpipe, ->] (-1.2, 0.4) -- (0, 0.4) node[above, midway, font=\tiny] {Départ PAC};
+    \draw[coldpipe, ->] (0, -0.4) -- (-1.2, -0.4) node[above, midway, font=\tiny] {Retour PAC};
+
+    % --- Débitmètre et actionneur symboles ---
+    \node[draw, fill=FedOrange!10, circle, minimum size=0.35cm, inner sep=0pt, font=\tiny]
+      at (0.8, 0.1) {Q};
+    \node[draw, fill=FedOrange!10, circle, minimum size=0.35cm, inner sep=0pt, font=\tiny]
+      at (2.3, 0.1) {Q};
+    \node[draw, fill=FedOrange!10, circle, minimum size=0.35cm, inner sep=0pt, font=\tiny]
+      at (3.8, 0.1) {Q};
+    \node[font=\tiny] at (2.5, 0.95) {(débitmètres + actionneurs thermoélectriques)};
+
+  \end{tikzpicture}
+  \caption{Schéma de principe d'un plancher chauffant hydraulique : collecteur, boucles et dalle}
+  \label{fig:pch-principe}
+\end{figure}
+
 \subsection{Collecteur de distribution}
 
 Le collecteur distribue l'eau chaude vers les différentes boucles du plancher. Il comporte :
@@ -479,6 +608,63 @@ Le local présente des déperditions de 1200\,W. Le radiateur a une puissance no
 \textbf{Action corrective :} Purger le radiateur, vérifier l'ouverture du robinet thermostatique et du robinet de retour, mesurer le débit après correction.
 \end{exemple}
 
+% --- Figure 3 : Comparaison des émetteurs — températures types ---
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+    >=Stealth,
+    every node/.style={font=\small},
+    bar/.style={draw, minimum width=1.6cm, align=center},
+    label/.style={font=\small, align=center}
+  ]
+    % Axes
+    \draw[->] (0,0) -- (0,8.2) node[left, font=\small] {$T$ (°C)};
+    \draw[->] (0,0) -- (10.5,0);
+
+    % Graduations axe Y
+    \foreach \y/\val in {0/0, 1.5/15, 3/30, 4.5/45, 6/60, 7.5/75}{
+      \draw (−0.1,\y) -- (0.1,\y);
+      \node[left, font=\tiny] at (0,\y) {\val};
+    }
+
+    % --- Radiateur haute T ---
+    % départ 75°C = 7.5, retour 65°C = 6.5 → 0,1 per °C scale: y = T/10
+    \draw[bar, fill=FedRed!40, draw=FedRed] (1.0, 6.5) rectangle (2.6, 7.5);
+    \node[label, FedRed] at (1.8, 6.0) {Radiateur\\HT\\75/65°C};
+    \node[font=\tiny, white] at (1.8, 7.0) {$\Delta T=10$K};
+
+    % --- Radiateur basse T ---
+    \draw[bar, fill=FedOrange!40, draw=FedOrange] (3.0, 4.0) rectangle (4.6, 5.0);
+    \node[label, FedOrange] at (3.8, 3.5) {Radiateur\\BT\\50/40°C};
+    \node[font=\tiny] at (3.8, 4.5) {$\Delta T=10$K};
+
+    % --- VEC ---
+    \draw[bar, fill=FedBlue!40, draw=FedBlue] (5.0, 4.0) rectangle (6.6, 5.0);
+    \node[label, FedBlue] at (5.8, 3.5) {Ventilo-\\convecteur\\50/45°C};
+    \node[font=\tiny] at (5.8, 4.5) {$\Delta T=5$K};
+
+    % --- PCH ---
+    \draw[bar, fill=FedGreen!40, draw=FedGreen] (7.0, 2.8) rectangle (8.6, 3.5);
+    \node[label, FedGreen] at (7.8, 2.2) {Plancher\\chauffant\\35/28°C};
+    \node[font=\tiny] at (7.8, 3.1) {$\Delta T=7$K};
+
+    % Ligne température ambiante 20°C
+    \draw[dashed, gray] (0, 2.0) -- (10.0, 2.0);
+    \node[right, font=\tiny, gray] at (10.0, 2.0) {$T_{amb}=20$°C};
+
+    % Compatibilité PAC (limite ~55°C = 5.5)
+    \draw[dashed, FedOrange, line width=0.8pt] (0, 5.5) -- (10.0, 5.5);
+    \node[right, font=\tiny, FedOrange] at (10.0, 5.5) {Limite PAC $\approx55$°C};
+
+    % Légende compatibilité
+    \node[draw, fill=FedGreen!20, font=\tiny, align=left, rounded corners=2pt]
+      at (5.0, 8.0) {Radiateur BT, VEC, PCH : compatibles PAC \quad Radiateur HT : incompatible PAC};
+
+  \end{tikzpicture}
+  \caption{Comparaison des émetteurs hydrauliques — températures de fonctionnement types et compatibilité PAC}
+  \label{fig:comparaison-emetteurs}
+\end{figure}
+
 % ============================================================
 \section{Éléments de réglementation}
 % ============================================================
@@ -500,3 +686,82 @@ Le local présente des déperditions de 1200\,W. Le radiateur a une puissance no
 
   \item[Décret du 25 juin 2019 (robinets thermostatiques)] Obligation d'équiper de robinets thermostatiques (ou autre régulation locale) tous les radiateurs alimentés par le réseau collectif dans les logements neufs et à l'occasion de travaux.
 \end{description}
+
+% ============================================================
+\section{Exercices}
+% ============================================================
+
+\begin{exercice}[title=Exercice 1 — Sélection d'un radiateur en régime PAC]
+\textbf{Énoncé :} Une chambre de 15\,m² présente des déperditions de \SI{750}{\watt} pour $T_{ext} = -9$\,°C, $T_{amb} = 20$\,°C. La PAC fonctionne en 50/40\,°C. Exposant $n = 1{,}3$.
+
+\begin{enumerate}
+  \item Calculer $\Delta T_{réel}$.
+  \item Calculer la puissance nominale catalogue nécessaire $\Phi_{nom,néc}$.
+  \item Indiquer quel type de radiateur choisir et justifier.
+\end{enumerate}
+
+\textbf{Corrigé :}
+
+\textbf{1 — Écart de température réel}
+\[
+  T_{moy,eau} = \frac{50 + 40}{2} = \SI{45}{\celsius}
+  \qquad
+  \Delta T_{réel} = 45 - 20 = \SI{25}{\kelvin}
+\]
+
+\textbf{2 — Puissance nominale équivalente nécessaire}
+\[
+  \Phi_{nom,néc} = \frac{750}{\left(\dfrac{25}{50}\right)^{1{,}3}}
+  = \frac{750}{(0{,}5)^{1{,}3}}
+  = \frac{750}{0{,}406}
+  \approx \SI{1848}{\watt}
+\]
+
+\textbf{3 — Choix du radiateur}
+Sélectionner un radiateur panneau acier type 22 de puissance nominale $\geq \SI{1850}{\watt}$ (catalogue HT 75/65/20\,°C). Le facteur de surdimensionnement est $\approx 2{,}5$ par rapport aux déperditions, ce qui est typique pour un fonctionnement PAC à 50/40\,°C. Vérifier l'encombrement en dessous de la fenêtre (position recommandée pour le confort).
+\end{exercice}
+
+\begin{exercice}[title=Exercice 2 — Dimensionnement d'un plancher chauffant (salon)]
+\textbf{Énoncé :} Un salon de 25\,m² présente des déperditions de \SI{900}{\watt}. Revêtement : parquet collé ($R_{revêt} = \SI{0{,}08}{\square\metre\kelvin\per\watt}$). PCH en 35/28\,°C, $T_{amb} = 20$\,°C.
+
+\begin{enumerate}
+  \item Calculer la puissance surfacique nécessaire $q_{néc}$.
+  \item Calculer le coefficient $B$.
+  \item Déterminer le pas de tube minimal théorique puis choisir un pas normalisé.
+  \item Vérifier que la longueur de boucle est acceptable.
+\end{enumerate}
+
+\textbf{Corrigé :}
+
+\textbf{1 — Puissance surfacique nécessaire}
+\[
+  q_{néc} = \frac{900}{25} = \SI{36}{\watt\per\square\metre}
+\]
+
+\textbf{2 — Coefficient B}
+\[
+  B = \frac{1}{0{,}173 + 0{,}08} = \frac{1}{0{,}253} = \SI{3{,}95}{\watt\per\square\metre\per\kelvin}
+\]
+
+\textbf{3 — Pas de tube}
+\[
+  T_{moy} = \frac{35 + 28}{2} = \SI{31{,}5}{\celsius}
+  \qquad
+  p = \frac{B \times (T_{moy} - T_{amb})}{q_{néc}}
+  = \frac{3{,}95 \times 11{,}5}{36} = \frac{45{,}4}{36} \approx \SI{1{,}26}{\metre}
+\]
+Le pas calculé est très grand car $q_{néc}$ est faible. On retient le pas normalisé \textbf{maximal de 300\,mm} (0,30\,m), qui fournit largement la puissance requise.
+
+\textbf{Vérification :}
+\[
+  q_{disp} = 3{,}95 \times \frac{11{,}5}{0{,}30} = 3{,}95 \times 38{,}3 = \SI{151}{\watt\per\square\metre} \gg 36\,\text{W/m}^2 \quad \checkmark
+\]
+
+\textbf{4 — Longueur de boucle}
+\[
+  L_{tube} = \frac{25}{0{,}30} \approx \SI{83}{\metre} < 100\,\text{m} \quad \checkmark
+\]
+Une seule boucle suffit pour ce salon.
+\end{exercice}
+
+\finchapitre

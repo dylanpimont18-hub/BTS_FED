@@ -48,7 +48,7 @@ Ce chapitre fournit les outils pour :
   \item \textbf{Transformer des équations} pour exprimer une inconnue en fonction d'autres
         paramètres ;
   \item \textbf{Exploiter des graphiques et abaques} : lecture de courbes, interpolation,
-        extériorisation dans un réseau dimanche.
+        extrapolation dans un réseau d'isobares ou d'isothermes.
 \end{itemize}
 
 La maîtrise de ces concepts garantit la fiabilité des dimensionnements et la détection rapide
@@ -204,18 +204,18 @@ modifier la valeur physique. Trois approches sont possibles :
 \begin{table}[h]
   \centering
   \sffamily\small
-  \caption{Conversions couantes — Énergie et puissance}
+  \caption{Conversions courantes — Énergie et puissance}
   \label{tab:conv-energie}
   \begin{tabular}{|l|c|l|}
     \hline
     \textbf{De} & \textbf{Vers} & \textbf{Facteur de conversion} \\
     \hline
-    \si{\watt (W)} & \si{\kilowatt (kW)} & $\times 10^{-3}$ \\
-    \si{\joule (J)} & \si{\kilowatt\hour (kWh)} & $\times 2{,}778 \times 10^{-7}$ \\
-    kWh & \si{\joule (J)} & $\times 3{,}6 \times 10^6$ \\
-    \si{\watt\hour (Wh)} & \si{\kilowatt\hour (kWh)} & $\times 10^{-3}$ \\
-    \si{\calorie (cal)} & \si{\joule (J)} & $\times 4{,}1868$ \\
-    kilocalorie (kcal) & \si{\joule (J)} & $\times 4186{,}8$ \\
+    \si{\watt} (W) & \si{\kilowatt} (kW) & $\times 10^{-3}$ \\
+    \si{\joule} (J) & \si{\kilo\watt\hour} (kWh) & $\times 2{,}778 \times 10^{-7}$ \\
+    kWh & \si{\joule} (J) & $\times 3{,}6 \times 10^6$ \\
+    Wh & kWh & $\times 10^{-3}$ \\
+    cal & \si{\joule} (J) & $\times 4{,}1868$ \\
+    kcal & \si{\joule} (J) & $\times 4186{,}8$ \\
     \hline
   \end{tabular}
 \end{table}
@@ -239,12 +239,12 @@ Une chaudière gaz produit une puissance de $35~\mathrm{kW}$.
     \hline
     \textbf{De} & \textbf{Vers} & \textbf{Facteur de conversion} \\
     \hline
-    \si{\pascal (Pa)} & \si{\bar} & $\times 10^{-5}$ \\
-    bar & Pa & $\times 10^5$ \\
-    bar & \si{\kilogram\per\meter\squared (kgf/m²)} & $\times 10\,197{,}16$ \\
-    \si{\pascal (Pa)} & \si{\meter H2O (mH₂O)} & $\times 1{,}02 \times 10^{-4}$ \\
-    mH₂O & Pa & $\times 9\,810$ \\
-    bar & mH₂O & $\times 10{,}2$ \\
+    \si{\pascal} (Pa) & bar & $\times 10^{-5}$ \\
+    bar & \si{\pascal} (Pa) & $\times 10^5$ \\
+    bar & kgf/m² & $\times 10\,197{,}16$ \\
+    \si{\pascal} (Pa) & mH\textsubscript{2}O & $\times 1{,}02 \times 10^{-4}$ \\
+    mH\textsubscript{2}O & \si{\pascal} (Pa) & $\times 9\,810$ \\
+    bar & mH\textsubscript{2}O & $\times 10{,}2$ \\
     \hline
   \end{tabular}
 \end{table}
@@ -268,10 +268,9 @@ Un détendeur hydrodynamique supporte une perte de charge $\Delta P = 25\,000~\m
     \hline
     \textbf{De} & \textbf{Vers} & \textbf{Facteur de conversion} \\
     \hline
-    \si{\meter\cubed\per\hour (m³/h)} & \si{\meter\cubed\per\second (m³/s)} & $\times 1/3\,600 \approx
-    2{,}778 \times 10^{-4}$ \\
-    m³/s & m³/h & $\times 3\,600$ \\
-    \si{\liter\per\second (L/s)} & m³/h & $\times 3{,}6$ \\
+    \si{\meter\cubed\per\hour} (m³/h) & \si{\meter\cubed\per\second} (m³/s) & $\times 1/3\,600 \approx 2{,}778 \times 10^{-4}$ \\
+    \si{\meter\cubed\per\second} (m³/s) & m³/h & $\times 3\,600$ \\
+    L/s & m³/h & $\times 3{,}6$ \\
     m³/h & L/s & $\times 1/3{,}6 \approx 0{,}2778$ \\
     m³/h & L/min & $\times 1000/60 \approx 16{,}67$ \\
     \hline
@@ -588,6 +587,131 @@ Pour $c_p$ (entre 40°C et 60°C) :
 \end{align*}
 
 % ============================================================
+\section{Diagrammes et schémas de synthèse}
+% ============================================================
+
+\subsection{Les sept dimensions fondamentales du SI}
+
+La figure~\ref{fig:dimensions-si} présente les sept grandeurs de base du Système International
+et leurs unités associées.
+
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}[
+      node distance = 1.4cm and 1.8cm,
+      dim/.style  = {draw, rounded corners=4pt, minimum width=3.2cm, minimum height=0.9cm,
+                     font=\sffamily\small, align=center, thick},
+      base/.style = {dim, fill=FedBlue!15, draw=FedBlue},
+      center/.style = {draw, circle, fill=FedBlue, text=white, font=\sffamily\bfseries\small,
+                       minimum size=1.8cm, align=center},
+      arr/.style  = {-Stealth, thick, FedBlue!70}
+    ]
+    % Centre
+    \node[center] (SI) {SI\\Dimensions};
+
+    % 7 nœuds autour
+    \node[base, above=1.6cm of SI]               (M) {\textbf{Masse} $[M]$\\\si{\kilogram} (kg)};
+    \node[base, above right=1.1cm and 2.2cm of SI](L) {\textbf{Longueur} $[L]$\\\si{\meter} (m)};
+    \node[base, right=2.8cm of SI]               (T) {\textbf{Temps} $[T]$\\\si{\second} (s)};
+    \node[base, below right=1.1cm and 2.2cm of SI](I) {\textbf{Courant} $[I]$\\\si{\ampere} (A)};
+    \node[base, below=1.6cm of SI]               (th){\textbf{Température} $[\Theta]$\\\si{\kelvin} (K)};
+    \node[base, below left=1.1cm and 2.2cm of SI] (N) {\textbf{Quantité de matière} $[N]$\\\si{\mole} (mol)};
+    \node[base, left=2.8cm of SI]                (J) {\textbf{Intensité lumineuse} $[J]$\\\si{\candela} (cd)};
+
+    % Flèches
+    \foreach \n in {M,L,T,I,th,N,J}
+      \draw[arr] (SI) -- (\n);
+  \end{tikzpicture}
+  \caption{Les sept dimensions fondamentales du Système International d'unités}
+  \label{fig:dimensions-si}
+\end{figure}
+
+\subsection{Méthode d'homogénéité — Schéma de raisonnement}
+
+La figure~\ref{fig:methode-homogeneite} illustre la démarche pas-à-pas pour vérifier
+l'homogénéité d'une équation physique (exemple : bilan thermique $\dot{Q} = \dot{m}\,c_p\,\Delta T$).
+
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}[
+      node distance=0.55cm,
+      step/.style  = {draw, rounded corners=4pt, fill=FedBlue!12, draw=FedBlue,
+                       text width=8cm, minimum height=0.85cm, align=left,
+                       font=\sffamily\small, inner sep=6pt},
+      result/.style= {draw, rounded corners=4pt, fill=FedGreen!20, draw=FedGreen,
+                       text width=8cm, minimum height=0.85cm, align=left,
+                       font=\sffamily\small, inner sep=6pt},
+      err/.style   = {draw, rounded corners=4pt, fill=FedOrange!20, draw=FedOrange,
+                       text width=8cm, minimum height=0.85cm, align=left,
+                       font=\sffamily\small, inner sep=6pt},
+      arr/.style   = {-Stealth, thick, FedBlue}
+    ]
+    \node[step]   (s1) {\textbf{Étape 1} — Écrire l'équation : $\dot{Q} = \dot{m}\cdot c_p\cdot\Delta T$};
+    \node[step, below=of s1] (s2) {\textbf{Étape 2} — Remplacer chaque grandeur par sa dimension :
+      $[\dot{Q}]=\mathrm{W}=\mathrm{kg\cdot m^2\cdot s^{-3}}$};
+    \node[step, below=of s2] (s3) {\textbf{Étape 3} — Développer le membre droit :
+      $[\dot{m}][c_p][\Delta T] = (\mathrm{kg\cdot s^{-1}})(\mathrm{m^2\cdot s^{-2}\cdot K^{-1}})(\mathrm{K})$};
+    \node[step, below=of s3] (s4) {\textbf{Étape 4} — Simplifier et regrouper les exposants};
+    \node[result, below=of s4] (ok) {\textcolor{FedGreen!60!black}{\textbf{Résultat :}}
+      $\mathrm{kg\cdot m^2\cdot s^{-3} = kg\cdot m^2\cdot s^{-3}}$ \quad \textbf{Équation homogène} \checkmark};
+
+    \draw[arr] (s1) -- (s2);
+    \draw[arr] (s2) -- (s3);
+    \draw[arr] (s3) -- (s4);
+    \draw[arr] (s4) -- (ok);
+
+    % Annotation à droite de s4
+    \node[err, right=1.2cm of s4, text width=4.2cm]
+      (warn) {\textcolor{FedOrange!80!black}{\textbf{Si différent :}} équation fausse — vérifier coefficients ou formule};
+    \draw[-Stealth, dashed, FedOrange, thick] (s4.east) -- (warn.west);
+  \end{tikzpicture}
+  \caption{Démarche de vérification d'homogénéité dimensionnelle (exemple thermique)}
+  \label{fig:methode-homogeneite}
+\end{figure}
+
+\subsection{Grandeurs physiques courantes en CVC — Rappel visuel}
+
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}[
+      col/.style={draw=FedBlue, fill=FedBlue!8, rounded corners=3pt,
+                  minimum width=2.8cm, minimum height=0.75cm,
+                  font=\sffamily\footnotesize, align=center},
+      hdr/.style={draw=FedBlue, fill=FedBlue, text=white, rounded corners=3pt,
+                  minimum width=2.8cm, minimum height=0.8cm,
+                  font=\sffamily\small\bfseries, align=center},
+      colO/.style={col, draw=FedOrange, fill=FedOrange!10},
+      hdrO/.style={hdr, draw=FedOrange, fill=FedOrange},
+      colG/.style={col, draw=FedGreen, fill=FedGreen!10},
+      hdrG/.style={hdr, draw=FedGreen, fill=FedGreen},
+      node distance=0pt
+    ]
+    % Colonne 1 — Thermique
+    \node[hdr]  (h1) at (0,0)        {Thermique};
+    \node[col, below=of h1] (r11)    {Puissance : \si{\watt} (W)};
+    \node[col, below=of r11] (r12)   {Énergie : \si{\kilo\watt\hour} (kWh)};
+    \node[col, below=of r12] (r13)   {Temp. : \si{\kelvin} / \si{\degreeCelsius}};
+    \node[col, below=of r13] (r14)   {$c_p$ : J/(kg·K)};
+
+    % Colonne 2 — Hydraulique
+    \node[hdrO] (h2) at (3.2,0)      {Hydraulique};
+    \node[colO, below=of h2] (r21)   {Pression : \si{\pascal} (Pa)};
+    \node[colO, below=of r21] (r22)  {Débit vol. : m³/h};
+    \node[colO, below=of r22] (r23)  {Débit mass. : kg/s};
+    \node[colO, below=of r23] (r24)  {Vitesse : m/s};
+
+    % Colonne 3 — Aéraulique / géométrie
+    \node[hdrG] (h3) at (6.4,0)      {Géométrie/Air};
+    \node[colG, below=of h3] (r31)   {Longueur : \si{\meter} (m)};
+    \node[colG, below=of r31] (r32)  {Surface : \si{\meter\squared} (m²)};
+    \node[colG, below=of r32] (r33)  {Volume : \si{\meter\cubed} (m³)};
+    \node[colG, below=of r33] (r34)  {Masse vol. : kg/m³};
+  \end{tikzpicture}
+  \caption{Grandeurs physiques et unités courantes en génie climatique (CVC)}
+  \label{fig:grandeurs-cvc}
+\end{figure}
+
+% ============================================================
 \section{Synthèse et bonnes pratiques}
 % ============================================================
 
@@ -605,4 +729,4 @@ Pour $c_p$ (entre 40°C et 60°C) :
   \end{itemize}
 \end{tcolorbox}
 
-\end{document}
+\finchapitre

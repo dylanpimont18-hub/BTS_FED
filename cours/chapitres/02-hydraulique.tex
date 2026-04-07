@@ -494,6 +494,201 @@ Choisir un vase de \SI{12}{\litre} (première taille standard supérieure).
 \end{exemple}
 
 % ============================================================
+\section{Schémas et diagrammes caractéristiques}
+% ============================================================
+
+\subsection{Circuit hydraulique bouclé}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+    thick,
+    >=Stealth,
+    box/.style={draw, rectangle, minimum width=2.2cm, minimum height=0.85cm,
+                fill=FedBlue!15, draw=FedBlue, rounded corners=3pt, font=\small\bfseries},
+    pump/.style={draw, circle, minimum size=0.85cm, fill=FedOrange!20,
+                 draw=FedOrange, font=\small\bfseries},
+    exp/.style={draw, diamond, minimum width=1.1cm, minimum height=1.1cm,
+                fill=FedGreen!20, draw=FedGreen, font=\scriptsize\bfseries},
+  ]
+    % Noeuds principaux (coordonnées absolues)
+    \node[box]  (chaudiere) at (0,0)    {Chaudière};
+    \node[pump] (pompe)     at (0,-2.2) {$P$};
+    \node[box]  (nourrice)  at (5,0)    {Nourrice};
+    \node[box]  (rad1)      at (2.5,-3.5) {Rad. 1};
+    \node[box]  (rad2)      at (5,-3.5)   {Rad. 2};
+    \node[box]  (rad3)      at (7.5,-3.5) {Rad. 3};
+    \node[exp]  (vase)      at (2.5,0)  {$V_e$};
+
+    % Tuyauterie départ : chaudière → nourrice
+    \draw[->, draw=FedRed, very thick]
+      (chaudiere.east) -- node[above, font=\footnotesize, text=FedRed]{Départ 70°C}
+      (nourrice.west);
+
+    % Vase d'expansion raccordé sur le départ
+    \draw[draw=FedGreen, thick] (vase.east) -- (3.9,0);
+
+    % Distribution depuis nourrice vers radiateurs
+    \draw[draw=FedRed, thick] (nourrice.south) -- (5,-2.5) -- (2.5,-2.5);
+    \draw[draw=FedRed, thick] (5,-2.5) -- (7.5,-2.5);
+    \draw[->, draw=FedRed, thick] (2.5,-2.5) -- (rad1.north);
+    \draw[->, draw=FedRed, thick] (5,-2.5)   -- (rad2.north);
+    \draw[->, draw=FedRed, thick] (7.5,-2.5) -- (rad3.north);
+
+    % Retour des radiateurs
+    \draw[draw=FedBlue, thick] (rad1.south) -- (2.5,-4.5);
+    \draw[draw=FedBlue, thick] (rad2.south) -- (5,-4.5);
+    \draw[draw=FedBlue, thick] (rad3.south) -- (7.5,-4.5);
+    \draw[draw=FedBlue, thick] (2.5,-4.5) -- (7.5,-4.5);
+    \draw[draw=FedBlue, thick] (5,-4.5) -- (5,-5.0) -- (0,-5.0) -- (0,-2.65);
+    \draw[->, draw=FedBlue, very thick]
+      (pompe.south) -- node[right, font=\footnotesize, text=FedBlue]{Retour 55°C}
+      (0,-2.65);
+
+    % Pompe → chaudière
+    \draw[->, draw=FedBlue, very thick] (pompe.north) -- (chaudiere.south);
+
+    % Légende
+    \draw[draw=FedRed, very thick, ->] (1.8,-6.0) -- ++(0.7,0);
+    \node[right, font=\footnotesize, text=FedRed] at (2.5,-6.0) {Aller (eau chaude)};
+    \draw[draw=FedBlue, very thick, ->] (1.8,-6.5) -- ++(0.7,0);
+    \node[right, font=\footnotesize, text=FedBlue] at (2.5,-6.5) {Retour (eau froide)};
+    \node[font=\footnotesize, text=FedGreen!70!black] at (7.2,-6.0) {$V_e$ : Vase d'expansion};
+    \node[font=\footnotesize, text=FedOrange!80!black] at (7.2,-6.5) {$P$ : Pompe de circulation};
+  \end{tikzpicture}
+  \caption{Schéma de principe d'un circuit hydraulique bouclé (chauffage bitubes)}
+  \label{fig:circuit-boucle}
+\end{figure}
+
+\subsection{Courbe caractéristique pompe / réseau}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[>=Stealth, thick]
+    % Axes
+    \draw[->] (0,0) -- (7.5,0) node[right, font=\small] {$q_v$ (\si{\cubic\metre\per\hour})};
+    \draw[->] (0,0) -- (0,5.5) node[above, font=\small] {$H$ (mCE)};
+
+    % Graduations axe X
+    \foreach \x/\lbl in {1/0{,}5, 2/1{,}0, 3/1{,}5, 4/2{,}0, 5/2{,}5, 6/3{,}0} {
+      \draw (\x,0.05) -- (\x,-0.05);
+      \node[below, font=\tiny] at (\x,0) {\lbl};
+    }
+    % Graduations axe Y
+    \foreach \y/\lbl in {1/1, 2/2, 3/3, 4/4, 5/5} {
+      \draw (0.05,\y) -- (-0.05,\y);
+      \node[left, font=\tiny] at (0,\y) {\lbl};
+    }
+
+    % Courbe pompe : H = 5 - 0.2*qv^2 (parabole descendante)
+    \draw[color=FedBlue, very thick, domain=0:6.5, samples=60]
+      plot (\x, {5 - 0.1*\x*\x})
+      node[right, font=\small, text=FedBlue] {Courbe pompe};
+
+    % Courbe réseau : H = 0.12*qv^2 (parabole ascendante, passe par 0)
+    \draw[color=FedOrange, very thick, domain=0:6.2, samples=60]
+      plot (\x, {0.13*\x*\x})
+      node[above, font=\small, text=FedOrange] {Courbe réseau};
+
+    % Point de fonctionnement : intersection de 5 - 0.1*x^2 = 0.13*x^2
+    % 5 = 0.23*x^2 => x^2 = 21.74 => x = 4.66, y = 0.13*21.74 = 2.83
+    \draw[dashed, color=FedRed] (4.66,0) -- (4.66,2.83) -- (0,2.83);
+    \filldraw[FedRed] (4.66,2.83) circle (3pt);
+    \node[above right, font=\small\bfseries, text=FedRed] at (4.66,2.83) {Pt de fonctionnement};
+    \node[below, font=\tiny, text=FedRed] at (4.66,0) {$q_{v,0}$};
+    \node[left, font=\tiny, text=FedRed] at (0,2.83) {$H_0$};
+
+    % Zone de bon rendement (hachures)
+    \draw[color=FedGreen!60, dashed, thick] (3.5,0) -- (3.5,{5 - 0.1*3.5*3.5});
+    \draw[color=FedGreen!60, dashed, thick] (5.5,0) -- (5.5,{5 - 0.1*5.5*5.5});
+    \node[font=\tiny, text=FedGreen!80!black, rotate=90] at (4.5,1.0) {Zone optimale};
+  \end{tikzpicture}
+  \caption{Courbe caractéristique pompe et courbe de réseau — détermination du point de fonctionnement}
+  \label{fig:courbe-pompe-reseau}
+\end{figure}
+
+\begin{methode}[title=Lecture du point de fonctionnement]
+Le point de fonctionnement $\left(q_{v,0},\, H_0\right)$ est l'intersection des deux courbes :
+\begin{itemize}
+  \item \textbf{Courbe pompe} : $H_{pompe}(q_v)$ décroissante — fournie par le fabricant
+  \item \textbf{Courbe réseau} : $H_{réseau} = k \cdot q_v^2$ croissante — calculée par l'installateur
+\end{itemize}
+Si le réseau est modifié (équilibrage, remplacement d'un émetteur), la courbe réseau change et le point de fonctionnement se déplace sur la courbe pompe.
+\end{methode}
+
+\subsection{Régimes d'écoulement — Profils de vitesse}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[>=Stealth, thick, node distance=4.5cm]
+
+    %--- Régime laminaire (gauche) ---
+    \begin{scope}[xshift=0cm]
+      % Tube
+      \draw[draw=FedBlue!50, fill=FedBlue!8] (0,-1.2) rectangle (4,1.2);
+      \draw[very thick] (0,-1.2) -- (4,-1.2);
+      \draw[very thick] (0, 1.2) -- (4, 1.2);
+
+      % Profil parabolique : v(r) = v_max*(1-(r/R)^2), R=1.2
+      % r=0.0 : vlen=1.69; r=±0.3 : vlen=1.55; r=±0.6 : vlen=1.12; r=±0.9 : vlen=0.62; r=±1.1 : vlen=0.23
+      \draw[->, color=FedBlue, thick] (0.6, 0.0)  -- ++(1.69,0);
+      \draw[->, color=FedBlue, thick] (0.6, 0.3)  -- ++(1.55,0);
+      \draw[->, color=FedBlue, thick] (0.6,-0.3)  -- ++(1.55,0);
+      \draw[->, color=FedBlue, thick] (0.6, 0.6)  -- ++(1.12,0);
+      \draw[->, color=FedBlue, thick] (0.6,-0.6)  -- ++(1.12,0);
+      \draw[->, color=FedBlue, thick] (0.6, 0.9)  -- ++(0.62,0);
+      \draw[->, color=FedBlue, thick] (0.6,-0.9)  -- ++(0.62,0);
+      \draw[->, color=FedBlue, thick] (0.6, 1.1)  -- ++(0.23,0);
+      \draw[->, color=FedBlue, thick] (0.6,-1.1)  -- ++(0.23,0);
+
+      % Légende
+      \node[below, font=\small\bfseries, text=FedBlue] at (2,-1.5) {Laminaire ($Re < 2300$)};
+      \node[below, font=\footnotesize] at (2,-1.9) {Profil parabolique};
+      \node[right, font=\tiny] at (2.3,0) {$v_{max}$};
+
+      % Note Reynolds
+      \node[font=\footnotesize, text=FedBlue!70!black] at (2,1.6) {Filets parallèles, $\lambda = 64/Re$};
+    \end{scope}
+
+    %--- Régime turbulent (droite) ---
+    \begin{scope}[xshift=5.5cm]
+      % Tube
+      \draw[draw=FedOrange!50, fill=FedOrange!8] (0,-1.2) rectangle (4,1.2);
+      \draw[very thick] (0,-1.2) -- (4,-1.2);
+      \draw[very thick] (0, 1.2) -- (4, 1.2);
+
+      % Profil quasi-uniforme : flèches presque égales, chute rapide en paroi
+      \draw[->, color=FedOrange, thick] (0.6, 0.0)  -- ++(1.69,0);
+      \draw[->, color=FedOrange, thick] (0.6, 0.3)  -- ++(1.63,0);
+      \draw[->, color=FedOrange, thick] (0.6,-0.3)  -- ++(1.63,0);
+      \draw[->, color=FedOrange, thick] (0.6, 0.6)  -- ++(1.50,0);
+      \draw[->, color=FedOrange, thick] (0.6,-0.6)  -- ++(1.50,0);
+      \draw[->, color=FedOrange, thick] (0.6, 0.9)  -- ++(1.20,0);
+      \draw[->, color=FedOrange, thick] (0.6,-0.9)  -- ++(1.20,0);
+      \draw[->, color=FedOrange, thick] (0.6, 1.1)  -- ++(0.40,0);
+      \draw[->, color=FedOrange, thick] (0.6,-1.1)  -- ++(0.40,0);
+
+      % Perturbations schématisées
+      \draw[color=FedOrange!60, thin, ->] (1.5, 0.4) -- ++(-0.1,0.25) -- ++(0.15,0.2);
+      \draw[color=FedOrange!60, thin, ->] (1.5,-0.4) -- ++(0.1,-0.25) -- ++(-0.15,-0.2);
+      \draw[color=FedOrange!60, thin, ->] (2.3, 0.4) -- ++(-0.1,0.25) -- ++(0.15,0.2);
+      \draw[color=FedOrange!60, thin, ->] (2.3,-0.4) -- ++(0.1,-0.25) -- ++(-0.15,-0.2);
+
+      % Légende
+      \node[below, font=\small\bfseries, text=FedOrange] at (2,-1.5) {Turbulent ($Re > 4000$)};
+      \node[below, font=\footnotesize] at (2,-1.9) {Profil quasi-uniforme};
+      \node[font=\footnotesize, text=FedOrange!70!black] at (2,1.6) {Mélange transversal, $\lambda = f(Re,\, \varepsilon/D)$};
+    \end{scope}
+
+    % Flèche de transition au centre
+    \draw[->, very thick, color=FedGreen] (4.2,0) -- node[above, font=\footnotesize, text=FedGreen]{$Re \uparrow$} (5.3,0);
+
+  \end{tikzpicture}
+  \caption{Profils de vitesse en régime laminaire et turbulent dans une conduite circulaire}
+  \label{fig:profils-ecoulement}
+\end{figure}
+
+% ============================================================
 \section{Éléments de réglementation}
 % ============================================================
 
@@ -506,3 +701,5 @@ Choisir un vase de \SI{12}{\litre} (première taille standard supérieure).
   \item[RE 2020] Impose une approche de calcul de la consommation d'énergie primaire incluant les auxiliaires (pompes). Favorise les circulateurs à haut rendement (classe ErP 2015 minimum).
   \item[Règlement EU 547/2012] Définit les exigences d'écoconception des pompes à eau. Les circulateurs de chauffage doivent satisfaire l'indice d'efficacité énergétique $IEE \leq 0{,}23$.
 \end{description}
+
+\finchapitre
