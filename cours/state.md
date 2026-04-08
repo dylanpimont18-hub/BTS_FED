@@ -6,8 +6,8 @@ Mis à jour automatiquement par l'agent à chaque run.
 ---
 
 ## Dernier run
-- Date : 2026-04-08 (6ème run)
-- Action : **T01 — Ajout \input ch01-07 dans livret-exercices.tex | T02 — Rédaction profil étudiant en difficulté (etudiant-mauvais.md, 300+ mots)**
+- Date : 2026-04-08 (7ème run)
+- Action : **T03 — Rédaction profil étudiant dans la moyenne (etudiant-bon.md, 400+ mots) | T04 — Rédaction profil étudiant excellent (etudiant-tres-bon.md, 450+ mots)**
 
 ---
 
@@ -19,8 +19,8 @@ Mis à jour automatiquement par l'agent à chaque run.
 |----|----------|--------|---------------|-------------|
 | T01 | HAUTE | **FAIT** | `cours/livret-exercices.tex` | Ajouter `\input` manquants ch01-07 dans le livret |
 | T02 | HAUTE | **FAIT** | `cours/etudiant-mauvais.md` | Rédiger profil pédagogique étudiant en difficulté |
-| T03 | HAUTE | **TODO** | `cours/etudiant-bon.md` | Rédiger profil pédagogique étudiant dans la moyenne |
-| T04 | HAUTE | **TODO** | `cours/etudiant-tres-bon.md` | Rédiger profil pédagogique étudiant excellent |
+| T03 | HAUTE | **FAIT** | `cours/etudiant-bon.md` | Rédiger profil pédagogique étudiant dans la moyenne |
+| T04 | HAUTE | **FAIT** | `cours/etudiant-tres-bon.md` | Rédiger profil pédagogique étudiant excellent |
 | T05 | MOYENNE | **TODO** | `cours/chapitres/01-bases-thermiques.tex` | Ajouter fiche mémo fin de chapitre (boîte tcolorbox récap formules) |
 | T06 | MOYENNE | **TODO** | `cours/chapitres/02-hydraulique.tex` | Ajouter fiche mémo fin de chapitre |
 | T07 | MOYENNE | **TODO** | `cours/chapitres/03-aeraulique.tex` | Ajouter fiche mémo fin de chapitre |
@@ -103,8 +103,8 @@ Mis à jour automatiquement par l'agent à chaque run.
 | Fichier | Statut |
 |---------|--------|
 | etudiant-mauvais.md | ✅ Rédigé (T02 FAIT) |
-| etudiant-bon.md | ❌ Vide (T03) |
-| etudiant-tres-bon.md | ❌ Vide (T04) |
+| etudiant-bon.md | ✅ Rédigé (T03 FAIT) |
+| etudiant-tres-bon.md | ✅ Rédigé (T04 FAIT) |
 
 ---
 
