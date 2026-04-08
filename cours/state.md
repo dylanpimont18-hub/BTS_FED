@@ -6,8 +6,8 @@ Mis à jour automatiquement par l'agent à chaque run.
 ---
 
 ## Dernier run
-- Date : 2026-04-08 (7ème run)
-- Action : **T03 — Rédaction profil étudiant dans la moyenne (etudiant-bon.md, 400+ mots) | T04 — Rédaction profil étudiant excellent (etudiant-tres-bon.md, 450+ mots)**
+- Date : 2026-04-08 (8ème run)
+- Action : **T05 — Fiche mémo tcolorbox ajoutée en fin de ch01 (bases-thermiques.tex, 8 formules clés) | T06 — Fiche mémo tcolorbox ajoutée en fin de ch02 (hydraulique.tex, 8 formules clés)**
 
 ---
 
@@ -21,8 +21,8 @@ Mis à jour automatiquement par l'agent à chaque run.
 | T02 | HAUTE | **FAIT** | `cours/etudiant-mauvais.md` | Rédiger profil pédagogique étudiant en difficulté |
 | T03 | HAUTE | **FAIT** | `cours/etudiant-bon.md` | Rédiger profil pédagogique étudiant dans la moyenne |
 | T04 | HAUTE | **FAIT** | `cours/etudiant-tres-bon.md` | Rédiger profil pédagogique étudiant excellent |
-| T05 | MOYENNE | **TODO** | `cours/chapitres/01-bases-thermiques.tex` | Ajouter fiche mémo fin de chapitre (boîte tcolorbox récap formules) |
-| T06 | MOYENNE | **TODO** | `cours/chapitres/02-hydraulique.tex` | Ajouter fiche mémo fin de chapitre |
+| T05 | MOYENNE | **FAIT** | `cours/chapitres/01-bases-thermiques.tex` | Ajouter fiche mémo fin de chapitre (boîte tcolorbox récap formules) |
+| T06 | MOYENNE | **FAIT** | `cours/chapitres/02-hydraulique.tex` | Ajouter fiche mémo fin de chapitre |
 | T07 | MOYENNE | **TODO** | `cours/chapitres/03-aeraulique.tex` | Ajouter fiche mémo fin de chapitre |
 | T08 | MOYENNE | **TODO** | `cours/chapitres/04-production-chaleur.tex` | Ajouter fiche mémo fin de chapitre |
 | T09 | MOYENNE | **TODO** | `cours/chapitres/05-distribution-emission.tex` | Ajouter fiche mémo fin de chapitre |

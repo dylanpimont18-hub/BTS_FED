@@ -994,4 +994,54 @@ thermiquement homogènes. Elle fixe notamment les valeurs des résistances super
   \label{fig:courbe_chauffe}
 \end{figure}
 
+\begin{tcolorbox}[
+  enhanced, colback=FedBlue!3, colframe=FedBlue!50,
+  fonttitle=\bfseries\sffamily, coltitle=FedBlue,
+  title={FICHE MÉMO — Bases de la thermique}, boxrule=0.8pt, arc=2pt,
+  width=\textwidth
+]
+\begin{multicols}{2}
+\textbf{Chaleur sensible}
+\[ Q = m \cdot c_p \cdot \Delta T \]
+avec $m$ = masse [\si{\kilogram}], $c_p$ = capacité thermique massique [\si{\joule\per\kilogram\per\kelvin}], $\Delta T$ = écart de température [\si{\kelvin}]
+
+\medskip
+\textbf{Puissance thermique (fluide en circulation)}
+\[ \dot{Q} = \dot{m} \cdot c_p \cdot \Delta T \]
+avec $\dot{m}$ = débit massique [\si{\kilogram\per\second}]
+
+\medskip
+\textbf{Formule pratique eau liquide}
+\[ \dot{Q}\,[\si{\watt}] = \dot{V}\,[\si{\liter\per\hour}] \times 1{,}163 \times \Delta T\,[\si{\kelvin}] \]
+
+\medskip
+\textbf{Conduction (loi de Fourier)}
+\[ \dot{Q} = \lambda \cdot \frac{S \cdot \Delta T}{e} \]
+avec $\lambda$ = conductivité thermique [\si{\watt\per\metre\per\kelvin}], $e$ = épaisseur [\si{\metre}]
+
+\columnbreak
+
+\textbf{Résistance thermique d'une couche}
+\[ R = \frac{e}{\lambda} \quad \left[\si{\metre\squared\kelvin\per\watt}\right] \]
+
+\medskip
+\textbf{Coefficient de transmission surfacique}
+\[ U = \frac{1}{\displaystyle R_{si} + \sum_i \frac{e_i}{\lambda_i} + R_{se}} \quad \left[\si{\watt\per\metre\squared\per\kelvin}\right] \]
+
+\medskip
+\textbf{Flux thermique total paroi}
+\[ \dot{Q} = U \cdot S \cdot \Delta T \]
+
+\medskip
+\textbf{Convection (loi de Newton)}
+\[ \dot{Q} = h \cdot S \cdot \Delta T \]
+avec $h$ = coefficient d'échange convectif [\si{\watt\per\metre\squared\per\kelvin}]
+
+\medskip
+\textbf{Rayonnement (Stefan-Boltzmann)}
+\[ M^{\circ} = \varepsilon \cdot \sigma \cdot T^4 \quad \left[\si{\watt\per\metre\squared}\right] \]
+avec $\sigma = \SI{5{,}67e-8}{\watt\per\metre\squared\per\kelvin\tothe{4}}$, $T$ en \si{\kelvin}
+\end{multicols}
+\end{tcolorbox}
+
 \finchapitre

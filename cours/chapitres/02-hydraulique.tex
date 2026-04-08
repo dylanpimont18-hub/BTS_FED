@@ -702,4 +702,58 @@ Si le réseau est modifié (équilibrage, remplacement d'un émetteur), la courb
   \item[Règlement EU 547/2012] Définit les exigences d'écoconception des pompes à eau. Les circulateurs de chauffage doivent satisfaire l'indice d'efficacité énergétique $IEE \leq 0{,}23$.
 \end{description}
 
+\begin{tcolorbox}[
+  enhanced, colback=FedBlue!3, colframe=FedBlue!50,
+  fonttitle=\bfseries\sffamily, coltitle=FedBlue,
+  title={FICHE MÉMO — Hydraulique des circuits}, boxrule=0.8pt, arc=2pt,
+  width=\textwidth
+]
+\begin{multicols}{2}
+\textbf{Débit volumique}
+\[ q_v = v \cdot S \quad \left[\si{\cubic\metre\per\second}\right] \]
+avec $v$ = vitesse [\si{\metre\per\second}], $S$ = section droite [\si{\metre\squared}]
+
+\medskip
+\textbf{Débit massique}
+\[ \dot{m} = \rho \cdot q_v \quad \left[\si{\kilogram\per\second}\right] \]
+avec $\rho$ = masse volumique [\si{\kilogram\per\cubic\metre}]
+
+\medskip
+\textbf{Nombre de Reynolds}
+\[ Re = \frac{v \cdot D}{\nu} \]
+$Re < 2300$ : laminaire \quad $Re > 4000$ : turbulent \\
+avec $\nu$ = viscosité cinématique [\si{\metre\squared\per\second}]
+
+\medskip
+\textbf{Pertes de charge régulières (Darcy-Weisbach)}
+\[ \Delta P_r = \lambda \cdot \frac{L}{D} \cdot \frac{\rho\, v^2}{2} \quad \left[\si{\pascal}\right] \]
+avec $\lambda$ = coeff. de frottement, $L$ = longueur [\si{\metre}]
+
+\columnbreak
+
+\textbf{Pertes de charge singulières}
+\[ \Delta P_s = \zeta \cdot \frac{\rho\, v^2}{2} \quad \left[\si{\pascal}\right] \]
+avec $\zeta$ = coefficient de singularité (coude 90° : $\zeta \approx 1{,}5$)
+
+\medskip
+\textbf{Méthode de la longueur équivalente}
+\[ \Delta P_{total} = R \cdot \bigl(L_{réel} + \textstyle\sum L_{eq}\bigr) \]
+avec $R$ = perte de charge linéique [\si{\pascal\per\metre}] \\
+Règle GCF : cible $R$ entre \SI{100}{} et \SI{300}{\pascal\per\metre}
+
+\medskip
+\textbf{HMT — Hauteur manométrique totale}
+\[ HMT = \Delta h_{pertes\,totales} \quad \left[\si{mCE}\right] \]
+
+\medskip
+\textbf{Puissance hydraulique}
+\[ P_{hyd} = \rho \cdot g \cdot q_v \cdot HMT \quad \left[\si{\watt}\right] \]
+
+\medskip
+\textbf{Puissance absorbée par la pompe}
+\[ P_{abs} = \frac{P_{hyd}}{\eta_{pompe}} \quad \left[\si{\watt}\right] \]
+\textit{Exigence RE : IEE $\leq 0{,}23$ (circulateurs ErP 2015)}
+\end{multicols}
+\end{tcolorbox}
+
 \finchapitre
