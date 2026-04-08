@@ -6,8 +6,8 @@ Mis à jour automatiquement par l'agent à chaque run.
 ---
 
 ## Dernier run
-- Date : 2026-04-07 (5ème run)
-- Action : **Création livret Situations Réelles (3 projets SR1-SR2-SR3 avec TikZ) + agent cron**
+- Date : 2026-04-08 (6ème run)
+- Action : **T01 — Ajout \input ch01-07 dans livret-exercices.tex | T02 — Rédaction profil étudiant en difficulté (etudiant-mauvais.md, 300+ mots)**
 
 ---
 
@@ -17,8 +17,8 @@ Mis à jour automatiquement par l'agent à chaque run.
 
 | ID | Priorité | Statut | Fichier cible | Description |
 |----|----------|--------|---------------|-------------|
-| T01 | HAUTE | **TODO** | `cours/livret-exercices.tex` | Ajouter `\input` manquants ch01-07 dans le livret |
-| T02 | HAUTE | **TODO** | `cours/etudiant-mauvais.md` | Rédiger profil pédagogique étudiant en difficulté |
+| T01 | HAUTE | **FAIT** | `cours/livret-exercices.tex` | Ajouter `\input` manquants ch01-07 dans le livret |
+| T02 | HAUTE | **FAIT** | `cours/etudiant-mauvais.md` | Rédiger profil pédagogique étudiant en difficulté |
 | T03 | HAUTE | **TODO** | `cours/etudiant-bon.md` | Rédiger profil pédagogique étudiant dans la moyenne |
 | T04 | HAUTE | **TODO** | `cours/etudiant-tres-bon.md` | Rédiger profil pédagogique étudiant excellent |
 | T05 | MOYENNE | **TODO** | `cours/chapitres/01-bases-thermiques.tex` | Ajouter fiche mémo fin de chapitre (boîte tcolorbox récap formules) |
@@ -51,7 +51,7 @@ Mis à jour automatiquement par l'agent à chaque run.
 | Fascicule | Fichier | Couleur | Statut | Compilation |
 |-----------|---------|---------|--------|-------------|
 | Référentiel de cours | `main.tex` | FedBlue | ✅ Complet | Non testée (LaTeX requis) |
-| Livret d'exercices | `livret-exercices.tex` | FedOrange | ⚠️ Partiel (ch01-07 manquants) | Non testée |
+| Livret d'exercices | `livret-exercices.tex` | FedOrange | ✅ Complet (ch00-11) | Non testée |
 | Livret Situations Réelles | `livret-situations.tex` | FedGreen | ✅ Créé (3 SR) | Non testée |
 
 ---
@@ -78,13 +78,13 @@ Mis à jour automatiquement par l'agent à chaque run.
 | # | Fichier | Inclus dans livret | Statut |
 |---|---------|-------------------|--------|
 | 00 | exercices/00-exercices.tex | ✅ Oui | complet |
-| 01 | exercices/01-exercices.tex | ❌ Non (T01) | complet |
-| 02 | exercices/02-exercices.tex | ❌ Non (T01) | complet |
-| 03 | exercices/03-exercices.tex | ❌ Non (T01) | complet |
-| 04 | exercices/04-exercices.tex | ❌ Non (T01) | complet |
-| 05 | exercices/05-exercices.tex | ❌ Non (T01) | complet |
-| 06 | exercices/06-exercices.tex | ❌ Non (T01) | complet |
-| 07 | exercices/07-exercices.tex | ❌ Non (T01) | complet |
+| 01 | exercices/01-exercices.tex | ✅ Oui | complet |
+| 02 | exercices/02-exercices.tex | ✅ Oui | complet |
+| 03 | exercices/03-exercices.tex | ✅ Oui | complet |
+| 04 | exercices/04-exercices.tex | ✅ Oui | complet |
+| 05 | exercices/05-exercices.tex | ✅ Oui | complet |
+| 06 | exercices/06-exercices.tex | ✅ Oui | complet |
+| 07 | exercices/07-exercices.tex | ✅ Oui | complet |
 | 08 | exercices/08-exercices.tex | ✅ Oui | complet |
 | 09 | exercices/09-exercices.tex | ✅ Oui | complet |
 | 10 | exercices/10-exercices.tex | ✅ Oui | complet |
@@ -102,7 +102,7 @@ Mis à jour automatiquement par l'agent à chaque run.
 
 | Fichier | Statut |
 |---------|--------|
-| etudiant-mauvais.md | ❌ Vide (T02) |
+| etudiant-mauvais.md | ✅ Rédigé (T02 FAIT) |
 | etudiant-bon.md | ❌ Vide (T03) |
 | etudiant-tres-bon.md | ❌ Vide (T04) |
 
