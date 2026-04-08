@@ -631,4 +631,50 @@ Le fabricant annonce COP = 3,8 en A2/W45.
   \item[MaPrimeRénov' et CEE] Dispositifs d'aide à la rénovation énergétique : bonus pour les PAC (SCOP $\geq 3{,}5$), bonus pour les chaudières biomasse. Les CEE (Certificats d'Économies d'Énergie) financent la rénovation via les obligations des fournisseurs d'énergie.
 \end{description}
 
+\begin{tcolorbox}[
+  enhanced, colback=FedBlue!3, colframe=FedBlue!50,
+  fonttitle=\bfseries\sffamily, coltitle=FedBlue,
+  title={FICHE MÉMO — Production de chaleur}, boxrule=0.8pt, arc=2pt,
+  width=\textwidth
+]
+\textbf{Combustion — Chaudières gaz}
+\[
+  e = \frac{V_{air\,réel} - V_{air\,stœchio}}{V_{air\,stœchio}} \times 100 \quad [\%]
+  \qquad \text{excès d'air (brûleur atm. : 20–40\,\%, prémélange : 5–15\,\%)}
+\]
+\[
+  \eta_{comb} = \frac{\dot{Q}_{utile}}{\dot{Q}_{PCI}} \quad [\%]
+  \qquad \text{condensation effective si } T_{retour} < 57\,\text{°C (point de rosée gaz)}
+\]
+
+\textbf{Pompe à chaleur (PAC) — Cycle à compression}
+\[
+  COP = \frac{\dot{Q}_{chaud}}{P_{élec}} \qquad \text{avec } \dot{Q}_{chaud} = \dot{Q}_{froid} + P_{élec} \quad [\si{\kilo\watt}]
+\]
+\[
+  COP_{Carnot} = \frac{T_{chaud}}{T_{chaud} - T_{froid}} \quad \text{(températures en \si{\kelvin})}
+  \qquad COP_{réel} \approx 0{,}4 \text{ à } 0{,}6 \times COP_{Carnot}
+\]
+\[
+  SCOP = \frac{E_{thermique\,annuelle}}{E_{électrique\,annuelle}}
+  \qquad \text{(NF EN 14825 — intègre variations saisonnières et dégivrage)}
+\]
+
+\textbf{Solaire thermique}
+\[
+  \eta = \eta_0 - a_1 \cdot \frac{T_m - T_{ext}}{G} - a_2 \cdot \frac{(T_m - T_{ext})^2}{G}
+  \qquad \text{avec } G = \text{irradiance} [\si{\watt\per\square\metre}]
+\]
+\[
+  f_{sol} = \frac{E_{solaire\,utile}}{E_{besoin\,total}} \times 100 \quad [\%]
+  \qquad \text{ECS résidentielle bien dimensionnée : } f_{sol} = 50 \text{ à } 70\,\%
+\]
+
+\textbf{Dimensionnement de la puissance}
+\[
+  \dot{Q}_{ECS} = \dot{m}_{ECS} \cdot c_p \cdot (T_{ECS} - T_{froide}) \quad [\si{\kilo\watt}]
+  \qquad \text{déperditions : } \dot{Q}_{dep} = H_T \cdot (T_{int} - T_{ext})
+\]
+\end{tcolorbox}
+
 \finchapitre

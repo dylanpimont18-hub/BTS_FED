@@ -6,8 +6,8 @@ Mis à jour automatiquement par l'agent à chaque run.
 ---
 
 ## Dernier run
-- Date : 2026-04-08 (8ème run)
-- Action : **T05 — Fiche mémo tcolorbox ajoutée en fin de ch01 (bases-thermiques.tex, 8 formules clés) | T06 — Fiche mémo tcolorbox ajoutée en fin de ch02 (hydraulique.tex, 8 formules clés)**
+- Date : 2026-04-08 (9ème run)
+- Action : **T07 — Fiche mémo tcolorbox ajoutée en fin de ch03 (aeraulique.tex, 8 formules clés : humidité, enthalpie, débits, pertes de charge, lois de similitude ventilateurs) | T08 — Fiche mémo tcolorbox ajoutée en fin de ch04 (production-chaleur.tex, 8 formules clés : excès d'air, COP, COP Carnot, SCOP, rendement capteur solaire, taux couverture solaire, puissance ECS)**
 
 ---
 
@@ -23,8 +23,8 @@ Mis à jour automatiquement par l'agent à chaque run.
 | T04 | HAUTE | **FAIT** | `cours/etudiant-tres-bon.md` | Rédiger profil pédagogique étudiant excellent |
 | T05 | MOYENNE | **FAIT** | `cours/chapitres/01-bases-thermiques.tex` | Ajouter fiche mémo fin de chapitre (boîte tcolorbox récap formules) |
 | T06 | MOYENNE | **FAIT** | `cours/chapitres/02-hydraulique.tex` | Ajouter fiche mémo fin de chapitre |
-| T07 | MOYENNE | **TODO** | `cours/chapitres/03-aeraulique.tex` | Ajouter fiche mémo fin de chapitre |
-| T08 | MOYENNE | **TODO** | `cours/chapitres/04-production-chaleur.tex` | Ajouter fiche mémo fin de chapitre |
+| T07 | MOYENNE | **FAIT** | `cours/chapitres/03-aeraulique.tex` | Ajouter fiche mémo fin de chapitre |
+| T08 | MOYENNE | **FAIT** | `cours/chapitres/04-production-chaleur.tex` | Ajouter fiche mémo fin de chapitre |
 | T09 | MOYENNE | **TODO** | `cours/chapitres/05-distribution-emission.tex` | Ajouter fiche mémo fin de chapitre |
 | T10 | MOYENNE | **TODO** | `cours/chapitres/06-climatisation.tex` | Ajouter fiche mémo fin de chapitre |
 | T11 | MOYENNE | **TODO** | `cours/chapitres/07-regulation-gtb.tex` | Ajouter fiche mémo fin de chapitre |

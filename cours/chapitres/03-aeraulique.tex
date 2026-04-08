@@ -923,4 +923,56 @@ Ce SFP est élevé — vérifier si des filtres colmatés ou des coudes sans aub
   \item[NF S61-937] Systèmes de désenfumage — conception et mise en œuvre. Prescrit les débits d'extraction de fumée et les vitesses maximales dans les conduits de désenfumage (jusqu'à 15\,m/s).
 \end{description}
 
+\begin{tcolorbox}[
+  enhanced, colback=FedBlue!3, colframe=FedBlue!50,
+  fonttitle=\bfseries\sffamily, coltitle=FedBlue,
+  title={FICHE MÉMO — Aéraulique}, boxrule=0.8pt, arc=2pt,
+  width=\textwidth
+]
+\textbf{Propriétés de l'air humide}
+\[
+  w = \frac{m_{vapeur}}{m_{air\,sec}} \quad [\si{\kilogram\per\kilogram}]
+  \qquad \text{avec } w = \text{humidité spécifique (teneur en eau)}
+\]
+\[
+  HR = \frac{p_{vapeur}}{p_{vapeur\,sat}(T)} \times 100 \quad [\%]
+  \qquad \text{confort : } 40 \leq HR \leq 60\,\%
+\]
+\[
+  h \approx 1{,}006\,T + w\,(2501 + 1{,}86\,T) \quad [\si{\kilo\joule\per\kilogram}]
+  \qquad \text{avec } T \text{ en °C et } w \text{ en kg/kg}
+\]
+
+\textbf{Dynamique — Débits et pertes de charge}
+\[
+  q_v = v \cdot S \quad [\si{\cubic\metre\per\hour}]
+  \qquad \text{avec } v = \text{vitesse} [\si{\metre\per\second}],\ S = \text{section} [\si{\square\metre}]
+\]
+\[
+  \Delta P_r = \lambda \cdot \frac{L}{D_h} \cdot \frac{\rho\,v^2}{2} \quad [\si{\pascal}]
+  \qquad \text{perte de charge régulière (Darcy-Weisbach)}
+\]
+\[
+  \Delta P_s = \zeta \cdot \frac{\rho\,v^2}{2} \quad [\si{\pascal}]
+  \qquad \text{perte de charge singulière, } \zeta = \text{coefficient de résistance}
+\]
+\[
+  D_h = \frac{2\,a\,b}{a+b} \quad [\si{\metre}]
+  \qquad \text{diamètre hydraulique d'une gaine rectangulaire } a \times b
+\]
+
+\textbf{Ventilateurs}
+\[
+  P_{hyd} = q_v \cdot \Delta P_t \quad [\si{\watt}]
+  \qquad P_{abs} = \frac{P_{hyd}}{\eta_{vent}}
+  \qquad SFP = \frac{P_{abs,total}}{q_{v,total}} \quad [\si{\pascal}]
+\]
+\[
+  \frac{q_{v2}}{q_{v1}} = \frac{n_2}{n_1} \qquad
+  \frac{\Delta P_{t2}}{\Delta P_{t1}} = \left(\frac{n_2}{n_1}\right)^{\!2} \qquad
+  \frac{P_{abs2}}{P_{abs1}} = \left(\frac{n_2}{n_1}\right)^{\!3}
+  \quad \text{(lois de similitude)}
+\]
+\end{tcolorbox}
+
 \finchapitre
