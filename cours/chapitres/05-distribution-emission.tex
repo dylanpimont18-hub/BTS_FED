@@ -764,4 +764,65 @@ Le pas calculé est très grand car $q_{néc}$ est faible. On retient le pas nor
 Une seule boucle suffit pour ce salon.
 \end{exercice}
 
+\begin{tcolorbox}[
+  enhanced, colback=FedBlue!3, colframe=FedBlue!50,
+  fonttitle=\bfseries\sffamily, coltitle=FedBlue,
+  title={FICHE MÉMO — Distribution et émission de chaleur}, boxrule=0.8pt, arc=2pt,
+  width=\textwidth
+]
+
+\textbf{Radiateurs — correction de puissance (NF EN 442)}
+\[
+  \Phi_{réel} = \Phi_{nom} \cdot \left(\frac{\Delta T_{réel}}{\Delta T_{nom}}\right)^n
+  \qquad \text{avec } \Delta T_{réel} = T_{moy,eau} - T_{amb},\quad \Delta T_{nom} = \SI{50}{\kelvin},\quad n \approx 1{,}3
+\]
+
+\textbf{Puissance nominale équivalente nécessaire (sélection catalogue)}
+\[
+  \Phi_{nom,néc} = \frac{\dot{Q}_{local}}{\left(\dfrac{\Delta T_{réel}}{50}\right)^n}
+  \qquad [\si{\watt}]
+\]
+
+\textbf{Débit à travers un robinet thermostatique}
+\[
+  q_v = K_{vs} \cdot \sqrt{\Delta P}
+  \qquad \left[q_v \text{ en m}^3/\text{h},\ \Delta P \text{ en bar}\right]
+\]
+
+\textbf{Plancher chauffant — puissance surfacique (NF EN 1264)}
+\[
+  q = B \cdot \frac{T_{moy} - T_{amb}}{p}
+  \qquad [\si{\watt\per\square\metre}]
+\]
+avec $p$ = pas de tube [\si{\metre}] et $B = \dfrac{1}{0{,}173 + R_{revêt}}$ [\si{\watt\per\square\metre\per\kelvin}]
+
+\textbf{Puissance surfacique nécessaire}
+\[
+  q_{néc} = \frac{\dot{Q}_{local}}{S_{local}}
+  \qquad [\si{\watt\per\square\metre}]
+\]
+
+\textbf{Pas de tube calculé}
+\[
+  p = \frac{B \cdot (T_{moy} - T_{amb})}{q_{néc}}
+  \qquad [\si{\metre}] \quad\Rightarrow\quad \text{arrondir au pas normalisé (75–300\,mm)}
+\]
+
+\textbf{Rappel températures de fonctionnement PAC}
+
+\begin{center}\small
+\begin{tabular}{lccc}
+  \toprule
+  Émetteur & $T_{dep}/T_{ret}$ (°C) & Compatible PAC & Facteur de correction \\
+  \midrule
+  Radiateur HT & 75/65 & Non & 1,00 \\
+  Radiateur BT & 50/40 & Oui (surdim. ×2,5) & 0,406 \\
+  Plancher chauffant & 35/28 & Idéal & — \\
+  Ventilo-convecteur & 45/55 & Oui & 0,5–0,7 \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\end{tcolorbox}
+
 \finchapitre

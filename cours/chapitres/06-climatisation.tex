@@ -960,4 +960,67 @@ Le régulateur compare en permanence la température extérieure $T_{ext}$ et la
 \textbf{Économies potentielles :} jusqu'à 60--70\,\% des heures de fonctionnement en free-cooling pour les bâtiments tertiaires en France (hors zones côtières très chaudes).
 \end{methode}
 
+\begin{tcolorbox}[
+  enhanced, colback=FedBlue!3, colframe=FedBlue!50,
+  fonttitle=\bfseries\sffamily, coltitle=FedBlue,
+  title={FICHE MÉMO — Climatisation}, boxrule=0.8pt, arc=2pt,
+  width=\textwidth
+]
+
+\textbf{Cycle frigorifique — bilans enthalpiques (diagramme log\,P/h)}
+\[
+  q_0 = h_1 - h_4 \quad [\si{\kilo\joule\per\kilogram}]
+  \qquad
+  w_c = h_2 - h_1 \quad [\si{\kilo\joule\per\kilogram}]
+  \qquad
+  q_c = h_2 - h_3 \quad [\si{\kilo\joule\per\kilogram}]
+\]
+avec $q_c = q_0 + w_c$ (1\textsuperscript{er} principe appliqué au cycle)
+
+\textbf{EER — Energy Efficiency Ratio (coefficient de performance en froid)}
+\[
+  EER = \frac{\dot{Q}_0}{P_{élec}} = \frac{q_0}{w_c} \qquad [-]
+  \qquad
+  EER_{Carnot} = \frac{T_{froid}}{T_{chaud} - T_{froid}} \quad (T \text{ en K, limite théorique})
+\]
+
+\textbf{Chaleur rejetée au condenseur (et récupération possible)}
+\[
+  \dot{Q}_c = \dot{Q}_0 + P_{élec} = \dot{Q}_0 \left(1 + \frac{1}{EER}\right) \qquad [\si{\kilo\watt}]
+\]
+
+\textbf{Apport solaire par vitrage}
+\[
+  Q_{sol} = S_{vit} \times G_{sol} \times g \times F_{ombr} \qquad [\si{\watt}]
+\]
+avec $g$ = facteur solaire du vitrage, $F_{ombr}$ = facteur d'ombrage (0,3–1,0)
+
+\textbf{Apports internes (bureaux)}
+\[
+  Q_{int} = n_{pers} \times \SI{70}{\watt} + P_{inst} \times S_{local} + P_{PC} \times n_{PC}
+\]
+
+\textbf{Enthalpie de l'air humide}
+\[
+  h = 1{,}006\,T + w\,(2501 + 1{,}86\,T) \qquad [\si{\kilo\joule\per\kilogram_{as}}]
+\]
+avec $w$ = humidité spécifique [\si{\kilogram_v\per\kilogram_{as}}], $T$ en °C
+
+\textbf{Valeurs de référence}
+
+\begin{center}\small
+\begin{tabular}{lcc}
+  \toprule
+  Grandeur & Valeur typique & Norme / Source \\
+  \midrule
+  EER split résidentiel & 2,5–4,5 & EN 14825 \\
+  SEER tertiaire RE2020 & $\geq$ 3,5 recommandé & EU 206/2012 \\
+  $T_{surf,max}$ PCH zones habitées & 29\,°C & NF EN 1264 \\
+  Free-cooling activé si & $T_{ext} < T_{int} - 2\,\text{K}$ & \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\end{tcolorbox}
+
 \finchapitre

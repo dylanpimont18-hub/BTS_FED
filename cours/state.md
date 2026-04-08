@@ -6,8 +6,8 @@ Mis à jour automatiquement par l'agent à chaque run.
 ---
 
 ## Dernier run
-- Date : 2026-04-08 (9ème run)
-- Action : **T07 — Fiche mémo tcolorbox ajoutée en fin de ch03 (aeraulique.tex, 8 formules clés : humidité, enthalpie, débits, pertes de charge, lois de similitude ventilateurs) | T08 — Fiche mémo tcolorbox ajoutée en fin de ch04 (production-chaleur.tex, 8 formules clés : excès d'air, COP, COP Carnot, SCOP, rendement capteur solaire, taux couverture solaire, puissance ECS)**
+- Date : 2026-04-08 (10ème run)
+- Action : **T09 — Fiche mémo tcolorbox ajoutée en fin de ch05 (distribution-emission.tex, 7 formules clés : correction puissance radiateur, puissance nominale nécessaire, Kvs robinet thermostatique, puissance surfacique PCH, coefficient B, puissance surfacique nécessaire, pas de tube) | T10 — Fiche mémo tcolorbox ajoutée en fin de ch06 (climatisation.tex, 7 formules clés : bilans enthalpiques cycle frigo, EER, EER Carnot, chaleur condenseur, apport solaire vitrage, apports internes, enthalpie air humide)**
 
 ---
 
@@ -25,8 +25,8 @@ Mis à jour automatiquement par l'agent à chaque run.
 | T06 | MOYENNE | **FAIT** | `cours/chapitres/02-hydraulique.tex` | Ajouter fiche mémo fin de chapitre |
 | T07 | MOYENNE | **FAIT** | `cours/chapitres/03-aeraulique.tex` | Ajouter fiche mémo fin de chapitre |
 | T08 | MOYENNE | **FAIT** | `cours/chapitres/04-production-chaleur.tex` | Ajouter fiche mémo fin de chapitre |
-| T09 | MOYENNE | **TODO** | `cours/chapitres/05-distribution-emission.tex` | Ajouter fiche mémo fin de chapitre |
-| T10 | MOYENNE | **TODO** | `cours/chapitres/06-climatisation.tex` | Ajouter fiche mémo fin de chapitre |
+| T09 | MOYENNE | **FAIT** | `cours/chapitres/05-distribution-emission.tex` | Ajouter fiche mémo fin de chapitre |
+| T10 | MOYENNE | **FAIT** | `cours/chapitres/06-climatisation.tex` | Ajouter fiche mémo fin de chapitre |
 | T11 | MOYENNE | **TODO** | `cours/chapitres/07-regulation-gtb.tex` | Ajouter fiche mémo fin de chapitre |
 | T12 | MOYENNE | **TODO** | `cours/chapitres/08-efficacite-energetique.tex` | Ajouter fiche mémo fin de chapitre |
 | T13 | MOYENNE | **TODO** | `cours/chapitres/09-acoustique.tex` | Ajouter fiche mémo fin de chapitre |
