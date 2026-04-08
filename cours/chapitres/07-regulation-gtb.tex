@@ -753,4 +753,61 @@ La \textbf{Réglementation Environnementale 2020} (RE2020), entrée en vigueur l
   \end{enumerate}
 \end{methode}
 
+\begin{tcolorbox}[
+  enhanced, colback=FedBlue!3, colframe=FedBlue!50,
+  fonttitle=\bfseries\sffamily, coltitle=FedBlue,
+  title={FICHE MÉMO — Régulation et GTB}, boxrule=0.8pt, arc=2pt,
+  width=\textwidth
+]
+
+\textbf{Correcteur proportionnel (P) :}
+\[
+  u(t) = K_P \cdot e(t) + u_0
+  \qquad \text{avec} \quad X_P = \frac{1}{K_P} \times 100 \; [\si{\percent\per\kelvin}]
+\]
+$K_P$ = gain proportionnel, $e(t) = w - y(t)$ = erreur, $X_P$ = bande proportionnelle [\si{\kelvin}]
+
+\medskip
+\textbf{Correcteur PID complet :}
+\[
+  u(t) = K_P \left[ e(t) + \frac{1}{T_i} \int_0^t e(\tau)\,\mathrm{d}\tau + T_d \frac{\mathrm{d}e}{\mathrm{d}t} \right]
+\]
+$T_i$ = temps d'intégrale [\si{\second}] (annule l'écart statique) ; $T_d$ = temps dérivé [\si{\second}] (anticipe les variations)
+
+\medskip
+\textbf{Loi d'eau (régulation climatique) :}
+\[
+  T_{\text{dep}} = T_{\text{dep,base}} + K_{\text{loi}} \cdot (T_{\text{ext,base}} - T_{\text{ext}})
+\]
+$T_{\text{dep}}$ = température de départ [\si{\celsius}] ; $K_{\text{loi}}$ = pente de la courbe de chauffe (sans dimension)
+
+\medskip
+\textbf{Démarrage optimal (préchauffage) :}
+\[
+  t_{\text{start}} = t_{\text{occupation}} - \frac{w - T_{\text{amb,nuit}}}{K_{\text{bâtiment}} \times (T_{\text{dep,max}} - w)}
+\]
+$t_{\text{start}}$ = heure de démarrage [\si{\hour}] ; $K_{\text{bâtiment}}$ = constante de temps du bâtiment
+
+\medskip
+\textbf{Puissance PAC en fonction de la température extérieure :}
+\[
+  \dot{Q}_{\text{PAC}}(T_{\text{ext}}) = \dot{Q}_{\text{PAC,max}} \times \frac{T_{\text{ext}} - T_{\text{min}}}{T_{\text{max}} - T_{\text{min}}}
+\]
+$\dot{Q}_{\text{PAC,max}}$ = puissance maximale [\si{\kW}] ; $T_{\text{min}}$, $T_{\text{max}}$ = plage de fonctionnement [\si{\celsius}]
+
+\medskip
+\textbf{Niveaux d'architecture GTB :}
+
+\begin{tabular}{@{}lll@{}}
+  \toprule
+  Niveau & Désignation & Exemples \\
+  \midrule
+  1 & Terrain & Capteurs, actionneurs, vannes, sondes \\
+  2 & Automatisme & Automates, régulateurs locaux, UTA \\
+  3 & Supervision & IHM, serveur GTB, tableaux de bord \\
+  \bottomrule
+\end{tabular}
+
+\end{tcolorbox}
+
 \finchapitre

@@ -975,4 +975,61 @@ TRI = \frac{C_{\text{invest}}}{\Delta C_{\text{annuel}}} = \frac{14\,000}{3\,904
 
 \end{exercice}
 
+\begin{tcolorbox}[
+  enhanced, colback=FedBlue!3, colframe=FedBlue!50,
+  fonttitle=\bfseries\sffamily, coltitle=FedBlue,
+  title={FICHE MÉMO — Efficacité énergétique et RE2020}, boxrule=0.8pt, arc=2pt,
+  width=\textwidth
+]
+
+\textbf{Besoin bioclimatique (Bbio) :}
+\[
+  \text{Bbio} = \text{Bbio}_{\text{ch}} + \text{Bbio}_{\text{fr}} + \text{Bbio}_{\text{éclairage}} \leq \text{Bbio}_{\text{max}} \times M_{\text{zone}} \times M_{\text{alt}} \times M_{\text{surface}}
+\]
+Indicateur sans unité — caractérise la qualité de l'enveloppe, indépendant des systèmes.
+
+\medskip
+\textbf{Consommation en énergie primaire (Cep) :}
+\[
+  \text{Cep} = \sum_{i} \frac{C_{\text{ef},i} \times \text{fep}_i}{S_{\text{ref}}} \quad [\si{\kWh_{ep}\per\m^2\per\year}]
+\]
+$C_{\text{ef},i}$ = consommation énergie finale usage $i$ [\si{\kWh\per\year}] ; $\text{fep}_i$ = coefficient de conversion (électricité : 2,3 ; gaz : 1,0)
+
+\medskip
+\textbf{Consommation énergie non renouvelable (Cep,nr) :}
+\[
+  \text{Cep,nr} = \sum_{i} \frac{C_{\text{ef},i} \times \text{fep,nr}_i}{S_{\text{ref}}} \quad [\si{\kWh_{ep,nr}\per\m^2\per\year}]
+\]
+Indicateur central RE2020 — valorise la fraction renouvelable des PAC et biomasse.
+
+\medskip
+\textbf{COP et SCOP de pompe à chaleur :}
+\[
+  \text{COP} = \frac{P_{\text{ch}}}{P_{\text{élec}}} \qquad ; \qquad \text{SCOP} = \frac{Q_{\text{ch,saison}}}{W_{\text{élec,saison}}}
+\]
+COP = rendement instantané ; SCOP = rendement saisonnier (conditions réelles sur l'année)
+
+\medskip
+\textbf{Efficacité de la récupération de chaleur (échangeur double flux) :}
+\[
+  \eta_r = \frac{T_{\text{soufflage}} - T_{\text{extérieur}}}{T_{\text{extrait}} - T_{\text{extérieur}}}
+\]
+$\eta_r$ = rendement de récupération thermique (valeurs typiques : 0{,}70 à 0{,}90)
+
+\medskip
+\textbf{Consommation réelle chauffage (méthode réglementaire) :}
+\[
+  C_{\text{ef,ch}} = \frac{Q_{\text{besoin,ch}}}{\eta_{\text{gén}} \times \eta_{\text{dist}} \times \eta_{\text{ém}} \times \eta_{\text{rég}}} \quad [\si{\kWh\per\year}]
+\]
+$Q_{\text{besoin,ch}}$ = besoin de chauffage [\si{\kWh\per\year}] ; $\eta$ = rendements générateur, distribution, émission, régulation
+
+\medskip
+\textbf{Besoin de chauffage par DJU :}
+\[
+  Q_{\text{besoin,ch}} = \frac{(\text{Ubât} \times S_{\text{dép}} + 0{,}34 \times \dot{V}_{\text{inf}}) \times \text{DJU} \times 24}{1\,000} \quad [\si{\kWh\per\year}]
+\]
+DJU = degrés-jours unifiés [\si{\kelvin\cdot\day}] ; $S_{\text{dép}}$ = surface de déperdition [\si{\m^2}] ; $\dot{V}_{\text{inf}}$ = débit d'infiltration [\si{\m^3\per\hour}]
+
+\end{tcolorbox}
+
 \finchapitre

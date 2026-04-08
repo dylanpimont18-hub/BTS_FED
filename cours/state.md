@@ -6,8 +6,8 @@ Mis à jour automatiquement par l'agent à chaque run.
 ---
 
 ## Dernier run
-- Date : 2026-04-08 (10ème run)
-- Action : **T09 — Fiche mémo tcolorbox ajoutée en fin de ch05 (distribution-emission.tex, 7 formules clés : correction puissance radiateur, puissance nominale nécessaire, Kvs robinet thermostatique, puissance surfacique PCH, coefficient B, puissance surfacique nécessaire, pas de tube) | T10 — Fiche mémo tcolorbox ajoutée en fin de ch06 (climatisation.tex, 7 formules clés : bilans enthalpiques cycle frigo, EER, EER Carnot, chaleur condenseur, apport solaire vitrage, apports internes, enthalpie air humide)**
+- Date : 2026-04-08 (11ème run)
+- Action : **T11 — Fiche mémo tcolorbox ajoutée en fin de ch07 (regulation-gtb.tex, 5 formules clés : correcteur P, correcteur PID, loi d'eau, démarrage optimal, puissance PAC + tableau niveaux GTB) | T12 — Fiche mémo tcolorbox ajoutée en fin de ch08 (efficacite-energetique.tex, 7 formules clés : Bbio, Cep, Cep,nr, COP/SCOP PAC, rendement récupération double flux, consommation chauffage réglementaire, besoin chauffage DJU)**
 
 ---
 
@@ -27,8 +27,8 @@ Mis à jour automatiquement par l'agent à chaque run.
 | T08 | MOYENNE | **FAIT** | `cours/chapitres/04-production-chaleur.tex` | Ajouter fiche mémo fin de chapitre |
 | T09 | MOYENNE | **FAIT** | `cours/chapitres/05-distribution-emission.tex` | Ajouter fiche mémo fin de chapitre |
 | T10 | MOYENNE | **FAIT** | `cours/chapitres/06-climatisation.tex` | Ajouter fiche mémo fin de chapitre |
-| T11 | MOYENNE | **TODO** | `cours/chapitres/07-regulation-gtb.tex` | Ajouter fiche mémo fin de chapitre |
-| T12 | MOYENNE | **TODO** | `cours/chapitres/08-efficacite-energetique.tex` | Ajouter fiche mémo fin de chapitre |
+| T11 | MOYENNE | **FAIT** | `cours/chapitres/07-regulation-gtb.tex` | Ajouter fiche mémo fin de chapitre |
+| T12 | MOYENNE | **FAIT** | `cours/chapitres/08-efficacite-energetique.tex` | Ajouter fiche mémo fin de chapitre |
 | T13 | MOYENNE | **TODO** | `cours/chapitres/09-acoustique.tex` | Ajouter fiche mémo fin de chapitre |
 | T14 | MOYENNE | **TODO** | `cours/chapitres/10-electrotechnique.tex` | Ajouter fiche mémo fin de chapitre |
 | T15 | FAIBLE | **TODO** | `cours/chapitres/00-analyse-dimensionnelle.tex` | Enrichir avec données terrain réelles (catalogues Grundfos, Daikin) |
