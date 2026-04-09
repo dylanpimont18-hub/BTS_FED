@@ -1,0 +1,312 @@
+% tikz-gcf-symbols.tex — Symboles TikZ ISO GCF pour le BTS FED
+% Chargé automatiquement via preamble.tex
+% Usage : \pic at (x,y) {nom};  ou  \draw ... pic {nom};
+%
+% Symboles disponibles :
+%   pompe          — Pompe de circulation (cercle + flèche ISO)
+%   vanne-quart    — Vanne quart de tour (papillon ISO)
+%   vanne-motorisee— Vanne motorisée (papillon + actuateur carré)
+%   vanne-equilibrage — Vanne d'équilibrage (double triangle ISO)
+%   clapet         — Clapet anti-retour (flèche barrée ISO)
+%   chaudiere      — Chaudière (rectangle + flamme stylisée)
+%   echangeur      — Échangeur à plaques (double rectangle croisé)
+%   ballon         — Ballon tampon / ECS (ellipse verticale)
+%   vase-expansion — Vase d'expansion (cercle + membrane)
+%   pac            — Pompe à chaleur (rectangle + cycle frigorigène)
+%   cta            — Centrale de traitement d'air (rectangle multi-sections)
+%   ventilateur    — Ventilateur (cercle + pales ISO)
+%   registre       — Registre de réglage (rectangle barré diagonal)
+%   filtre         — Filtre (losange hachuré ISO)
+%   radiateur      — Radiateur (rectangle à ailettes)
+%   vc             — Ventilo-convecteur (rectangle + ventilateur intégré)
+%   sonde-t        — Sonde de température (cercle + T)
+%   sonde-p        — Sonde de pression (cercle + P)
+%   actionneur     — Actionneur (carré + flèche de commande)
+
+\usetikzlibrary{calc, patterns, decorations.markings}
+
+\tikzset{
+  % ============================================================
+  % POMPE DE CIRCULATION
+  % Symbole ISO 1219 : cercle avec flèche de rotation
+  % ============================================================
+  pics/pompe/.style={
+    code={
+      \draw[draw=FedOrange, fill=FedOrange!10, thick] (0,0) circle (0.35cm);
+      % Flèche de circulation (arc ISO)
+      \draw[->, draw=FedOrange, thick, >=Stealth]
+        (-0.20, 0.10) arc (140:40:0.26cm);
+      \node[font=\tiny\bfseries, text=FedOrange] at (0,-0.20) {P};
+    }
+  },
+  % ============================================================
+  % VANNE QUART DE TOUR (papillon ISO)
+  % Symbole ISO 1219 : deux triangles opposés par la pointe
+  % ============================================================
+  pics/vanne-quart/.style={
+    code={
+      \draw[draw=FedBlue, thick] (-0.30,0) -- (0.30,0);
+      \draw[draw=FedBlue, fill=FedBlue!15, thick]
+        (-0.22, 0.22) -- (0, 0) -- (-0.22,-0.22) -- cycle;
+      \draw[draw=FedBlue, fill=FedBlue!15, thick]
+        ( 0.22, 0.22) -- (0, 0) -- ( 0.22,-0.22) -- cycle;
+    }
+  },
+  % ============================================================
+  % VANNE MOTORISÉE (papillon + actuateur carré)
+  % ============================================================
+  pics/vanne-motorisee/.style={
+    code={
+      \draw[draw=FedBlue, thick] (-0.30,0) -- (0.30,0);
+      \draw[draw=FedBlue, fill=FedBlue!15, thick]
+        (-0.22, 0.22) -- (0, 0) -- (-0.22,-0.22) -- cycle;
+      \draw[draw=FedBlue, fill=FedBlue!15, thick]
+        ( 0.22, 0.22) -- (0, 0) -- ( 0.22,-0.22) -- cycle;
+      % Actuateur (carré vert en haut)
+      \draw[draw=FedGreen, fill=FedGreen!20, thick]
+        (-0.18, 0.28) rectangle (0.18, 0.56);
+      \node[font=\tiny\bfseries, text=FedGreen] at (0, 0.42) {M};
+    }
+  },
+  % ============================================================
+  % VANNE D'ÉQUILIBRAGE (double triangle ISO)
+  % ============================================================
+  pics/vanne-equilibrage/.style={
+    code={
+      \draw[draw=FedBlue, thick] (-0.32,0) -- (0.32,0);
+      % Triangle haut
+      \draw[draw=FedBlue, fill=FedBlue!20, thick]
+        (-0.22,0) -- (0, 0.26) -- (0.22, 0) -- cycle;
+      % Triangle bas
+      \draw[draw=FedBlue, fill=white, thick]
+        (-0.22,0) -- (0,-0.26) -- (0.22, 0) -- cycle;
+      % Trait de réglage
+      \draw[draw=FedBlue, thick] (0,-0.26) -- (0,-0.40);
+    }
+  },
+  % ============================================================
+  % CLAPET ANTI-RETOUR (flèche barrée ISO)
+  % ============================================================
+  pics/clapet/.style={
+    code={
+      \draw[draw=FedBlue, thick] (-0.30,0) -- (0.30,0);
+      % Corps du clapet (triangle pointant vers la droite = sens passant)
+      \draw[draw=FedBlue, fill=FedBlue!15, thick]
+        (-0.10,-0.22) -- (0.18, 0) -- (-0.10, 0.22) -- cycle;
+      % Barre de blocage retour
+      \draw[draw=FedBlue, thick, line width=1.2pt]
+        (-0.10,-0.24) -- (-0.10, 0.24);
+    }
+  },
+  % ============================================================
+  % CHAUDIÈRE (rectangle + flamme stylisée)
+  % ============================================================
+  pics/chaudiere/.style={
+    code={
+      \draw[draw=FedRed, fill=FedRed!8, thick]
+        (-0.52,-0.36) rectangle (0.52, 0.36);
+      % Flamme stylisée (orange)
+      \draw[draw=FedOrange, fill=FedOrange!50, thick]
+        (-0.18,-0.10)
+        .. controls (-0.12, 0.18) and ( 0.02, 0.05) .. (0, 0.26)
+        .. controls (-0.02, 0.05) and ( 0.12, 0.18) .. (0.18,-0.10)
+        -- cycle;
+      \node[font=\tiny\bfseries, text=FedRed] at (0,-0.28) {Chaud.};
+    }
+  },
+  % ============================================================
+  % ÉCHANGEUR À PLAQUES (double rectangle croisé)
+  % ============================================================
+  pics/echangeur/.style={
+    code={
+      \draw[draw=FedBlue, fill=FedBlue!8, thick]
+        (-0.42,-0.36) rectangle (0.42, 0.36);
+      % Croix de flux (échange thermique)
+      \draw[draw=FedRed,  thick] (-0.42, 0.14) -- (0.42,-0.14);
+      \draw[draw=FedBlue, thick] (-0.42,-0.14) -- (0.42, 0.14);
+      \node[font=\tiny\bfseries, text=FedBlue] at (0,-0.28) {Éch.};
+    }
+  },
+  % ============================================================
+  % BALLON TAMPON / ECS (ellipse verticale)
+  % ============================================================
+  pics/ballon/.style={
+    code={
+      \draw[draw=FedBlue, fill=FedBlue!8, thick]
+        (0,0) ellipse (0.30cm and 0.48cm);
+      % Niveau d'eau
+      \draw[draw=FedBlue!50, thick] (-0.30, 0.08) -- (0.30, 0.08);
+      % Résistance électrique symbolique
+      \draw[draw=FedOrange, thick]
+        (-0.12,-0.20) -- (-0.06,-0.10) -- (0,-0.20) -- (0.06,-0.10) -- (0.12,-0.20);
+      \node[font=\tiny\bfseries, text=FedBlue] at (0, 0.62) {Ballon};
+    }
+  },
+  % ============================================================
+  % VASE D'EXPANSION (cercle + membrane diaphragme)
+  % ============================================================
+  pics/vase-expansion/.style={
+    code={
+      \draw[draw=FedGreen, fill=white, thick] (0,0) circle (0.34cm);
+      % Membrane (ligne droite horizontale = diaphragme)
+      \draw[draw=FedGreen, thick, line width=1.2pt] (-0.34,0) -- (0.34,0);
+      % Zone gaz (haut, hachuré)
+      \fill[FedGreen!15] (-0.34,0) arc (180:0:0.34cm) -- cycle;
+      % Zone eau (bas, bleu)
+      \fill[FedBlue!15]  (-0.34,0) arc (180:360:0.34cm) -- cycle;
+      % Redessiner le cercle et la membrane par-dessus
+      \draw[draw=FedGreen, thick] (0,0) circle (0.34cm);
+      \draw[draw=FedGreen, thick, line width=1.2pt] (-0.34,0) -- (0.34,0);
+      \node[font=\tiny\bfseries, text=FedGreen] at (0, 0.50) {$V_e$};
+    }
+  },
+  % ============================================================
+  % POMPE À CHALEUR (rectangle + cycle frigorigène schématisé)
+  % ============================================================
+  pics/pac/.style={
+    code={
+      \draw[draw=FedBlue, fill=FedBlue!6, thick]
+        (-0.58,-0.42) rectangle (0.58, 0.42);
+      % Cycle (flèche froide bas, flèche chaude haut)
+      \draw[->, draw=FedBlue, thick, >=Stealth]
+        (-0.32,-0.18) arc (200:340:0.26cm);
+      \draw[->, draw=FedRed, thick, >=Stealth]
+        ( 0.32, 0.18) arc (20:160:0.26cm);
+      \node[font=\tiny\bfseries, text=FedBlue] at (0,-0.32) {PAC};
+    }
+  },
+  % ============================================================
+  % CENTRALE DE TRAITEMENT D'AIR (rectangle multi-sections)
+  % ============================================================
+  pics/cta/.style={
+    code={
+      \draw[draw=FedBlue, fill=FedBlue!6, thick]
+        (-0.72,-0.36) rectangle (0.72, 0.36);
+      % Sections internes (filtration | chauffage | ventilation | humidification)
+      \draw[draw=FedBlue!40, thick] (-0.36,-0.36) -- (-0.36, 0.36);
+      \draw[draw=FedBlue!40, thick] ( 0.00,-0.36) -- ( 0.00, 0.36);
+      \draw[draw=FedBlue!40, thick] ( 0.36,-0.36) -- ( 0.36, 0.36);
+      % Symboles dans les sections
+      \node[font=\tiny, text=FedBlue] at (-0.54, 0) {F};
+      \node[font=\tiny, text=FedRed]  at (-0.18, 0) {\(\sim\)};
+      \node[font=\tiny, text=FedBlue] at ( 0.18, 0) {$\circlearrowleft$};
+      \node[font=\tiny, text=FedGreen] at ( 0.54, 0) {H};
+      \node[font=\tiny\bfseries, text=FedBlue] at (0,-0.28) {CTA};
+    }
+  },
+  % ============================================================
+  % VENTILATEUR (cercle + pales ISO)
+  % ============================================================
+  pics/ventilateur/.style={
+    code={
+      \draw[draw=FedBlue, fill=white, thick] (0,0) circle (0.34cm);
+      % Trois pales (120° entre elles)
+      \draw[draw=FedBlue, thick, fill=FedBlue!20]
+        (0,0) -- (0, 0.30) arc (90:150:0.30cm) -- cycle;
+      \draw[draw=FedBlue, thick, fill=FedBlue!20]
+        (0,0) -- (-0.26,-0.15) arc (210:270:0.30cm) -- cycle;
+      \draw[draw=FedBlue, thick, fill=FedBlue!20]
+        (0,0) -- (0.26,-0.15) arc (330:30:0.30cm) -- cycle;
+      \draw[draw=FedBlue, fill=white, thick] (0,0) circle (0.07cm);
+      \node[font=\tiny\bfseries, text=FedBlue] at (0, 0.50) {Vent.};
+    }
+  },
+  % ============================================================
+  % REGISTRE DE RÉGLAGE (rectangle + barre diagonale)
+  % ============================================================
+  pics/registre/.style={
+    code={
+      \draw[draw=FedBlue, fill=FedBlue!8, thick]
+        (-0.32,-0.22) rectangle (0.32, 0.22);
+      \draw[draw=FedOrange, thick, line width=1.5pt]
+        (-0.28,-0.18) -- (0.28, 0.18);
+      \node[font=\tiny\bfseries, text=FedBlue] at (0,-0.36) {Reg.};
+    }
+  },
+  % ============================================================
+  % FILTRE (losange hachuré ISO)
+  % ============================================================
+  pics/filtre/.style={
+    code={
+      \draw[draw=FedBlue, fill=white, thick]
+        (0, 0.30) -- (0.30, 0) -- (0,-0.30) -- (-0.30, 0) -- cycle;
+      % Hachures internes (représentant le média filtrant)
+      \draw[draw=FedBlue!60, thin] (-0.20,-0.08) -- (0.20, 0.08);
+      \draw[draw=FedBlue!60, thin] (-0.20, 0.08) -- (0.20,-0.08);
+      \draw[draw=FedBlue!60, thin] (-0.10,-0.20) -- (0.10, 0.20);
+      \draw[draw=FedBlue!60, thin] (-0.10, 0.20) -- (0.10,-0.20);
+    }
+  },
+  % ============================================================
+  % RADIATEUR (rectangle à ailettes verticales)
+  % ============================================================
+  pics/radiateur/.style={
+    code={
+      \draw[draw=FedOrange, fill=FedOrange!8, thick]
+        (-0.48,-0.30) rectangle (0.48, 0.30);
+      % Ailettes (tubes verticaux)
+      \foreach \x in {-0.32,-0.16,0.00,0.16,0.32} {
+        \draw[draw=FedOrange, thick] (\x,-0.30) -- (\x, 0.30);
+      }
+      \node[font=\tiny\bfseries, text=FedOrange] at (0,-0.44) {Rad.};
+    }
+  },
+  % ============================================================
+  % VENTILO-CONVECTEUR (rectangle + ventilateur intégré)
+  % ============================================================
+  pics/vc/.style={
+    code={
+      \draw[draw=FedOrange, fill=FedOrange!8, thick]
+        (-0.52,-0.30) rectangle (0.52, 0.30);
+      % Batterie (ailettes)
+      \foreach \x in {-0.38,-0.22,-0.06} {
+        \draw[draw=FedOrange, thick] (\x,-0.30) -- (\x, 0.30);
+      }
+      % Ventilateur intégré (côté droit)
+      \draw[draw=FedBlue, fill=white, thick] (0.30, 0) circle (0.18cm);
+      \draw[draw=FedBlue, thick] (0.30,0) -- (0.30, 0.18);
+      \draw[draw=FedBlue, thick] (0.30,0) -- (0.46,-0.09);
+      \draw[draw=FedBlue, thick] (0.30,0) -- (0.14,-0.09);
+      \node[font=\tiny\bfseries, text=FedOrange] at (0,-0.44) {VC};
+    }
+  },
+  % ============================================================
+  % SONDE DE TEMPÉRATURE (cercle + lettre T)
+  % ============================================================
+  pics/sonde-t/.style={
+    code={
+      \draw[draw=FedGreen, fill=FedGreen!12, thick] (0,0) circle (0.26cm);
+      \node[font=\small\bfseries, text=FedGreen] at (0, 0) {T};
+      % Prise de mesure (trait vers le bas)
+      \draw[draw=FedGreen, thick] (0,-0.26) -- (0,-0.44);
+      \draw[draw=FedGreen, thick, fill=FedGreen]
+        (-0.06,-0.44) -- (0,-0.56) -- (0.06,-0.44) -- cycle;
+    }
+  },
+  % ============================================================
+  % SONDE DE PRESSION (cercle + lettre P)
+  % ============================================================
+  pics/sonde-p/.style={
+    code={
+      \draw[draw=FedGreen, fill=FedGreen!12, thick] (0,0) circle (0.26cm);
+      \node[font=\small\bfseries, text=FedGreen] at (0, 0) {P};
+      % Prise de mesure (trait vers le bas)
+      \draw[draw=FedGreen, thick] (0,-0.26) -- (0,-0.44);
+      \draw[draw=FedGreen, thick, fill=FedGreen]
+        (-0.06,-0.44) -- (0,-0.56) -- (0.06,-0.44) -- cycle;
+    }
+  },
+  % ============================================================
+  % ACTIONNEUR (carré + flèche de commande)
+  % ============================================================
+  pics/actionneur/.style={
+    code={
+      \draw[draw=FedGreen, fill=FedGreen!12, thick]
+        (-0.24,-0.24) rectangle (0.24, 0.24);
+      % Flèche de commande (sortie droite)
+      \draw[->, draw=FedGreen, thick, >=Stealth]
+        (0.24, 0.08) -- ++(0.30, 0);
+      \node[font=\tiny\bfseries, text=FedGreen] at (0, 0) {Act.};
+    }
+  },
+}

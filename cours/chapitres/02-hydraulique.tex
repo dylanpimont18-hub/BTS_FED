@@ -370,7 +370,165 @@ Dans un réseau ramifié, certains émetteurs reçoivent plus d'eau que prévu (
 \end{enumerate}
 \end{methode}
 
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[>=Stealth, thick, font=\small]
+    % --- Réseau de distribution bitubes équilibré ---
+    % Collecteur départ (barre horizontale en rouge)
+    \draw[draw=FedRed, very thick] (0,0) -- (10,0)
+      node[right, text=FedRed, font=\footnotesize] {Collecteur départ 70°C};
+
+    % Collecteur retour (barre horizontale en bleu, en bas)
+    \draw[draw=FedBlue, very thick] (0,-5.0) -- (10,-5.0)
+      node[right, text=FedBlue, font=\footnotesize] {Collecteur retour 55°C};
+
+    % === Branche A — branche INDEX (la plus défavorisée) ===
+    % Départ A
+    \draw[draw=FedRed, thick] (2.0, 0) -- (2.0,-0.6);
+    \pic at (2.0,-0.6) {clapet};        % Clapet anti-retour départ
+    \draw[draw=FedRed, thick] (2.0,-0.96) -- (2.0,-1.5);
+    \pic at (2.0,-1.5) {vanne-quart};   % Vanne d'arrêt
+    \draw[draw=FedRed, thick] (2.0,-1.72) -- (2.0,-2.5);
+    \pic at (2.0,-2.5) {radiateur};     % Émetteur (radiateur)
+    % Retour A
+    \draw[draw=FedBlue, thick] (2.0,-2.80) -- (2.0,-3.6);
+    \pic at (2.0,-3.6) {vanne-equilibrage}; % Vanne équilibrage (réglage minimal)
+    \draw[draw=FedBlue, thick] (2.0,-3.86) -- (2.0,-5.0);
+    % Étiquette branche A
+    \node[left, font=\footnotesize\bfseries, text=FedBlue] at (1.4,-2.0) {Branche A};
+    \node[left, font=\tiny, text=FedBlue] at (1.4,-2.3) {(index)};
+
+    % === Branche B — branche intermédiaire ===
+    \draw[draw=FedRed, thick] (5.0, 0) -- (5.0,-0.6);
+    \pic at (5.0,-0.6) {clapet};
+    \draw[draw=FedRed, thick] (5.0,-0.96) -- (5.0,-1.5);
+    \pic at (5.0,-1.5) {vanne-quart};
+    \draw[draw=FedRed, thick] (5.0,-1.72) -- (5.0,-2.5);
+    \pic at (5.0,-2.5) {radiateur};
+    \draw[draw=FedBlue, thick] (5.0,-2.80) -- (5.0,-3.6);
+    \pic at (5.0,-3.6) {vanne-equilibrage};
+    \draw[draw=FedBlue, thick] (5.0,-3.86) -- (5.0,-5.0);
+    \node[left, font=\footnotesize\bfseries, text=FedBlue] at (4.4,-2.0) {Branche B};
+
+    % === Branche C — branche la plus proche de la pompe ===
+    \draw[draw=FedRed, thick] (8.0, 0) -- (8.0,-0.6);
+    \pic at (8.0,-0.6) {clapet};
+    \draw[draw=FedRed, thick] (8.0,-0.96) -- (8.0,-1.5);
+    \pic at (8.0,-1.5) {vanne-quart};
+    \draw[draw=FedRed, thick] (8.0,-1.72) -- (8.0,-2.5);
+    \pic at (8.0,-2.5) {radiateur};
+    \draw[draw=FedBlue, thick] (8.0,-2.80) -- (8.0,-3.6);
+    \pic at (8.0,-3.6) {vanne-equilibrage};
+    \draw[draw=FedBlue, thick] (8.0,-3.86) -- (8.0,-5.0);
+    \node[left, font=\footnotesize\bfseries, text=FedBlue] at (7.4,-2.0) {Branche C};
+    \node[left, font=\tiny, text=FedBlue] at (7.35,-2.3) {(proche pompe)};
+
+    % Pompe côté gauche (avant collecteur départ)
+    \draw[draw=FedRed, thick] (-1.0, 0) -- (0,0);
+    \pic at (-1.0, 0) {pompe};
+    \draw[draw=FedBlue, thick] (-1.0,-5.0) -- (0,-5.0);
+    \draw[draw=FedBlue, thick] (-1.36,-5.0) -- (-1.36,-2.0) -- (-1.36,0);
+    \draw[draw=FedRed,  thick] (-1.36,0) -- (-1.0, 0);
+    % Légende des vannes
+    \node[draw=FedBlue, fill=white, rounded corners=2pt,
+          font=\tiny, text=FedBlue, align=left,
+          inner sep=4pt] at (5.0,-6.2) {%
+      \textcolor{FedBlue}{$\triangledown$} Vanne équilibrage \quad
+      \textcolor{FedBlue}{$\triangleright\!|$} Clapet anti-retour \quad
+      \textcolor{FedBlue}{\textsf{X}} Vanne quart de tour \quad
+      \textcolor{FedOrange}{$\equiv$} Radiateur
+    };
+  \end{tikzpicture}
+  \caption{Schéma de principe — réseau bitubes équilibré avec symboles ISO GCF.
+           La branche A (index) reçoit la vanne d'équilibrage au minimum de réglage ;
+           les branches B et C sont sur-étranglées pour absorber l'excédent de pression.}
+  \label{fig:reseau-equilibrage-iso}
+\end{figure}
+
 \subsection{Sécurités hydrauliques}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[>=Stealth, thick, font=\small]
+
+    % ======================================================
+    % Schéma sécurités hydrauliques — Chaudière + circuit
+    % ======================================================
+
+    % --- Chaudière (centre gauche) ---
+    \pic at (0, 0) {chaudiere};
+    \node[below, font=\footnotesize, text=FedRed] at (0,-0.58) {Chaudière};
+
+    % --- Départ eau chaude (haut, rouge) ---
+    \draw[->, draw=FedRed, very thick] (0.52, 0.20) -- (2.0, 0.20)
+      node[above, font=\tiny, text=FedRed, midway] {Départ 70°C};
+
+    % --- Clapet anti-retour sur départ ---
+    \pic at (2.0, 0.20) {clapet};
+    \draw[draw=FedRed, thick] (2.30, 0.20) -- (3.5, 0.20);
+
+    % --- Sonde de température départ ---
+    \pic at (3.5, 0.20) {sonde-t};
+    \node[above, font=\tiny, text=FedGreen] at (3.5, 0.48) {$T_{dep}$};
+    \draw[draw=FedRed, thick] (3.5,-0.06) -- (3.5,-0.44) -- (5.5,-0.44);
+
+    % --- Sonde de pression ---
+    \pic at (4.8, 0.20) {sonde-p};
+    \node[above, font=\tiny, text=FedGreen] at (4.8, 0.48) {$P_{circuit}$};
+    \draw[draw=FedRed, thick] (3.5, 0.20) -- (4.54, 0.20);
+    \draw[draw=FedRed, thick] (5.06, 0.20) -- (6.5, 0.20);
+
+    % --- Vase d'expansion (raccordé sur le départ, en hauteur) ---
+    \pic at (6.5, 1.2) {vase-expansion};
+    \draw[draw=FedGreen!70!black, thick] (6.5, 0.20) -- (6.5, 0.86);
+    \node[right, font=\tiny, text=FedGreen!70!black] at (6.84, 1.2) {$V_e$};
+
+    % --- Circuit vers émetteurs (partie droite) ---
+    \draw[draw=FedRed, thick] (6.5, 0.20) -- (8.0, 0.20);
+    \pic at (8.0, 0.20) {vanne-motorisee};
+    \draw[draw=FedRed, thick] (8.0, -0.02) -- (8.0,-1.0);
+    \pic at (8.0,-1.0) {vc};
+    \node[right, font=\tiny, text=FedOrange] at (8.54,-1.0) {VC};
+
+    % --- Retour eau refroidie (bas, bleu) ---
+    \draw[draw=FedBlue, thick] (8.0,-1.30) -- (8.0,-2.0) -- (1.5,-2.0);
+
+    % --- Pompe de circulation sur le retour ---
+    \pic at (1.5,-2.0) {pompe};
+    \draw[->, draw=FedBlue, very thick] (1.14,-2.0) -- (0,-2.0)
+      node[above, font=\tiny, text=FedBlue, midway] {Retour 55°C};
+
+    % --- Vanne d'équilibrage sur le retour ---
+    \pic at (4.5,-2.0) {vanne-equilibrage};
+    \draw[draw=FedBlue, thick] (1.86,-2.0) -- (4.18,-2.0);
+    \draw[draw=FedBlue, thick] (4.82,-2.0) -- (8.0,-2.0);
+
+    % --- Retour vers chaudière (bas gauche) ---
+    \draw[->, draw=FedBlue, very thick] (0,-2.0) -- (0,-0.36);
+
+    % -------- Légende --------
+    \begin{scope}[shift={(0,-3.2)}]
+      \node[draw=FedBlue!30, fill=FedBlue!3, rounded corners=3pt,
+            inner sep=6pt, align=left, font=\tiny,
+            minimum width=9.5cm] at (4.5,0)
+      {%
+        \textbf{Légende des symboles ISO GCF :}\quad
+        \textcolor{FedOrange}{\textbf{P}} Pompe ~\,
+        \textcolor{FedBlue}{$\triangleright\!|$} Clapet ~\,
+        \textcolor{FedBlue}{$\triangledown\!M$} Vanne motorisée ~\,
+        \textcolor{FedBlue}{$\triangledown$} Vanne équilibrage\\[2pt]
+        \textcolor{FedGreen}{\textbf{T}} Sonde température ~\,
+        \textcolor{FedGreen}{\textbf{P}} Sonde pression ~\,
+        \textcolor{FedGreen}{$V_e$} Vase d'expansion ~\,
+        \textcolor{FedOrange}{\textbf{VC}} Ventilo-convecteur
+      };
+    \end{scope}
+
+  \end{tikzpicture}
+  \caption{Schéma des organes de sécurité hydraulique sur un circuit de chauffage :
+           clapet anti-retour, vase d'expansion, sondes $T$ et $P$, vanne motorisée (DTU\,65.11)}
+  \label{fig:securites-hydrauliques-iso}
+\end{figure}
 
 \begin{table}[H]
   \centering

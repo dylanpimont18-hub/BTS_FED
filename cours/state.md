@@ -6,8 +6,10 @@ Mis à jour automatiquement par l'agent à chaque run.
 ---
 
 ## Dernier run
-- Date : 2026-04-09 (14ème run)
-- Action : **T17 — Environnement `fichememo` (tcolorbox FedBlue) ajouté dans cours/preamble.tex, après la définition de `methode` : permet d'utiliser `\begin{fichememo}[Titre]...\end{fichememo}` dans tous les chapitres pour encadrer les fiches mémo de formules**
+- Date : 2026-04-09 (15ème run)
+- Action : **T18 FAIT — `cours/tikz-gcf-symbols.tex` créé : 19 symboles TikZ ISO GCF (`\pic{pompe}`, `\pic{vanne-quart}`, `\pic{vanne-motorisee}`, `\pic{vanne-equilibrage}`, `\pic{clapet}`, `\pic{chaudiere}`, `\pic{echangeur}`, `\pic{ballon}`, `\pic{vase-expansion}`, `\pic{pac}`, `\pic{cta}`, `\pic{ventilateur}`, `\pic{registre}`, `\pic{filtre}`, `\pic{radiateur}`, `\pic{vc}`, `\pic{sonde-t}`, `\pic{sonde-p}`, `\pic{actionneur}`)**
+- **T19 FAIT — `cours/preamble.tex` mis à jour : `\input{tikz-gcf-symbols}` + `usetikzlibrary{calc, patterns, decorations.markings}`**
+- **T20 FAIT — `cours/chapitres/02-hydraulique.tex` enrichi : 2 nouveaux schémas TikZ ISO GCF ajoutés (`fig:reseau-equilibrage-iso` réseau bitubes équilibré avec vannes, clapets, radiateurs ; `fig:securites-hydrauliques-iso` circuit chaudière avec sécurités hydrauliques complètes)**
 
 ---
 
@@ -34,6 +36,18 @@ Mis à jour automatiquement par l'agent à chaque run.
 | T15 | FAIBLE | **FAIT** | `cours/chapitres/00-analyse-dimensionnelle.tex` | Enrichir avec données terrain réelles (catalogues Grundfos, Daikin) |
 | T16 | FAIBLE | **FAIT** | `cours/chapitres/11-etudes-de-cas.tex` | Ajouter renvois inter-chapitres explicites |
 | T17 | FAIBLE | **FAIT** | `cours/preamble.tex` | Ajouter environnement `fichemémo` (tcolorbox récap formules) |
+| T18 | HAUTE | **FAIT** | `cours/tikz-gcf-symbols.tex` | Créer le fichier de symboles TikZ ISO GCF (`\pic{pompe}`, `\pic{vanne-quart}`, etc.) |
+| T19 | HAUTE | **FAIT** | `cours/preamble.tex` | Charger `tikz-gcf-symbols.tex` dans preamble + libs `calc`, `patterns` |
+| T20 | HAUTE | **FAIT** | `cours/chapitres/02-hydraulique.tex` | Schémas TikZ ISO GCF — réseau équilibrage, sécurités hydrauliques |
+| T21 | HAUTE | TODO | `cours/chapitres/04-production-chaleur.tex` | Schémas TikZ ISO GCF — PAC, chaudière, solaire thermique |
+| T22 | HAUTE | TODO | `cours/chapitres/05-distribution-emission.tex` | Schémas TikZ ISO GCF — réseau distribution, radiateurs, VC |
+| T23 | MOYENNE | TODO | `cours/chapitres/06-climatisation.tex` | Schémas TikZ ISO GCF — CTA, groupes froids, cycles frigorifiques |
+| T24 | MOYENNE | TODO | `cours/chapitres/07-regulation-gtb.tex` | Schémas TikZ ISO GCF — sondes, actionneurs, boucles de régulation |
+| T25 | MOYENNE | TODO | `cours/chapitres/01-bases-thermiques.tex` | Schémas TikZ ISO GCF — échangeurs thermiques, transferts |
+| T26 | MOYENNE | TODO | `cours/chapitres/03-aeraulique.tex` | Schémas TikZ ISO GCF — CTA, ventilateurs, filtres, registres |
+| T27 | FAIBLE | TODO | `cours/chapitres/08-efficacite-energetique.tex` | Schémas TikZ ISO GCF — comptages, sous-comptage, supervision |
+| T28 | FAIBLE | TODO | `cours/chapitres/09-acoustique.tex` | Schémas TikZ ISO GCF — atténuateurs, silencieux, propagation |
+| T29 | FAIBLE | TODO | `cours/chapitres/10-electrotechnique.tex` | Schémas TikZ ISO GCF — coffrets, variateurs, câblage GCF |
 
 ### Règles de sélection des tâches
 ```
