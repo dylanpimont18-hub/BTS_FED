@@ -631,6 +631,116 @@ Le fabricant annonce COP = 3,8 en A2/W45.
   \item[MaPrimeRénov' et CEE] Dispositifs d'aide à la rénovation énergétique : bonus pour les PAC (SCOP $\geq 3{,}5$), bonus pour les chaudières biomasse. Les CEE (Certificats d'Économies d'Énergie) financent la rénovation via les obligations des fournisseurs d'énergie.
 \end{description}
 
+% ------------------------------------------------------------
+% Schéma ISO GCF — Installation PAC air/eau complète
+% ------------------------------------------------------------
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[>=Stealth, font=\small, thick,
+      lbl/.style={font=\footnotesize, inner sep=1pt}]
+
+    % ============ CÔTÉ SOURCE FROIDE (air extérieur) ============
+    % PAC (unité extérieure)
+    \pic[draw=FedBlue] at (0,0) {pac};
+    \node[lbl, above=0.75cm] at (0,0) {PAC air/eau};
+    \node[lbl, text=FedBlue, below=0.62cm] at (0,0) {COP\,$\approx$\,3,5 (A7/W35)};
+
+    % ============ CÔTÉ SOURCE CHAUDE (circuit hydraulique) ============
+
+    % Pompe de circulation primaire
+    \pic[draw=FedOrange] at (3.5,0) {pompe};
+    \node[lbl, above=0.55cm] at (3.5,0) {Pompe};
+    \node[lbl, below=0.55cm, text=FedOrange] at (3.5,0) {primaire};
+
+    % Vanne quart de tour (isolement PAC)
+    \pic[draw=FedBlue!60] at (2.0, 0.5) {vanne-quart};
+
+    % Ballon tampon / hydraulique
+    \pic[draw=FedBlue!80] at (6.0,0) {ballon};
+    \node[lbl, above=1.0cm] at (6.0,0) {Ballon tampon};
+    \node[lbl, below=1.0cm, text=FedBlue] at (6.0,0) {\SI{100}{\litre}};
+
+    % Vase d'expansion
+    \pic[draw=FedGreen!70!black] at (6.0,2.2) {vase-expansion};
+    \node[lbl, above=0.75cm] at (6.0,2.2) {Vase exp.};
+
+    % Sondes de température (départ et retour)
+    \pic[draw=FedGreen] at (4.8, 0.5) {sonde-t};
+    \node[lbl, above=0.60cm, text=FedGreen] at (4.8,0.5) {$T_{dep}$};
+
+    \pic[draw=FedGreen] at (4.8,-0.5) {sonde-t};
+    \node[lbl, below=0.60cm, text=FedGreen] at (4.8,-0.5) {$T_{ret}$};
+
+    % Pompe secondaire (vers émetteurs)
+    \pic[draw=FedOrange] at (8.5,0) {pompe};
+    \node[lbl, above=0.55cm] at (8.5,0) {Pompe};
+    \node[lbl, below=0.55cm, text=FedOrange] at (8.5,0) {secondaire};
+
+    % Vanne motorisée 3 voies (mélange)
+    \pic[draw=FedBlue] at (10.0,0) {vanne-motorisee};
+    \node[lbl, below=1.0cm] at (10.0,0) {3 voies};
+
+    % Sonde de température extérieure
+    \pic[draw=FedGreen!80!black] at (-1.8, 2.0) {sonde-t};
+    \node[lbl, above=0.60cm, text=FedGreen!80!black] at (-1.8,2.0) {$T_{ext}$};
+
+    % Radiateur (émetteur, extrémité droite)
+    \pic[draw=FedRed] at (12.0,0.8) {radiateur};
+    \node[lbl, above=0.55cm] at (12.0,0.8) {Radiateurs};
+    \pic[draw=FedRed] at (12.0,-0.8) {vc};
+    \node[lbl, below=0.55cm] at (12.0,-0.8) {Venti-conv.};
+
+    % ============ TUYAUTERIE ============
+    % PAC → pompe primaire (départ source chaude)
+    \draw[->, draw=FedRed, very thick]
+      (0.95, 0.22) -- node[above, lbl, text=FedRed]{70\,°C} (3.08, 0.22);
+    % Pompe → ballon (départ)
+    \draw[->, draw=FedRed, very thick]
+      (3.92, 0.22) -- (5.62, 0.22);
+    % Ballon → pompe secondaire (départ)
+    \draw[->, draw=FedRed, thick]
+      (6.38, 0.22) -- (8.08, 0.22);
+    % Pompe secondaire → vanne 3 voies → émetteurs
+    \draw[->, draw=FedRed, thick]
+      (8.92, 0.22) -- (9.68, 0.22);
+    \draw[draw=FedRed, thick]
+      (10.32, 0.22) -- (11.30, 0.22);
+    \draw[->, draw=FedRed, thick]
+      (11.30, 0.22) -- (11.30, 0.80) -- (11.30, 0.80);
+    \draw[->, draw=FedRed, thick]
+      (11.30, 0.22) -- (11.30,-0.80);
+
+    % Retour émetteurs → ballon
+    \draw[draw=FedBlue, thick]
+      (12.70, 0.80) -- (13.5, 0.80) -- (13.5,-1.5) -- (6.0,-1.5) -- (6.0,-0.90);
+    \draw[draw=FedBlue, thick]
+      (12.70,-0.80) -- (13.5,-0.80);
+    % Retour ballon → PAC
+    \draw[->, draw=FedBlue, very thick]
+      (5.62,-0.22) -- node[below, lbl, text=FedBlue]{55\,°C} (0.95,-0.22);
+
+    % Vase d'expansion sur ligne départ ballon
+    \draw[draw=FedGreen!70!black, thick] (6.0, 0.90) -- (6.0, 1.55);
+
+    % Sonde extérieure raccordée à la PAC (commande)
+    \draw[dashed, draw=FedGreen!80!black] (-1.8,1.65) -- (-1.8,0) -- (-0.95,0);
+
+    % ============ LÉGENDE ============
+    \begin{scope}[yshift=-3.0cm]
+      \draw[FedRed,  very thick, ->] (0,0) -- (0.8,0);
+      \node[right, lbl, text=FedRed]  at (0.9,0) {Départ (eau chaude)};
+      \draw[FedBlue, very thick, ->]  (4.5,0) -- (5.3,0);
+      \node[right, lbl, text=FedBlue] at (5.4,0) {Retour};
+      \draw[dashed, FedGreen!80!black] (9.0,0) -- (9.8,0);
+      \node[right, lbl, text=FedGreen!70!black] at (9.9,0) {Signal régulation};
+    \end{scope}
+
+  \end{tikzpicture}
+  \caption{Installation PAC air/eau complète — symboles ISO NF GCF : PAC, pompes, ballon tampon,
+    vase d'expansion, vannes motorisées, sondes de température, émetteurs}
+  \label{fig:pac-installation-iso}
+\end{figure}
+
 \begin{tcolorbox}[
   enhanced, colback=FedBlue!3, colframe=FedBlue!50,
   fonttitle=\bfseries\sffamily, coltitle=FedBlue,

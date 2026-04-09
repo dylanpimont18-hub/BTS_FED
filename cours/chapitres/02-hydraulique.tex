@@ -501,62 +501,88 @@ Choisir un vase de \SI{12}{\litre} (première taille standard supérieure).
 
 \begin{figure}[H]
   \centering
-  \begin{tikzpicture}[
-    thick,
-    >=Stealth,
-    box/.style={draw, rectangle, minimum width=2.2cm, minimum height=0.85cm,
-                fill=FedBlue!15, draw=FedBlue, rounded corners=3pt, font=\small\bfseries},
-    pump/.style={draw, circle, minimum size=0.85cm, fill=FedOrange!20,
-                 draw=FedOrange, font=\small\bfseries},
-    exp/.style={draw, diamond, minimum width=1.1cm, minimum height=1.1cm,
-                fill=FedGreen!20, draw=FedGreen, font=\scriptsize\bfseries},
-  ]
-    % Noeuds principaux (coordonnées absolues)
-    \node[box]  (chaudiere) at (0,0)    {Chaudière};
-    \node[pump] (pompe)     at (0,-2.2) {$P$};
-    \node[box]  (nourrice)  at (5,0)    {Nourrice};
-    \node[box]  (rad1)      at (2.5,-3.5) {Rad. 1};
-    \node[box]  (rad2)      at (5,-3.5)   {Rad. 2};
-    \node[box]  (rad3)      at (7.5,-3.5) {Rad. 3};
-    \node[exp]  (vase)      at (2.5,0)  {$V_e$};
+  \begin{tikzpicture}[>=Stealth, font=\small, thick,
+      lbl/.style={font=\footnotesize, inner sep=2pt}]
 
-    % Tuyauterie départ : chaudière → nourrice
+    % ---- CHAUDIÈRE (symbole ISO NF) ----
+    \pic[draw=FedBlue] at (0,0) {chaudiere};
+    \node[lbl, above=0.65cm] at (0,0) {Chaudière};
+    \node[lbl, text=FedBlue, below=0.35cm] at (0,0) {\footnotesize condensation};
+
+    % ---- VASE D'EXPANSION (symbole ISO) ----
+    \pic[draw=FedGreen!70!black] at (2.5,1.2) {vase-expansion};
+    \node[lbl, above=0.75cm] at (2.5,1.2) {Vase exp.};
+
+    % ---- POMPE DE CIRCULATION (symbole ISO) ----
+    \pic[draw=FedOrange] at (0,-2.2) {pompe};
+    \node[lbl, right=0.55cm] at (0,-2.2) {Circ.};
+
+    % ---- NOURRICE (rectangle simple — nœud de distribution) ----
+    \draw[draw=FedBlue, fill=FedBlue!10, rounded corners=2pt]
+      (4.5,-0.25) rectangle (5.5,0.25);
+    \node[lbl] at (5.0,0) {Nourrice};
+
+    % ---- RADIATEURS (symboles ISO NF) ----
+    \pic[draw=FedRed] at (2.5,-3.5) {radiateur};
+    \node[lbl, below=0.55cm] at (2.5,-3.5) {Rad. 1};
+
+    \pic[draw=FedRed] at (5.0,-3.5) {radiateur};
+    \node[lbl, below=0.55cm] at (5.0,-3.5) {Rad. 2};
+
+    \pic[draw=FedRed] at (7.5,-3.5) {radiateur};
+    \node[lbl, below=0.55cm] at (7.5,-3.5) {Rad. 3};
+
+    % ---- VANNES QUART DE TOUR sur chaque radiateur ----
+    \pic[draw=FedBlue!60] at (2.5,-2.70) {vanne-quart};
+    \pic[draw=FedBlue!60] at (5.0,-2.70) {vanne-quart};
+    \pic[draw=FedBlue!60] at (7.5,-2.70) {vanne-quart};
+
+    % ============ TUYAUTERIE DÉPART (rouge) ============
+    % Chaudière (est) → nourrice (ouest)
     \draw[->, draw=FedRed, very thick]
-      (chaudiere.east) -- node[above, font=\footnotesize, text=FedRed]{Départ 70°C}
-      (nourrice.west);
+      (0.80,0) -- node[above, lbl, text=FedRed]{Départ 70\,°C} (4.5,0);
+    % Vase d'expansion raccordé sur la ligne départ
+    \draw[draw=FedGreen!70!black, thick] (2.5,0.70) -- (2.5,0) -- (3.5,0);
+    % Nourrice → distribution verticale
+    \draw[draw=FedRed, thick] (5.0,-0.25) -- (5.0,-2.35);
+    \draw[draw=FedRed, thick] (5.0,-2.35) -- (2.5,-2.35) -- (7.5,-2.35);
+    % Départ vers vannes
+    \draw[->, draw=FedRed, thick] (2.5,-2.35) -- (2.5,-2.38);
+    \draw[->, draw=FedRed, thick] (5.0,-2.35) -- (5.0,-2.38);
+    \draw[->, draw=FedRed, thick] (7.5,-2.35) -- (7.5,-2.38);
+    % Vannes → radiateurs
+    \draw[->, draw=FedRed, thick] (2.5,-3.02) -- (2.5,-3.12);
+    \draw[->, draw=FedRed, thick] (5.0,-3.02) -- (5.0,-3.12);
+    \draw[->, draw=FedRed, thick] (7.5,-3.02) -- (7.5,-3.12);
 
-    % Vase d'expansion raccordé sur le départ
-    \draw[draw=FedGreen, thick] (vase.east) -- (3.9,0);
-
-    % Distribution depuis nourrice vers radiateurs
-    \draw[draw=FedRed, thick] (nourrice.south) -- (5,-2.5) -- (2.5,-2.5);
-    \draw[draw=FedRed, thick] (5,-2.5) -- (7.5,-2.5);
-    \draw[->, draw=FedRed, thick] (2.5,-2.5) -- (rad1.north);
-    \draw[->, draw=FedRed, thick] (5,-2.5)   -- (rad2.north);
-    \draw[->, draw=FedRed, thick] (7.5,-2.5) -- (rad3.north);
-
-    % Retour des radiateurs
-    \draw[draw=FedBlue, thick] (rad1.south) -- (2.5,-4.5);
-    \draw[draw=FedBlue, thick] (rad2.south) -- (5,-4.5);
-    \draw[draw=FedBlue, thick] (rad3.south) -- (7.5,-4.5);
-    \draw[draw=FedBlue, thick] (2.5,-4.5) -- (7.5,-4.5);
-    \draw[draw=FedBlue, thick] (5,-4.5) -- (5,-5.0) -- (0,-5.0) -- (0,-2.65);
+    % ============ TUYAUTERIE RETOUR (bleu) ============
+    \draw[draw=FedBlue, thick] (2.5,-3.88) -- (2.5,-4.6);
+    \draw[draw=FedBlue, thick] (5.0,-3.88) -- (5.0,-4.6);
+    \draw[draw=FedBlue, thick] (7.5,-3.88) -- (7.5,-4.6);
+    \draw[draw=FedBlue, thick] (2.5,-4.6) -- (7.5,-4.6);
+    \draw[draw=FedBlue, thick] (5.0,-4.6) -- (5.0,-5.1) -- (0,-5.1) -- (0,-2.62);
     \draw[->, draw=FedBlue, very thick]
-      (pompe.south) -- node[right, font=\footnotesize, text=FedBlue]{Retour 55°C}
-      (0,-2.65);
+      (0,-2.62) -- node[right, lbl, text=FedBlue]{Retour 55\,°C} (0,-2.62);
+    \draw[->, draw=FedBlue, very thick] (0,-2.62) -- (0.0,-2.62);
+    % Retour → pompe → chaudière
+    \draw[draw=FedBlue, very thick] (0,-5.1) -- (0,-2.62);
+    \draw[->, draw=FedBlue, very thick] (0,-1.78) -- (0,-0.42);
 
-    % Pompe → chaudière
-    \draw[->, draw=FedBlue, very thick] (pompe.north) -- (chaudiere.south);
+    % ============ LÉGENDE ============
+    \begin{scope}[yshift=-6.0cm]
+      \draw[FedRed,  very thick, ->] (0,0) -- (0.7,0);
+      \node[right, lbl, text=FedRed]  at (0.8,0)   {Aller — eau chaude};
+      \draw[FedBlue, very thick, ->]  (3.8,0) -- (4.5,0);
+      \node[right, lbl, text=FedBlue] at (4.6,0)   {Retour — eau tiède};
+      \node[lbl, text=FedGreen!70!black]  at (1.5,-0.55)
+        {\tikz\pic[draw=FedGreen!70!black, scale=0.7]{vase-expansion}; \;Vase d'expansion};
+      \node[lbl, text=FedOrange]          at (6.5,-0.55)
+        {\tikz\pic[draw=FedOrange, scale=0.7]{pompe}; \;Pompe circulatrice};
+    \end{scope}
 
-    % Légende
-    \draw[draw=FedRed, very thick, ->] (1.8,-6.0) -- ++(0.7,0);
-    \node[right, font=\footnotesize, text=FedRed] at (2.5,-6.0) {Aller (eau chaude)};
-    \draw[draw=FedBlue, very thick, ->] (1.8,-6.5) -- ++(0.7,0);
-    \node[right, font=\footnotesize, text=FedBlue] at (2.5,-6.5) {Retour (eau froide)};
-    \node[font=\footnotesize, text=FedGreen!70!black] at (7.2,-6.0) {$V_e$ : Vase d'expansion};
-    \node[font=\footnotesize, text=FedOrange!80!black] at (7.2,-6.5) {$P$ : Pompe de circulation};
   \end{tikzpicture}
-  \caption{Schéma de principe d'un circuit hydraulique bouclé (chauffage bitubes)}
+  \caption{Circuit hydraulique bouclé — chauffage bitubes (symboles ISO NF GCF :
+    chaudière, pompe circulatrice, vase d'expansion, radiateurs, vannes quart de tour)}
   \label{fig:circuit-boucle}
 \end{figure}
 

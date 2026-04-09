@@ -6,8 +6,8 @@ Mis à jour automatiquement par l'agent à chaque run.
 ---
 
 ## Dernier run
-- Date : 2026-04-09 (14ème run)
-- Action : **T17 — Environnement `fichememo` (tcolorbox FedBlue) ajouté dans cours/preamble.tex, après la définition de `methode` : permet d'utiliser `\begin{fichememo}[Titre]...\end{fichememo}` dans tous les chapitres pour encadrer les fiches mémo de formules**
+- Date : 2026-04-09 (15ème run)
+- Action : **T18/T19/T20 — Schémas TikZ avec symboles ISO GCF : (1) création de `cours/tikz-gcf-symbols.tex` (19 symboles ISO : pompe, vannes, chaudière, PAC, CTA, etc.) + chargement dans preamble.tex ; (2) T18 ch01 — nouveau schéma circuit d'émission chauffage avec \pic{radiateur}, \pic{vanne-quart}, \pic{sonde-t}, \pic{pompe} ; (3) T19 ch02 — remplacement du schéma hydraulique bouclé par symboles ISO (\pic{chaudiere}, \pic{pompe}, \pic{vase-expansion}, \pic{radiateur}) ; (4) T20 ch04 — ajout schéma installation PAC complète avec \pic{pac}, \pic{pompe}, \pic{ballon}, \pic{vanne-quart}, \pic{sonde-t}**
 
 ---
 
@@ -34,6 +34,18 @@ Mis à jour automatiquement par l'agent à chaque run.
 | T15 | FAIBLE | **FAIT** | `cours/chapitres/00-analyse-dimensionnelle.tex` | Enrichir avec données terrain réelles (catalogues Grundfos, Daikin) |
 | T16 | FAIBLE | **FAIT** | `cours/chapitres/11-etudes-de-cas.tex` | Ajouter renvois inter-chapitres explicites |
 | T17 | FAIBLE | **FAIT** | `cours/preamble.tex` | Ajouter environnement `fichemémo` (tcolorbox récap formules) |
+| T18 | HAUTE | **FAIT** | `cours/chapitres/01-bases-thermiques.tex` | Schémas TikZ ISO GCF : ajouter circuit d'émission chauffage avec symboles \pic{radiateur}, \pic{vanne-quart}, \pic{sonde-t}, \pic{pompe} |
+| T19 | HAUTE | **FAIT** | `cours/chapitres/02-hydraulique.tex` | Schémas TikZ ISO GCF : remplacer formes génériques par \pic{chaudiere}, \pic{pompe}, \pic{vase-expansion}, \pic{radiateur} |
+| T20 | HAUTE | **FAIT** | `cours/chapitres/04-production-chaleur.tex` | Schémas TikZ ISO GCF : ajouter schéma installation PAC complète (\pic{pac}, \pic{pompe}, \pic{ballon}, \pic{vanne-quart}, \pic{sonde-t}) |
+| T21 | HAUTE | TODO | `cours/chapitres/03-aeraulique.tex` | Schémas TikZ ISO GCF : remplacer formes génériques par \pic{ventilateur}, \pic{filtre}, \pic{registre}, \pic{cta} |
+| T22 | HAUTE | TODO | `cours/chapitres/05-distribution-emission.tex` | Schémas TikZ ISO GCF : ajouter circuit distribution avec \pic{pompe}, \pic{vanne-equilibrage}, \pic{radiateur}, \pic{vc} |
+| T23 | HAUTE | TODO | `cours/chapitres/06-climatisation.tex` | Schémas TikZ ISO GCF : remplacer formes par \pic{cta}, \pic{ventilateur}, \pic{filtre}, \pic{sonde-t}, \pic{sonde-p} |
+| T24 | MOYENNE | TODO | `cours/chapitres/07-regulation-gtb.tex` | Schémas TikZ ISO GCF : ajouter boucle de régulation avec \pic{sonde-t}, \pic{actionneur}, \pic{vanne-motorisee} |
+| T25 | MOYENNE | TODO | `cours/chapitres/08-efficacite-energetique.tex` | Schémas TikZ ISO GCF : ajouter synoptique énergétique avec \pic{pac}, \pic{chaudiere}, \pic{echangeur}, \pic{sonde-t} |
+| T26 | MOYENNE | TODO | `cours/chapitres/09-acoustique.tex` | Schémas TikZ ISO GCF : ajouter schéma propagation acoustique CTA avec \pic{ventilateur}, \pic{registre}, \pic{cta} |
+| T27 | MOYENNE | TODO | `cours/chapitres/10-electrotechnique.tex` | Schémas TikZ ISO GCF : ajouter schéma armoire électrique avec \pic{actionneur}, \pic{pompe}, \pic{sonde-p} |
+| T28 | FAIBLE | TODO | `cours/chapitres/00-analyse-dimensionnelle.tex` | Schémas TikZ ISO GCF : ajouter tableau synoptique grandeurs GCF avec \pic{pompe}, \pic{radiateur}, \pic{sonde-t} |
+| T29 | FAIBLE | TODO | `cours/chapitres/11-etudes-de-cas.tex` | Schémas TikZ ISO GCF : intégrer symboles ISO dans les schémas d'études de cas (PAC + réseau) |
 
 ### Règles de sélection des tâches
 ```

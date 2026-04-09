@@ -1,0 +1,305 @@
+% tikz-gcf-symbols.tex — Bibliothèque de symboles ISO/NF pour schémas GCF
+% BTS FED option GCF — Chargé automatiquement depuis preamble.tex
+%
+% Usage dans un environnement tikzpicture :
+%   \pic[draw=FedBlue] at (x,y) {pompe};
+%   \pic (nom) at (x,y) {vanne-quart};
+%
+% Tous les symboles sont centrés en (0,0).
+% Taille standard : ≈ 0.9 cm de côté (adapte avec scale=).
+
+\usetikzlibrary{pics, calc, decorations.markings}
+
+\tikzset{
+  % ================================================================
+  % POMPE DE CIRCULATION — ISO 3511 : cercle + croix directionnelle
+  % ================================================================
+  pics/pompe/.style={
+    code={
+      \draw[line width=0.9pt] (0,0) circle[radius=0.42cm];
+      % Flèche diagonale indiquant le sens de rotation (↗)
+      \draw[->, line width=0.9pt] (-0.27,-0.27) -- (0.27,0.27);
+      % Ligne transversale
+      \draw[line width=0.9pt] (0.25,-0.27) -- (-0.25,0.27);
+    }
+  },
+  % ================================================================
+  % VANNE QUART DE TOUR (papillon) — deux triangles se rejoignant
+  % ================================================================
+  pics/vanne-quart/.style={
+    code={
+      \draw[line width=0.9pt] (-0.50,0) -- (0.50,0);
+      \filldraw[line width=0.8pt, fill=black!70]
+        (-0.42,-0.32) -- (-0.42,0.32) -- (0,0) -- cycle;
+      \filldraw[line width=0.8pt, fill=black!70]
+        (0.42,-0.32) -- (0.42,0.32) -- (0,0) -- cycle;
+    }
+  },
+  % ================================================================
+  % VANNE MOTORISÉE — papillon + carré actuateur
+  % ================================================================
+  pics/vanne-motorisee/.style={
+    code={
+      \draw[line width=0.9pt] (-0.50,0) -- (0.50,0);
+      \filldraw[line width=0.8pt, fill=black!70]
+        (-0.42,-0.32) -- (-0.42,0.32) -- (0,0) -- cycle;
+      \filldraw[line width=0.8pt, fill=black!70]
+        (0.42,-0.32) -- (0.42,0.32) -- (0,0) -- cycle;
+      % Actuateur rectangulaire sur la tige
+      \draw[line width=0.9pt] (0,0.32) -- (0,0.50);
+      \draw[line width=0.8pt] (-0.22,0.50) rectangle (0.22,0.80);
+      \node[font=\tiny, inner sep=0pt] at (0,0.65) {M};
+    }
+  },
+  % ================================================================
+  % VANNE D'ÉQUILIBRAGE — double triangle ISO
+  % ================================================================
+  pics/vanne-equilibrage/.style={
+    code={
+      \draw[line width=0.9pt] (-0.50,0) -- (0.50,0);
+      % Triangle extérieur
+      \draw[line width=0.8pt] (-0.38,-0.30) -- (0,0.32) -- (0.38,-0.30) -- cycle;
+      % Triangle intérieur (hachuré)
+      \draw[line width=0.7pt] (-0.18,-0.10) -- (0,0.18) -- (0.18,-0.10);
+      % Tige de réglage
+      \draw[line width=0.8pt] (0,0.32) -- (0,0.55);
+      \draw[line width=1.0pt] (-0.12,0.55) -- (0.12,0.55);
+    }
+  },
+  % ================================================================
+  % CLAPET ANTI-RETOUR — triangle + barre
+  % ================================================================
+  pics/clapet/.style={
+    code={
+      \draw[line width=0.9pt] (-0.50,0) -- (0.50,0);
+      % Triangle (sens du flux → droite)
+      \filldraw[line width=0.8pt, fill=black!60]
+        (-0.22,-0.28) -- (-0.22,0.28) -- (0.22,0) -- cycle;
+      % Barre d'arrêt verticale
+      \draw[line width=1.3pt] (0.22,-0.32) -- (0.22,0.32);
+    }
+  },
+  % ================================================================
+  % CHAUDIÈRE — rectangle + flamme ISO
+  % ================================================================
+  pics/chaudiere/.style={
+    code={
+      % Corps rectangulaire
+      \draw[line width=0.9pt] (-0.60,-0.42) rectangle (0.60,0.42);
+      % Flamme stylisée (courbe en S)
+      \draw[line width=0.9pt, FedOrange!80!black]
+        (-0.15,-0.15)
+        .. controls (-0.18,0.10) and (-0.05,0.05) .. (0,0.28)
+        .. controls (0.05,0.05) and (0.18,0.10) .. (0.15,-0.15);
+      % Raccord gauche (retour) et droit (départ)
+      \draw[line width=0.9pt] (-0.60,0) -- (-0.80,0);
+      \draw[line width=0.9pt] (0.60,0) -- (0.80,0);
+    }
+  },
+  % ================================================================
+  % ÉCHANGEUR À PLAQUES — double rectangle + croix
+  % ================================================================
+  pics/echangeur/.style={
+    code={
+      % Demi-rectangle gauche (primaire)
+      \draw[line width=0.9pt] (-0.55,-0.42) rectangle (0.00,0.42);
+      % Demi-rectangle droit (secondaire)
+      \draw[line width=0.9pt] (0.00,-0.42) rectangle (0.55,0.42);
+      % Diagonales symbolisant l'échange
+      \draw[line width=0.7pt] (-0.55,0.42) -- (0.00,-0.42);
+      \draw[line width=0.7pt] (0.00,0.42) -- (0.55,-0.42);
+      % Raccords (2 par côté)
+      \draw[line width=0.9pt] (-0.55, 0.22) -- (-0.78, 0.22);
+      \draw[line width=0.9pt] (-0.55,-0.22) -- (-0.78,-0.22);
+      \draw[line width=0.9pt] ( 0.55, 0.22) -- ( 0.78, 0.22);
+      \draw[line width=0.9pt] ( 0.55,-0.22) -- ( 0.78,-0.22);
+    }
+  },
+  % ================================================================
+  % BALLON TAMPON / ECS — ellipse verticale
+  % ================================================================
+  pics/ballon/.style={
+    code={
+      \draw[line width=0.9pt] (0,0) ellipse[x radius=0.38cm, y radius=0.65cm];
+      % Ligne de séparation (zone ECS / retour)
+      \draw[line width=0.6pt, dashed] (-0.38,0.15) -- (0.38,0.15);
+      % Raccords haut et bas
+      \draw[line width=0.9pt] (0, 0.65) -- (0, 0.90);
+      \draw[line width=0.9pt] (0,-0.65) -- (0,-0.90);
+    }
+  },
+  % ================================================================
+  % VASE D'EXPANSION — cercle + membrane horizontale
+  % ================================================================
+  pics/vase-expansion/.style={
+    code={
+      \draw[line width=0.9pt] (0,0) circle[radius=0.45cm];
+      % Membrane (ligne centrale)
+      \draw[line width=1.3pt] (-0.45,0) -- (0.45,0);
+      % Hachures zone gaz (partie haute)
+      \foreach \dy in {0.15, 0.28} {
+        \draw[line width=0.4pt] (-0.30+\dy*0.4,\dy) -- (0.30-\dy*0.4,\dy);
+      }
+      % Raccord eau (bas)
+      \draw[line width=0.9pt] (0,-0.45) -- (0,-0.70);
+    }
+  },
+  % ================================================================
+  % POMPE À CHALEUR — rectangle + flèches cycle
+  % ================================================================
+  pics/pac/.style={
+    code={
+      \draw[line width=0.9pt] (-0.75,-0.52) rectangle (0.75,0.52);
+      \node[font=\tiny\bfseries\sffamily] at (0, 0.25) {PAC};
+      % Flèche cycle frigorigène simplifiée
+      \draw[->, line width=0.7pt] (-0.45,-0.20) -- (0.45,-0.20);
+      \node[font=\tiny] at (0,-0.38) {COP};
+      % Connexions hydrauliques gauche (source froide) et droite (source chaude)
+      \draw[line width=0.9pt] (-0.75, 0.22) -- (-0.95, 0.22);
+      \draw[line width=0.9pt] (-0.75,-0.22) -- (-0.95,-0.22);
+      \draw[line width=0.9pt] ( 0.75, 0.22) -- ( 0.95, 0.22);
+      \draw[line width=0.9pt] ( 0.75,-0.22) -- ( 0.95,-0.22);
+    }
+  },
+  % ================================================================
+  % CENTRALE DE TRAITEMENT D'AIR (CTA) — rectangle multi-sections
+  % ================================================================
+  pics/cta/.style={
+    code={
+      \draw[line width=0.9pt] (-1.05,-0.48) rectangle (1.05,0.48);
+      % Cloisons internes
+      \draw[line width=0.6pt] (-0.65,-0.48) -- (-0.65,0.48);
+      \draw[line width=0.6pt] (-0.10,-0.48) -- (-0.10,0.48);
+      \draw[line width=0.6pt] ( 0.55,-0.48) -- ( 0.55,0.48);
+      % Section filtre (hachures)
+      \foreach \y in {-0.30,-0.10,0.10,0.30} {
+        \draw[line width=0.5pt] (-1.00,\y) -- (-0.70,\y);
+      }
+      % Section batterie (croix)
+      \draw[line width=0.6pt] (-0.65,0.40) -- (-0.10,-0.40);
+      \draw[line width=0.6pt] (-0.65,-0.40) -- (-0.10,0.40);
+      % Section humidification (points)
+      \node[font=\tiny] at (0.22,0) {$\sim$};
+      % Section ventilateur (cercle + pale)
+      \draw[line width=0.6pt] (0.78,0) circle[radius=0.22cm];
+      \draw[->, line width=0.5pt] (0.69,0.14) arc[start angle=130,end angle=30,radius=0.22cm];
+      % Raccords soufflage et reprise
+      \draw[line width=0.9pt] (1.05, 0.22) -- (1.25, 0.22);
+      \draw[line width=0.9pt] (-1.05, 0.00) -- (-1.25, 0.00);
+    }
+  },
+  % ================================================================
+  % VENTILATEUR — cercle + 3 pales ISO
+  % ================================================================
+  pics/ventilateur/.style={
+    code={
+      \draw[line width=0.9pt] (0,0) circle[radius=0.45cm];
+      % 3 pales orientées à 120°
+      \foreach \a in {90, 210, 330} {
+        \draw[line width=0.9pt, rotate=\a]
+          (0,0) -- (0,0.40cm);
+        \draw[line width=0.7pt, rotate=\a, ->]
+          (0.12,0.25) arc[start angle=90,delta angle=40,radius=0.12cm];
+      }
+    }
+  },
+  % ================================================================
+  % REGISTRE DE RÉGLAGE — rectangle + barre diagonale
+  % ================================================================
+  pics/registre/.style={
+    code={
+      \draw[line width=0.9pt] (-0.50,-0.32) rectangle (0.50,0.32);
+      % Barre diagonale (volet)
+      \draw[line width=1.3pt] (-0.50,-0.32) -- (0.50,0.32);
+      % Tige de commande (haut)
+      \draw[line width=0.8pt] (0,0.32) -- (0,0.58);
+      \draw[line width=1.0pt] (-0.12,0.58) -- (0.12,0.58);
+    }
+  },
+  % ================================================================
+  % FILTRE — losange hachuré ISO
+  % ================================================================
+  pics/filtre/.style={
+    code={
+      \draw[line width=0.9pt]
+        (0,0.50) -- (0.50,0) -- (0,-0.50) -- (-0.50,0) -- cycle;
+      % Hachures internes
+      \foreach \k in {-2,-1,0,1,2} {
+        \pgfmathsetmacro{\halflen}{0.40 - abs(\k)*0.10}
+        \draw[line width=0.5pt]
+          (-\halflen, \k*0.12) -- (\halflen, \k*0.12);
+      }
+    }
+  },
+  % ================================================================
+  % RADIATEUR — rectangle à ailettes
+  % ================================================================
+  pics/radiateur/.style={
+    code={
+      \draw[line width=0.9pt] (-0.70,-0.38) rectangle (0.70,0.38);
+      % Ailettes verticales internes (6 ailettes)
+      \foreach \x in {-0.48,-0.28,-0.08,0.12,0.32,0.52} {
+        \draw[line width=0.7pt] (\x,-0.38) -- (\x,0.38);
+      }
+      % Raccords entrée/sortie
+      \draw[line width=0.9pt] (-0.70, 0.18) -- (-0.95, 0.18);
+      \draw[line width=0.9pt] (-0.70,-0.18) -- (-0.95,-0.18);
+    }
+  },
+  % ================================================================
+  % VENTILO-CONVECTEUR (VC / FAN-COIL) — batterie + ventilateur
+  % ================================================================
+  pics/vc/.style={
+    code={
+      \draw[line width=0.9pt] (-0.70,-0.38) rectangle (0.70,0.38);
+      % Batterie (ailettes côté gauche)
+      \foreach \x in {-0.60,-0.46,-0.32} {
+        \draw[line width=0.7pt] (\x,-0.28) -- (\x,0.28);
+      }
+      % Cercle ventilateur (côté droit)
+      \draw[line width=0.8pt] (0.35,0) circle[radius=0.25cm];
+      \draw[->, line width=0.6pt] (0.24,0.18)
+        arc[start angle=130,end angle=30,radius=0.25cm];
+      % Raccords hydrauliques
+      \draw[line width=0.9pt] (-0.70, 0.18) -- (-0.95, 0.18);
+      \draw[line width=0.9pt] (-0.70,-0.18) -- (-0.95,-0.18);
+    }
+  },
+  % ================================================================
+  % SONDE DE TEMPÉRATURE — cercle + T
+  % ================================================================
+  pics/sonde-t/.style={
+    code={
+      \draw[line width=0.9pt] (0,0) circle[radius=0.35cm];
+      \node[font=\small\bfseries\sffamily] at (0,0.02) {T};
+      % Tige de plongée (bas)
+      \draw[line width=0.9pt] (0,-0.35) -- (0,-0.60);
+      \draw[line width=1.0pt] (-0.08,-0.60) -- (0.08,-0.60);
+    }
+  },
+  % ================================================================
+  % SONDE DE PRESSION — cercle + P
+  % ================================================================
+  pics/sonde-p/.style={
+    code={
+      \draw[line width=0.9pt] (0,0) circle[radius=0.35cm];
+      \node[font=\small\bfseries\sffamily] at (0,0.02) {P};
+      % Raccord (bas)
+      \draw[line width=0.9pt] (0,-0.35) -- (0,-0.60);
+      \draw[line width=1.0pt] (-0.08,-0.60) -- (0.08,-0.60);
+    }
+  },
+  % ================================================================
+  % ACTIONNEUR — carré + flèche de commande
+  % ================================================================
+  pics/actionneur/.style={
+    code={
+      \draw[line width=0.9pt] (-0.32,-0.32) rectangle (0.32,0.32);
+      % Croix intérieure (symbole d'action motorisée)
+      \draw[line width=0.7pt] (-0.20,0) -- (0.20,0);
+      \draw[line width=0.7pt] (0,-0.20) -- (0,0.20);
+      % Flèche de commande sortant vers le bas
+      \draw[->, line width=0.9pt] (0,-0.32) -- (0,-0.60);
+    }
+  },
+}

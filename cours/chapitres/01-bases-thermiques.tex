@@ -1044,4 +1044,80 @@ avec $\sigma = \SI{5{,}67e-8}{\watt\per\metre\squared\per\kelvin\tothe{4}}$, $T$
 \end{multicols}
 \end{tcolorbox}
 
+% ------------------------------------------------------------
+% Schéma ISO GCF — Circuit d'émission de chaleur (symboles normalisés)
+% ------------------------------------------------------------
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[>=Stealth, font=\small, thick,
+      lbl/.style={font=\footnotesize, inner sep=2pt}]
+
+    % ---- Chaudière (source) ----
+    \pic[draw=FedBlue] (ch) at (0,0) {chaudiere};
+    \node[lbl, below=0.55cm] at (0,0) {Chaudière};
+
+    % ---- Pompe de circulation ----
+    \pic[draw=FedOrange] (po) at (3.2,0) {pompe};
+    \node[lbl, below=0.55cm] at (3.2,0) {Pompe};
+
+    % ---- Vanne quart de tour (isolement) ----
+    \pic[draw=FedBlue!70] (vq1) at (5.5, 1.8) {vanne-quart};
+    \node[lbl, above=0.55cm] at (5.5, 1.8) {Vanne};
+
+    \pic[draw=FedBlue!70] (vq2) at (5.5,-1.8) {vanne-quart};
+    \node[lbl, below=0.55cm] at (5.5,-1.8) {Vanne};
+
+    % ---- Radiateurs ----
+    \pic[draw=FedRed] (r1) at (8.0, 1.8) {radiateur};
+    \node[lbl, above=0.55cm] at (8.0, 1.8) {Rad. 1 — bureau};
+
+    \pic[draw=FedRed] (r2) at (8.0,-1.8) {radiateur};
+    \node[lbl, below=0.55cm] at (8.0,-1.8) {Rad. 2 — séjour};
+
+    % ---- Sondes de température ----
+    \pic[draw=FedGreen] (st1) at (6.8, 1.8) {sonde-t};
+    \pic[draw=FedGreen] (st2) at (6.8,-1.8) {sonde-t};
+
+    % ---- Vase d'expansion ----
+    \pic[draw=FedGreen!70!black] (ve) at (1.6, 1.6) {vase-expansion};
+    \node[lbl, above=0.65cm] at (1.6, 1.6) {Vase exp.};
+
+    % ============ Tuyauterie départ (rouge = eau chaude) ============
+    % Chaudière sortie → pompe
+    \draw[->, draw=FedRed, very thick] (0.80,0) -- (2.78,0);
+    % Pompe → nourrice départ (point de tee)
+    \draw[draw=FedRed, very thick] (3.62,0) -- (5.0,0);
+    % Nourrice → deux circuits
+    \draw[draw=FedRed, thick] (5.0,0) -- (5.0, 1.8) -- (5.08, 1.8);
+    \draw[draw=FedRed, thick] (5.0,0) -- (5.0,-1.8) -- (5.08,-1.8);
+    % Vannes → sondes → radiateurs
+    \draw[->, draw=FedRed, thick] (5.92, 1.8) -- (6.45, 1.8);
+    \draw[->, draw=FedRed, thick] (7.15, 1.8) -- (7.30, 1.8);
+    \draw[->, draw=FedRed, thick] (5.92,-1.8) -- (6.45,-1.8);
+    \draw[->, draw=FedRed, thick] (7.15,-1.8) -- (7.30,-1.8);
+
+    % ============ Tuyauterie retour (bleu = eau froide) ============
+    \draw[draw=FedBlue, thick] (8.70, 1.8) -- (10.0, 1.8) -- (10.0,0);
+    \draw[draw=FedBlue, thick] (8.70,-1.8) -- (10.0,-1.8) -- (10.0,0);
+    \draw[->, draw=FedBlue, very thick] (10.0,0) -- (10.0,-0.5)
+      -- (-1.0,-0.5) -- (-1.0,0) -- (-0.80,0);
+
+    % ---- Raccord vase d'expansion sur départ ----
+    \draw[draw=FedGreen!70!black, thick] (1.6, 0.70) -- (1.6, 0) -- (2.0,0);
+
+    % ============ Légende ============
+    \begin{scope}[xshift=0cm, yshift=-3.2cm]
+      \draw[FedRed, very thick, ->] (0,0) -- (0.8,0);
+      \node[right, lbl, text=FedRed] at (0.9,0) {Départ (eau chaude $\approx$70\,°C)};
+      \draw[FedBlue, very thick, ->] (4.2,0) -- (5.0,0);
+      \node[right, lbl, text=FedBlue] at (5.1,0) {Retour (eau tiède $\approx$55\,°C)};
+      \node[lbl, text=FedGreen!70!black] at (8.5,0) {\pic[draw=FedGreen]{sonde-t} Sonde T°};
+    \end{scope}
+
+  \end{tikzpicture}
+  \caption{Circuit d'émission de chauffage bitubes — symboles ISO NF GCF :
+    chaudière, pompe, vanne quart de tour, sonde de température, radiateurs}
+  \label{fig:circuit-emission-iso}
+\end{figure}
+
 \finchapitre
