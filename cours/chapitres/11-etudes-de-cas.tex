@@ -18,6 +18,32 @@
 \textbf{Compétences mobilisées :} C1, C2, C3, C5, C7, C8, C9 \quad
 \textbf{Savoirs associés :} S5.1, S8-A2, S8-A3, S8-A4, S8-A5, S8-B1, S8-B2, S8-B4, S8-B11
 
+\begin{tcolorbox}[
+  enhanced, colback=FedBlue!4, colframe=FedBlue!45,
+  fonttitle=\bfseries\sffamily, coltitle=FedBlue,
+  title={Chapitres du cours mobilisés dans ce chapitre de synthèse},
+  boxrule=0.7pt, arc=2pt, width=\textwidth
+]
+\small\sffamily
+Ce chapitre est un \textbf{chapitre transversal} qui intègre l'ensemble des disciplines
+enseignées dans les chapitres précédents. Lors de la résolution des études de cas, se
+référer aux chapitres indiqués :
+
+\begin{tabular}{@{}ll@{\quad}ll@{}}
+  \textbf{Ch.\,00} & Analyse dimensionnelle, conversions d'unités &
+  \textbf{Ch.\,06} & Climatisation, groupes froids, free-cooling \\
+  \textbf{Ch.\,01} & Bases de la thermique, bilans enthalpiques &
+  \textbf{Ch.\,07} & Régulation et GTB \\
+  \textbf{Ch.\,02} & Hydraulique, pertes de charge, pompes &
+  \textbf{Ch.\,08} & Efficacité énergétique, RE2020 \\
+  \textbf{Ch.\,03} & Aéraulique, ventilateurs, CTA &
+  \textbf{Ch.\,09} & Acoustique, niveaux de bruit équipements \\
+  \textbf{Ch.\,04} & Production de chaleur, PAC, chaudières &
+  \textbf{Ch.\,10} & Électrotechnique, puissances, moteurs \\
+  \textbf{Ch.\,05} & Distribution, émetteurs, planchers chauffants & & \\
+\end{tabular}
+\end{tcolorbox}
+
 % ============================================================
 \section{Méthode générale de dimensionnement}
 % ============================================================
@@ -29,14 +55,23 @@ Le technicien supérieur GCF est régulièrement amené à produire des études 
 \begin{methode}[title={Étapes du dimensionnement CVC}]
   \begin{enumerate}
     \item \textbf{Collecte des données} : plans architectural, orientation, localisation climatique, destination des locaux, réglementation applicable.
+          \hfill\textcolor{FedBlue!70!black}{\textsf{\footnotesize$\Rightarrow$ ch.\,00 (unités), ch.\,01 (données météo, DJU)}}
     \item \textbf{Bilan thermique d'hiver} : calcul des déperditions par transmission et renouvellement d'air (NF EN 12831).
+          \hfill\textcolor{FedBlue!70!black}{\textsf{\footnotesize$\Rightarrow$ ch.\,01 — Bases de la thermique}}
     \item \textbf{Bilan thermique d'été} : calcul des charges de refroidissement (apports solaires, internes, renouvellement).
+          \hfill\textcolor{FedBlue!70!black}{\textsf{\footnotesize$\Rightarrow$ ch.\,01, ch.\,06 — Climatisation}}
     \item \textbf{Sélection des générateurs} : chaudière, PAC, groupe froid — selon besoins de pointe et modulabilité.
+          \hfill\textcolor{FedBlue!70!black}{\textsf{\footnotesize$\Rightarrow$ ch.\,04 — Production de chaleur}}
     \item \textbf{Distribution} : réseau hydraulique (dimensionnement des tuyauteries, pompes, équilibrage) et/ou aéraulique (gaines, ventilateurs, diffuseurs).
+          \hfill\textcolor{FedBlue!70!black}{\textsf{\footnotesize$\Rightarrow$ ch.\,02 (hydraulique), ch.\,03 (aéraulique)}}
     \item \textbf{Émission} : radiateurs, planchers chauffants, ventilo-convecteurs, soufflage.
+          \hfill\textcolor{FedBlue!70!black}{\textsf{\footnotesize$\Rightarrow$ ch.\,05 — Distribution et émission}}
     \item \textbf{Régulation et GTB} : stratégies de commande, sondes, actionneurs.
+          \hfill\textcolor{FedBlue!70!black}{\textsf{\footnotesize$\Rightarrow$ ch.\,07 — Régulation et GTB}}
     \item \textbf{Vérification RE2020} : calcul Bbio, Cep, DH.
+          \hfill\textcolor{FedBlue!70!black}{\textsf{\footnotesize$\Rightarrow$ ch.\,08 — Efficacité énergétique}}
     \item \textbf{Rédaction de la note de calcul} et sélection du matériel sur catalogue.
+          \hfill\textcolor{FedBlue!70!black}{\textsf{\footnotesize$\Rightarrow$ ch.\,10 (élect.), ch.\,09 (acoustique)}}
   \end{enumerate}
 \end{methode}
 
@@ -245,6 +280,15 @@ conformité RE2020 exigée.
 \textbf{Objectifs de l'étude :} calculer la puissance de pointe, sélectionner la PAC,
 dimensionner le plancher chauffant, vérifier l'indicateur Cep RE2020.
 
+\begin{tcolorbox}[colback=FedBlue!4, colframe=FedBlue!35, boxrule=0.5pt, arc=1pt,
+  top=3pt, bottom=3pt, left=6pt, right=6pt]
+\footnotesize\sffamily
+\textbf{Renvois inter-chapitres — Étude de cas 1 :}\quad
+\textbf{Ch.\,01} (bilan thermique hiver, $H_T$, $H_V$) — \textbf{Ch.\,02} (réseau hydraulique, pompe, équilibrage) —
+\textbf{Ch.\,04} (PAC air/eau, COP, courbes fabricant) — \textbf{Ch.\,05} (plancher chauffant, émetteurs BT) —
+\textbf{Ch.\,08} (Cep RE2020, $f_{prim}$, SCOP).
+\end{tcolorbox}
+
 \subsection{Théorie — Calcul des besoins thermiques}
 
 Le bilan thermique d'hiver s'appuie sur la norme NF EN 12831 :
@@ -392,6 +436,15 @@ Système CVC : CTA double flux avec batterie froide, groupe d'eau glacée,
 free-cooling aéraulique, GTB.
 
 \textbf{Objectifs :} bilan aéraulique et frigorifique, sélection CTA, vérification RE2020 tertiaire.
+
+\begin{tcolorbox}[colback=FedBlue!4, colframe=FedBlue!35, boxrule=0.5pt, arc=1pt,
+  top=3pt, bottom=3pt, left=6pt, right=6pt]
+\footnotesize\sffamily
+\textbf{Renvois inter-chapitres — Étude de cas 2 :}\quad
+\textbf{Ch.\,03} (aéraulique, gaines, CTA, ventilateurs, SFP) — \textbf{Ch.\,06} (groupe froid, EER, free-cooling aéraulique) —
+\textbf{Ch.\,07} (GTB, régulation free-cooling, volet motorisé) — \textbf{Ch.\,08} (Cep tertiaire, décret tertiaire 2030) —
+\textbf{Ch.\,09} (niveau sonore ventilateurs, silencieux en gaine).
+\end{tcolorbox}
 
 \subsection{Théorie — Bilan aéraulique et free-cooling}
 
@@ -556,6 +609,16 @@ renouvellement d'air conforme BPF (20 volumes/heure minimum).
 
 \textbf{Objectifs :} classification ISO 7, dimensionnement CTA HEPA, bilan énergétique annuel,
 vérification des exigences de surpression et contamination.
+
+\begin{tcolorbox}[colback=FedBlue!4, colframe=FedBlue!35, boxrule=0.5pt, arc=1pt,
+  top=3pt, bottom=3pt, left=6pt, right=6pt]
+\footnotesize\sffamily
+\textbf{Renvois inter-chapitres — Étude de cas 3 :}\quad
+\textbf{Ch.\,03} (aéraulique, gaines haute pression, taux de brassage) — \textbf{Ch.\,06} (groupe froid eau glacée 6/12\,°C, pincement thermique) —
+\textbf{Ch.\,07} (régulation surpression, volet d'extraction, capteurs $\Delta P$) —
+\textbf{Ch.\,09} (acoustique, salles propres : vibrations transmises par gaines, liaisons souples) —
+\textbf{Ch.\,10} (puissance moteurs, bilan électrique process).
+\end{tcolorbox}
 
 \subsection{Théorie — Classification ISO et gestion de la contamination}
 
@@ -736,6 +799,8 @@ en chauffage et humidification, représentant un retour sur investissement estim
 À l'issue de tout dimensionnement CVC, une vérification systématique est indispensable
 avant de finaliser la note de calcul. La check-list ci-dessous couvre les domaines RE2020,
 acoustique et hydraulique.
+
+\noindent\textcolor{FedBlue!70!black}{\textsf{\small$\Rightarrow$ Renvois : RE2020 (ch.\,08), acoustique (ch.\,09), hydraulique (ch.\,02), aéraulique (ch.\,03), frigorigènes (ch.\,06), électrotechnique (ch.\,10).}}
 
 \begin{methode}[title={Check-list de vérification — Note de calcul CVC}]
 \textbf{Réglementation thermique RE2020 :}

@@ -6,8 +6,8 @@ Mis à jour automatiquement par l'agent à chaque run.
 ---
 
 ## Dernier run
-- Date : 2026-04-09 (12ème run)
-- Action : **T13 — Fiche mémo tcolorbox ajoutée en fin de ch09 (acoustique.tex, 7 formules clés : Lp, Lw, addition sources, propagation champ libre, Sabine, loi de masse, DnTw, Regenscheit) | T14 — Fiche mémo tcolorbox ajoutée en fin de ch10 (electrotechnique.tex, 7 formules clés : puissances triphasées, cos φ, vitesse synchronisme/glissement, lois similitude, compensation cos φ, courant emploi, chute tension)**
+- Date : 2026-04-09 (13ème run)
+- Action : **T15 — Section "Données terrain" ajoutée dans ch00 (00-analyse-dimensionnelle.tex) : tableau performances Grundfos MAGNA3 25-100 (8 points débit/HMT/puissance/rendement), tableau COP Daikin Altherma 3 R (7 conditions A/W), 2 exemples applicatifs avec vérification dimensionnelle | T16 — Renvois inter-chapitres explicites ajoutés dans ch11 (11-etudes-de-cas.tex) : box chapitres de référence (ch00 à ch10) en introduction, renvois colorés dans les 9 étapes de la méthode, boxes tcolorbox ciblées en tête de chaque étude de cas (Cas 1 : ch01/02/04/05/08, Cas 2 : ch03/06/07/08/09, Cas 3 : ch03/06/07/09/10), renvoi final dans la section vérification**
 
 ---
 
@@ -31,8 +31,8 @@ Mis à jour automatiquement par l'agent à chaque run.
 | T12 | MOYENNE | **FAIT** | `cours/chapitres/08-efficacite-energetique.tex` | Ajouter fiche mémo fin de chapitre |
 | T13 | MOYENNE | **FAIT** | `cours/chapitres/09-acoustique.tex` | Ajouter fiche mémo fin de chapitre |
 | T14 | MOYENNE | **FAIT** | `cours/chapitres/10-electrotechnique.tex` | Ajouter fiche mémo fin de chapitre |
-| T15 | FAIBLE | **TODO** | `cours/chapitres/00-analyse-dimensionnelle.tex` | Enrichir avec données terrain réelles (catalogues Grundfos, Daikin) |
-| T16 | FAIBLE | **TODO** | `cours/chapitres/11-etudes-de-cas.tex` | Ajouter renvois inter-chapitres explicites |
+| T15 | FAIBLE | **FAIT** | `cours/chapitres/00-analyse-dimensionnelle.tex` | Enrichir avec données terrain réelles (catalogues Grundfos, Daikin) |
+| T16 | FAIBLE | **FAIT** | `cours/chapitres/11-etudes-de-cas.tex` | Ajouter renvois inter-chapitres explicites |
 | T17 | FAIBLE | **TODO** | `cours/preamble.tex` | Ajouter environnement `fichemémo` (tcolorbox récap formules) |
 
 ### Règles de sélection des tâches

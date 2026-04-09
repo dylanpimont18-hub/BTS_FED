@@ -712,6 +712,132 @@ l'homogénéité d'une équation physique (exemple : bilan thermique $\dot{Q} = 
 \end{figure}
 
 % ============================================================
+\section{Données terrain — Extraits de catalogues fabricants}
+% ============================================================
+
+Ce chapitre prépare l'étudiant à exploiter des données techniques réelles. Les extraits
+ci-dessous sont représentatifs des catalogues industriels Grundfos (circulateurs) et
+Daikin (pompes à chaleur) — compétence \textbf{C1-1 : exploiter des sources d'information}.
+
+\subsection{Extrait catalogue Grundfos — Circulateur MAGNA3 25-100}
+
+La gamme \textbf{Grundfos MAGNA3} est représentative des circulateurs haute efficacité
+(classe IE5) utilisés en chauffage et climatisation. Les données suivantes correspondent
+aux conditions d'essai EN\,1151 (eau à \SI{60}{\celsius}, $\rho = \SI{983}{\kilogram\per\metre\cubed}$).
+
+\begin{table}[H]
+  \centering\sffamily\small
+  \caption{Extrait performances Grundfos MAGNA3 25-100 — Points caractéristiques (eau 60\,°C, EN\,1151)}
+  \label{tab:grundfos-magna3}
+  \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Débit} $\dot{V}$ & \textbf{HMT} & \textbf{Puiss. absorbée} $P_1$ & \textbf{Rendement} $\eta$ & \textbf{Vitesse} $n$ \\
+    (\si{\metre\cubed\per\hour}) & (\si{\meter} CE) & (\si{\watt}) & (\%) & (tr/min) \\
+    \hline
+    0{,}0 & 10{,}0 &  85 &  0{,}0 & 3\,200 \\
+    0{,}5 &  9{,}5 &  92 & 14{,}3 & 3\,100 \\
+    1{,}0 &  8{,}6 & 105 & 22{,}6 & 2\,950 \\
+    1{,}5 &  7{,}4 & 118 & 25{,}8 & 2\,750 \\
+    2{,}0 &  6{,}0 & 128 & 25{,}8 & 2\,550 \\
+    2{,}5 &  4{,}5 & 132 & 23{,}5 & 2\,350 \\
+    3{,}0 &  2{,}6 & 128 & 16{,}9 & 2\,100 \\
+    3{,}2 &  1{,}8 & 120 & 13{,}2 & 2\,000 \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\textbf{Rappel — Conversion HMT $\leftrightarrow$ pression différentielle :}
+\begin{equation}
+  \Delta P\,[\si{\pascal}] = \rho \cdot g \cdot H_{MT}\,[\si{\meter}]
+  \quad\Rightarrow\quad
+  \Delta P \approx 983 \times 9{,}81 \times H_{MT} \approx 9\,644 \times H_{MT}
+  \label{eq:hmt-dp}
+\end{equation}
+
+\begin{exemple}[title={Application — Lecture catalogue Grundfos MAGNA3}]
+\textbf{Contexte :} Un circuit de chauffage présente une perte de charge totale
+$\Delta P_{circuit} = \SI{45\,000}{\pascal}$ pour un débit nominal $\dot{V} = \SI{1{,}5}{\metre\cubed\per\hour}$.
+
+\textbf{1 — Conversion en mètres de colonne d'eau (vérification dimensionnelle) :}
+\[
+  H_{circuit} = \frac{\Delta P}{\rho \cdot g}
+  = \frac{45\,000\,[\si{\pascal}]}{983\,[\si{\kilogram\per\metre\cubed}] \times 9{,}81\,[\si{\metre\per\second\squared}]}
+  = \frac{45\,000}{9\,644} \approx \SI{4{,}67}{\meter}~\text{CE}
+\]
+
+\textbf{Homogénéité :} $\dfrac{\mathrm{Pa}}{\mathrm{kg/m^3 \cdot m/s^2}}
+= \dfrac{\mathrm{kg \cdot m^{-1} \cdot s^{-2}}}{\mathrm{kg \cdot m^{-2} \cdot s^{-2}}}
+= \mathrm{m}$ \checkmark
+
+\textbf{2 — Vérification du point de fonctionnement :}
+
+À $\dot{V} = 1{,}5\,\mathrm{m^3/h}$, la MAGNA3 25-100 développe $H_{MT} = 7{,}4\,\mathrm{m}$ CE.
+La pompe peut alimenter ce circuit ($7{,}4 > 4{,}67\,\mathrm{m}$).
+Le point de fonctionnement réel (intersection courbe pompe / résistance réseau) se situe
+entre $\dot{V} = 1{,}5$ et $\SI{2{,}0}{\metre\cubed\per\hour}$.
+
+\textbf{3 — Rendement au point de fonctionnement :}
+$\eta \approx 25{,}8\,\%$ — valeur typique d'un petit circulateur de chauffage.
+\end{exemple}
+
+\subsection{Extrait catalogue Daikin — Pompe à chaleur Altherma 3 R (air/eau)}
+
+La gamme \textbf{Daikin Altherma 3 R} est représentative des PAC air/eau résidentielles.
+Les COP sont mesurés selon EN\,14511 ; ils \textbf{diminuent} quand la température extérieure
+baisse ou que la température de départ augmente.
+
+\begin{table}[H]
+  \centering\sffamily\small
+  \caption{Extrait performances Daikin Altherma 3 R 8\,kW — COP selon conditions d'essai EN\,14511}
+  \label{tab:daikin-cop}
+  \begin{tabular}{|l|c|c|c|c|}
+    \hline
+    \textbf{Conditions} & $T_{ext}$ & $T_{départ}$ & \textbf{Puiss. calorifique} & \textbf{COP} \\
+    & (\si{\degreeCelsius}) & (\si{\degreeCelsius}) & (\si{\kilo\watt}) & (—) \\
+    \hline
+    A7/W35 (nominale)      & $+7$  & 35 & 8{,}0 & 4{,}65 \\
+    A7/W45                 & $+7$  & 45 & 8{,}1 & 3{,}40 \\
+    A2/W35 (intermédiaire) & $+2$  & 35 & 7{,}3 & 3{,}80 \\
+    A$-$7/W35 (hiver froid)  & $-7$  & 35 & 6{,}0 & 2{,}90 \\
+    A$-$10/W35 (hiver froid) & $-10$ & 35 & 5{,}4 & 2{,}60 \\
+    A$-$15/W35 (grand froid) & $-15$ & 35 & 4{,}5 & 2{,}20 \\
+    A7/W55 (haute temp.)   & $+7$  & 55 & 8{,}5 & 2{,}55 \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\textbf{Clé de lecture :} la notation \textbf{A7/W35} signifie
+$T_{air\_ext} = +7\,\si{\degreeCelsius}$ / $T_{eau\_départ} = 35\,\si{\degreeCelsius}$.
+
+\begin{exemple}[title={Application — Vérification dimensionnelle avec données Daikin}]
+\textbf{Contexte :} Maison de $120\,\mathrm{m^2}$ à Strasbourg (zone H1c,
+$T_{ext,base} = \SI{-11}{\celsius}$, $DJU = 3\,100$).
+Besoin de pointe : $\Phi_{ch} = \SI{6{,}0}{\kilo\watt}$.
+
+\textbf{1 — Puissance électrique absorbée en pointe ($T_{ext} = -15\,\si{\celsius}$, COP = 2,20) :}
+\[
+  P_{el,pointe} = \frac{\Phi_{ch}}{COP}
+  = \frac{6{,}0\,[\si{\kilo\watt}]}{2{,}20\,[-]}
+  = \SI{2{,}73}{\kilo\watt}
+  \quad\text{Homogénéité :}\ \frac{\mathrm{kW}}{1} = \mathrm{kW}\ \checkmark
+\]
+
+À $-15\,\si{\celsius}$, l'Altherma 3R 8\,kW ne délivre que $4{,}5\,\mathrm{kW}$
+$< 6{,}0\,\mathrm{kW}$ requis. \textbf{Appoint électrique nécessaire} ou modèle 12\,kW.
+
+\textbf{2 — Consommation annuelle ($SCOP_{annuel} = 3{,}6$) :}
+\[
+  W_{el,annuel} = \frac{\Phi_{ch} \times DJU \times 24}{SCOP \times \Delta T_{base}}
+  = \frac{6{,}0 \times 3\,100 \times 24}{3{,}6 \times 30}
+  = \frac{446\,400}{108}
+  \approx \SI{4\,133}{\kilo\watt\hour\per\year}
+\]
+
+\textbf{Homogénéité :} $\dfrac{[\si{\kilo\watt}] \times [\text{jours}] \times [\si{\hour\per\day}]}{[1] \times [\si{\kelvin}]}
+= \dfrac{\mathrm{kW \cdot h}}{\mathrm{K} / \mathrm{K}} = \mathrm{kWh/an}$ \checkmark
+\end{exemple}
+
+% ============================================================
 \section{Synthèse et bonnes pratiques}
 % ============================================================
 
