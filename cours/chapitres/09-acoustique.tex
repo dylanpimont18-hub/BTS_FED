@@ -811,4 +811,61 @@ La Réglementation Environnementale 2020 (RE2020), en vigueur depuis le 1\textsu
 \end{enumerate}
 \end{methode}
 
+\begin{tcolorbox}[
+  enhanced, colback=FedBlue!3, colframe=FedBlue!50,
+  fonttitle=\bfseries\sffamily, coltitle=FedBlue,
+  title={FICHE MÉMO — Acoustique du bâtiment}, boxrule=0.8pt, arc=2pt,
+  width=\textwidth
+]
+\textbf{Niveau de pression sonore :}
+\[
+  L_p = 20 \cdot \log_{10}\!\left(\frac{p}{p_0}\right) \quad [\si{\decibel}]
+  \qquad p_0 = 20~\si{\micro\pascal}
+\]
+
+\textbf{Niveau de puissance sonore :}
+\[
+  L_w = 10 \cdot \log_{10}\!\left(\frac{W}{W_0}\right) \quad [\si{\decibel}]
+  \qquad W_0 = 10^{-12}~\si{\watt}
+\]
+
+\textbf{Addition de $n$ sources sonores :}
+\[
+  L_{\text{total}} = 10 \cdot \log_{10}\!\left(\sum_{i=1}^{n} 10^{L_i/10}\right) \quad [\si{\decibel}]
+  \quad \Rightarrow \quad n~\text{sources identiques} : L_{\text{total}} = L_0 + 10\log_{10}(n)
+\]
+
+\textbf{Propagation en champ libre (source ponctuelle) :}
+\[
+  L_p = L_w - 20 \cdot \log_{10}(r) - 11 \quad [\si{\decibel}]
+  \qquad \text{(demi-espace} : {-8}\text{)}
+  \quad r~[\si{\metre}]
+\]
+
+\textbf{Niveau dans un local — formule de Sabine :}
+\[
+  L_p = L_w + 10 \cdot \log_{10}\!\left(\frac{Q}{4\pi r^2} + \frac{4}{R}\right) \quad [\si{\decibel}]
+  \qquad R = \frac{S \cdot \bar{\alpha}}{1 - \bar{\alpha}}~[\si{\metre\squared}]
+\]
+
+\textbf{Loi de masse (affaiblissement d'une paroi) :}
+\[
+  R \approx 20 \cdot \log_{10}(m_s \cdot f) - 48 \quad [\si{\decibel}]
+  \qquad m_s~[\si{\kilogram\per\metre\squared}],\; f~[\si{\hertz}]
+\]
+
+\textbf{Isolement normalisé in situ :}
+\[
+  D_{nT,w} = R_w + 10 \cdot \log_{10}\!\left(\frac{T}{T_0}\right) \quad [\si{\decibel}]
+  \qquad T_0 = 0{,}5~\si{\second}
+  \quad \text{(exigence habitation : } D_{nT,w} \geq 53~\text{dB)}
+\]
+
+\textbf{Bruit des ventilateurs (formule de Regenscheit) :}
+\[
+  L_w \approx K_v + 10 \cdot \log_{10}(q_v) + 20 \cdot \log_{10}(\Delta P_t) \quad [\si{\decibel}]
+  \qquad q_v~[\si{\metre\cubed\per\second}],\; \Delta P_t~[\si{\pascal}]
+\]
+\end{tcolorbox}
+
 \finchapitre

@@ -911,4 +911,61 @@ La figure~\ref{fig:courbes-protection} illustre les zones de déclenchement cara
   \label{fig:courbes-protection}
 \end{figure}
 
+\begin{tcolorbox}[
+  enhanced, colback=FedBlue!3, colframe=FedBlue!50,
+  fonttitle=\bfseries\sffamily, coltitle=FedBlue,
+  title={FICHE MÉMO — Électrotechnique appliquée CVC}, boxrule=0.8pt, arc=2pt,
+  width=\textwidth
+]
+\textbf{Puissances en triphasé équilibré :}
+\[
+  S = \sqrt{3}\,U\,I \;[\text{VA}] \qquad
+  P = \sqrt{3}\,U\,I\,\cos\varphi \;[\text{W}] \qquad
+  Q = \sqrt{3}\,U\,I\,\sin\varphi \;[\text{var}] \qquad
+  S^2 = P^2 + Q^2
+\]
+
+\textbf{Facteur de puissance :}
+\[
+  \cos\varphi = \frac{P}{S} \quad [\text{sans unité}]
+  \qquad \text{(objectif en conception GCF : } \cos\varphi \geq 0{,}85\text{)}
+\]
+
+\textbf{Vitesse de synchronisme et glissement (moteur asynchrone) :}
+\[
+  n_s = \frac{60\,f}{p} \;[\text{tr/min}]
+  \qquad
+  g = \frac{n_s - n}{n_s} \;[\text{typiquement } 2\text{ à }5\,\%]
+  \quad f = 50\,\text{Hz},\; p = \text{nb de paires de pôles}
+\]
+
+\textbf{Lois de similitude (pompe / ventilateur centrifuge) :}
+\[
+  \frac{Q_2}{Q_1} = \frac{n_2}{n_1}
+  \qquad
+  \frac{H_2}{H_1} = \left(\frac{n_2}{n_1}\right)^{\!2}
+  \qquad
+  \frac{P_2}{P_1} = \left(\frac{n_2}{n_1}\right)^{\!3}
+\]
+
+\textbf{Correction du facteur de puissance par condensateurs :}
+\[
+  Q_C = P\,\bigl(\tan\varphi_1 - \tan\varphi_2\bigr) \;[\text{kvar}]
+  \qquad P \;[\text{kW}]
+\]
+
+\textbf{Courant d'emploi (moteur triphasé) :}
+\[
+  I_B = \frac{P}{\sqrt{3}\,U\,\cos\varphi\,\cdot\,\eta} \;[\text{A}]
+  \qquad P \;[\text{W}],\; U \;[\text{V}]
+\]
+
+\textbf{Chute de tension (circuit triphasé) :}
+\[
+  \Delta U = \frac{\sqrt{3}\,\rho\,L\,I}{S} \;[\text{V}]
+  \qquad \rho_{\text{Cu}} \approx 0{,}0225\;\Omega\cdot\text{mm}^2/\text{m}, \quad
+  \Delta U\,[\%] = \frac{\Delta U}{U} \times 100 \;\leq 3\,\%
+\]
+\end{tcolorbox}
+
 \finchapitre

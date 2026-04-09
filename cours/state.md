@@ -6,8 +6,8 @@ Mis à jour automatiquement par l'agent à chaque run.
 ---
 
 ## Dernier run
-- Date : 2026-04-08 (11ème run)
-- Action : **T11 — Fiche mémo tcolorbox ajoutée en fin de ch07 (regulation-gtb.tex, 5 formules clés : correcteur P, correcteur PID, loi d'eau, démarrage optimal, puissance PAC + tableau niveaux GTB) | T12 — Fiche mémo tcolorbox ajoutée en fin de ch08 (efficacite-energetique.tex, 7 formules clés : Bbio, Cep, Cep,nr, COP/SCOP PAC, rendement récupération double flux, consommation chauffage réglementaire, besoin chauffage DJU)**
+- Date : 2026-04-09 (12ème run)
+- Action : **T13 — Fiche mémo tcolorbox ajoutée en fin de ch09 (acoustique.tex, 7 formules clés : Lp, Lw, addition sources, propagation champ libre, Sabine, loi de masse, DnTw, Regenscheit) | T14 — Fiche mémo tcolorbox ajoutée en fin de ch10 (electrotechnique.tex, 7 formules clés : puissances triphasées, cos φ, vitesse synchronisme/glissement, lois similitude, compensation cos φ, courant emploi, chute tension)**
 
 ---
 
@@ -29,8 +29,8 @@ Mis à jour automatiquement par l'agent à chaque run.
 | T10 | MOYENNE | **FAIT** | `cours/chapitres/06-climatisation.tex` | Ajouter fiche mémo fin de chapitre |
 | T11 | MOYENNE | **FAIT** | `cours/chapitres/07-regulation-gtb.tex` | Ajouter fiche mémo fin de chapitre |
 | T12 | MOYENNE | **FAIT** | `cours/chapitres/08-efficacite-energetique.tex` | Ajouter fiche mémo fin de chapitre |
-| T13 | MOYENNE | **TODO** | `cours/chapitres/09-acoustique.tex` | Ajouter fiche mémo fin de chapitre |
-| T14 | MOYENNE | **TODO** | `cours/chapitres/10-electrotechnique.tex` | Ajouter fiche mémo fin de chapitre |
+| T13 | MOYENNE | **FAIT** | `cours/chapitres/09-acoustique.tex` | Ajouter fiche mémo fin de chapitre |
+| T14 | MOYENNE | **FAIT** | `cours/chapitres/10-electrotechnique.tex` | Ajouter fiche mémo fin de chapitre |
 | T15 | FAIBLE | **TODO** | `cours/chapitres/00-analyse-dimensionnelle.tex` | Enrichir avec données terrain réelles (catalogues Grundfos, Daikin) |
 | T16 | FAIBLE | **TODO** | `cours/chapitres/11-etudes-de-cas.tex` | Ajouter renvois inter-chapitres explicites |
 | T17 | FAIBLE | **TODO** | `cours/preamble.tex` | Ajouter environnement `fichemémo` (tcolorbox récap formules) |
