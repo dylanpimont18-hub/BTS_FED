@@ -1,0 +1,204 @@
+% preamble.tex — BTS FED GCF — Charte graphique unifiée
+
+% ==========================================
+% 1. PACKAGES ET ENCODAGE
+% ==========================================
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{babel}
+\usepackage[margin=2.5cm, bottom=3.2cm]{geometry}
+
+\usepackage{mathpazo}
+\usepackage[scaled=0.95]{helvet}
+\usepackage{parskip}
+\usepackage{amsmath, amssymb}
+\usepackage{siunitx}
+\usepackage{tikz}
+\usepackage{etoolbox}
+\usepackage{enumitem}
+
+% Configuration globale des listes numérotées
+\setlist[enumerate]{itemsep=0.5em, topsep=0.5em}
+
+% Configuration des Unités spécifiques FED
+\DeclareSIUnit{\decadanewton}{daN}
+\sisetup{locale = FR, detect-all}
+
+% Tableaux et figures
+\usepackage{booktabs, tabularx, multirow}
+\usepackage{graphicx, float}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning}
+
+% ==========================================
+% 2. COULEURS DE LA CHARTE
+% ==========================================
+
+\usepackage{xcolor}
+\definecolor{FedBlue}{RGB}{0, 92, 122}
+\definecolor{FedOrange}{RGB}{217, 90, 64}
+\definecolor{FedGreen}{RGB}{74, 124, 89}
+\definecolor{FedRed}{RGB}{192, 57, 43}
+\definecolor{FedExercice}{RGB}{44, 62, 80}
+
+% Alias pour compatibilité charte graphique
+\definecolor{btsprimary}{RGB}{0, 92, 122}
+\definecolor{btsaccent}{RGB}{217, 90, 64}
+\definecolor{btsrule}{RGB}{0, 92, 122}
+
+% ==========================================
+% 3. GESTION DE LA PAGINATION ET DES STYLES
+% ==========================================
+
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% Définition du style principal
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyhead[L]{\sffamily\small Mathématiques Appliquées}
+\fancyfoot[L]{\sffamily\small BTS FED A -- \leftmark}
+\fancyfoot[R]{\sffamily\small Page \thepage\ / \pageref{lastpage:\thechapter}}
+
+% REDÉFINITION DU STYLE 'PLAIN'
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\sffamily\small BTS FED A -- \leftmark}
+    \fancyfoot[R]{\sffamily\small Page \thepage\ / \pageref{lastpage:\thechapter}}
+}
+
+% FIX : Forcer le compteur à 1 à chaque nouveau chapitre
+\preto{\chapter}{\setcounter{page}{1}}
+
+% Macro de clôture de chapitre
+\newcommand{\finchapitre}{
+    \label{lastpage:\thechapter}
+    \newpage
+}
+
+% ==========================================
+% 4. ÉLÉMENTS DE DESIGN (TCOLORBOX)
+% ==========================================
+
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{breakable, skins}
+
+\newtcolorbox{definition}[1][]{
+    enhanced, colback=FedBlue!5, borderline west={3pt}{0pt}{FedBlue},
+    fonttitle=\bfseries\sffamily, coltitle=FedBlue, attach title to upper,
+    title={DÉFINITION~: #1 \vspace{1mm}\\}, arc=0mm, width=\textwidth, nobeforeafter
+}
+
+\newtcolorbox{propriete}[1]{
+    enhanced, colback=white, colframe=FedOrange, colbacktitle=FedOrange,
+    fonttitle=\bfseries\sffamily\large, title={#1}, boxrule=1pt, arc=3pt,
+    drop fuzzy shadow=black!10, width=\textwidth, nobeforeafter
+}
+
+\newtcolorbox{exemple}[1][]{
+    enhanced, colback=white, borderline={1pt}{0pt}{FedGreen, dashed},
+    fonttitle=\bfseries\sffamily, coltitle=FedGreen, attach title to upper,
+    title={Exemple~#1 : \quad}, width=\textwidth, nobeforeafter
+}
+
+\newtcolorbox{erreur}{
+    enhanced, colback=FedRed!5, colframe=FedRed, fonttitle=\bfseries\sffamily,
+    coltitle=white, colbacktitle=FedRed, title={\textbf{!} ATTENTION -- ERREUR FRÉQUENTE},
+    boxrule=1.5pt, leftrule=6mm, width=\textwidth, nobeforeafter
+}
+
+\newtcolorbox{exercice}[1][]{
+    enhanced, colback=white, colframe=FedExercice, fonttitle=\bfseries\sffamily,
+    coltitle=white, colbacktitle=FedExercice, title={EXERCICE~: #1},
+    boxrule=1pt, arc=2pt, width=\textwidth, nobeforeafter
+}
+
+\newtcolorbox{methode}[1][]{
+    enhanced, colback=FedOrange!5, colframe=FedOrange, fonttitle=\bfseries\sffamily,
+    coltitle=FedOrange, title={MÉTHODE~: #1}, boxrule=1pt, arc=2pt,
+    width=\textwidth, nobeforeafter
+}
+
+\newtcolorbox{fichememo}[1][]{
+    enhanced, colback=FedBlue!3, colframe=FedBlue!50,
+    fonttitle=\bfseries\sffamily, coltitle=FedBlue,
+    title={FICHE MÉMO~: #1}, boxrule=0.8pt, arc=2pt,
+    width=\textwidth, nobeforeafter
+}
+
+\newtcolorbox{attention}[1][]{
+    enhanced, colback=FedRed!5, colframe=FedRed, fonttitle=\bfseries\sffamily,
+    coltitle=white, colbacktitle=FedRed, title={⚠ ATTENTION~: #1},
+    boxrule=1.5pt, arc=2pt, width=\textwidth, nobeforeafter
+}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{btsprimary}}
+  {\textcolor{btsaccent}{\thesection}}
+  {0.75em}
+  {}
+  [\vspace{2pt}{\color{btsrule}\hrule height 0.6pt}\vspace{2pt}]
+
+\titlespacing*{\section}{0pt}{16pt}{8pt}
+
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{btsprimary!80!black}}
+  {\textcolor{btsaccent}{\thesubsection}}
+  {0.75em}
+  {}
+
+\titlespacing*{\subsection}{0pt}{12pt}{4pt}
+
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\itshape\color{btsprimary!60!black}}
+  {\thesubsubsection}
+  {0.75em}
+  {}
+
+% Table des matières
+\usepackage{tocloft}
+\renewcommand{\cftchapfont}{\bfseries\color{btsprimary}}
+\renewcommand{\cftchappagefont}{\bfseries\color{btsprimary}}
+\renewcommand{\cftchapleader}{\cftdotfill{\cftchapdotsep}}
+\renewcommand{\cftchapdotsep}{\cftdotsep}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\setlength{\cftbeforechapskip}{6pt}
+
+% En-têtes et pieds de page
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\small\textcolor{btsprimary}{\textit{BTS FED — Option GCF}}}
+\fancyhead[RE,LO]{\small\textcolor{btsprimary!70!black}{\nouppercase{\leftmark}}}
+\fancyfoot[C]{\small\textcolor{btsprimary!60!black}{--- \thepage\ ---}}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{btsprimary}\leaders\hrule height \headrulewidth\hfill}}
+\renewcommand{\footrulewidth}{0pt}
+
+% Style plain propre pour les premières pages de chapitre
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyfoot[C]{\small\textcolor{btsprimary!60!black}{--- \thepage\ ---}}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+
+% Liens (toujours en dernier)
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true, linkcolor=btsprimary,
+  urlcolor=btsprimary, citecolor=btsprimary,
+  pdftitle={Cours BTS FED — Option GCF},
+  pdfauthor={Généré par agent Claude Code}
+}
+
+% Numérotation des exercices
+\newcounter{exercice}[chapter]
+\newcommand{\exercice}[1]{%
+  \stepcounter{exercice}%
+  \subsection*{Exercice \theexercice\ — #1}%
+}

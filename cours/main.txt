@@ -1,0 +1,10 @@
+﻿BTS FED - DOSSIER COURS
+
+Ce dossier contient le referentiel de cours.
+
+Point d'entree Overleaf:
+- main.tex
+
+Contenu principal:
+- chapitres/00 a 11
+- preamble.tex

@@ -1,0 +1,10 @@
+﻿BTS FED - DOSSIER EXERCICES
+
+Ce dossier contient le livret d'exercices complet.
+
+Point d'entree Overleaf:
+- main.tex
+
+Contenu principal:
+- exercices/00 a 11
+- preamble.tex

@@ -1,0 +1,12 @@
+﻿BTS FED - DOSSIER SITUATIONS
+
+Ce dossier contient les situations reelles (SR1, SR2, SR3).
+
+Point d'entree Overleaf:
+- main.tex
+
+Contenu principal:
+- situations/sr1-rehabilitation-maison.tex
+- situations/sr2-climatisation-tertiaire.tex
+- situations/sr3-conception-immeuble.tex
+- preamble.tex
