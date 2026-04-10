@@ -668,6 +668,76 @@ La formule pratique avec le débit volumique en \si{\liter\per\hour} et \(c_p\) 
 Le facteur \num{1,163} est le produit \((\rho \cdot c_p) / 3600\) pour l'eau
 \(= 1000 \times 4186 / 3\,600\,000 \approx \num{1,163}\,\si{\watt\hour\per\liter\per\kelvin}\).
 
+% ------------------------------------------------------------
+% Schéma TikZ — Circuit de chauffage élémentaire (symboles ISO GCF)
+% Illustration de la puissance thermique du fluide caloporteur
+% Symboles : chaudiere, pompe, radiateur, sonde-t (tikz-gcf-symbols.tex)
+% ------------------------------------------------------------
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[>=Stealth, font=\small, thick,
+      label/.style={font=\footnotesize}]
+
+    % --- Générateur de chaleur (chaudière) ---
+    \pic[draw=FedRed,  line width=0.9pt] at (0, 0)    {chaudiere};
+    \node[label, text=FedRed,  below=0.50cm] at (0,0)    {Chaudière};
+
+    % --- Pompe de circulation ---
+    \pic[draw=FedOrange, line width=0.9pt] at (0,-3.0) {pompe};
+    \node[label, text=FedOrange, right=0.55cm] at (0,-3.0) {Pompe\\de circulation};
+
+    % --- Émetteur (radiateur) ---
+    \pic[draw=FedBlue, line width=0.9pt] at (7, 0)    {radiateur};
+    \node[label, text=FedBlue,  above=0.38cm] at (7,0)    {Radiateur};
+
+    % --- Sonde de température départ ---
+    \pic[draw=FedGreen!70!black, line width=0.9pt] at (2.8,0.5) {sonde-t};
+    \node[label, text=FedGreen!70!black, above=0.0cm] at (2.8,1.05) {$T_{dep}$};
+
+    % --- Sonde de température retour ---
+    \pic[draw=FedGreen!70!black, line width=0.9pt] at (4.0,-3.0) {sonde-t};
+    \node[label, text=FedGreen!70!black, below=0.52cm] at (4.0,-3.0) {$T_{ret}$};
+
+    % --- Tuyauterie départ (rouge — eau chaude) ---
+    \draw[->, draw=FedRed, very thick] (0.42,0.15)   -- (2.8,0.15);
+    \draw[->, draw=FedRed, very thick] (2.8,0.15) -- (6.52,0.15);
+    \node[label, above, text=FedRed] at (4.0,0.15) {Départ \SI{70}{\degreeCelsius}};
+
+    % --- Tuyauterie retour (bleu — eau froide) ---
+    \draw[draw=FedBlue, very thick] (7.48,0.0)   -- (9.5,0.0)  -- (9.5,-3.0);
+    \draw[->, draw=FedBlue, very thick] (9.5,-3.0) -- (4.28,-3.0);
+    \draw[->, draw=FedBlue, very thick] (3.72,-3.0) -- (0.35,-3.0);
+    \draw[->, draw=FedBlue, very thick] (0,-2.65)   -- (0,-0.32);
+    \node[label, below, text=FedBlue] at (5.5,-3.0) {Retour \SI{55}{\degreeCelsius}};
+
+    % --- Accolade Delta T ---
+    \draw[<->, dashed, FedGreen!70!black, thick] (11.0, 0.15) -- (11.0,-3.0);
+    \node[label, right, text=FedGreen!70!black, align=left] at (11.1,-1.4)
+      {$\Delta T$\\$= 15\,\si{\degreeCelsius}$};
+
+    % --- Encadré formule numérique ---
+    \node[draw=FedBlue!40, fill=FedBlue!5, rounded corners=4pt,
+          font=\footnotesize, align=center, inner sep=6pt] at (4.5,-4.6)
+      {\textbf{Application numérique}\\[3pt]
+       $\dot{Q} = \dot{V} \times 1{,}163 \times \Delta T$\\[2pt]
+       $= 600\,\si{\liter\per\hour} \times 1{,}163 \times 15\,\si{\kelvin}
+          = \mathbf{\SI{10{,}5}{\kilo\watt}}$};
+
+    % --- Légende ---
+    \draw[draw=FedRed,  very thick, ->] (-0.5,-5.8) -- ++(0.9,0);
+    \node[label, right, text=FedRed]    at (0.4,-5.8) {Circuit aller (eau chaude)};
+    \draw[draw=FedBlue, very thick, ->] (5.5,-5.8) -- ++(0.9,0);
+    \node[label, right, text=FedBlue]   at (6.4,-5.8) {Circuit retour (eau froide)};
+    \pic[draw=FedGreen!70!black] at (-0.5,-6.4) {sonde-t};
+    \node[label, right, text=FedGreen!70!black] at (0.1,-6.4)
+      {Sonde de température (ISO GCF)};
+  \end{tikzpicture}
+  \caption{Circuit de chauffage élémentaire avec symboles ISO GCF —
+    la puissance thermique transférée au radiateur vaut
+    $\dot{Q} = \dot{V} \times 1{,}163 \times \Delta T$.}
+  \label{fig:circuit-chauffage-iso}
+\end{figure}
+
 \subsection{Coefficient de déperdition thermique d'un bâtiment}
 
 Le coefficient de déperdition thermique global $H_T$ (en \si{\watt\per\kelvin}) est la somme des contributions de toutes les parois :

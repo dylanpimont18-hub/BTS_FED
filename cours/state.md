@@ -6,8 +6,8 @@ Mis à jour automatiquement par l'agent à chaque run.
 ---
 
 ## Dernier run
-- Date : 2026-04-09 (14ème run)
-- Action : **T17 — Environnement `fichememo` (tcolorbox FedBlue) ajouté dans cours/preamble.tex, après la définition de `methode` : permet d'utiliser `\begin{fichememo}[Titre]...\end{fichememo}` dans tous les chapitres pour encadrer les fiches mémo de formules**
+- Date : 2026-04-10 (15ème run)
+- Action : **T18 — Création de `cours/tikz-gcf-symbols.tex` (19 symboles ISO GCF : pompe, vannes, échangeur, ballon, PAC, CTA, ventilateur, registre, filtre, radiateur, VC, sondes T/P, actionneur) + `\input{tikz-gcf-symbols}` ajouté dans `preamble.tex` (nouvelles bibliothèques TikZ : decorations.pathmorphing, patterns, calc)** | **T19 — Schéma TikZ ISO GCF ajouté dans `ch01-bases-thermiques.tex` (fig:circuit-chauffage-iso) : circuit de chauffage élémentaire avec symboles chaudiere, pompe, radiateur, sonde-t illustrant $\dot{Q} = \dot{V} \times 1{,}163 \times \Delta T$** | **T20 — Schéma TikZ ISO GCF ajouté dans `ch02-hydraulique.tex` (fig:reseau-equilibre-iso) : réseau bitubes équilibré avec symboles vanne-equilibrage, clapet, radiateur, chaudiere, pompe illustrant la méthode branche index**
 
 ---
 
@@ -34,6 +34,18 @@ Mis à jour automatiquement par l'agent à chaque run.
 | T15 | FAIBLE | **FAIT** | `cours/chapitres/00-analyse-dimensionnelle.tex` | Enrichir avec données terrain réelles (catalogues Grundfos, Daikin) |
 | T16 | FAIBLE | **FAIT** | `cours/chapitres/11-etudes-de-cas.tex` | Ajouter renvois inter-chapitres explicites |
 | T17 | FAIBLE | **FAIT** | `cours/preamble.tex` | Ajouter environnement `fichemémo` (tcolorbox récap formules) |
+| T18 | HAUTE | **FAIT** | `cours/tikz-gcf-symbols.tex` | Créer bibliothèque symboles ISO GCF TikZ + `\input` dans preamble.tex |
+| T19 | HAUTE | **FAIT** | `cours/chapitres/01-bases-thermiques.tex` | Ajouter schéma TikZ symboles ISO GCF (circuit de chauffage élémentaire) |
+| T20 | HAUTE | **FAIT** | `cours/chapitres/02-hydraulique.tex` | Ajouter schéma TikZ symboles ISO GCF (réseau hydraulique équilibré) |
+| T21 | MOYENNE | TODO | `cours/chapitres/03-aeraulique.tex` | Ajouter/enrichir schémas TikZ symboles ISO GCF |
+| T22 | MOYENNE | TODO | `cours/chapitres/04-production-chaleur.tex` | Ajouter/enrichir schémas TikZ symboles ISO GCF |
+| T23 | MOYENNE | TODO | `cours/chapitres/05-distribution-emission.tex` | Ajouter/enrichir schémas TikZ symboles ISO GCF |
+| T24 | MOYENNE | TODO | `cours/chapitres/06-climatisation.tex` | Ajouter/enrichir schémas TikZ symboles ISO GCF |
+| T25 | MOYENNE | TODO | `cours/chapitres/07-regulation-gtb.tex` | Ajouter/enrichir schémas TikZ symboles ISO GCF |
+| T26 | MOYENNE | TODO | `cours/chapitres/08-efficacite-energetique.tex` | Ajouter/enrichir schémas TikZ symboles ISO GCF |
+| T27 | MOYENNE | TODO | `cours/chapitres/09-acoustique.tex` | Ajouter/enrichir schémas TikZ symboles ISO GCF |
+| T28 | MOYENNE | TODO | `cours/chapitres/10-electrotechnique.tex` | Ajouter/enrichir schémas TikZ symboles ISO GCF |
+| T29 | FAIBLE | TODO | `cours/chapitres/11-etudes-de-cas.tex` | Ajouter/enrichir schémas TikZ symboles ISO GCF |
 
 ### Règles de sélection des tâches
 ```
@@ -61,8 +73,8 @@ Mis à jour automatiquement par l'agent à chaque run.
 | # | Fichier | Titre | Statut | Score /5 | Notes |
 |---|---------|-------|--------|----------|-------|
 | 00 | 00-analyse-dimensionnelle.tex | Analyse dimensionnelle | révisé | 5 | TikZ ✅ \finchapitre ✅ |
-| 01 | 01-bases-thermiques.tex | Bases de la thermique | révisé | 5 | TikZ ✅ \finchapitre ✅ |
-| 02 | 02-hydraulique.tex | Hydraulique des circuits | révisé | 5 | TikZ ✅ \finchapitre ✅ |
+| 01 | 01-bases-thermiques.tex | Bases de la thermique | révisé | 5 | TikZ ✅ ISO GCF ✅ \finchapitre ✅ |
+| 02 | 02-hydraulique.tex | Hydraulique des circuits | révisé | 5 | TikZ ✅ ISO GCF ✅ \finchapitre ✅ |
 | 03 | 03-aeraulique.tex | Aéraulique | révisé | 5 | TikZ ✅ \finchapitre ✅ |
 | 04 | 04-production-chaleur.tex | Production de chaleur | révisé | 5 | TikZ ✅ \finchapitre ✅ |
 | 05 | 05-distribution-emission.tex | Distribution et émission | révisé | 5 | TikZ ✅ \finchapitre ✅ |

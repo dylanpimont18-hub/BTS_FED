@@ -357,6 +357,94 @@ Dans un réseau ramifié, certains émetteurs reçoivent plus d'eau que prévu (
   \end{tabular}
 \end{table}
 
+% ------------------------------------------------------------
+% Schéma TikZ — Réseau hydraulique bitubes équilibré (symboles ISO GCF)
+% Symboles : chaudiere, pompe, vanne-equilibrage, clapet, radiateur (tikz-gcf-symbols.tex)
+% ------------------------------------------------------------
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[>=Stealth, font=\small, thick,
+      lbl/.style={font=\footnotesize}]
+
+    % ---- Générateur ----
+    \pic[draw=FedRed,    line width=0.9pt] at (0, 0)    {chaudiere};
+    \node[lbl, text=FedRed,    left=0.55cm] at (0,0) {Chaudière};
+
+    % ---- Pompe ----
+    \pic[draw=FedOrange, line width=0.9pt] at (0,-4.5)  {pompe};
+    \node[lbl, text=FedOrange, left=0.55cm] at (0,-4.5) {Pompe};
+
+    % ---- Branche 1 (proche — branche courte) ----
+    \node[draw=FedBlue, fill=FedBlue!10, rectangle,
+          minimum width=1.8cm, minimum height=0.75cm,
+          rounded corners=3pt, lbl, font=\footnotesize\bfseries]
+      (rad1) at (8.0, 0.8) {Rad. 1};
+
+    % Vanne d'équilibrage branche 1 (crée ΔP_excédent)
+    \pic[draw=FedGreen!80!black, line width=0.9pt] at (4.5, 0.8) {vanne-equilibrage};
+    \node[lbl, above=0.50cm, text=FedGreen!80!black] at (4.5, 0.8)
+      {$\Delta P_{eq,1}$};
+
+    % Clapet anti-retour branche 1
+    \pic[draw=FedBlue, line width=0.9pt] at (2.2, 0.8) {clapet};
+
+    % ---- Branche 2 (éloignée — branche index) ----
+    \node[draw=FedBlue, fill=FedBlue!10, rectangle,
+          minimum width=1.8cm, minimum height=0.75cm,
+          rounded corners=3pt, lbl, font=\footnotesize\bfseries]
+      (rad2) at (8.0,-1.8) {Rad. 2 (index)};
+
+    % Vanne d'équilibrage branche 2 (ouverte au maximum)
+    \pic[draw=FedGreen!80!black, line width=0.9pt] at (4.5,-1.8) {vanne-equilibrage};
+    \node[lbl, below=0.50cm, text=FedGreen!80!black] at (4.5,-1.8)
+      {$\Delta P_{eq,2} = 0$};
+
+    % Clapet anti-retour branche 2
+    \pic[draw=FedBlue, line width=0.9pt] at (2.2,-1.8) {clapet};
+
+    % ---- Collecteur départ (rouge) ----
+    \draw[draw=FedRed, very thick] (0.42,0.15)  -- (0.9,0.15)
+          -- (0.9,0.80) -- (1.70,0.80);
+    \draw[draw=FedRed, very thick] (0.9,0.15)
+          -- (0.9,-1.80) -- (1.70,-1.80);
+    \draw[->, draw=FedRed, very thick] (2.70,0.80)  -- (3.95,0.80);
+    \draw[->, draw=FedRed, very thick] (2.70,-1.80) -- (3.95,-1.80);
+    \draw[draw=FedRed, very thick] (5.05,0.80)  -- (7.10,0.80);
+    \draw[draw=FedRed, very thick] (5.05,-1.80) -- (7.10,-1.80);
+    \node[lbl, above, text=FedRed] at (0.9,0.80) {Départ \SI{70}{\degreeCelsius}};
+
+    % ---- Collecteur retour (bleu) ----
+    \draw[draw=FedBlue, very thick]
+      (8.90, 0.80) -- (10.2, 0.80)
+                   -- (10.2,-1.80)
+                   -- (8.90,-1.80);
+    \draw[draw=FedBlue, very thick] (10.2,-0.5) -- (10.2,-4.5) -- (0.35,-4.5);
+    \draw[->, draw=FedBlue, very thick] (0,-4.15) -- (0,-0.32);
+    \node[lbl, below, text=FedBlue] at (5.5,-4.5) {Retour \SI{55}{\degreeCelsius}};
+
+    % ---- Annotation branche index ----
+    \draw[dashed, FedRed!60, thick] (7.0,-1.0) rectangle (11.5,-2.6);
+    \node[lbl, right, text=FedRed!80!black] at (9.6,-2.8)
+      {\textit{Branche index}};
+
+    % ---- Légende ----
+    \draw[draw=FedRed,  very thick, ->] (-1,-6.0) -- ++(0.8,0);
+    \node[lbl, right, text=FedRed]  at (-0.2,-6.0) {Circuit aller (eau chaude)};
+    \draw[draw=FedBlue, very thick, ->] (5,-6.0) -- ++(0.8,0);
+    \node[lbl, right, text=FedBlue] at (5.8,-6.0) {Circuit retour (eau froide)};
+    \pic[draw=FedGreen!80!black] at (-1,-6.6) {vanne-equilibrage};
+    \node[lbl, right, text=FedGreen!80!black] at (-0.5,-6.6)
+      {Vanne d'équilibrage ISO};
+    \pic[draw=FedBlue] at (5,-6.6) {clapet};
+    \node[lbl, right, text=FedBlue] at (5.5,-6.6) {Clapet anti-retour ISO};
+  \end{tikzpicture}
+  \caption{Réseau hydraulique bitubes équilibré avec symboles ISO GCF —
+    la branche~2 (éloignée) est la branche index~;
+    la vanne d'équilibrage de la branche~1 absorbe l'excédent
+    $\Delta P_{eq,1} = \Delta P_{index} - \Delta P_{branche\,1}$.}
+  \label{fig:reseau-equilibre-iso}
+\end{figure}
+
 \begin{methode}[title=Équilibrage par la méthode de la résistance équivalente (branche index)]
 \begin{enumerate}
   \item Calculer les pertes de charge de chaque branche du réseau (du départ au retour)

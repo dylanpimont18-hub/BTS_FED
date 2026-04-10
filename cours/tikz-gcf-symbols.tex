@@ -1,0 +1,336 @@
+% tikz-gcf-symbols.tex — Bibliothèque de symboles ISO GCF pour les schémas TikZ
+% BTS FED option GCF — Charte graphique unifiée
+% Chargé automatiquement via preamble.tex (\input{tikz-gcf-symbols})
+%
+% Utilisation dans un environnement TikZ :
+%   \pic[draw=FedBlue, thick] at (x,y) {nom-symbole};
+%
+% Symboles disponibles : pompe, vanne-quart, vanne-motorisee, vanne-equilibrage,
+%   clapet, chaudiere, echangeur, ballon, vase-expansion, pac, cta, ventilateur,
+%   registre, filtre, radiateur, vc, sonde-t, sonde-p, actionneur
+
+% Bibliothèques TikZ supplémentaires requises
+\usetikzlibrary{decorations.pathmorphing, patterns, calc}
+
+% ============================================================
+% ORGANES HYDRAULIQUES
+% ============================================================
+
+% --- POMPE DE CIRCULATION (ISO 3511 / EN ISO 10628-2) ---
+% Cercle + flèche interne indiquant le sens de refoulement
+\tikzset{
+  pics/pompe/.style={
+    code={
+      \draw[pic actions] (0,0) circle (0.35cm);
+      \draw[->, pic actions, line width=0.9pt] (-0.18,0) arc[start angle=180,
+            end angle=30, radius=0.18cm];
+      \draw[pic actions] (0,-0.35) -- (0,-0.52); % raccordement aspiration
+      \draw[pic actions] (0, 0.35) -- (0, 0.52); % raccordement refoulement
+    }
+  }
+}
+
+% --- VANNE QUART DE TOUR — PAPILLON (ISO 7005 / EN 1074) ---
+% Nœud papillon : deux triangles symétriques pointe à pointe
+\tikzset{
+  pics/vanne-quart/.style={
+    code={
+      \draw[pic actions] (-0.30, 0.22) -- (0,0) -- (-0.30,-0.22); % triangle gauche
+      \draw[pic actions] ( 0.30, 0.22) -- (0,0) -- ( 0.30,-0.22); % triangle droit
+      \draw[pic actions] (-0.50,0) -- (-0.30,0); % raccordement gauche
+      \draw[pic actions] ( 0.30,0) -- ( 0.50,0); % raccordement droit
+    }
+  }
+}
+
+% --- VANNE MOTORISÉE (EN 15714) ---
+% Papillon + carré actuateur sur la tige
+\tikzset{
+  pics/vanne-motorisee/.style={
+    code={
+      \draw[pic actions] (-0.30, 0.22) -- (0,0) -- (-0.30,-0.22);
+      \draw[pic actions] ( 0.30, 0.22) -- (0,0) -- ( 0.30,-0.22);
+      \draw[pic actions] (-0.50,0) -- (-0.30,0);
+      \draw[pic actions] ( 0.30,0) -- ( 0.50,0);
+      \draw[pic actions] (-0.15,0.22) rectangle (0.15,0.52); % actuateur carré
+      \draw[->, pic actions] (0,0.52) -- (0,0.68);           % flèche de commande
+    }
+  }
+}
+
+% --- VANNE D'ÉQUILIBRAGE (EN 1434 / ISO 3823) ---
+% Papillon + tige de réglage avec tête (repère de position)
+\tikzset{
+  pics/vanne-equilibrage/.style={
+    code={
+      \draw[pic actions] (-0.30, 0.22) -- (0,0) -- (-0.30,-0.22);
+      \draw[pic actions] ( 0.30, 0.22) -- (0,0) -- ( 0.30,-0.22);
+      \draw[pic actions] (-0.50,0) -- (-0.30,0);
+      \draw[pic actions] ( 0.30,0) -- ( 0.50,0);
+      \filldraw[pic actions] (0,0) circle (0.055cm); % point central (position fermée)
+      \draw[pic actions] (0,0) -- (0,0.40);          % tige de réglage
+      \draw[pic actions] (-0.13,0.40) -- (0.13,0.40); % tête de réglage
+    }
+  }
+}
+
+% --- CLAPET ANTI-RETOUR (EN 12266-1) ---
+% Triangle orienté + barre perpendiculaire
+\tikzset{
+  pics/clapet/.style={
+    code={
+      \draw[pic actions] (-0.50,0) -- (-0.20,0); % tuyau amont
+      \draw[pic actions] ( 0.20,0) -- ( 0.50,0); % tuyau aval
+      \draw[pic actions] (-0.20, 0.22) -- (0.20,0) -- (-0.20,-0.22); % triangle clapet
+      \draw[pic actions, line width=1.0pt] (0.20,-0.25) -- (0.20, 0.25); % barre
+    }
+  }
+}
+
+% --- VASE D'EXPANSION (EN 12828) ---
+% Cercle + membrane horizontale (zone gaz hachurée en haut)
+\tikzset{
+  pics/vase-expansion/.style={
+    code={
+      \draw[pic actions] (0,0) circle (0.35cm);
+      \draw[pic actions, line width=0.9pt] (-0.35,0) -- (0.35,0); % membrane
+      % Hachures zone gaz (haut)
+      \draw[pic actions, line width=0.4pt] (-0.24,0.08) -- (-0.05,0.30);
+      \draw[pic actions, line width=0.4pt] (-0.08,0.05) -- (0.13,0.30);
+      \draw[pic actions, line width=0.4pt] ( 0.08,0.03) -- (0.28,0.22);
+      \draw[pic actions] (0,-0.35) -- (0,-0.55); % raccordement eau
+    }
+  }
+}
+
+% ============================================================
+% GÉNÉRATEURS ET ÉCHANGEURS
+% ============================================================
+
+% --- CHAUDIÈRE (EN ISO 3511 / NF EN 303) ---
+% Rectangle + flamme stylisée intérieure
+\tikzset{
+  pics/chaudiere/.style={
+    code={
+      \draw[pic actions] (-0.42,-0.32) rectangle (0.42,0.32);
+      % Flamme stylisée (courbe de Bézier)
+      \draw[pic actions, line width=0.7pt]
+        (-0.10,-0.28) .. controls (-0.18,0.02) and (0.06,0.08) .. (0.00,0.24)
+                      .. controls (-0.06,0.12) and (0.14,0.06) .. (0.12,0.24)
+                      .. controls (0.18,0.08) and (0.18,-0.10) .. (0.10,-0.28);
+      % Raccordements eau
+      \draw[pic actions] (-0.42,0.15) -- (-0.62,0.15); % retour (entrée froide)
+      \draw[pic actions] (-0.42,-0.15) -- (-0.62,-0.15); % départ (sortie chaude)
+    }
+  }
+}
+
+% --- ÉCHANGEUR À PLAQUES (EN ISO 10628-2) ---
+% Deux demi-rectangles avec lignes croisées symbolisant l'échange
+\tikzset{
+  pics/echangeur/.style={
+    code={
+      \draw[pic actions] (-0.42,-0.30) rectangle (0,0.30);  % circuit primaire
+      \draw[pic actions] (0,-0.30) rectangle (0.42,0.30);   % circuit secondaire
+      \draw[pic actions] (-0.42,-0.30) -- (0,0.30);         % croisé primaire
+      \draw[pic actions] (0,-0.30) -- (0.42,0.30);          % croisé secondaire
+      % Raccordements 4 voies
+      \draw[pic actions] (-0.42,0.15) -- (-0.62,0.15);
+      \draw[pic actions] (-0.42,-0.15) -- (-0.62,-0.15);
+      \draw[pic actions] (0.42,0.15) -- (0.62,0.15);
+      \draw[pic actions] (0.42,-0.15) -- (0.62,-0.15);
+    }
+  }
+}
+
+% --- BALLON TAMPON / ECS (NF EN 12897) ---
+% Cylindre vertical (ellipses haut et bas + côtés droits)
+\tikzset{
+  pics/ballon/.style={
+    code={
+      \draw[pic actions] (-0.26,-0.42) -- (-0.26,0.42);
+      \draw[pic actions] ( 0.26,-0.42) -- ( 0.26,0.42);
+      \draw[pic actions] (0,-0.42) ellipse (0.26cm and 0.08cm);
+      \draw[pic actions] (0, 0.42) ellipse (0.26cm and 0.08cm);
+      % Raccordements
+      \draw[pic actions] (0, 0.42) -- (0, 0.60); % sortie haute
+      \draw[pic actions] (0,-0.42) -- (0,-0.60); % entrée basse
+    }
+  }
+}
+
+% --- POMPE À CHALEUR (NF EN 14511) ---
+% Rectangle avec cycle frigorigène simplifié et flèches
+\tikzset{
+  pics/pac/.style={
+    code={
+      \draw[pic actions] (-0.52,-0.36) rectangle (0.52,0.36);
+      \node[font=\tiny\bfseries, inner sep=0pt] at (0,0.14) {PAC};
+      % Cycle frigorigène (demi-cercle interne)
+      \draw[->, pic actions, line width=0.6pt]
+        (-0.28,-0.18) arc[start angle=200, end angle=20, radius=0.30cm];
+      % Raccordements (source froide et source chaude)
+      \draw[<-, pic actions] (-0.52,0.18) -- (-0.72,0.18);
+      \draw[->, pic actions] (-0.52,-0.18) -- (-0.72,-0.18);
+      \draw[->, pic actions] (0.52,0.18) -- (0.72,0.18);
+      \draw[<-, pic actions] (0.52,-0.18) -- (0.72,-0.18);
+    }
+  }
+}
+
+% ============================================================
+% ÉQUIPEMENTS AÉRAULIQUES
+% ============================================================
+
+% --- CENTRALE DE TRAITEMENT D'AIR (NF EN 1886) ---
+% Rectangle multi-sections (Filtre / Chauffage / Humidification / Ventilation)
+\tikzset{
+  pics/cta/.style={
+    code={
+      \draw[pic actions] (-0.80,-0.36) rectangle (0.80,0.36);
+      % Séparations internes (4 sections)
+      \draw[pic actions] (-0.40,-0.36) -- (-0.40,0.36);
+      \draw[pic actions] (  0.0,-0.36) -- (  0.0,0.36);
+      \draw[pic actions] ( 0.40,-0.36) -- ( 0.40,0.36);
+      % Étiquettes sections
+      \node[font=\tiny\bfseries] at (-0.60,0) {F}; % Filtre
+      \node[font=\tiny\bfseries] at (-0.20,0) {C}; % Chauffage
+      \node[font=\tiny\bfseries] at ( 0.20,0) {H}; % Humidification
+      \node[font=\tiny\bfseries] at ( 0.60,0) {V}; % Ventilation
+      % Raccordements air entrant / sortant
+      \draw[<-, pic actions, line width=0.9pt] (-0.80,0) -- (-1.00,0);
+      \draw[->, pic actions, line width=0.9pt] ( 0.80,0) -- ( 1.00,0);
+    }
+  }
+}
+
+% --- VENTILATEUR (ISO 10628-2) ---
+% Cercle + 3 pales et moyeu central
+\tikzset{
+  pics/ventilateur/.style={
+    code={
+      \draw[pic actions] (0,0) circle (0.35cm);
+      % 3 pales
+      \draw[pic actions, line width=0.7pt] (0,0) -- (0,0.35);
+      \draw[pic actions, line width=0.7pt] (0,0) -- ( 0.303,-0.175);
+      \draw[pic actions, line width=0.7pt] (0,0) -- (-0.303,-0.175);
+      \filldraw[pic actions] (0,0) circle (0.05cm); % moyeu
+    }
+  }
+}
+
+% --- REGISTRE DE RÉGLAGE (EN 1751) ---
+% Rectangle barré d'une diagonale
+\tikzset{
+  pics/registre/.style={
+    code={
+      \draw[pic actions] (-0.38,-0.22) rectangle (0.38,0.22);
+      \draw[pic actions] (-0.38,-0.22) -- (0.38,0.22); % diagonale ISO
+      % Raccordements conduit
+      \draw[pic actions] (-0.58,0) -- (-0.38,0);
+      \draw[pic actions] ( 0.38,0) -- ( 0.58,0);
+    }
+  }
+}
+
+% --- FILTRE (EN 779 / EN ISO 16890) ---
+% Losange avec hachures internes
+\tikzset{
+  pics/filtre/.style={
+    code={
+      \draw[pic actions] (0,0.30) -- (0.26,0) -- (0,-0.30) -- (-0.26,0) -- cycle;
+      % Hachures de filtration
+      \draw[pic actions, line width=0.4pt] (-0.16,-0.06) -- (0.06,0.25);
+      \draw[pic actions, line width=0.4pt] (-0.04,-0.20) -- (0.20,0.14);
+      \draw[pic actions, line width=0.4pt] ( 0.08,-0.26) -- (0.26,0.00);
+      % Raccordements
+      \draw[pic actions] (-0.50,0) -- (-0.26,0);
+      \draw[pic actions] ( 0.26,0) -- ( 0.50,0);
+    }
+  }
+}
+
+% ============================================================
+% ÉMETTEURS DE CHALEUR / FROID
+% ============================================================
+
+% --- RADIATEUR (NF EN 442) ---
+% Rectangle avec ailettes verticales
+\tikzset{
+  pics/radiateur/.style={
+    code={
+      \draw[pic actions] (-0.48,-0.30) rectangle (0.48,0.30);
+      % Ailettes (4 éléments)
+      \foreach \x in {-0.30, -0.10, 0.10, 0.30} {
+        \draw[pic actions, line width=0.6pt] (\x,-0.30) -- (\x,0.30);
+      }
+      % Raccordements hydrauliques
+      \draw[pic actions] (-0.48,0) -- (-0.68,0); % retour
+      \draw[pic actions] ( 0.48,0) -- ( 0.68,0); % départ
+    }
+  }
+}
+
+% --- VENTILO-CONVECTEUR (NF EN 15218) ---
+% Rectangle + ailettes + petit ventilateur intégré
+\tikzset{
+  pics/vc/.style={
+    code={
+      \draw[pic actions] (-0.54,-0.30) rectangle (0.54,0.30);
+      % Ailettes partie gauche (batterie)
+      \foreach \x in {-0.38, -0.22, -0.06} {
+        \draw[pic actions, line width=0.6pt] (\x,-0.30) -- (\x,0.30);
+      }
+      % Ventilateur (cercle) partie droite
+      \draw[pic actions] (0.28,0) circle (0.18cm);
+      \draw[pic actions, line width=0.6pt] (0.28,0) -- (0.28, 0.18);
+      \draw[pic actions, line width=0.6pt] (0.28,0) -- (0.436,-0.09);
+      \draw[pic actions, line width=0.6pt] (0.28,0) -- (0.124,-0.09);
+      \filldraw[pic actions] (0.28,0) circle (0.04cm);
+      % Raccordements
+      \draw[pic actions] (-0.54,0.12) -- (-0.74,0.12); % eau retour
+      \draw[pic actions] (-0.54,-0.12) -- (-0.74,-0.12); % eau départ
+    }
+  }
+}
+
+% ============================================================
+% INSTRUMENTATION ET RÉGULATION
+% ============================================================
+
+% --- SONDE DE TEMPÉRATURE (NF EN 13779) ---
+% Cercle avec lettre T + tige de mesure
+\tikzset{
+  pics/sonde-t/.style={
+    code={
+      \draw[pic actions] (0,0) circle (0.26cm);
+      \node[font=\tiny\bfseries, inner sep=0pt] at (0,0) {T};
+      \draw[pic actions] (0,-0.26) -- (0,-0.48); % tige de mesure
+    }
+  }
+}
+
+% --- SONDE DE PRESSION (NF EN 837) ---
+% Cercle avec lettre P + tige de mesure
+\tikzset{
+  pics/sonde-p/.style={
+    code={
+      \draw[pic actions] (0,0) circle (0.26cm);
+      \node[font=\tiny\bfseries, inner sep=0pt] at (0,0) {P};
+      \draw[pic actions] (0,-0.26) -- (0,-0.48);
+    }
+  }
+}
+
+% --- ACTIONNEUR (IEC 60534) ---
+% Carré + flèche de commande (signal 0-10V ou 4-20mA)
+\tikzset{
+  pics/actionneur/.style={
+    code={
+      \draw[pic actions] (-0.22,-0.22) rectangle (0.22,0.22);
+      \draw[->, pic actions, line width=0.9pt] (0,0.22) -- (0,0.52); % signal
+      % Trait horizontal symbolisant l'alimentation
+      \draw[pic actions] (-0.10,0.38) -- (0.10,0.38);
+    }
+  }
+}
