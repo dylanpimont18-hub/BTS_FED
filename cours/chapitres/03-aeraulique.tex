@@ -655,6 +655,136 @@ Ce SFP est élevé — vérifier si des filtres colmatés ou des coudes sans aub
 \section{Diagrammes et schémas techniques}
 % ============================================================
 
+% ---- Schéma ISO GCF : Centrale de Traitement d'Air (CTA) ----
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[>=Stealth, thick]
+
+    % =====================================================
+    %  CORPS DE LA CTA (boîtier principal)
+    % =====================================================
+    \draw[FedBlue, thick, rounded corners=5pt]
+      (-0.5, -1.5) rectangle (13.5, 1.5);
+    \node[FedBlue, font=\footnotesize\sffamily\bfseries] at (6.5, -1.25)
+      {CENTRALE DE TRAITEMENT D'AIR (CTA)};
+
+    % Cloisons de séparation des sections
+    \draw[FedBlue!40, thin] (1.8, -1.5) -- (1.8, 1.5);  % après filtration
+    \draw[FedBlue!40, thin] (4.2, -1.5) -- (4.2, 1.5);  % après batterie ch.
+    \draw[FedBlue!40, thin] (6.8, -1.5) -- (6.8, 1.5);  % après batterie fr.
+    \draw[FedBlue!40, thin] (9.5, -1.5) -- (9.5, 1.5);  % après ventilateur
+    \draw[FedBlue!40, thin] (11.5,-1.5) -- (11.5, 1.5); % après humidification
+
+    % =====================================================
+    %  AIR NEUF — entrée gauche
+    % =====================================================
+    \draw[FedGreen, very thick, ->] (-2.5, 0) -- (-0.5, 0);
+    \node[above, font=\small\sffamily, text=FedGreen] at (-1.5, 0.08)
+      {Air neuf $T_{ext}$};
+
+    % =====================================================
+    %  SECTION 1 : REGISTRE D'ADMISSION + FILTRE
+    % =====================================================
+    % Registre (inline, à x=0.3, centré dans la section)
+    \pic at (0.3, 0) {registre};
+    \node[below=0.40cm, font=\tiny\sffamily] at (0.3, 0) {Registre};
+
+    % Filtre (ISO — losange hachuré)
+    \pic at (1.2, 0) {filtre};
+    \node[below=0.55cm, font=\tiny\sffamily] at (1.2, 0) {Filtre G4/F7};
+
+    % =====================================================
+    %  SECTION 2 : BATTERIE DE PRÉCHAUFFAGE (eau chaude)
+    % =====================================================
+    % Rectangle batterie avec ailettes (schéma simplifié)
+    \draw[FedRed, thick] (2.2,-0.8) rectangle (4.0,0.8);
+    \foreach \hx in {2.5, 2.9, 3.3, 3.7} {
+      \draw[FedRed!60, thin] (\hx,-0.75) -- (\hx,0.75);
+    }
+    \node[below=0.05cm, font=\tiny\sffamily] at (3.1, -0.8) {Batterie Ch.};
+    % Circuit eau chaude (arrive et repart par le bas)
+    \draw[FedRed, thick, ->] (2.6, -1.5) -- (2.6, -0.8);
+    \draw[FedRed, thick]     (3.6, -0.8) -- (3.6, -1.5);
+    \node[below, font=\tiny\sffamily, text=FedRed] at (3.1,-1.55) {Eau chaude};
+
+    % =====================================================
+    %  SECTION 3 : BATTERIE DE FROID (eau glacée)
+    % =====================================================
+    \draw[FedBlue, thick] (4.5,-0.8) rectangle (6.5,0.8);
+    \foreach \cx in {4.8, 5.2, 5.6, 6.0, 6.3} {
+      \draw[FedBlue!60, thin] (\cx,-0.75) -- (\cx,0.75);
+    }
+    \node[below=0.05cm, font=\tiny\sffamily] at (5.5,-0.8) {Batterie Fr.};
+    % Circuit eau glacée
+    \draw[FedBlue, thick, ->] (4.9,-1.5) -- (4.9,-0.8);
+    \draw[FedBlue, thick]     (6.1,-0.8) -- (6.1,-1.5);
+    \node[below, font=\tiny\sffamily, text=FedBlue] at (5.5,-1.55) {Eau glacée};
+
+    % =====================================================
+    %  SECTION 4 : VENTILATEUR DE SOUFFLAGE (ISO GCF)
+    % =====================================================
+    \pic at (8.0, 0) {ventilateur};
+    \node[below=0.55cm, font=\tiny\sffamily] at (8.0, 0) {Ventilateur};
+    % Sonde de pression différentielle (encrassement filtre)
+    \pic at (0.75, 1.0) {sonde-p};
+    \node[right=0.05cm, font=\tiny\sffamily, text=FedGreen!80!black] at (1.03, 1.0)
+      {$\Delta\!P$};
+    \draw[FedGreen!70!black, thin] (0.75, 0.72) -- (0.75, 0.32);
+
+    % =====================================================
+    %  SECTION 5 : SECTION HUMIDIFICATION (étiquette)
+    % =====================================================
+    \node[font=\tiny\sffamily, align=center] at (10.5, 0)
+      {Humidi-\\fication\\(option.)};
+
+    % =====================================================
+    %  SECTION 6 : REGISTRE DE SORTIE (ISO GCF)
+    % =====================================================
+    \pic at (12.5, 0) {registre};
+    \node[below=0.40cm, font=\tiny\sffamily] at (12.5, 0) {Registre};
+    % Actionneur de registre (motorisé, GTC)
+    \pic at (12.5, 0.85) {actionneur};
+
+    % =====================================================
+    %  AIR TRAITÉ — sortie droite (soufflage)
+    % =====================================================
+    \draw[FedBlue, very thick, ->] (13.5, 0) -- (15.0, 0);
+    \node[above, font=\small\sffamily, text=FedBlue] at (14.25, 0.08)
+      {Soufflage $T_{souf}$};
+
+    % =====================================================
+    %  FLUX D'AIR intérieur à la CTA (air path)
+    % =====================================================
+    % Connexions au fil de l'air
+    \draw[FedGreen!60, thick] (-0.5, 0) -- (-0.25, 0);
+    \draw[gray!60, thick] (0.70, 0) -- (0.88, 0);   % registre → filtre
+    \draw[gray!60, thick] (1.52, 0) -- (2.2,  0);   % filtre → bat. ch.
+    \draw[FedOrange!60, thick] (4.0, 0) -- (4.5, 0); % bat. ch. → bat. fr.
+    \draw[FedBlue!40, thick]  (6.5, 0) -- (7.65, 0); % bat. fr. → ventilo.
+    \draw[FedBlue, thick] (8.35, 0) -- (9.5,  0);    % ventilo → humid.
+    \draw[FedBlue, thick] (11.5, 0) -- (12.08, 0);   % humid. → registre
+    \draw[FedBlue, thick] (12.92,0) -- (13.5, 0);    % registre → sortie
+
+    % =====================================================
+    %  LÉGENDE
+    % =====================================================
+    \node[draw=FedBlue!30, fill=FedBlue!5, rounded corners=3pt,
+          font=\tiny\sffamily, align=left, inner sep=4pt] at (4.5, -2.8)
+      {\textbf{Symboles ISO GCF :}\\
+       Registre : régulation débit air (GTC)\\
+       Filtre : élimination particules (G4/F7/H13)\\
+       Ventilateur : mise en mouvement de l'air};
+    \node[draw=FedOrange!30, fill=FedOrange!5, rounded corners=3pt,
+          font=\tiny\sffamily, align=left, inner sep=4pt] at (11.0, -2.8)
+      {Batterie Ch. : eau chaude $\geq 60\,°C$\\
+       Batterie Fr. : eau glacée $6/12\,°C$\\
+       Actionneur : motorisation GTC (0–10\,V)};
+
+  \end{tikzpicture}
+  \caption{Schéma normalisé ISO GCF d'une CTA — sections : filtration (losange), batterie de préchauffage, batterie froide, ventilateur (ISO), registre motorisé (ISO) et instrumentation $\Delta P$}
+  \label{fig:cta-iso-gcf}
+\end{figure}
+
 % --- Schéma réseau de gaines soufflage/reprise ---
 \begin{figure}[H]
   \centering

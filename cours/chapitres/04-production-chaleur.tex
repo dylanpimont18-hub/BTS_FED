@@ -607,6 +607,134 @@ Le fabricant annonce COP = 3,8 en A2/W45.
   \label{fig:comparaison-cop-rendement}
 \end{figure}
 
+% ---- Schéma ISO GCF : Installation PAC air/eau + circuit hydraulique ----
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[>=Stealth, thick]
+
+    % =====================================================
+    %  PAC AIR/EAU (corps principal)
+    % =====================================================
+    % Centre de la PAC à (2.0, 0)
+    \pic at (2.0, 0) {pac};
+    \node[below=0.70cm, font=\small\sffamily\bfseries] at (2.0, 0) {PAC air/eau};
+
+    % Source froide : air extérieur (flèche vers la PAC)
+    \draw[FedGreen, very thick, ->] (0.0, -1.8) -- (2.0, -1.8)
+      node[midway, below, font=\small\sffamily, text=FedGreen] {Air extérieur};
+    \draw[FedGreen, very thick, ->] (4.0, -1.8) -- (2.0, -1.8);
+
+    % =====================================================
+    %  CIRCUIT HYDRAULIQUE DÉPART (FedRed — eau chaude)
+    % =====================================================
+    % Sortie PAC départ: port haut gauche à (-0.30, 0+0.65) = (1.70, 0.65)
+    \draw[FedRed, very thick] (1.70, 0.65) -- (1.70, 2.5) -- (10.0, 2.5);
+    \node[above, font=\small\sffamily, text=FedRed] at (5.5, 2.55) {Départ eau chaude};
+
+    % =====================================================
+    %  BALLON TAMPON (découplage hydraulique)
+    % =====================================================
+    % Center at (5.0, 0.5) — ballon vertical
+    \pic at (5.0, 0.5) {ballon};
+    \node[right=0.55cm, font=\small\sffamily] at (5.0, 0.5) {Ballon\\tampon};
+    % Raccordement départ (en haut du ballon, port haut gauche)
+    \draw[FedRed, thick] (5.0, 2.5) -- (4.82, 2.5) -- (4.82, 1.22);   % départ → haut ballon
+    % Raccordement retour (en bas du ballon, port bas droit)
+    \draw[FedBlue, thick] (5.18, -0.22) -- (5.18, -0.8);               % bas ballon → retour
+
+    % =====================================================
+    %  POMPE DE DISTRIBUTION (sur le départ vers émetteurs)
+    % =====================================================
+    % Pompe center at (7.5, 0.5) — sur le départ secondaire
+    % On branche le départ secondaire depuis le ballon (haut du ballon → pompe)
+    \draw[FedRed, thick] (5.18, 1.22) -- (5.18, 2.5);                  % haut ballon → bus départ
+    % Descente depuis bus départ vers pompe secondaire
+    \draw[FedRed, thick] (7.5, 2.5) -- (7.5, 0.90);    % bus → pompe (aspiration en bas)
+    \pic at (7.5, 0.0) {pompe};
+    \node[right=0.10cm, font=\small\sffamily\bfseries] at (8.1, 0.0) {$P_2$};
+    % Refoulement pompe vers émetteurs (à droite)
+    \draw[FedRed, very thick] (8.1, 0.0) -- (10.0, 0.0);
+
+    % =====================================================
+    %  VANNE D'ÉQUILIBRAGE (sur retour émetteurs)
+    % =====================================================
+    % Center at (7.5, -1.5)
+    \pic at (7.5, -1.5) {vanne-equilibrage};
+    \draw[FedBlue, very thick] (10.0, -1.5) -- (8.05, -1.5);  % retour → vanne
+    \draw[FedBlue, very thick] (6.95, -1.5) -- (5.18, -1.5) -- (5.18, -0.8); % vanne → bas ballon
+
+    % =====================================================
+    %  SONDE DE TEMPÉRATURE (sur le départ secondaire)
+    % =====================================================
+    \pic at (9.0, 0.95) {sonde-t};
+    \draw[FedGreen!70!black, thick] (9.0, 0.0) -- (9.0, 0.67);
+    \node[right=0.05cm, font=\tiny\sffamily, text=FedGreen!80!black] at (9.28, 0.95)
+      {$T_{départ}$};
+
+    % =====================================================
+    %  CIRCUIT RETOUR (FedBlue — retour vers PAC)
+    % =====================================================
+    % Bus retour horizontal à y=-0.8 entre ballon et PAC
+    \draw[FedBlue, very thick] (5.18, -0.8) -- (2.30, -0.8);
+    % Retour vers PAC : port bas droit (0.30, -0.65) = (2.30, -0.65)
+    \draw[FedBlue, very thick] (2.30, -0.65) -- (2.30, -0.8);
+    \node[below, font=\small\sffamily, text=FedBlue] at (4.0, -0.85) {Retour eau};
+
+    % =====================================================
+    %  VASE D'EXPANSION (sur le circuit primaire, entre PAC et ballon)
+    % =====================================================
+    % Center at (3.5, -2.0)
+    \pic at (3.5, -2.0) {vase-expansion};
+    \draw[FedBlue, thick] (3.5, -0.8) -- (3.5, -1.42);  % pipe retour → vase port haut
+
+    % =====================================================
+    %  POMPE PRIMAIRE PAC (Grundfos type)
+    % =====================================================
+    % Center at (4.0, -0.8) [inline sur retour — aspiration du bas, refoulement droite]
+    % Ici on place la pompe primaire sur le circuit retour, entre PAC et ballon
+    % Pompe à (3.9+0.8, -0.8) = (4.7, -0.8) centrée ; aspiration gauche, refoulement droite
+    % On la place à (4.5, -0.8) et on route en L :
+    \draw[FedBlue, very thick] (3.5, -0.8) -- (4.5, -0.8) -- (4.5, -1.40);
+    \pic at (4.5, -1.9) {pompe};
+    \node[right=0.10cm, font=\small\sffamily\bfseries] at (5.1, -1.9) {$P_1$};
+    \draw[FedBlue, very thick] (5.1, -1.9) -- (5.18, -1.9) -- (5.18, -0.8);
+
+    % =====================================================
+    %  ÉMETTEURS — représentation symbolique
+    % =====================================================
+    % Deux ventilo-convecteurs à droite (x=10.5, y=0 et y=-1.5)
+    \pic at (10.5, 0.0) {vc};
+    \node[right=0.70cm, font=\small\sffamily] at (10.5, 0.0) {VC 1};
+    \draw[FedRed, thick] (10.0, 0.0) -- (9.85, 0.0);
+
+    \pic at (10.5, -1.5) {vc};
+    \node[right=0.70cm, font=\small\sffamily] at (10.5, -1.5) {VC 2};
+    \draw[FedRed, thick] (10.0, 0.0) -- (10.0, -1.5) -- (9.85, -1.5);
+
+    % Retours VC → bus retour
+    \draw[FedBlue, thick] (11.15, 0.0)  -- (12.0, 0.0) -- (12.0, -1.5) -- (12.0, -1.5);
+    \draw[FedBlue, thick] (11.15, -1.5) -- (12.0, -1.5);
+    \draw[FedBlue, very thick] (12.0, -0.75) -- (12.0, -1.5) -- (10.0, -1.5);
+
+    % =====================================================
+    %  LÉGENDE
+    % =====================================================
+    \node[draw=FedBlue!30, fill=FedBlue!5, rounded corners=3pt,
+          font=\tiny\sffamily, align=left, inner sep=4pt] at (1.5, -4.5)
+      {\textbf{Circuit primaire PAC} (FedBlue) : \\
+       PAC + pompe $P_1$ + vase d'expansion\\
+       Température départ : 35 à 55\,°C (basse T°)};
+    \node[draw=FedRed!30, fill=FedRed!5, rounded corners=3pt,
+          font=\tiny\sffamily, align=left, inner sep=4pt] at (7.0, -4.5)
+      {\textbf{Circuit secondaire émetteurs} (FedRed) : \\
+       Pompe $P_2$ + ballon tampon + ventilo-convecteurs\\
+       Sonde $T_{départ}$ : régulation loi d'eau (GTC)};
+
+  \end{tikzpicture}
+  \caption{Schéma normalisé ISO GCF — Installation PAC air/eau avec ballon tampon, circuit primaire (pompe $P_1$), circuit secondaire (pompe $P_2$, sonde de température, vanne d'équilibrage) et émetteurs ventilo-convecteurs}
+  \label{fig:pac-installation-iso}
+\end{figure}
+
 % ============================================================
 \section{Éléments de réglementation}
 % ============================================================

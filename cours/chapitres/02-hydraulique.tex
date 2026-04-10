@@ -497,6 +497,131 @@ Choisir un vase de \SI{12}{\litre} (première taille standard supérieure).
 \section{Schémas et diagrammes caractéristiques}
 % ============================================================
 
+% ---- Tableau de référence — Symboles ISO GCF (organes hydrauliques) ----
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[>=Stealth, thick]
+    % Grille 4 colonnes × 2 lignes — espacement régulier
+    \def\dx{3.6}  % pas horizontal
+    \def\dy{2.4}  % pas vertical
+
+    % ---- Ligne 1 ----
+    \pic at (0*\dx, 0)    {pompe};
+    \node[font=\small\sffamily, below=0.85cm] at (0*\dx, 0) {\textbf{Pompe} de circulation};
+
+    \pic at (1*\dx, 0)    {vanne-quart};
+    \node[font=\small\sffamily, below=0.65cm] at (1*\dx, 0) {\textbf{Vanne} quart de tour};
+
+    \pic at (2*\dx, 0)    {vanne-motorisee};
+    \node[font=\small\sffamily, below=0.85cm] at (2*\dx, 0) {\textbf{Vanne} motorisée};
+
+    \pic at (3*\dx, 0)    {vanne-equilibrage};
+    \node[font=\small\sffamily, below=0.75cm] at (3*\dx, 0) {\textbf{Vanne} d'équilibrage};
+
+    % ---- Ligne 2 ----
+    \pic at (0*\dx, -\dy) {clapet};
+    \node[font=\small\sffamily, below=0.65cm] at (0*\dx, -\dy) {\textbf{Clapet} anti-retour};
+
+    \pic at (1*\dx, -\dy) {vase-expansion};
+    \node[font=\small\sffamily, below=0.85cm] at (1*\dx, -\dy) {\textbf{Vase} d'expansion};
+
+    \pic at (2*\dx, -\dy) {sonde-t};
+    \node[font=\small\sffamily, below=0.65cm] at (2*\dx, -\dy) {\textbf{Sonde} température};
+
+    \pic at (3*\dx, -\dy) {sonde-p};
+    \node[font=\small\sffamily, below=0.65cm] at (3*\dx, -\dy) {\textbf{Sonde} pression};
+
+  \end{tikzpicture}
+  \caption{Symboles normalisés ISO GCF — Organes hydrauliques courants (NF EN ISO 1219)}
+  \label{fig:symboles-iso-hydraulique}
+\end{figure}
+
+% ---- Schéma ISO GCF : Station de pompage avec organes de sécurité ----
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[>=Stealth, thick]
+
+    % =====================================================
+    %  CIRCUIT : Retour (FedBlue) → Pompe → Départ (FedRed)
+    % =====================================================
+
+    % --- Tuyauterie retour (FedBlue) arrivant de la gauche ---
+    \draw[FedBlue, very thick, ->] (-1.0, 0) -- (1.3, 0);
+    \node[above, font=\small\sffamily, text=FedBlue] at (-0.3, 0.05) {Retour};
+
+    % --- VASE D'EXPANSION — raccordé en dérivation sur le retour ---
+    % Pic center at (1.3, 1.9) ; port bas à 1.9-0.58 = 1.32 → raccord en (1.3, 0)
+    \pic at (1.3, 1.9) {vase-expansion};
+    \draw[FedBlue, thick] (1.3, 0) -- (1.3, 1.32);
+    \node[right=0.15cm, font=\footnotesize\sffamily] at (1.65, 1.9) {$V_e$};
+
+    % --- Tuyauterie retour continue vers pompe ---
+    \draw[FedBlue, very thick] (1.3, 0) -- (4.0, 0);
+
+    % --- SONDE DE PRESSION — sur le retour, avant pompe ---
+    % Pic center at (2.5, -0.9) ; port haut à -0.9+0.50 = -0.40 → raccord en (2.5, 0)
+    \pic at (2.5, -0.9) {sonde-p};
+    \draw[FedGreen!70!black, thick] (2.5, 0) -- (2.5, -0.62);
+    \node[right=0.05cm, font=\footnotesize\sffamily, text=FedGreen!80!black]
+      at (2.78, -0.9) {$\mathsf{P}$};
+
+    % --- Descente du retour vers aspiration pompe ---
+    % Pompe center at (4.0, -1.5) ; aspiration port à (4.0, -2.10)
+    \draw[FedBlue, very thick] (4.0, 0) -- (4.0, -2.10);
+
+    % --- POMPE DE CIRCULATION ---
+    \pic at (4.0, -1.5) {pompe};
+    \node[right=0.15cm, font=\small\sffamily\bfseries] at (4.35, -1.5) {$P$};
+
+    % --- Tuyauterie départ : refoulement pompe → clapet ---
+    % Refoulement port à (4.0+0.60, -1.5) = (4.60, -1.5)
+    % Clapet center at (5.75, -1.5) ; port gauche à (5.75-0.55, -1.5) = (5.20, -1.5)
+    \draw[FedRed, very thick] (4.60, -1.5) -- (5.20, -1.5);
+
+    % --- CLAPET ANTI-RETOUR (inline sur le départ) ---
+    \pic at (5.75, -1.5) {clapet};
+
+    % --- Remontée vers le niveau du départ ---
+    % Port droit clapet à (5.75+0.55, -1.5) = (6.30, -1.5)
+    \draw[FedRed, very thick] (6.30, -1.5) -- (7.10, -1.5) -- (7.10, 0);
+
+    % --- SONDE DE TEMPÉRATURE — sur le départ ---
+    % Pic center at (7.10, 0.95) ; port haut descend en (7.10, 0.67) → raccord en (7.10, 0)
+    \pic at (7.10, 0.95) {sonde-t};
+    \draw[FedGreen!70!black, thick] (7.10, 0) -- (7.10, 0.67);
+    \node[right=0.05cm, font=\footnotesize\sffamily, text=FedGreen!80!black]
+      at (7.38, 0.95) {$\mathsf{T}$};
+
+    % --- VANNE D'ÉQUILIBRAGE (inline sur le départ, horizontal) ---
+    % Center at (8.60, 0) ; port gauche 8.05, port droit 9.15
+    \draw[FedRed, very thick] (7.10, 0) -- (8.05, 0);
+    \pic at (8.60, 0) {vanne-equilibrage};
+
+    % --- Tuyauterie départ vers émetteurs ---
+    \draw[FedRed, very thick, ->] (9.15, 0) -- (10.2, 0);
+    \node[above, font=\small\sffamily, text=FedRed] at (9.7, 0.05) {Départ};
+
+    % =====================================================
+    %  LÉGENDE
+    % =====================================================
+    \node[font=\footnotesize\sffamily, text=FedBlue!80!black,
+          draw=FedBlue!30, fill=FedBlue!5, rounded corners=3pt, inner sep=4pt,
+          align=left] at (2.0, -3.5)
+      {$V_e$ : Vase d'expansion (\SI{3}{bar}) \\
+       $P$   : Pompe de circulation (ErP 2015) \\
+       Clapet : anti-retour, évite refoulement};
+    \node[font=\footnotesize\sffamily, text=FedRed!80!black,
+          draw=FedOrange!30, fill=FedOrange!5, rounded corners=3pt, inner sep=4pt,
+          align=left] at (8.0, -3.5)
+      {Vanne d'équilibrage : \\
+       \quad réglage du débit de branche \\
+       Sondes $\mathsf{T}$, $\mathsf{P}$ : instrumentation GTC};
+
+  \end{tikzpicture}
+  \caption{Schéma normalisé ISO GCF — Station de pompage : vase d'expansion, pompe de circulation, clapet anti-retour, instrumentation et vanne d'équilibrage}
+  \label{fig:station-pompage-iso}
+\end{figure}
+
 \subsection{Circuit hydraulique bouclé}
 
 \begin{figure}[H]
