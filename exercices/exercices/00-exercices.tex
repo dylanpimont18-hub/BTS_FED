@@ -6,190 +6,494 @@
 
 \section*{Chapitre 00 — Exercices (50 exercices)}
 
+\vspace{1em}
+
 % ============================================================
-\subsection*{Thème A — Vérification d'homogénéité (6 exercices)}
+% FORMULAIRE — GRANDEURS ET UNITÉS
 % ============================================================
 
-\textbf{Niveau facile à moyen}
+\noindent
+\fcolorbox{FedBlue}{FedBlue!3}{%
+  \begin{minipage}{0.95\textwidth}
+    \textbf{\Large\color{FedBlue}Formulaire — Grandeurs et Unités}
+  \end{minipage}
+}
+
+\vspace{0.8em}
+
+\textbf{\large A) Grandeurs thermiques et énergétiques}
+
+\begin{center}
+\small
+\begin{tabularx}{0.95\textwidth}{|l|l|l|l|}
+\hline
+\textbf{Symbole} & \textbf{Grandeur} & \textbf{Unité SI} & \textbf{Autres unités} \\
+\hline
+$\dot{Q}$ & Puissance thermique & W (watt) & kW, MW, cal/s, kcal/h \\
+\hline
+$Q$ & Énergie thermique & J (joule) & kJ, kWh, cal, kcal \\
+\hline
+$\Delta T$, $T$ & Température, écart & K (kelvin) & °C, °F \\
+\hline
+$c_p$ & Chaleur spécifique & J/(kg·K) & kJ/(kg·K), cal/(g·°C) \\
+\hline
+$h$ & Coefficient d'échange & W/(m²·K) & kcal/(h·m²·°C) \\
+\hline
+$A$ & Surface & m² & cm², mm² \\
+\hline
+$\dot{m}$ & Débit massique & kg/s & g/s, t/h, kg/h \\
+\hline
+$\eta$ & Rendement & — (adimensionnel) & \% \\
+\hline
+\end{tabularx}
+\end{center}
+
+\vspace{0.8em}
+
+\textbf{\large B) Grandeurs hydrauliques et de débit}
+
+\begin{center}
+\small
+\begin{tabularx}{0.95\textwidth}{|l|l|l|l|}
+\hline
+\textbf{Symbole} & \textbf{Grandeur} & \textbf{Unité SI} & \textbf{Autres unités} \\
+\hline
+$\dot{V}$ & Débit volumique & m³/s & m³/h, L/min, L/s, cm³/s \\
+\hline
+$\Delta P$, $P$ & Pression, chute & Pa (pascal) & bar, mbar, mH₂O, atm, kPa \\
+\hline
+$\rho$ & Masse volumique & kg/m³ & — \\
+\hline
+$v$ & Vitesse du fluide & m/s & km/h \\
+\hline
+$d$ & Diamètre, longueur & m & cm, mm \\
+\hline
+$\ell$ & Longueur conduit & m & cm, km \\
+\hline
+$\lambda$ & Coefficient friction & — (adimensionnel) & — \\
+\hline
+$\mu$ & Viscosité dynamique & Pa·s & cP (centipoise) \\
+\hline
+$\nu$ & Viscosité cinématique & m²/s & cSt (centistokes) \\
+\hline
+\end{tabularx}
+\end{center}
+
+\vspace{0.8em}
+
+\textbf{\large C) Grandeurs aérodynamiques et dimensionnelles}
+
+\begin{center}
+\small
+\begin{tabularx}{0.95\textwidth}{|l|l|l|l|}
+\hline
+\textbf{Symbole} & \textbf{Grandeur} & \textbf{Unité SI} & \textbf{Autres unités} \\
+\hline
+$\mathrm{Re}$ & Nombre de Reynolds & — (adimensionnel) & — \\
+\hline
+$c$ & Vitesse du son & m/s & km/h \\
+\hline
+$\gamma$ & Indice adiabatique & — (adimensionnel) & — \\
+\hline
+$R$ & Constante gaz & J/(kg·K) & — \\
+\hline
+$q_\ell$ & Flux linéique & W/m & kW/km, W/(100~m) \\
+\hline
+$q_s$ & Densité de flux & W/m² & kW/m², W/cm² \\
+\hline
+$h_v$ & Humidité spécifique & g/kg & — \\
+\hline
+$\mathrm{NUT}$ & Nombre d'Unités Transfert & — (adimensionnel) & — \\
+\hline
+$\varepsilon$ & Efficacité échangeur & — (adimensionnel) & \% \\
+\hline
+$\mathrm{St}$ & Nombre de Strouhal & — (adimensionnel) & — \\
+\hline
+$f$ & Fréquence & Hz (hertz) & tr/min (tours/min) \\
+\hline
+\end{tabularx}
+\end{center}
+
+\vspace{0.8em}
+
+\textbf{\large D) Géométrie et constantes}
+
+\begin{center}
+\small
+\begin{tabularx}{0.95\textwidth}{|l|l|l|l|}
+\hline
+\textbf{Symbole} & \textbf{Grandeur} & \textbf{Unité SI} & \textbf{Autres unités} \\
+\hline
+$F$ & Force & N (newton) & daN, kN \\
+\hline
+$g$ & Accélération gravité & m/s² & ≈ 9,81 m/s² (Terre) \\
+\hline
+$h$ & Hauteur, profondeur & m & cm, mm \\
+\hline
+$R$, $R_e$, $R_i$ & Rayon (externe, interne) & m & cm, mm \\
+\hline
+$k$ & Constante (contexte) & Varie & Varie selon équation \\
+\hline
+$\pi$ & Nombre pi & — & ≈ 3,14159 \\
+\hline
+\end{tabularx}
+\end{center}
+
+\vspace{0.8em}
+
+\textbf{\large E) ⚠️ Ambiguïtés de symboles — À bien distinguer}
+
+\noindent
+\fcolorbox{FedRed}{FedRed!5}{%
+  \begin{minipage}{0.95\textwidth}\small
+    \textbf{$P$ a deux sens distincts :}
+    \begin{itemize}[leftmargin=1.5em, itemsep=0.2em]
+      \item $P_{\text{hyd}}$ ou $P$ en équations thermiques = \textbf{Puissance} en W (watts)
+      \item $P$ dans formules de dynamique (ex: $c = \sqrt{\gamma P / \rho}$) = \textbf{Pression} en Pa
+    \end{itemize}
+    \textbf{→ Toujours vérifier le contexte et les unités !}
+  \end{minipage}
+}
+
+\vspace{0.8em}
+
+\textbf{\large F) Conversions rapides}
+
+\noindent
+\fcolorbox{FedOrange}{FedOrange!5}{%
+  \begin{minipage}{0.95\textwidth}\small
+    \textbf{Puissance :} 1~kW = 1\,000~W = 0{,}86~kcal/s = 3\,600~kJ/h \\
+    \textbf{Pression :} 1~bar = 100\,000~Pa = 10{,}2~mH₂O = 0{,}987~atm \\
+    \textbf{Débit :} 1~m³/h = 0{,}278~L/s = 16{,}67~L/min \\
+    \textbf{Viscosité :} 1~Pa·s = 1\,000~cP; \quad 1~m²/s = 10\,000~cSt \\
+    \textbf{Masse volumique eau :} $\rho \approx 1\,000$~kg/m³ (varie avec T) 
+  \end{minipage}
+}
+
+\newpage
+
+\vspace{1em}
+
+% ============================================================
+% THÈME A — VÉRIFICATION D'HOMOGÉNÉITÉ
+% ============================================================
+
+\noindent
+\fcolorbox{FedOrange}{FedOrange!8}{%
+  \begin{minipage}{0.95\textwidth}
+    \textbf{\Large\color{FedOrange}Thème A — Vérification d'homogénéité} \\
+    \small\textit{6 exercices} \quad | \quad \textbf{Niveau :} facile à moyen
+  \end{minipage}
+}
+
+\vspace{0.8em}
 
 \subsubsection*{A1}  Perte de charge : $\Delta P = \lambda \dfrac{\ell}{d} \dfrac{\rho v^2}{2}$. Vérifier.
+\vspace{0.4em}
 
 \subsubsection*{A2}  Bilan thermique : $\dot{Q} = h A \Delta T$. Vérifier.
+\vspace{0.4em}
 
 \subsubsection*{A3}  Vitesse du son : $c = \sqrt{\dfrac{\gamma P}{\rho}}$. Vérifier.
+\vspace{0.4em}
 
 \subsubsection*{A4}  Puissance hydraulique : $P_{\text{hyd}} = \dot{V} \times \Delta P$. Vérifier.
+\vspace{0.4em}
 
 \subsubsection*{A5}  Nombre de Reynolds (sans dimension) : $\mathrm{Re} = \dfrac{\rho v d}{\mu}$. Vérifier.
+\vspace{0.4em}
 
 \subsubsection*{A6}  Énergie cinétique volumique : $\rho v^2 = \Delta P$. Vérifier. Signification ?
 
+\vspace{1.5em}
 % ============================================================
-\subsection*{Thème B — Conversions simples (6 exercices)}
+% THÈME B — CONVERSIONS SIMPLES
 % ============================================================
 
-\textbf{Niveau facile}
+\noindent
+\fcolorbox{FedOrange}{FedOrange!8}{%
+  \begin{minipage}{0.95\textwidth}
+    \textbf{\Large\color{FedOrange}Thème B — Conversions simples} \\
+    \small\textit{6 exercices} \quad | \quad \textbf{Niveau :} facile
+  \end{minipage}
+}
+
+\vspace{0.8em}
 
 \subsubsection*{B1}  Convertir $P = 18~\mathrm{kW}$ en W, kWh/h, cal/s.
+\vspace{0.4em}
 
 \subsubsection*{B2}  Convertir $\dot{V} = 720~\mathrm{m^3/h}$ en m³/s, L/min, L/s.
+\vspace{0.4em}
 
-\subsubsection*{B3}  Convertir $\Delta P = 3{,}2~\mathrm{bar}$ en Pa, mH₂O, kPa.
+\subsubsection*{B3}  Convertir $\Delta P = 3{,}2~\mathrm{bar}$ en Pa, $\mathrm{mH_2O}$, kPa.
+\vspace{0.4em}
 
-\subsubsection*{B4}  Convertir $T = 75~\mathrm{°C}$ en K et °F. Différence T absolue vs Δ T ?
+\subsubsection*{B4}  Convertir $T = 75~\mathrm{°C}$ en K et °F. Différence T absolue vs $\Delta T$ ?
+\vspace{0.4em}
 
 \subsubsection*{B5}  Convertir $\dot{m} = 2{,}5~\mathrm{kg/s}$ en g/s, tonnes/h.
+\vspace{0.4em}
 
 \subsubsection*{B6}  Convertir $E = 125~\mathrm{kWh}$ en J, MJ, cal.
 
+\vspace{1.5em}
 % ============================================================
-\subsection*{Thème C — Conversions composées (6 exercices)}
+% THÈME C — CONVERSIONS COMPOSÉES
 % ============================================================
 
-\textbf{Niveau facile à moyen}
+\noindent
+\fcolorbox{FedOrange}{FedOrange!8}{%
+  \begin{minipage}{0.95\textwidth}
+    \textbf{\Large\color{FedOrange}Thème C — Conversions composées} \\
+    \small\textit{6 exercices} \quad | \quad \textbf{Niveau :} facile à moyen
+  \end{minipage}
+}
 
-\subsubsection*{C1}  Eau $\dot{V} = 2{,}4~\mathrm{m^3/h}$ (ρ = 1000 kg/m³). Convertir kg/s, tonnes/h.
+\vspace{0.8em}
+
+\subsubsection*{C1}  Eau $\dot{V} = 2{,}4~\mathrm{m^3/h}$ ($\rho = 1000$~kg/m³). Convertir kg/s, tonnes/h.
+\vspace{0.4em}
 
 \subsubsection*{C2}  Flux linéique tube $q_\ell = 45~\mathrm{W/m}$. Exprimer kW/(km), W/(100 m).
+\vspace{0.4em}
 
 \subsubsection*{C3}  Flux 12 kW sur 8 m². Densité flux W/m², kW/m², W/cm² ?
+\vspace{0.4em}
 
-\subsubsection*{C4}  Viscosité cinématique air : μ = 1,8×10⁻⁵ Pa·s, ρ = 1,2 kg/m³. Calculer ν en m²/s, cSt.
+\subsubsection*{C4}  Viscosité cinématique air : $\mu = 1{,}8 \times 10^{-5}$~Pa·s, $\rho = 1{,}2$~kg/m³. Calculer $\nu$ en m²/s, cSt.
+\vspace{0.4em}
 
-\subsubsection*{C5}  Air humide : $\dot{V} = 500~\mathrm{L/min}$ (ρ = 1,2), $h_v = 8~\mathrm{g/kg}$. Débit air m³/h, eau kg/h ?
+\subsubsection*{C5}  Air humide : $\dot{V} = 500~\mathrm{L/min}$ ($\rho = 1{,}2$), $h_v = 8~\mathrm{g/kg}$. Débit air m³/h, eau kg/h ?
+\vspace{0.4em}
 
 \subsubsection*{C6}  Pompe : 15 kW absorbé, 12,3 kW hydraulique. Puissances W, kJ/h. Rendement % ?
 
+\vspace{1.5em}
 % ============================================================
-\subsection*{Thème D — Résolution d'équations linéaires (6 exercices)}
+% THÈME D — RÉSOLUTION D'ÉQUATIONS LINÉAIRES
 % ============================================================
 
-\textbf{Niveau facile}
+\noindent
+\fcolorbox{FedOrange}{FedOrange!8}{%
+  \begin{minipage}{0.95\textwidth}
+    \textbf{\Large\color{FedOrange}Thème D — Résolution d'équations linéaires} \\
+    \small\textit{6 exercices} \quad | \quad \textbf{Niveau :} facile
+  \end{minipage}
+}
 
-\subsubsection*{D1}  $\dot{Q} = \dot{m} c_p (T_{\text{in}} - T_{\text{out}})$. Exprimer $T_{\text{out}}$, $\dot{m}$, Δ T.
+\vspace{0.8em}
+
+\subsubsection*{D1}  $\dot{Q} = \dot{m} c_p (T_{\text{in}} - T_{\text{out}})$. Exprimer $T_{\text{out}}$, $\dot{m}$, $\Delta T$.
+\vspace{0.4em}
 
 \subsubsection*{D2}  $\dot{Q} = h A (T_{\text{paroi}} - T_{\text{fluide}})$. Exprimer $T_{\text{paroi}}$, $h$, $A$.
+\vspace{0.4em}
 
 \subsubsection*{D3}  Bifurcation : $\dot{V}_{\text{tot}} = 100~\mathrm{L/min}$, $\dot{V}_1 = 35~\mathrm{L/min}$. Trouver $\dot{V}_2$.
+\vspace{0.4em}
 
 \subsubsection*{D4}  $\dot{Q} = k \Delta T$. Si $\dot{Q} = 8~\mathrm{kW}$, $\Delta T = 20~\mathrm{K}$, calculer $k$.
+\vspace{0.4em}
 
-\subsubsection*{D5}  $\dot{m} = \rho \dot{V}$. Eau : ρ = 998 kg/m³, $\dot{V} = 0{,}05~\mathrm{m^3/s}$. Calculer $\dot{m}$. Exprimer $\dot{V}$.
+\subsubsection*{D5}  $\dot{m} = \rho \dot{V}$. Eau : $\rho = 998$~kg/m³, $\dot{V} = 0{,}05~\mathrm{m^3/s}$. Calculer $\dot{m}$. Exprimer $\dot{V}$.
+\vspace{0.4em}
 
 \subsubsection*{D6}  $\Delta P = \lambda \dfrac{\ell}{d} \dfrac{\rho v^2}{2}$. Exprimer $v$, puis $\lambda$.
 
+\vspace{1.5em}
 % ============================================================
-\subsection*{Thème E — Équations non-linéaires (6 exercices)}
+% THÈME E — ÉQUATIONS NON-LINÉAIRES
 % ============================================================
 
-\textbf{Niveau moyen}
+\noindent
+\fcolorbox{FedOrange}{FedOrange!8}{%
+  \begin{minipage}{0.95\textwidth}
+    \textbf{\Large\color{FedOrange}Thème E — Équations non-linéaires} \\
+    \small\textit{6 exercices} \quad | \quad \textbf{Niveau :} moyen
+  \end{minipage}
+}
+
+\vspace{0.8em}
 
 \subsubsection*{E1}  $\dot{V} = v \pi \dfrac{d^2}{4}$. Exprimer $d$. Si $v = 2~\mathrm{m/s}$, $\dot{V} = 0{,}05~\mathrm{m^3/s}$, calculer.
+\vspace{0.4em}
 
-\subsubsection*{E2}  $c = \sqrt{\gamma R T}$. Exprimer $T$ et $\gamma$. Vérifier air : γ = 1,4, R = 287, c ≈ 340 m/s.
+\subsubsection*{E2}  $c = \sqrt{\gamma R T}$. Exprimer $T$ et $\gamma$. Vérifier air : $\gamma = 1{,}4$, $R = 287$, $c \approx 340$~m/s.
+\vspace{0.4em}
 
-\subsubsection*{E3}  $\mathrm{Re} = \dfrac{\rho v d}{\mu}$. Exprimer $v$, $d$. Re = 50000, ρ = 1000, μ = 10⁻³, d = 0,05 → $v$ ?
+\subsubsection*{E3}  $\mathrm{Re} = \dfrac{\rho v d}{\mu}$. Exprimer $v$, $d$. Re = 50000, $\rho = 1000$, $\mu = 10^{-3}$, $d = 0{,}05$ $\to$ $v$ ?
+\vspace{0.4em}
 
 \subsubsection*{E4}  $P = \dot{V} \Delta P = v A \Delta P$. Exprimer $v$ en $P$, $A$, $\Delta P$.
+\vspace{0.4em}
 
 \subsubsection*{E5}  Annulaire : $\dot{V} = v \pi (R_e^2 - R_i^2)$. Exprimer $R_e$.
+\vspace{0.4em}
 
 \subsubsection*{E6}  $\varepsilon = 1 - \exp(-\mathrm{NUT})$. Exprimer $\mathrm{NUT}$. Calculer pour $\varepsilon = 0{,}7$.
 
+\vspace{1.5em}
 % ============================================================
-\subsection*{Thème F — Débits massique/volumique (6 exercices)}
+% THÈME F — DÉBITS MASSIQUE/VOLUMIQUE
 % ============================================================
 
-\textbf{Niveau facile à moyen}
+\noindent
+\fcolorbox{FedOrange}{FedOrange!8}{%
+  \begin{minipage}{0.95\textwidth}
+    \textbf{\Large\color{FedOrange}Thème F — Débits massique/volumique} \\
+    \small\textit{6 exercices} \quad | \quad \textbf{Niveau :} facile à moyen
+  \end{minipage}
+}
+
+\vspace{0.8em}
 
 \subsubsection*{F1}  Pompe $Q = 2{,}1~\mathrm{m^3/h}$. Convertir L/min, m³/s, L/s.
+\vspace{0.4em}
 
-\subsubsection*{F2}  Extracteur $\dot{V} = 780~\mathrm{m^3/h}$ air (ρ = 1,2). Convertir m³/s, L/min. Débit massique kg/s, t/h.
+\subsubsection*{F2}  Extracteur $\dot{V} = 780~\mathrm{m^3/h}$ air ($\rho = 1{,}2$). Convertir m³/s, L/min. Débit massique kg/s, t/h.
+\vspace{0.4em}
 
-\subsubsection*{F3}  Compresseur 45 m³/h (1 atm). L/min ? ρ = 1,2 → $\dot{m}$ kg/s ?
+\subsubsection*{F3}  Compresseur 45 m³/h (1 atm). L/min ? $\rho = 1{,}2$ $\to$ $\dot{m}$~kg/s ?
+\vspace{0.4em}
 
-\subsubsection*{F4}  Frigorifique $\dot{m} = 0{,}15~\mathrm{kg/s}$ (ρ = 1300 kg/m³). $\dot{V}$ m³/h, L/min, cm³/s ?
+\subsubsection*{F4}  Frigorifique $\dot{m} = 0{,}15~\mathrm{kg/s}$ ($\rho = 1300$~kg/m³). $\dot{V}$ m³/h, L/min, cm³/s ?
+\vspace{0.4em}
 
-\subsubsection*{F5}  Air humide $\dot{V} = 120~\mathrm{m^3/h}$ (ρ = 1,18), $h_v = 10~\mathrm{g/kg}$. Débit sec, eau kg/h ?
+\subsubsection*{F5}  Air humide $\dot{V} = 120~\mathrm{m^3/h}$ ($\rho = 1{,}18$), $h_v = 10~\mathrm{g/kg}$. Débit sec, eau kg/h ?
+\vspace{0.4em}
 
-\subsubsection*{F6}  Air réchauffe 20°C (ρ₁ = 1,204), 500 m³/h → 60°C (ρ₂ = 1,067). Nouveau $\dot{V}_2$ ? $\dot{m}$ change ?
+\subsubsection*{F6}  Air réchauffe 20°C ($\rho_1 = 1{,}204$), 500 m³/h $\to$ 60°C ($\rho_2 = 1{,}067$). Nouveau $\dot{V}_2$ ? $\dot{m}$ change ?
 
+\vspace{1.5em}
 % ============================================================
-\subsection*{Thème G — Analyse dimensionnelle par exposants (6 exercices)}
+% THÈME G — ANALYSE DIMENSIONNELLE PAR EXPOSANTS
 % ============================================================
 
-\textbf{Niveau moyen à difficile}
+\noindent
+\fcolorbox{FedOrange}{FedOrange!8}{%
+  \begin{minipage}{0.95\textwidth}
+    \textbf{\Large\color{FedOrange}Thème G — Analyse dimensionnelle par exposants} \\
+    \small\textit{6 exercices} \quad | \quad \textbf{Niveau :} moyen à difficile
+  \end{minipage}
+}
 
-\subsubsection*{G1}  $\Delta P = k \rho^\alpha v^\beta \ell^\gamma d^\delta$. Trouver α, β, γ, δ.
+\vspace{0.8em}
+
+\subsubsection*{G1}  $\Delta P = k \rho^\alpha v^\beta \ell^\gamma d^\delta$. Trouver $\alpha$, $\beta$, $\gamma$, $\delta$.
+\vspace{0.4em}
 
 \subsubsection*{G2}  $F = k \rho^\alpha v^\beta A^\gamma$ (traînée). Déterminer exposants.
+\vspace{0.4em}
 
-\subsubsection*{G3}  $\dot{V} = k A^\alpha \sqrt{g^\beta h^\gamma}$ (orifice). Trouver α, β, γ.
+\subsubsection*{G3}  $\dot{V} = k A^\alpha \sqrt{g^\beta h^\gamma}$ (orifice). Trouver $\alpha$, $\beta$, $\gamma$.
+\vspace{0.4em}
 
 \subsubsection*{G4}  $P = k \rho^\alpha g^\beta h^\gamma \dot{V}^\delta$ (pompe). Déterminer.
+\vspace{0.4em}
 
 \subsubsection*{G5}  Vérifier $[\nu] = [\mathrm{m^2/s}]$ pour $\nu = \mu/\rho$ (Pa·s / kg/m³).
+\vspace{0.4em}
 
-\subsubsection*{G6}  Strouhal adimensionnel : $\mathrm{St} = \dfrac{f d}{v}$. Vérifier (f Hz, d m, v m/s).
+\subsubsection*{G6}  Strouhal adimensionnel : $\mathrm{St} = \dfrac{f d}{v}$. Vérifier ($f$ Hz, $d$ m, $v$ m/s).
 
+\vspace{1.5em}
 % ============================================================
-\subsection*{Thème H — Ordre de grandeur (5 exercices)}
+% THÈME H — ORDRE DE GRANDEUR
 % ============================================================
 
-\textbf{Niveau facile}
+\noindent
+\fcolorbox{FedOrange}{FedOrange!8}{%
+  \begin{minipage}{0.95\textwidth}
+    \textbf{\Large\color{FedOrange}Thème H — Ordre de grandeur} \\
+    \small\textit{5 exercices} \quad | \quad \textbf{Niveau :} facile
+  \end{minipage}
+}
 
-\subsubsection*{H1}  Classer puissances : 10 W (LED) ; 1500 W (radiateur) ; 3 kW (clim) ; 100 kW (chaudière). 
+\vspace{0.8em}
+
+\subsubsection*{H1}  Classer puissances : 10 W (LED) ; 1500 W (radiateur) ; 3 kW (clim) ; 100 kW (chaudière).
 Puissances lycée ?
+\vspace{0.4em}
 
-\subsubsection*{H2}  Vitesse air 15 m/s dans gaine. Plausible ? (Norme confort 3–6 m/s, max 8–12 m/s).
+\subsubsection*{H2}  Vitesse air 15 m/s dans gaine. Plausible ? (Norme confort 3--6 m/s, max 8--12 m/s).
+\vspace{0.4em}
 
 \subsubsection*{H3}  ECS 5 m³/h pour 20 pers. Volume/pers/h ? Plausible douche 10 min ?
+\vspace{0.4em}
 
-\subsubsection*{H4}  Échangeur Δ T = −3 K. Possible ?  Pourquoi ?
+\subsubsection*{H4}  Échangeur $\Delta T = -3$~K. Possible ?  Pourquoi ?
+\vspace{0.4em}
 
-\subsubsection*{H5}  Paroi intérieure −15°C (extérieur 5°C). Plausible ? Conséquences ?
+\subsubsection*{H5}  Paroi intérieure $-15$°C (extérieur 5°C). Plausible ? Conséquences ?
 
+\vspace{1.5em}
 % ============================================================
-\subsection*{Thème I — Interpolation/abaques (5 exercices)}
+% THÈME I — INTERPOLATION/ABAQUES
 % ============================================================
 
-\textbf{Niveau facile à moyen}
+\noindent
+\fcolorbox{FedOrange}{FedOrange!8}{%
+  \begin{minipage}{0.95\textwidth}
+    \textbf{\Large\color{FedOrange}Thème I — Interpolation/abaques} \\
+    \small\textit{5 exercices} \quad | \quad \textbf{Niveau :} facile à moyen
+  \end{minipage}
+}
 
-\subsubsection*{I1}  Tableau eau (ρ, $c_p$, μ) 0, 20, 40, 60, 80, 100°C. Interpoler 30°C, 50°C, 55°C.
+\vspace{0.8em}
 
-\subsubsection*{I2}  Tableau air (ρ, ν) 0, 10, 20, 30°C. Interpoler 25°C.
+\subsubsection*{I1}  Tableau eau ($\rho$, $c_p$, $\mu$) 0, 20, 40, 60, 80, 100°C. Interpoler 30°C, 50°C, 55°C.
+\vspace{0.4em}
 
-\subsubsection*{I3}  Moody (Re = 1000, 2000, 5000, 10000) λ. Interpoler log-log Re = 3000.
+\subsubsection*{I2}  Tableau air ($\rho$, $\nu$) 0, 10, 20, 30°C. Interpoler 25°C.
+\vspace{0.4em}
+
+\subsubsection*{I3}  Moody (Re = 1000, 2000, 5000, 10000) $\lambda$. Interpoler log-log Re = 3000.
+\vspace{0.4em}
 
 \subsubsection*{I4}  Viscosité fluide (25, 35, 45°C). Estimé 40°C ? Croît ou décroît T ?
+\vspace{0.4em}
 
 \subsubsection*{I5}  Enthalpie vs T (10°C : 130 kJ/kg ; 30°C : 145). Interpoler 20°C. Linéaire ?
 
+\vspace{1.5em}
 % ============================================================
-\subsection*{Thème J — Synthèse complète (5 exercices)}
+% THÈME J — SYNTHÈSE COMPLÈTE
 % ============================================================
 
-\textbf{Niveau moyen à difficile}
+\noindent
+\fcolorbox{FedOrange}{FedOrange!8}{%
+  \begin{minipage}{0.95\textwidth}
+    \textbf{\Large\color{FedOrange}Thème J — Synthèse complète} \\
+    \small\textit{5 exercices} \quad | \quad \textbf{Niveau :} moyen à difficile
+  \end{minipage}
+}
+
+\vspace{0.8em}
 
 \subsubsection*{J1 — Pompe}
-$Q = 1{,}2~\mathrm{m^3/h}$, $\Delta P = 25\,000~\mathrm{Pa}$. 
-a) Convertir. b) Puissance hydraulique. c) η = 70 % → puissance moteur. d) Plausible ?
+$Q = 1{,}2~\mathrm{m^3/h}$, $\Delta P = 25\,000~\mathrm{Pa}$.
+a) Convertir. b) Puissance hydraulique. c) $\eta = 70$~\% $\to$ puissance moteur. d) Plausible ?
+\vspace{0.4em}
 
 \subsubsection*{J2 — Radiateur}
-12 kW, eau 70→55°C ($c_p = 4{,}18~\mathrm{kJ/(kg \cdot K)}$). 
-a) Débit massique. b) kg/h, L/min (ρ = 985). c) Vérifier bilan. d) Si Δ T = 5 K ?
+12 kW, eau 70$\to$55°C ($c_p = 4{,}18~\mathrm{kJ/(kg \cdot K)}$).
+a) Débit massique. b) kg/h, L/min ($\rho = 985$). c) Vérifier bilan. d) Si $\Delta T = 5$~K ?
+\vspace{0.4em}
 
 \subsubsection*{J3 — Conduit}
-$\dot{V} = 400~\mathrm{m^3/h}$, d = 0,2 m, ℓ = 50 m, λ = 0,025. 
-a) Débit convert. b) Vitesse. c) Reynolds (ρ = 1,2, μ = 1,8×10⁻⁵). d) Darcy. e) Pa, bar, mH₂O.
+$\dot{V} = 400~\mathrm{m^3/h}$, $d = 0{,}2$~m, $\ell = 50$~m, $\lambda = 0{,}025$.
+a) Débit convert. b) Vitesse. c) Reynolds ($\rho = 1{,}2$, $\mu = 1{,}8 \times 10^{-5}$). d) Darcy. e) Pa, bar, $\mathrm{mH_2O}$.
+\vspace{0.4em}
 
 \subsubsection*{J4 — Récupération}
-Effluent 30→20°C, $\dot{m} = 5~\mathrm{kg/s}$ ($c_p = 4{,}18~\mathrm{kJ/(kg \cdot K)}$). 
+Effluent 30$\to$20°C, $\dot{m} = 5~\mathrm{kg/s}$ ($c_p = 4{,}18~\mathrm{kJ/(kg \cdot K)}$).
 a) Puissance kW. b) Débit m³/h. c) Énergie 24h kWh. d) Coût 0,12 €/kWh/jour.
+\vspace{0.4em}
 
 \subsubsection*{J5 — Frigorifique R410A}
-$\dot{m} = 0{,}08~\mathrm{kg/s}$, ρ = 850 kg/m³, Δh = 180 kJ/kg. 
-a) $\dot{V}$ m³/s, L/min, m³/h. b) Puissance frigorifique kW. c) Moteur 15 kW → COP. 
+$\dot{m} = 0{,}08~\mathrm{kg/s}$, $\rho = 850$~kg/m³, $\Delta h = 180$~kJ/kg.
+a) $\dot{V}$ m³/s, L/min, m³/h. b) Puissance frigorifique kW. c) Moteur 15 kW $\to$ COP.
 d) COP = 3 plausible ? e) Vérifier dimensions.
 
 \newpage
@@ -200,41 +504,72 @@ d) COP = 3 plausible ? e) Vérifier dimensions.
 
 \section*{Corrigés — Chapitre 00}
 
+\vspace{1em}
+
 \subsection*{Thème A — Corrigés}
 
-\subsubsection*{A1–A6}  ✓ Toutes homogènes. A6 = énergie cinétique volumique.
+\noindent
+\fcolorbox{FedBlue}{FedBlue!5}{%
+  \begin{minipage}{0.95\textwidth}\small
+    \textbf{A1--A6 :} Toutes homogènes. A6 = énergie cinétique volumique.
+  \end{minipage}
+}
+
+\vspace{1.2em}
 
 \subsection*{Thème B — Corrigés (résumé)}
 
-B1: 18 000 W = 18 kWh/h ≈ 4 300 cal/s | 
-B2: 0,2 m³/s = 12 000 L/min |
-B3: 320 000 Pa = 32 mH₂O = 320 kPa |
-B4: 348 K = 167°F |
-B5: 2 500 g/s = 9 t/h |
-B6: 4,5×10⁸ J = 450 MJ
+\noindent
+\fcolorbox{FedBlue}{FedBlue!5}{%
+  \begin{minipage}{0.95\textwidth}\small
+    B1: 18 000 W = 18 kWh/h $\approx$ 4 300 cal/s \\[0.3em]
+    B2: 0,2 m³/s = 12 000 L/min \\[0.3em]
+    B3: 320 000 Pa = 32~$\mathrm{mH_2O}$ = 320 kPa \\[0.3em]
+    B4: 348 K = 167°F \\[0.3em]
+    B5: 2 500 g/s = 9 t/h \\[0.3em]
+    B6: $4{,}5\times 10^8$~J = 450 MJ
+  \end{minipage}
+}
+
+\vspace{1.2em}
 
 \subsection*{Thème C — Corrigés (résumé)}
 
-C1: 2,4×10⁶ kg/h = 2 400 t/h |
-C2: 4,5 kW/(100 m) |
-C3: 1 500 W/m² = 1,5 kW/m² |
-C4: ν = 1,5×10⁻⁵ m²/s = 0,015 cSt |
-C5: 30 m³/h air | 0,3 kg/h eau |
-C6: η = 82 % ✓
+\noindent
+\fcolorbox{FedBlue}{FedBlue!5}{%
+  \begin{minipage}{0.95\textwidth}\small
+    C1: $2{,}4\times 10^6$~kg/h = 2 400 t/h \\[0.3em]
+    C2: 4,5 kW/(100 m) \\[0.3em]
+    C3: 1 500 W/m² = 1,5 kW/m² \\[0.3em]
+    C4: $\nu = 1{,}5\times 10^{-5}$~m²/s = 0,015 cSt \\[0.3em]
+    C5: 30 m³/h air | 0,3 kg/h eau \\[0.3em]
+    C6: $\eta = 82$~\% $\checkmark$
+  \end{minipage}
+}
 
-\subsection*{Thèmes D, E, F, G, H, I, J — Corrigés}
+\vspace{1.2em}
 
-\textit{Voir document séparé « Corrigés-Complets-Chapitre-00.pdf »}
+\subsection*{Thèmes D, E, F, G, H, I, J — Corrigés complets}
 
-\textit{Clés pédagogiques :}
-\begin{itemize}
-  \item \textbf{D} : Isoler variable, vérifier dimensions
-  \item \textbf{E} : Racines/puissances → 2 solutions possibles
-  \item \textbf{F} : Relation ρ, $\dot{m}$, $\dot{V}$ fondamentale
-  \item \textbf{G} : Système 3 équations / 4 inconnues
-  \item \textbf{H} : Valider ordre de grandeur toujours
-  \item \textbf{I} : Interpolation linéaire, log si nécessaire
-  \item \textbf{J} : Synthèse 3–4 techniques
+\noindent
+\fcolorbox{FedRed}{FedRed!5}{%
+  \begin{minipage}{0.95\textwidth}
+    \textbf{\normalsize Document séparé recommandé}\\[0.3em]
+    \small Consultez : \textit{Corrigés-Complets-Chapitre-00.pdf} \\
+    pour un traitement détaillé de chaque thème avec justifications.
+  \end{minipage}
+}
+
+\vspace{1.2em}
+
+\subsubsection*{Clés pédagogiques par thème}
+
+\begin{itemize}[leftmargin=1.5em, itemsep=0.6em]
+  \item \textbf{D — Manipulation algébrique :} Isoler la variable cible, toujours vérifier dimensions finales
+  \item \textbf{E — Non-linéarité :} Racines/puissances peuvent donner 2 solutions \text{; analyser physiquement}
+  \item \textbf{F — Masse vs Volume :} Relation $\rho = \dot{m}/\dot{V}$ \textbf{fondamentale} en FED
+  \item \textbf{G — Analyse dimensionnelle :} Système 3 équations / 4 inconnues $\to$ 1 degré de liberté
+  \item \textbf{H — Ordre de grandeur :} \textbf{TOUJOURS} valider : résultat plausible physiquement ?
+  \item \textbf{I — Interpolation :} Linéaire par défaut ; log-log si donnees couvrent plusieurs ordres
+  \item \textbf{J — Synthèse :} Combine 3--4 techniques ; exercices proches du terrain industrie
 \end{itemize}
-
-\end{document}

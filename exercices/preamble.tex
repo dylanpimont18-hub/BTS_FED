@@ -8,6 +8,8 @@
 \usepackage[T1]{fontenc}
 \usepackage{babel}
 \usepackage[margin=2.5cm, bottom=3.2cm]{geometry}
+\setlength{\headheight}{13.6pt}
+\addtolength{\topmargin}{-1.6pt}
 
 \usepackage{mathpazo}
 \usepackage[scaled=0.95]{helvet}
@@ -23,6 +25,11 @@
 
 % Configuration des Unités spécifiques FED
 \DeclareSIUnit{\decadanewton}{daN}
+\DeclareSIUnit{\euro}{\texteuro}
+\DeclareSIUnit{\an}{an}
+\DeclareSIUnit{\semaine}{semaine}
+\DeclareSIUnit{\personne}{pers}
+\DeclareSIUnit{\year}{an}
 \sisetup{locale = FR, detect-all}
 
 % Tableaux et figures
@@ -50,35 +57,6 @@
 % 3. GESTION DE LA PAGINATION ET DES STYLES
 % ==========================================
 
-\usepackage{fancyhdr}
-\usepackage{lastpage}
-
-% Définition du style principal
-\pagestyle{fancy}
-\fancyhf{}
-\renewcommand{\headrulewidth}{0.4pt}
-\renewcommand{\footrulewidth}{0.4pt}
-\fancyhead[L]{\sffamily\small Mathématiques Appliquées}
-\fancyfoot[L]{\sffamily\small BTS FED A -- \leftmark}
-\fancyfoot[R]{\sffamily\small Page \thepage\ / \pageref{lastpage:\thechapter}}
-
-% REDÉFINITION DU STYLE 'PLAIN'
-\fancypagestyle{plain}{
-    \fancyhf{}
-    \renewcommand{\headrulewidth}{0pt}
-    \renewcommand{\footrulewidth}{0.4pt}
-    \fancyfoot[L]{\sffamily\small BTS FED A -- \leftmark}
-    \fancyfoot[R]{\sffamily\small Page \thepage\ / \pageref{lastpage:\thechapter}}
-}
-
-% FIX : Forcer le compteur à 1 à chaque nouveau chapitre
-\preto{\chapter}{\setcounter{page}{1}}
-
-% Macro de clôture de chapitre
-\newcommand{\finchapitre}{
-    \label{lastpage:\thechapter}
-    \newpage
-}
 
 % ==========================================
 % 4. ÉLÉMENTS DE DESIGN (TCOLORBOX)
@@ -111,11 +89,6 @@
     boxrule=1.5pt, leftrule=6mm, width=\textwidth, nobeforeafter
 }
 
-\newtcolorbox{exercice}[1][]{
-    enhanced, colback=white, colframe=FedExercice, fonttitle=\bfseries\sffamily,
-    coltitle=white, colbacktitle=FedExercice, title={EXERCICE~: #1},
-    boxrule=1pt, arc=2pt, width=\textwidth, nobeforeafter
-}
 
 \newtcolorbox{methode}[1][]{
     enhanced, colback=FedOrange!5, colframe=FedOrange, fonttitle=\bfseries\sffamily,
@@ -132,9 +105,17 @@
 
 \newtcolorbox{attention}[1][]{
     enhanced, colback=FedRed!5, colframe=FedRed, fonttitle=\bfseries\sffamily,
-    coltitle=white, colbacktitle=FedRed, title={⚠ ATTENTION~: #1},
+    coltitle=white, colbacktitle=FedRed, title={\textbf{!} ATTENTION~: #1},
     boxrule=1.5pt, arc=2pt, width=\textwidth, nobeforeafter
 }
+
+\newtcolorbox{remarque}[1][]{
+    enhanced, colback=FedBlue!4, colframe=FedBlue!40, fonttitle=\bfseries\sffamily,
+    coltitle=FedBlue, title={Remarque~: #1}, boxrule=0.8pt, arc=2pt,
+    width=\textwidth, nobeforeafter
+}
+
+\usepackage{titlesec}
 
 \titleformat{\section}
   {\normalfont\Large\bfseries\color{btsprimary}}

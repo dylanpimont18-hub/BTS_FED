@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pdflatex --version)",
+      "Bash(xelatex --version)",
+      "Bash(where pdflatex:*)",
+      "Read(//c/Program Files/MiKTeX/miktex/bin/x64/**)",
+      "Read(//c/texlive/2024/bin/windows/**)",
+      "Bash(\"/c/Program Files/MiKTeX/miktex/bin/x64/pdflatex\" --version)",
+      "Bash(\"/c/Program Files/MiKTeX/miktex/bin/x64/pdflatex\" -interaction=nonstopmode -halt-on-error main.tex)",
+      "Bash(\"/c/Program Files/MiKTeX/miktex/bin/x64/pdflatex\" -interaction=nonstopmode main.tex)",
+      "Bash(grep -rn \"\\\\\\\\\\\\\\\\heure\\\\|\\\\\\\\\\\\\\\\semaine\\\\|\\\\\\\\\\\\\\\\euro\\\\|⚠\\\\|kWh_\" \"c:/Users/dylan/Desktop/Creation_site/BTS FED/exercices\")"
+    ]
+  }
+}
