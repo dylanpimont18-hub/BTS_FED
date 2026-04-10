@@ -1,0 +1,300 @@
+% tikz-gcf-symbols.tex — Bibliothèque de symboles ISO GCF pour TikZ
+% BTS FED option GCF
+% Chargé automatiquement par preamble.tex via \input{tikz-gcf-symbols}
+% Compatible ISO 1219 (hydraulique), ISO 1751 (aéraulique)
+%
+% Utilisation dans un chapitre :
+%   \pic at (x,y) {pompe};
+%   \path (x,y) pic[scale=1.2] {radiateur};
+
+\usetikzlibrary{calc, patterns, decorations.markings, decorations.pathmorphing}
+
+\tikzset{
+  % ============================================================
+  % SYMBOLES HYDRAULIQUES — circuits eau chaude / eau glacée
+  % ============================================================
+
+  % Pompe de circulation (ISO 1219 — cercle + flèche rotor)
+  pics/pompe/.style={
+    code={
+      \draw[thick, fill=FedOrange!20, draw=FedOrange] (0,0) circle (0.32cm);
+      % Flèche de rotation (arc indiquant le sens)
+      \draw[-{Stealth[length=3.5pt,width=2.5pt]}, FedOrange, thick]
+        (0.10,-0.18) arc (-60:200:0.20cm);
+      % Connexions entrée/sortie (axe horizontal)
+      \draw[FedOrange, thick] (-0.32,0) -- (-0.50,0);
+      \draw[FedOrange, thick] ( 0.32,0) -- ( 0.50,0);
+    }
+  },
+
+  % Vanne quart de tour — papillon (ISO 1219)
+  pics/vanne-quart/.style={
+    code={
+      \fill[FedBlue!25]  (-0.24, 0.24) -- (0,0) -- (-0.24,-0.24) -- cycle;
+      \fill[FedBlue!25]  ( 0.24, 0.24) -- (0,0) -- ( 0.24,-0.24) -- cycle;
+      \draw[FedBlue, thick] (-0.24, 0.24) -- (0,0) -- (-0.24,-0.24);
+      \draw[FedBlue, thick] ( 0.24, 0.24) -- (0,0) -- ( 0.24,-0.24);
+      % Poignée de manœuvre
+      \draw[FedBlue, thick] (0,0) -- (0, 0.38);
+      \draw[FedBlue, thick] (-0.12,0.38) -- (0.12,0.38);
+      % Connexions
+      \draw[FedBlue, thick] (-0.38,0) -- (-0.24,0);
+      \draw[FedBlue, thick] ( 0.24,0) -- ( 0.38,0);
+    }
+  },
+
+  % Vanne motorisée (papillon + actionneur carré au-dessus)
+  pics/vanne-motorisee/.style={
+    code={
+      \fill[FedBlue!25]  (-0.24, 0.24) -- (0,0) -- (-0.24,-0.24) -- cycle;
+      \fill[FedBlue!25]  ( 0.24, 0.24) -- (0,0) -- ( 0.24,-0.24) -- cycle;
+      \draw[FedBlue, thick] (-0.24, 0.24) -- (0,0) -- (-0.24,-0.24);
+      \draw[FedBlue, thick] ( 0.24, 0.24) -- (0,0) -- ( 0.24,-0.24);
+      % Tige de liaison
+      \draw[FedBlue, thick] (0,0) -- (0, 0.30);
+      % Actionneur électrique (rectangle vert)
+      \draw[FedGreen, thick, fill=FedGreen!20] (-0.18,0.30) rectangle (0.18,0.60);
+      % Flèche de commande
+      \draw[-{Stealth[length=3pt]}, FedGreen, thick] (0,0.60) -- (0,0.76);
+      % Connexions
+      \draw[FedBlue, thick] (-0.38,0) -- (-0.24,0);
+      \draw[FedBlue, thick] ( 0.24,0) -- ( 0.38,0);
+    }
+  },
+
+  % Vanne d'équilibrage (double triangle face-à-face ISO)
+  pics/vanne-equilibrage/.style={
+    code={
+      \fill[FedBlue!20] (-0.32,-0.22) -- (-0.06,0) -- (-0.32,0.22) -- cycle;
+      \fill[FedBlue!20] ( 0.32,-0.22) -- ( 0.06,0) -- ( 0.32,0.22) -- cycle;
+      \draw[FedBlue, thick] (-0.32,-0.22) -- (-0.06,0) -- (-0.32,0.22) -- cycle;
+      \draw[FedBlue, thick] ( 0.32,-0.22) -- ( 0.06,0) -- ( 0.32,0.22) -- cycle;
+      % Trait de jonction central
+      \draw[FedBlue, thick] (-0.06,0) -- (0.06,0);
+      % Vis de réglage
+      \draw[FedBlue!70, thick] (0,0) -- (0,0.44);
+      \draw[FedBlue!70, thick] (-0.12,0.44) -- (0.12,0.44);
+      % Connexions
+      \draw[FedBlue, thick] (-0.46,0) -- (-0.32,0);
+      \draw[FedBlue, thick] ( 0.32,0) -- ( 0.46,0);
+    }
+  },
+
+  % Clapet anti-retour (triangle + barre ISO)
+  pics/clapet/.style={
+    code={
+      \fill[FedBlue!25] (-0.22,-0.22) -- (0.06,0) -- (-0.22,0.22) -- cycle;
+      \draw[FedBlue, thick] (-0.22,-0.22) -- (0.06,0) -- (-0.22,0.22) -- cycle;
+      % Barre de blocage
+      \draw[FedBlue, very thick] (0.06,-0.24) -- (0.06,0.24);
+      % Connexions
+      \draw[FedBlue, thick] (-0.38,0) -- (-0.22,0);
+      \draw[FedBlue, thick] ( 0.06,0) -- ( 0.38,0);
+    }
+  },
+
+  % Chaudière (rectangle + flamme stylisée ISO)
+  pics/chaudiere/.style={
+    code={
+      \draw[FedOrange, thick, fill=FedOrange!12, rounded corners=3pt]
+        (-0.50,-0.38) rectangle (0.50,0.38);
+      % Flamme intérieure
+      \draw[FedRed, thick, fill=FedRed!30]
+        (-0.12,-0.22)
+        .. controls (-0.22, 0.00) and (-0.08, 0.08) ..
+        ( 0.00, 0.22)
+        .. controls ( 0.08, 0.08) and ( 0.22, 0.00) ..
+        ( 0.12,-0.22)
+        -- cycle;
+      % Connexion eau départ (rouge, droite haute)
+      \draw[FedRed, thick]  (0.50, 0.18) -- (0.68,0.18);
+      % Connexion eau retour (bleu, droite basse)
+      \draw[FedBlue, thick] (0.50,-0.18) -- (0.68,-0.18);
+    }
+  },
+
+  % Échangeur à plaques (double rectangle + flèches croisées)
+  pics/echangeur/.style={
+    code={
+      \draw[FedBlue,   thick, fill=FedBlue!12]   (-0.38,-0.44) rectangle (-0.04,0.44);
+      \draw[FedOrange, thick, fill=FedOrange!12]  ( 0.04,-0.44) rectangle ( 0.38,0.44);
+      % Flèches fluide primaire (bleu, descendant à gauche)
+      \draw[-{Stealth[length=3pt]}, FedBlue, thick]
+        (-0.21, 0.44) -- (-0.21, 0.64);
+      \draw[-{Stealth[length=3pt]}, FedBlue, thick]
+        (-0.46, 0.00) -- (-0.38, 0.00);
+      % Flèches fluide secondaire (orange, montant à droite)
+      \draw[-{Stealth[length=3pt]}, FedOrange, thick]
+        ( 0.21,-0.44) -- ( 0.21,-0.64);
+      \draw[-{Stealth[length=3pt]}, FedOrange, thick]
+        ( 0.38, 0.00) -- ( 0.46, 0.00);
+    }
+  },
+
+  % Ballon tampon / ECS (ellipse verticale)
+  pics/ballon/.style={
+    code={
+      \draw[FedBlue, thick, fill=FedBlue!10] (0,0) ellipse (0.30cm and 0.52cm);
+      % Connexion en haut (départ)
+      \draw[FedRed,  thick] (0, 0.52) -- (0, 0.72);
+      % Connexion en bas (retour)
+      \draw[FedBlue, thick] (0,-0.52) -- (0,-0.72);
+      % Trait indicatif de niveau
+      \draw[FedBlue!50, dashed] (-0.28,0.10) -- (0.28,0.10);
+    }
+  },
+
+  % Vase d'expansion (cercle + membrane + zone eau)
+  pics/vase-expansion/.style={
+    code={
+      \draw[FedGreen, thick, fill=FedGreen!10] (0,0) circle (0.34cm);
+      % Zone gaz (haut, blanc)
+      \fill[white] (-0.34,0) arc (180:0:0.34cm) -- cycle;
+      % Membrane
+      \draw[FedGreen, very thick] (-0.34,0) -- (0.34,0);
+      % Zone eau (bas, bleu clair)
+      \fill[FedBlue!20] (-0.34,0) arc (180:360:0.34cm) -- cycle;
+      % Retracer le cercle par dessus
+      \draw[FedGreen, thick] (0,0) circle (0.34cm);
+      % Connexion
+      \draw[FedBlue, thick] (0,-0.34) -- (0,-0.54);
+    }
+  },
+
+  % Pompe à chaleur (rectangle + mini-cycle frigorigène)
+  pics/pac/.style={
+    code={
+      \draw[FedBlue, thick, fill=FedBlue!8, rounded corners=4pt]
+        (-0.60,-0.44) rectangle (0.60,0.44);
+      % Étiquette
+      \node[font=\tiny\bfseries, FedBlue] at (0, 0.24) {PAC};
+      % Mini-cycle (évap → comp → cond → det)
+      \draw[-{Stealth[length=3pt]}, FedOrange, thick]
+        (-0.30,-0.12) arc (180:0:0.30cm);
+      \draw[-{Stealth[length=3pt]}, FedBlue!70, thick]
+        ( 0.30,-0.12) arc (0:-180:0.30cm);
+      % Connexions eau chaude (droite)
+      \draw[FedRed,  thick] (0.60, 0.20) -- (0.80,0.20);
+      \draw[FedBlue, thick] (0.60,-0.20) -- (0.80,-0.20);
+    }
+  },
+
+  % CTA — Centrale de traitement d'air (rectangle multi-sections)
+  pics/cta/.style={
+    code={
+      \draw[FedBlue, thick, fill=FedBlue!8] (-0.70,-0.38) rectangle (0.70,0.38);
+      % Séparations internes : filtre | batterie | ventilateur
+      \draw[FedBlue!50, thick] (-0.40,-0.38) -- (-0.40, 0.38);
+      \draw[FedBlue!50, thick] (-0.05,-0.38) -- (-0.05, 0.38);
+      \draw[FedBlue!50, thick] ( 0.32,-0.38) -- ( 0.32, 0.38);
+      % Symbole filtre (losange hachuré dans section 1)
+      \fill[pattern=north east lines, pattern color=FedBlue!40]
+        (-0.68,-0.20) -- (-0.52,0) -- (-0.68,0.20) -- cycle;
+      % Mini ventilateur (section 4)
+      \draw[FedOrange, thick] (0.51,0) circle (0.14cm);
+      \draw[-{Stealth[length=2pt]}, FedOrange]
+        (0.51, 0.06) arc (90:320:0.10cm);
+      % Flèches d'air
+      \draw[-{Stealth[length=4pt]}, FedBlue, thick] (-0.90,0) -- (-0.70,0);
+      \draw[-{Stealth[length=4pt]}, FedBlue, thick] ( 0.70,0) -- ( 0.90,0);
+    }
+  },
+
+  % Ventilateur (cercle + pales ISO)
+  pics/ventilateur/.style={
+    code={
+      \draw[FedOrange, thick, fill=FedOrange!15] (0,0) circle (0.32cm);
+      \draw[-{Stealth[length=3.5pt,width=2.5pt]}, FedOrange, very thick]
+        (0.05, 0.06) arc (90:320:0.22cm);
+      % Connexions (axe horizontal)
+      \draw[FedOrange, thick] (-0.32,0) -- (-0.50,0);
+      \draw[FedOrange, thick] ( 0.32,0) -- ( 0.50,0);
+    }
+  },
+
+  % Registre de réglage (rectangle barré diagonal)
+  pics/registre/.style={
+    code={
+      \draw[FedOrange, thick, fill=FedOrange!10] (-0.32,-0.24) rectangle (0.32,0.24);
+      \draw[FedOrange, thick] (-0.32,-0.24) -- (0.32,0.24);
+      % Connexions
+      \draw[FedOrange, thick] (-0.46,0) -- (-0.32,0);
+      \draw[FedOrange, thick] ( 0.32,0) -- ( 0.46,0);
+    }
+  },
+
+  % Filtre (losange hachuré ISO)
+  pics/filtre/.style={
+    code={
+      \fill[pattern=north east lines, pattern color=FedBlue!50]
+        (-0.30,0) -- (0,-0.30) -- (0.30,0) -- (0,0.30) -- cycle;
+      \draw[FedBlue, thick]
+        (-0.30,0) -- (0,-0.30) -- (0.30,0) -- (0,0.30) -- cycle;
+      % Connexions
+      \draw[FedBlue, thick] (-0.44,0) -- (-0.30,0);
+      \draw[FedBlue, thick] ( 0.30,0) -- ( 0.44,0);
+    }
+  },
+
+  % Radiateur (rectangle à ailettes verticales)
+  pics/radiateur/.style={
+    code={
+      \draw[FedRed, thick, fill=FedRed!8] (-0.44,-0.30) rectangle (0.44,0.30);
+      % Ailettes internes
+      \foreach \xi in {-0.33,-0.22,-0.11,0.00,0.11,0.22,0.33} {
+        \draw[FedRed!60, thick] (\xi,-0.30) -- (\xi,0.30);
+      }
+      % Connexion entrée (eau chaude, gauche haut)
+      \draw[FedRed,  thick] (-0.44, 0.14) -- (-0.62,0.14);
+      % Connexion sortie (eau tiède, gauche bas)
+      \draw[FedBlue, thick] (-0.44,-0.14) -- (-0.62,-0.14);
+    }
+  },
+
+  % Ventilo-convecteur — VC (rectangle + batterie + ventilateur)
+  pics/vc/.style={
+    code={
+      \draw[FedOrange, thick, fill=FedOrange!8] (-0.50,-0.32) rectangle (0.50,0.32);
+      % Batterie hydraulique (gauche)
+      \foreach \xi in {-0.42,-0.32} {
+        \draw[FedRed!70, thick] (\xi,-0.26) -- (\xi,0.26);
+      }
+      % Mini-ventilateur (droite)
+      \draw[FedOrange, thick] (0.22,0) circle (0.22cm);
+      \draw[-{Stealth[length=2.5pt]}, FedOrange, thick]
+        (0.22, 0.08) arc (90:320:0.16cm);
+      % Connexions fluide batterie
+      \draw[FedRed,  thick] (-0.50, 0.16) -- (-0.68,0.16);
+      \draw[FedBlue, thick] (-0.50,-0.16) -- (-0.68,-0.16);
+    }
+  },
+
+  % Sonde de température (cercle + T)
+  pics/sonde-t/.style={
+    code={
+      \draw[FedGreen, thick, fill=FedGreen!10] (0,0) circle (0.26cm);
+      \node[font=\tiny\bfseries, FedGreen!80!black] at (0,0) {T};
+      % Trait de connexion vers la tuyauterie
+      \draw[FedGreen, thick] (0,-0.26) -- (0,-0.44);
+    }
+  },
+
+  % Sonde de pression (cercle + P)
+  pics/sonde-p/.style={
+    code={
+      \draw[FedGreen, thick, fill=FedGreen!10] (0,0) circle (0.26cm);
+      \node[font=\tiny\bfseries, FedGreen!80!black] at (0,0) {P};
+      \draw[FedGreen, thick] (0,-0.26) -- (0,-0.44);
+    }
+  },
+
+  % Actionneur thermoélectrique (carré + flèche de commande)
+  pics/actionneur/.style={
+    code={
+      \draw[FedGreen, thick, fill=FedGreen!10] (-0.24,-0.24) rectangle (0.24,0.24);
+      \draw[-{Stealth[length=3pt]}, FedGreen, thick] (0,0.24) -- (0,0.44);
+      % Trait électrique (en pointillé)
+      \draw[FedGreen!60, dashed, thick] (0.24,0) -- (0.44,0);
+    }
+  },
+}

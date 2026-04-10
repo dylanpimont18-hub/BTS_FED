@@ -6,8 +6,8 @@ Mis à jour automatiquement par l'agent à chaque run.
 ---
 
 ## Dernier run
-- Date : 2026-04-09 (14ème run)
-- Action : **T17 — Environnement `fichememo` (tcolorbox FedBlue) ajouté dans cours/preamble.tex, après la définition de `methode` : permet d'utiliser `\begin{fichememo}[Titre]...\end{fichememo}` dans tous les chapitres pour encadrer les fiches mémo de formules**
+- Date : 2026-04-10 (15ème run)
+- Action : **Création de `cours/tikz-gcf-symbols.tex` (19 symboles ISO GCF : pompe, vannes quart/motorisée/équilibrage, clapet, chaudière, échangeur, ballon, vase-expansion, PAC, CTA, ventilateur, registre, filtre, radiateur, VC, sondes T/P, actionneur) + `\input` dans preamble.tex. T20 FAIT : fig:circuit-boucle remplacée (ch02, symboles pompe/vanne-équilibrage/radiateur/vase-expansion). T22 FAIT : nouvelle fig:pac-hydraulique-iso ajoutée (ch04, PAC+ballon+V3V+sondes). T23 FAIT : fig:circuit-bitube-v3v remplacée (ch05, pompe/V3V motorisée/vannes-quart/radiateurs ISO).**
 
 ---
 
@@ -34,6 +34,18 @@ Mis à jour automatiquement par l'agent à chaque run.
 | T15 | FAIBLE | **FAIT** | `cours/chapitres/00-analyse-dimensionnelle.tex` | Enrichir avec données terrain réelles (catalogues Grundfos, Daikin) |
 | T16 | FAIBLE | **FAIT** | `cours/chapitres/11-etudes-de-cas.tex` | Ajouter renvois inter-chapitres explicites |
 | T17 | FAIBLE | **FAIT** | `cours/preamble.tex` | Ajouter environnement `fichemémo` (tcolorbox récap formules) |
+| T18 | HAUTE | TODO | `cours/chapitres/00-analyse-dimensionnelle.tex` | Schémas TikZ ISO GCF : symboles hydrauliques/aérauliques |
+| T19 | HAUTE | TODO | `cours/chapitres/01-bases-thermiques.tex` | Schémas TikZ ISO GCF : remplacer formes génériques |
+| T20 | HAUTE | **FAIT** | `cours/chapitres/02-hydraulique.tex` | Schémas TikZ ISO GCF : circuit hydraulique bouclé avec symboles pompe/vannes/radiateurs |
+| T21 | HAUTE | TODO | `cours/chapitres/03-aeraulique.tex` | Schémas TikZ ISO GCF : CTA, ventilateur, registre, filtre |
+| T22 | HAUTE | **FAIT** | `cours/chapitres/04-production-chaleur.tex` | Schémas TikZ ISO GCF : PAC hydraulique avec ballon tampon |
+| T23 | HAUTE | **FAIT** | `cours/chapitres/05-distribution-emission.tex` | Schémas TikZ ISO GCF : circuit bitube V3V + radiateurs ISO |
+| T24 | MOYENNE | TODO | `cours/chapitres/06-climatisation.tex` | Schémas TikZ ISO GCF : groupe froid, VC, CTA |
+| T25 | MOYENNE | TODO | `cours/chapitres/07-regulation-gtb.tex` | Schémas TikZ ISO GCF : sondes T/P, actionneurs, régulateurs |
+| T26 | MOYENNE | TODO | `cours/chapitres/08-efficacite-energetique.tex` | Schémas TikZ ISO GCF : échangeur, PAC, comptage |
+| T27 | MOYENNE | TODO | `cours/chapitres/09-acoustique.tex` | Schémas TikZ ISO GCF : silencieux, registre |
+| T28 | FAIBLE | TODO | `cours/chapitres/10-electrotechnique.tex` | Schémas TikZ ISO GCF : actionneur, sonde, tableau |
+| T29 | FAIBLE | TODO | `cours/chapitres/11-etudes-de-cas.tex` | Schémas TikZ ISO GCF : schéma installation complète |
 
 ### Règles de sélection des tâches
 ```

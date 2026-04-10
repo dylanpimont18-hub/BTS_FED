@@ -39,69 +39,89 @@ La transition vers les pompes à chaleur (PAC) impose une réflexion systématiq
 % --- Figure 1 : Schéma circuit bitube avec vanne 3 voies et robinets thermostatiques ---
 \begin{figure}[H]
   \centering
-  \begin{tikzpicture}[
-    >=Stealth,
-    every node/.style={font=\small},
-    pipe/.style={line width=1.5pt},
-    hotpipe/.style={pipe, color=FedOrange},
-    coldpipe/.style={pipe, color=FedBlue},
-    box/.style={draw, fill=white, minimum width=1.4cm, minimum height=0.8cm, align=center},
-    valve/.style={draw, fill=FedGreen!30, circle, minimum size=0.5cm, inner sep=0pt},
-    rad/.style={draw=FedOrange, fill=FedOrange!15, minimum width=1.1cm, minimum height=1.6cm, align=center, rounded corners=2pt}
-  ]
+  \begin{tikzpicture}[>=Stealth, thick, font=\small]
 
-    % Chaudière / PAC
-    \node[draw=FedBlue, fill=FedBlue!15, minimum width=1.6cm, minimum height=1.2cm, align=center, rounded corners=4pt] (prod) at (0,0) {\textbf{Chaudière}\\\textbf{/ PAC}};
+    % ---- Production : Chaudière / PAC (symbole ISO GCF) ----
+    \pic at (0,0) {chaudiere};
+    \node[font=\footnotesize, FedOrange] at (0,-0.60) {Chaud./PAC};
 
-    % Pompe de circulation
-    \node[draw, circle, fill=FedOrange!20, minimum size=0.8cm, right=1.2cm of prod] (pump) {$\circlearrowleft$};
+    % ---- Pompe de circulation (symbole ISO GCF) ----
+    \pic at (1.80,0) {pompe};
+    \node[font=\tiny, FedOrange] at (1.80,0.56) {P};
 
-    % Vanne 3 voies mélange
-    \node[valve, right=1.0cm of pump, minimum size=0.8cm, fill=FedGreen!30] (v3v) {};
-    \node[above=0.05cm of v3v, font=\tiny] {V3V};
+    % ---- Vanne motorisée 3 voies mélange (symbole ISO GCF) ----
+    \pic at (3.20,0) {vanne-motorisee};
+    \node[font=\tiny, FedBlue] at (3.20,-0.50) {V3V};
 
-    % Collecteur départ (nourrice)
-    \node[draw, fill=FedOrange!25, minimum width=0.3cm, minimum height=3.6cm] (coll_dep) at (5.5, 0) {};
-    \node[right=0.05cm of coll_dep, font=\tiny, rotate=90, anchor=south] {Nourrice départ};
+    % ---- Collecteur départ ----
+    \draw[FedRed, thick, fill=FedRed!15] (4.60,-1.90) rectangle (5.00,1.90);
+    \node[font=\tiny\bfseries, FedRed, rotate=90] at (4.80,0) {Nourrice départ};
 
-    % Collecteur retour
-    \node[draw, fill=FedBlue!25, minimum width=0.3cm, minimum height=3.6cm] (coll_ret) at (8.2, 0) {};
-    \node[right=0.05cm of coll_ret, font=\tiny, rotate=90, anchor=south] {Nourrice retour};
+    % ---- Collecteur retour ----
+    \draw[FedBlue, thick, fill=FedBlue!12] (8.10,-1.90) rectangle (8.50,1.90);
+    \node[font=\tiny\bfseries, FedBlue, rotate=90] at (8.30,0) {Nourrice retour};
 
-    % Tuyau départ principal (orange)
-    \draw[hotpipe, ->] (prod.east) -- (pump.west);
-    \draw[hotpipe, ->] (pump.east) -- (v3v.west);
-    \draw[hotpipe, ->] (v3v.east) -- (5.35, 0) node[above, midway, font=\tiny] {Départ 45–55°C};
+    % ---- Robinets thermostatiques (vanne quart de tour — symboles ISO) ----
+    \pic at (5.70, 1.40) {vanne-quart};
+    \node[font=\tiny, FedBlue] at (5.70,1.96) {RT 1};
+    \pic at (5.70,-1.40) {vanne-quart};
+    \node[font=\tiny, FedBlue] at (5.70,-0.84) {RT 2};
 
-    % Tuyau retour principal (bleu)
-    \draw[coldpipe, ->] (8.35, 0) -- (v3v.south |- 0, -1.8) -- (v3v.south |- prod.west) -- +(-0.3,0) node[below, font=\tiny] {Retour};
-    \draw[coldpipe] (8.35,0) -- (prod.east |- 0, -1.8) -- (prod.south |- 0,-1.8) -- (prod.south);
+    % ---- Radiateurs (symboles ISO GCF) ----
+    \pic at (7.00, 1.40) {radiateur};
+    \node[font=\footnotesize, FedRed] at (7.00,1.98) {Rad. 1};
+    \pic at (7.00,-1.40) {radiateur};
+    \node[font=\footnotesize, FedRed] at (7.00,-0.82) {Rad. 2};
 
-    % Radiateur 1
-    \node[rad] (rad1) at (6.85, 1.4) {Rad 1};
-    % robinet thermostatique entrée (symbole simplifié)
-    \node[valve, fill=FedRed!30, minimum size=0.4cm] (rt1) at (6.1, 1.4) {};
-    \node[above=0.0cm of rt1, font=\tiny] {RT};
-    \draw[hotpipe, ->] (5.5, 1.4) -- (rt1.west);
-    \draw[hotpipe, ->] (rt1.east) -- (rad1.west);
-    \draw[coldpipe, ->] (rad1.east) -- (8.2, 1.4);
+    % ---- Sondes de température départ/retour ----
+    \pic at (4.00, 0.55) {sonde-t};
+    \node[font=\tiny, FedGreen!80!black] at (4.58,0.55) {45–55°C};
 
-    % Radiateur 2
-    \node[rad] (rad2) at (6.85, -1.4) {Rad 2};
-    \node[valve, fill=FedRed!30, minimum size=0.4cm] (rt2) at (6.1, -1.4) {};
-    \node[above=0.0cm of rt2, font=\tiny] {RT};
-    \draw[hotpipe, ->] (5.5, -1.4) -- (rt2.west);
-    \draw[hotpipe, ->] (rt2.east) -- (rad2.west);
-    \draw[coldpipe, ->] (rad2.east) -- (8.2, -1.4);
+    % ============ TUYAUTERIES ============
 
-    % Légende
-    \draw[hotpipe] (0, -2.8) -- ++(1.0, 0) node[right] {Eau chaude (départ)};
-    \draw[coldpipe] (5, -2.8) -- ++(1.0, 0) node[right] {Eau froide (retour)};
-    \node[valve, fill=FedRed!30, minimum size=0.4cm] at (3.8,-2.8) {};
-    \node[right=0.3cm] at (3.8,-2.8) {Robinet thermostatique (RT)};
+    % Départ production → pompe → V3V → collecteur départ (rouge)
+    \draw[->, FedRed, very thick] (0.68,0.18) -- (1.30,0.18);
+    \draw[->, FedRed, very thick] (2.30,0.18) -- (2.82,0.18);
+    \draw[->, FedRed, very thick]
+      (3.58,0.18) -- node[above, font=\tiny, FedRed]{Départ} (4.60,0.18);
+
+    % Retour collecteur retour → V3V bypass → production (bleu)
+    \draw[FedBlue, very thick] (8.50,0) -- (9.20,0) -- (9.20,-2.60)
+      -- (0,-2.60) -- (0.68,-0.18);
+    \draw[->, FedBlue, very thick] (3.58,-0.18) -- (2.30,-0.18);
+    \draw[->, FedBlue, very thick] (1.30,-0.18) -- (0.68,-0.18);
+
+    % Bypass V3V (boucle de mélange court-circuit)
+    \draw[FedBlue!50, dashed, thick]
+      (3.20,-0.76) -- (3.20,-1.20)
+      -- node[below, font=\tiny, FedBlue!50]{Bypass} (4.60,-1.20) -- (4.60,-0.30);
+
+    % Nourrice départ → robinets → radiateurs départ (rouge)
+    \draw[->, FedRed, thick] (5.00, 1.40) -- (5.32,1.40);
+    \draw[->, FedRed, thick] (6.08, 1.40) -- (6.56,1.40);
+    \draw[->, FedRed, thick] (5.00,-1.40) -- (5.32,-1.40);
+    \draw[->, FedRed, thick] (6.08,-1.40) -- (6.56,-1.40);
+
+    % Radiateurs retour → collecteur retour (bleu)
+    \draw[->, FedBlue, thick] (7.44,1.26) -- (8.10,1.40);
+    \draw[->, FedBlue, thick] (7.44,-1.26) -- (8.10,-1.40);
+
+    % ============ LÉGENDE ============
+    \draw[FedRed,  very thick, ->] (0.0,-3.30) -- ++(0.8,0);
+    \node[right, font=\footnotesize, FedRed]  at (0.8,-3.30) {Départ (eau chaude)};
+    \draw[FedBlue, very thick, ->] (0.0,-3.70) -- ++(0.8,0);
+    \node[right, font=\footnotesize, FedBlue] at (0.8,-3.70) {Retour};
+    \pic at (4.5,-3.30) {pompe};
+    \node[right, font=\footnotesize, FedOrange] at (4.95,-3.30) {Pompe};
+    \pic at (4.5,-3.70) {vanne-motorisee};
+    \node[right, font=\footnotesize, FedBlue]   at (4.95,-3.70) {Vanne motorisée V3V};
+    \pic at (7.8,-3.30) {vanne-quart};
+    \node[right, font=\footnotesize, FedBlue]   at (8.22,-3.30) {Robinet thermostatique};
+    \pic at (7.8,-3.70) {radiateur};
+    \node[right, font=\footnotesize, FedRed]    at (8.22,-3.70) {Radiateur};
 
   \end{tikzpicture}
-  \caption{Schéma de principe d'un circuit bitube avec vanne 3 voies et robinets thermostatiques}
+  \caption{Circuit bitube avec vanne 3 voies et robinets thermostatiques — symboles ISO GCF}
   \label{fig:circuit-bitube-v3v}
 \end{figure}
 

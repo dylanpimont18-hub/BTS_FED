@@ -317,6 +317,107 @@ Le SCOP est le COP moyen calculé sur l'ensemble de la saison de chauffage, selo
   \label{fig:cycle-pac}
 \end{figure}
 
+% ---- Schéma hydraulique PAC air/eau avec symboles ISO GCF ----
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[>=Stealth, thick, font=\small]
+
+    % ---- PAC air/eau (symbole ISO GCF) ----
+    \pic at (0,0) {pac};
+    \node[font=\footnotesize, FedBlue] at (0,-0.65) {PAC air/eau};
+
+    % ---- Ballon tampon (symbole ISO GCF) ----
+    \pic at (3.8,0) {ballon};
+    \node[font=\footnotesize, FedBlue] at (3.8,-0.90) {Ballon tampon};
+
+    % ---- Vase d'expansion (symbole ISO GCF) ----
+    \pic at (3.8,1.5) {vase-expansion};
+    \node[font=\footnotesize, FedGreen!80!black] at (4.55,1.5) {$V_e$};
+
+    % ---- Pompe primaire PAC→ballon (symbole ISO GCF) ----
+    \pic at (2.0, 0.40) {pompe};
+    \node[font=\tiny, FedOrange] at (2.0,0.95) {P1};
+
+    % ---- Pompe secondaire ballon→émetteurs (symbole ISO GCF) ----
+    \pic at (5.6, 0.40) {pompe};
+    \node[font=\tiny, FedOrange] at (5.6,0.95) {P2};
+
+    % ---- Vanne motorisée 3 voies (symbole ISO GCF) ----
+    \pic at (7.5, 0) {vanne-motorisee};
+    \node[font=\tiny, FedBlue] at (7.5,-0.50) {V3V};
+
+    % ---- Sonde température départ (symbole ISO GCF) ----
+    \pic at (5.6,-0.55) {sonde-t};
+    \node[font=\tiny, FedGreen!80!black] at (6.2,-0.55) {$T_{dep}$};
+
+    % ---- Sonde température retour (symbole ISO GCF) ----
+    \pic at (2.0,-0.55) {sonde-t};
+    \node[font=\tiny, FedGreen!80!black] at (2.6,-0.55) {$T_{ret}$};
+
+    % ---- Nourrice émetteurs (représentation schématique) ----
+    \draw[FedBlue, thick, fill=FedBlue!12, rounded corners=2pt]
+      (9.0,-0.28) rectangle (9.6,0.28);
+    \node[font=\tiny\bfseries, FedBlue, rotate=90] at (9.3,0) {Nourrice};
+
+    % ============ TUYAUTERIES ============
+
+    % Circuit primaire : PAC → pompe P1 → ballon (départ rouge)
+    \draw[->, FedRed, very thick]
+      (0.80, 0.20)
+      -- node[above, font=\footnotesize, FedRed]{45°C} (1.50,0.20);
+    \draw[->, FedRed, very thick]
+      (2.50, 0.20) -- (3.50,0.20);
+
+    % Ballon → vase d'expansion (piqûre)
+    \draw[FedGreen, thick] (3.80, 0.52) -- (3.80,1.16);
+
+    % Retour ballon → PAC (bleu)
+    \draw[->, FedBlue, very thick]
+      (3.50,-0.20) -- (2.50,-0.20);
+    \draw[->, FedBlue, very thick]
+      (1.50,-0.20)
+      -- node[below, font=\footnotesize, FedBlue]{35°C} (0.80,-0.20);
+
+    % Circuit secondaire : ballon → pompe P2 → V3V → nourrice (rouge)
+    \draw[->, FedRed, very thick]
+      (4.10, 0.20) -- (5.10,0.20);
+    \draw[->, FedRed, very thick]
+      (6.10, 0.20) -- node[above, font=\footnotesize, FedRed]{40°C} (7.12,0.20);
+    \draw[->, FedRed, very thick]
+      (7.88, 0.20) -- (9.0,0.20);
+
+    % Retour nourrice → V3V → ballon (bleu)
+    \draw[->, FedBlue, very thick]
+      (9.0,-0.20) -- (7.88,-0.20);
+    \draw[->, FedBlue, very thick]
+      (7.12,-0.20)
+      -- node[below, font=\footnotesize, FedBlue]{30°C} (4.10,-0.20);
+
+    % Bypass V3V (boucle de mélange)
+    \draw[FedBlue!60, dashed, thick]
+      (7.5,-0.76) -- (7.5,-1.20) -- (6.30,-1.20)
+      -- node[below, font=\tiny, FedBlue!60]{Bypass mélange} (5.60,-1.20)
+      -- (5.60,-0.20);
+
+    % ============ LÉGENDE ============
+    \draw[FedRed,  very thick, ->] (0.0,-2.0) -- ++(0.8,0);
+    \node[right, font=\footnotesize, FedRed]  at (0.8,-2.0) {Départ (eau chaude)};
+    \draw[FedBlue, very thick, ->] (0.0,-2.4) -- ++(0.8,0);
+    \node[right, font=\footnotesize, FedBlue] at (0.8,-2.4) {Retour};
+    \pic at (4.5,-2.0) {pompe};
+    \node[right, font=\footnotesize, FedOrange] at (4.95,-2.0) {Pompe de circulation};
+    \pic at (4.5,-2.4) {vanne-motorisee};
+    \node[right, font=\footnotesize, FedBlue]   at (4.95,-2.4) {Vanne motorisée (V3V)};
+    \pic at (7.8,-2.0) {ballon};
+    \node[right, font=\footnotesize, FedBlue]   at (8.15,-2.0) {Ballon tampon};
+    \pic at (7.8,-2.4) {sonde-t};
+    \node[right, font=\footnotesize, FedGreen!80!black] at (8.10,-2.4) {Sonde température};
+
+  \end{tikzpicture}
+  \caption{Schéma hydraulique d'une installation PAC air/eau avec ballon tampon et vanne 3 voies — symboles ISO GCF}
+  \label{fig:pac-hydraulique-iso}
+\end{figure}
+
 \subsection{Point de bivalence}
 
 La puissance des PAC air/eau diminue lorsque la température extérieure baisse. En dessous d'une certaine température (point de bivalence), un générateur d'appoint (résistance électrique, chaudière) prend le relais.

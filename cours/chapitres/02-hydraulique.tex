@@ -501,62 +501,95 @@ Choisir un vase de \SI{12}{\litre} (première taille standard supérieure).
 
 \begin{figure}[H]
   \centering
-  \begin{tikzpicture}[
-    thick,
-    >=Stealth,
-    box/.style={draw, rectangle, minimum width=2.2cm, minimum height=0.85cm,
-                fill=FedBlue!15, draw=FedBlue, rounded corners=3pt, font=\small\bfseries},
-    pump/.style={draw, circle, minimum size=0.85cm, fill=FedOrange!20,
-                 draw=FedOrange, font=\small\bfseries},
-    exp/.style={draw, diamond, minimum width=1.1cm, minimum height=1.1cm,
-                fill=FedGreen!20, draw=FedGreen, font=\scriptsize\bfseries},
-  ]
-    % Noeuds principaux (coordonnées absolues)
-    \node[box]  (chaudiere) at (0,0)    {Chaudière};
-    \node[pump] (pompe)     at (0,-2.2) {$P$};
-    \node[box]  (nourrice)  at (5,0)    {Nourrice};
-    \node[box]  (rad1)      at (2.5,-3.5) {Rad. 1};
-    \node[box]  (rad2)      at (5,-3.5)   {Rad. 2};
-    \node[box]  (rad3)      at (7.5,-3.5) {Rad. 3};
-    \node[exp]  (vase)      at (2.5,0)  {$V_e$};
+  \begin{tikzpicture}[>=Stealth, thick, font=\small]
 
-    % Tuyauterie départ : chaudière → nourrice
-    \draw[->, draw=FedRed, very thick]
-      (chaudiere.east) -- node[above, font=\footnotesize, text=FedRed]{Départ 70°C}
-      (nourrice.west);
+    % ---- Chaudière (symbole ISO GCF) ----
+    \pic at (0,0) {chaudiere};
+    \node[font=\footnotesize\bfseries, FedOrange] at (0,-0.60) {Chaudière};
 
-    % Vase d'expansion raccordé sur le départ
-    \draw[draw=FedGreen, thick] (vase.east) -- (3.9,0);
+    % ---- Pompe de circulation (symbole ISO GCF) ----
+    \pic at (0,-2.2) {pompe};
+    \node[font=\footnotesize, FedOrange] at (0.80,-2.2) {Pompe};
 
-    % Distribution depuis nourrice vers radiateurs
-    \draw[draw=FedRed, thick] (nourrice.south) -- (5,-2.5) -- (2.5,-2.5);
-    \draw[draw=FedRed, thick] (5,-2.5) -- (7.5,-2.5);
-    \draw[->, draw=FedRed, thick] (2.5,-2.5) -- (rad1.north);
-    \draw[->, draw=FedRed, thick] (5,-2.5)   -- (rad2.north);
-    \draw[->, draw=FedRed, thick] (7.5,-2.5) -- (rad3.north);
+    % ---- Vase d'expansion (symbole ISO GCF) ----
+    \pic at (2.5,0) {vase-expansion};
+    \node[font=\footnotesize, FedGreen!80!black] at (2.5,0.80) {$V_e$};
 
-    % Retour des radiateurs
-    \draw[draw=FedBlue, thick] (rad1.south) -- (2.5,-4.5);
-    \draw[draw=FedBlue, thick] (rad2.south) -- (5,-4.5);
-    \draw[draw=FedBlue, thick] (rad3.south) -- (7.5,-4.5);
-    \draw[draw=FedBlue, thick] (2.5,-4.5) -- (7.5,-4.5);
-    \draw[draw=FedBlue, thick] (5,-4.5) -- (5,-5.0) -- (0,-5.0) -- (0,-2.65);
-    \draw[->, draw=FedBlue, very thick]
-      (pompe.south) -- node[right, font=\footnotesize, text=FedBlue]{Retour 55°C}
-      (0,-2.65);
+    % ---- Collecteur / Nourrice ----
+    \draw[FedBlue, thick, fill=FedBlue!12, rounded corners=2pt]
+      (4.6,-0.30) rectangle (5.4,0.30);
+    \node[font=\footnotesize\bfseries, FedBlue] at (5.0,0) {Nourrice};
 
-    % Pompe → chaudière
-    \draw[->, draw=FedBlue, very thick] (pompe.north) -- (chaudiere.south);
+    % ---- Vannes d'équilibrage sur chaque dérivation (symboles ISO) ----
+    \pic at (2.5,-2.2) {vanne-equilibrage};
+    \pic at (5.0,-2.2) {vanne-equilibrage};
+    \pic at (7.5,-2.2) {vanne-equilibrage};
 
-    % Légende
-    \draw[draw=FedRed, very thick, ->] (1.8,-6.0) -- ++(0.7,0);
-    \node[right, font=\footnotesize, text=FedRed] at (2.5,-6.0) {Aller (eau chaude)};
-    \draw[draw=FedBlue, very thick, ->] (1.8,-6.5) -- ++(0.7,0);
-    \node[right, font=\footnotesize, text=FedBlue] at (2.5,-6.5) {Retour (eau froide)};
-    \node[font=\footnotesize, text=FedGreen!70!black] at (7.2,-6.0) {$V_e$ : Vase d'expansion};
-    \node[font=\footnotesize, text=FedOrange!80!black] at (7.2,-6.5) {$P$ : Pompe de circulation};
+    % ---- Radiateurs (symboles ISO GCF) ----
+    \pic at (2.5,-3.5) {radiateur};
+    \node[font=\footnotesize, FedRed] at (2.5,-4.10) {Rad. 1};
+    \pic at (5.0,-3.5) {radiateur};
+    \node[font=\footnotesize, FedRed] at (5.0,-4.10) {Rad. 2};
+    \pic at (7.5,-3.5) {radiateur};
+    \node[font=\footnotesize, FedRed] at (7.5,-4.10) {Rad. 3};
+
+    % ---- Sondes de température départ/retour ----
+    \pic at (3.0, 0.55) {sonde-t};
+    \node[font=\tiny, FedGreen] at (3.6, 0.55) {70°C};
+    \pic at (3.0,-5.3) {sonde-t};
+    \node[font=\tiny, FedGreen] at (3.6,-5.3) {55°C};
+
+    % ============ TUYAUTERIES ============
+
+    % Départ chaudière → vase → nourrice (rouge = eau chaude)
+    \draw[->, FedRed, very thick]
+      (0.68, 0.18) -- node[above, font=\footnotesize, FedRed]{Départ 70°C} (4.6,0.18);
+
+    % Vase d'expansion piqué sur le départ
+    \draw[FedGreen, thick] (2.5,-0.54) -- (2.5,0.18);
+
+    % Distribution depuis nourrice vers collecteur horizontal
+    \draw[FedRed, thick] (5.0,-0.30) -- (5.0,-1.80);
+    \draw[FedRed, thick] (2.5,-1.80) -- (7.5,-1.80);
+    % Branches vers vannes d'équilibrage
+    \draw[->, FedRed, thick] (2.5,-1.80) -- (2.5,-1.96);
+    \draw[->, FedRed, thick] (5.0,-1.80) -- (5.0,-1.96);
+    \draw[->, FedRed, thick] (7.5,-1.80) -- (7.5,-1.96);
+    % Vannes → radiateurs (départ)
+    \draw[->, FedRed, thick] (2.5,-2.44) -- (2.5,-3.20);
+    \draw[->, FedRed, thick] (5.0,-2.44) -- (5.0,-3.20);
+    \draw[->, FedRed, thick] (7.5,-2.44) -- (7.5,-3.20);
+
+    % Retour radiateurs → collecteur retour (bleu = eau froide)
+    \draw[FedBlue, thick] (2.5,-3.80) -- (2.5,-4.80);
+    \draw[FedBlue, thick] (5.0,-3.80) -- (5.0,-4.80);
+    \draw[FedBlue, thick] (7.5,-3.80) -- (7.5,-4.80);
+    \draw[FedBlue, thick] (2.5,-4.80) -- (7.5,-4.80);
+
+    % Collecteur retour → pompe
+    \draw[->, FedBlue, very thick]
+      (5.0,-4.80) -- (5.0,-5.50) -- (0,-5.50)
+      -- node[right, font=\footnotesize, FedBlue]{Retour 55°C} (0,-2.52);
+
+    % Pompe → chaudière (retour)
+    \draw[->, FedBlue, very thick] (0,-1.88) -- (0.68,-0.18);
+
+    % ============ LÉGENDE ============
+    \draw[FedRed, very thick, ->] (0.0,-6.30) -- ++(0.8,0);
+    \node[right, font=\footnotesize, FedRed]  at (0.8,-6.30) {Départ (eau chaude)};
+    \draw[FedBlue, very thick, ->] (0.0,-6.75) -- ++(0.8,0);
+    \node[right, font=\footnotesize, FedBlue] at (0.8,-6.75) {Retour (eau tiède)};
+    \pic at (5.2,-6.30) {vase-expansion};
+    \node[right, font=\footnotesize, FedGreen!80!black] at (5.55,-6.30) {Vase d'expansion};
+    \pic at (5.2,-6.75) {pompe};
+    \node[right, font=\footnotesize, FedOrange] at (5.55,-6.75) {Pompe de circulation};
+    \pic at (7.5,-6.30) {vanne-equilibrage};
+    \node[right, font=\footnotesize, FedBlue!80!black] at (7.95,-6.30) {Vanne d'équilibrage};
+    \pic at (7.5,-6.75) {radiateur};
+    \node[right, font=\footnotesize, FedRed] at (7.95,-6.75) {Radiateur};
+
   \end{tikzpicture}
-  \caption{Schéma de principe d'un circuit hydraulique bouclé (chauffage bitubes)}
+  \caption{Schéma de principe d'un circuit hydraulique bouclé — symboles ISO GCF (chauffage bitubes)}
   \label{fig:circuit-boucle}
 \end{figure}
 
