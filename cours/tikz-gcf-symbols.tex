@@ -1,0 +1,348 @@
+% tikz-gcf-symbols.tex — Bibliothèque de symboles ISO GCF pour TikZ
+% BTS FED GCF — Charte graphique unifiée
+% Chargé automatiquement via preamble.tex
+%
+% Usage : \pic{nom} dans un node, ou \draw ... pic{nom}
+% Couleurs : FedBlue (hydraulique), FedRed (eau chaude), FedOrange (mécanique), FedGreen (régulation)
+
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, patterns, decorations.pathmorphing}
+
+% ===========================================================
+% POMPE DE CIRCULATION (cercle + triangle ISO)
+% ===========================================================
+\tikzset{
+  pics/pompe/.style={
+    code={
+      \draw[thick, FedBlue] (0,0) circle (0.4cm);
+      \fill[FedBlue] (-0.1,0) -- (0.35, 0.22) -- (0.35,-0.22) -- cycle;
+      \draw[thick, FedBlue] (-0.4,0) -- (-0.55,0);
+      \draw[thick, FedBlue] (0.4,0) -- (0.55,0);
+    }
+  }
+}
+
+% ===========================================================
+% VANNE QUART DE TOUR (papillon ISO — deux triangles opposés)
+% ===========================================================
+\tikzset{
+  pics/vanne-quart/.style={
+    code={
+      \draw[thick, FedOrange] (-0.35,0) -- (-0.6,0);
+      \draw[thick, FedOrange] (0.35,0) -- (0.6,0);
+      \fill[FedOrange!30] (-0.35,0) -- (0,0.3) -- (0.35,0) -- (0,-0.3) -- cycle;
+      \draw[thick, FedOrange] (-0.35,0) -- (0,0.3) -- (0.35,0) -- (0,-0.3) -- cycle;
+    }
+  }
+}
+
+% ===========================================================
+% VANNE MOTORISÉE (papillon + carré actuateur)
+% ===========================================================
+\tikzset{
+  pics/vanne-motorisee/.style={
+    code={
+      \draw[thick, FedGreen] (-0.35,0) -- (-0.6,0);
+      \draw[thick, FedGreen] (0.35,0) -- (0.6,0);
+      \fill[FedGreen!20] (-0.35,0) -- (0,0.3) -- (0.35,0) -- (0,-0.3) -- cycle;
+      \draw[thick, FedGreen] (-0.35,0) -- (0,0.3) -- (0.35,0) -- (0,-0.3) -- cycle;
+      % Actuateur motorisé
+      \draw[thick, FedGreen] (-0.18,0.3) rectangle (0.18,0.65);
+      \node[FedGreen, font=\tiny\bfseries] at (0,0.475) {M};
+    }
+  }
+}
+
+% ===========================================================
+% VANNE D'ÉQUILIBRAGE (double triangle ISO)
+% ===========================================================
+\tikzset{
+  pics/vanne-equilibrage/.style={
+    code={
+      \draw[thick, FedBlue!70!black] (-0.35,0) -- (-0.6,0);
+      \draw[thick, FedBlue!70!black] (0.35,0) -- (0.6,0);
+      \fill[FedBlue!20] (-0.35,0.28) -- (0.35,0) -- (-0.35,-0.28) -- cycle;
+      \fill[FedBlue!20] (0.35,0.28) -- (-0.35,0) -- (0.35,-0.28) -- cycle;
+      \draw[thick, FedBlue!70!black] (-0.35,0.28) -- (0.35,0) -- (-0.35,-0.28);
+      \draw[thick, FedBlue!70!black] (0.35,0.28) -- (-0.35,0) -- (0.35,-0.28);
+      % Trait de réglage
+      \draw[thick, FedBlue!70!black] (0,-0.28) -- (0,-0.55);
+      \draw[thick, FedBlue!70!black] (-0.12,-0.55) -- (0.12,-0.55);
+    }
+  }
+}
+
+% ===========================================================
+% CLAPET ANTI-RETOUR (flèche barrée ISO)
+% ===========================================================
+\tikzset{
+  pics/clapet/.style={
+    code={
+      \draw[thick, FedBlue] (-0.5,0) -- (-0.1,0);
+      \draw[thick, FedBlue] (0.1,0) -- (0.5,0);
+      \fill[FedBlue!30] (-0.1,-0.3) -- (0.3,0) -- (-0.1,0.3) -- cycle;
+      \draw[thick, FedBlue] (-0.1,-0.3) -- (0.3,0) -- (-0.1,0.3);
+      \draw[very thick, FedBlue] (-0.1,-0.35) -- (-0.1,0.35);
+    }
+  }
+}
+
+% ===========================================================
+% CHAUDIÈRE (rectangle + flamme stylisée)
+% ===========================================================
+\tikzset{
+  pics/chaudiere/.style={
+    code={
+      \draw[thick, FedRed] (-0.5,-0.35) rectangle (0.5,0.35);
+      % Flamme
+      \draw[thick, FedOrange] (-0.15,-0.05)
+        .. controls (-0.2,0.15) and (0,0.05) .. (0,0.25)
+        .. controls (0,0.05) and (0.2,0.15) .. (0.15,-0.05);
+      \fill[FedOrange!50] (-0.15,-0.05)
+        .. controls (-0.2,0.15) and (0,0.05) .. (0,0.25)
+        .. controls (0,0.05) and (0.2,0.15) .. (0.15,-0.05) -- cycle;
+      % Connexions
+      \draw[thick, FedBlue] (-0.5,0.15) -- (-0.75,0.15);
+      \draw[thick, FedRed] (-0.5,-0.15) -- (-0.75,-0.15);
+      \draw[thick, FedRed] (0.5,0.15) -- (0.75,0.15);
+      \draw[thick, FedBlue] (0.5,-0.15) -- (0.75,-0.15);
+    }
+  }
+}
+
+% ===========================================================
+% ÉCHANGEUR À PLAQUES (double rectangle croisé)
+% ===========================================================
+\tikzset{
+  pics/echangeur/.style={
+    code={
+      \draw[thick, FedBlue] (-0.45,-0.35) rectangle (0.45,0.35);
+      \draw[thick, FedRed] (-0.35,-0.28) rectangle (0.35,0.28);
+      \draw[thick, FedBlue] (-0.45,0) -- (-0.35,0.28) -- (0.35,-0.28) -- (0.45,0);
+      \draw[thick, FedRed] (-0.35,0) -- (0.35,0);
+      % Connexions
+      \draw[thick, FedBlue] (-0.45,0.2) -- (-0.7,0.2);
+      \draw[thick, FedBlue] (0.45,-0.2) -- (0.7,-0.2);
+      \draw[thick, FedRed] (-0.45,-0.2) -- (-0.7,-0.2);
+      \draw[thick, FedRed] (0.45,0.2) -- (0.7,0.2);
+    }
+  }
+}
+
+% ===========================================================
+% BALLON TAMPON / ECS (ellipse verticale)
+% ===========================================================
+\tikzset{
+  pics/ballon/.style={
+    code={
+      \draw[thick, FedBlue] (0,0) ellipse (0.3cm and 0.55cm);
+      % Ligne de niveau
+      \draw[dashed, FedBlue!50] (-0.3,0.1) -- (0.3,0.1);
+      % Connexions
+      \draw[thick, FedBlue] (0,0.55) -- (0,0.75);
+      \draw[thick, FedRed] (0,-0.55) -- (0,-0.75);
+      \draw[thick, FedBlue] (-0.3,0.2) -- (-0.5,0.2);
+      \draw[thick, FedRed] (-0.3,-0.2) -- (-0.5,-0.2);
+    }
+  }
+}
+
+% ===========================================================
+% VASE D'EXPANSION (cercle + membrane)
+% ===========================================================
+\tikzset{
+  pics/vase-expansion/.style={
+    code={
+      \draw[thick, FedBlue] (0,0) circle (0.4cm);
+      % Membrane centrale
+      \draw[thick, FedBlue] (-0.4,0) -- (0.4,0);
+      \fill[FedBlue!20] (-0.4,0) arc (180:360:0.4) -- cycle;
+      % Connexion
+      \draw[thick, FedBlue] (0,0.4) -- (0,0.65);
+    }
+  }
+}
+
+% ===========================================================
+% POMPE À CHALEUR (rectangle + cycle frigorigène)
+% ===========================================================
+\tikzset{
+  pics/pac/.style={
+    code={
+      \draw[thick, FedBlue] (-0.55,-0.4) rectangle (0.55,0.4);
+      \node[FedBlue, font=\tiny\bfseries] at (0,0.2) {PAC};
+      % Cycle frigorigène simplifié (boucle)
+      \draw[->, thick, FedOrange] (-0.25,-0.1) -- (0.25,-0.1) -- (0.25,0.05) -- (-0.25,0.05) -- cycle;
+      % Connexions
+      \draw[thick, FedBlue] (-0.55,0.25) -- (-0.8,0.25);
+      \draw[thick, FedRed] (-0.55,-0.25) -- (-0.8,-0.25);
+      \draw[thick, FedGreen] (0.55,0.25) -- (0.8,0.25);
+      \draw[thick, FedGreen] (0.55,-0.25) -- (0.8,-0.25);
+    }
+  }
+}
+
+% ===========================================================
+% CENTRALE DE TRAITEMENT D'AIR (rectangle multi-sections)
+% ===========================================================
+\tikzset{
+  pics/cta/.style={
+    code={
+      \draw[thick, FedBlue] (-0.9,-0.45) rectangle (0.9,0.45);
+      % Sections internes
+      \draw[thick, FedBlue!50] (-0.55,-0.45) -- (-0.55,0.45);
+      \draw[thick, FedBlue!50] (-0.1,-0.45) -- (-0.1,0.45);
+      \draw[thick, FedBlue!50] (0.35,-0.45) -- (0.35,0.45);
+      % Étiquettes sections
+      \node[font=\tiny, FedBlue] at (-0.72,0) {F};
+      \node[font=\tiny, FedBlue] at (-0.32,0) {B};
+      \node[font=\tiny, FedBlue] at (0.12,0) {H};
+      \node[font=\tiny, FedBlue] at (0.62,0) {V};
+      % Flèches air
+      \draw[->, thick, FedBlue] (-1.1,0) -- (-0.9,0);
+      \draw[->, thick, FedBlue] (0.9,0) -- (1.1,0);
+    }
+  }
+}
+
+% ===========================================================
+% VENTILATEUR (cercle + pales ISO)
+% ===========================================================
+\tikzset{
+  pics/ventilateur/.style={
+    code={
+      \draw[thick, FedBlue] (0,0) circle (0.35cm);
+      % Pales
+      \draw[thick, FedBlue] (0,0) -- (0,0.35);
+      \draw[thick, FedBlue] (0,0) -- (0.3,-0.18);
+      \draw[thick, FedBlue] (0,0) -- (-0.3,-0.18);
+      % Courbes des pales
+      \draw[thick, FedBlue] (0,0.35) arc (90:30:0.35);
+      \draw[thick, FedBlue] (0.3,-0.18) arc (330:210:0.35);
+      \draw[thick, FedBlue] (-0.3,-0.18) arc (210:90:0.35);
+      % Connexions conduit
+      \draw[thick, FedBlue] (-0.35,0) -- (-0.6,0);
+      \draw[thick, FedBlue] (0.35,0) -- (0.6,0);
+    }
+  }
+}
+
+% ===========================================================
+% REGISTRE DE RÉGLAGE (rectangle barré diagonal)
+% ===========================================================
+\tikzset{
+  pics/registre/.style={
+    code={
+      \draw[thick, FedOrange] (-0.35,-0.2) rectangle (0.35,0.2);
+      \draw[thick, FedOrange] (-0.35,-0.2) -- (0.35,0.2);
+      % Connexions conduit
+      \draw[thick, FedBlue] (-0.5,0) -- (-0.35,0);
+      \draw[thick, FedBlue] (0.35,0) -- (0.5,0);
+    }
+  }
+}
+
+% ===========================================================
+% FILTRE (losange hachuré ISO)
+% ===========================================================
+\tikzset{
+  pics/filtre/.style={
+    code={
+      \fill[FedBlue!10] (0,0.3) -- (0.4,0) -- (0,-0.3) -- (-0.4,0) -- cycle;
+      \draw[thick, FedBlue] (0,0.3) -- (0.4,0) -- (0,-0.3) -- (-0.4,0) -- cycle;
+      % Hachures
+      \foreach \y in {-0.15, 0, 0.15} {
+        \draw[thin, FedBlue!60] (-0.28+\y*0.5, \y) -- (0.28-\y*0.5, \y);
+      }
+      % Connexions
+      \draw[thick, FedBlue] (-0.55,0) -- (-0.4,0);
+      \draw[thick, FedBlue] (0.4,0) -- (0.55,0);
+    }
+  }
+}
+
+% ===========================================================
+% RADIATEUR (rectangle à ailettes)
+% ===========================================================
+\tikzset{
+  pics/radiateur/.style={
+    code={
+      \draw[thick, FedRed] (-0.5,-0.35) rectangle (0.5,0.35);
+      % Ailettes verticales
+      \foreach \x in {-0.35,-0.175,0,0.175,0.35} {
+        \draw[thick, FedRed!60] (\x,-0.35) -- (\x,0.35);
+      }
+      % Connexions
+      \draw[thick, FedRed] (-0.5,0.2) -- (-0.7,0.2);
+      \draw[thick, FedBlue] (-0.5,-0.2) -- (-0.7,-0.2);
+    }
+  }
+}
+
+% ===========================================================
+% VENTILO-CONVECTEUR (rectangle + ventilateur intégré)
+% ===========================================================
+\tikzset{
+  pics/vc/.style={
+    code={
+      \draw[thick, FedBlue] (-0.55,-0.4) rectangle (0.55,0.4);
+      % Batterie (ailettes)
+      \foreach \x in {-0.4,-0.25,-0.1} {
+        \draw[thick, FedRed!60] (\x,-0.4) -- (\x,0.4);
+      }
+      % Ventilateur
+      \draw[thick, FedBlue] (0.25,0) circle (0.25cm);
+      \draw[thick, FedBlue] (0.25,0) -- (0.25,0.25);
+      \draw[thick, FedBlue] (0.25,0) -- (0.46,-0.125);
+      \draw[thick, FedBlue] (0.25,0) -- (0.04,-0.125);
+      % Connexions
+      \draw[thick, FedRed] (-0.55,0.2) -- (-0.75,0.2);
+      \draw[thick, FedBlue] (-0.55,-0.2) -- (-0.75,-0.2);
+    }
+  }
+}
+
+% ===========================================================
+% SONDE DE TEMPÉRATURE (cercle + T)
+% ===========================================================
+\tikzset{
+  pics/sonde-t/.style={
+    code={
+      \draw[thick, FedGreen] (0,0) circle (0.3cm);
+      \node[FedGreen, font=\small\bfseries] at (0,0) {T};
+      % Tige de sonde
+      \draw[thick, FedGreen] (0,-0.3) -- (0,-0.55);
+      \draw[very thick, FedGreen] (-0.08,-0.55) -- (0.08,-0.55);
+    }
+  }
+}
+
+% ===========================================================
+% SONDE DE PRESSION (cercle + P)
+% ===========================================================
+\tikzset{
+  pics/sonde-p/.style={
+    code={
+      \draw[thick, FedGreen] (0,0) circle (0.3cm);
+      \node[FedGreen, font=\small\bfseries] at (0,0) {P};
+      % Connexion process
+      \draw[thick, FedGreen] (0,-0.3) -- (0,-0.55);
+      \draw[very thick, FedGreen] (-0.08,-0.55) -- (0.08,-0.55);
+    }
+  }
+}
+
+% ===========================================================
+% ACTIONNEUR (carré + flèche de commande)
+% ===========================================================
+\tikzset{
+  pics/actionneur/.style={
+    code={
+      \draw[thick, FedGreen] (-0.25,-0.25) rectangle (0.25,0.25);
+      % Flèche de commande
+      \draw[->, thick, FedGreen] (0,0.25) -- (0,0.55);
+      % Trait de sortie mécanique
+      \draw[thick, FedGreen] (0,-0.25) -- (0,-0.45);
+      \draw[very thick, FedGreen] (-0.12,-0.45) -- (0.12,-0.45);
+    }
+  }
+}

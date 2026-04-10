@@ -855,4 +855,93 @@ $< 6{,}0\,\mathrm{kW}$ requis. \textbf{Appoint électrique nécessaire} ou modè
   \end{itemize}
 \end{tcolorbox}
 
+\subsection{Circuit de mesure GCF — Grandeurs et unités en situation réelle}
+
+La figure~\ref{fig:circuit-mesure-gcf} illustre comment les grandeurs physiques de ce
+chapitre s'appliquent concrètement sur un tronçon hydraulique typique (chauffage ou
+climatisation). Chaque instrument de mesure ou composant est associé à sa grandeur et son
+unité SI.
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+      node distance=1.8cm,
+      tuyau/.style={draw=FedBlue, line width=1.5pt},
+      etiq/.style={font=\sffamily\footnotesize, align=center},
+      unite/.style={draw=FedBlue!40, fill=FedBlue!5, rounded corners=3pt,
+                    font=\sffamily\scriptsize, inner sep=3pt, align=center},
+      legende/.style={font=\sffamily\scriptsize, align=left}
+    ]
+
+    % ---- Tracé du tuyau principal (horizontal) ----
+    \draw[tuyau] (0,0) -- (10.5,0);
+
+    % ---- Sonde pression amont (P1) ----
+    \node[etiq, above=0.05cm] at (1.2,0) {};
+    \pic at (1.2,0.6) {sonde-p};
+    \draw[FedGreen, thin] (1.2,0) -- (1.2,0.3);
+    \node[unite, above=1.1cm] at (1.2,0)
+      {\textbf{P\textsubscript{1}}\\$[\si{\pascal}]$};
+
+    % ---- Filtre (avec symbole ISO) ----
+    \pic at (2.6,0) {filtre};
+    \node[unite, below=0.65cm] at (2.6,0)
+      {\textbf{Filtre}};
+
+    % ---- Pompe de circulation ----
+    \pic at (4.4,0) {pompe};
+    \node[unite, below=0.65cm] at (4.4,0)
+      {\textbf{Pompe}\\$\dot{V}\,[\si{\metre\cubed\per\hour}]$};
+
+    % ---- Sonde débit (flèche annotée) ----
+    \draw[->, FedBlue!60, thick] (5.5,-0.55) -- (5.5,-0.05)
+      node[midway, right, font=\sffamily\scriptsize, FedBlue] {$\dot{V}$};
+
+    % ---- Vanne d'équilibrage ----
+    \pic at (6.5,0) {vanne-equilibrage};
+    \node[unite, below=0.75cm] at (6.5,0)
+      {\textbf{Équilibrage}};
+
+    % ---- Sonde température aval (T1) ----
+    \pic at (7.9,0.6) {sonde-t};
+    \draw[FedGreen, thin] (7.9,0) -- (7.9,0.3);
+    \node[unite, above=1.1cm] at (7.9,0)
+      {\textbf{T\textsubscript{1}}\\$[\si{\degreeCelsius}]$};
+
+    % ---- Sonde pression aval (P2) ----
+    \pic at (9.3,0.6) {sonde-p};
+    \draw[FedGreen, thin] (9.3,0) -- (9.3,0.3);
+    \node[unite, above=1.1cm] at (9.3,0)
+      {\textbf{P\textsubscript{2}}\\$[\si{\pascal}]$};
+
+    % ---- Annotations bilan ----
+    \node[draw=FedOrange, fill=FedOrange!8, rounded corners=4pt,
+          font=\sffamily\footnotesize, inner sep=5pt, align=left,
+          text width=5.8cm]
+      at (5.25,-2.2)
+      {%
+        \textbf{Grandeurs mesurées :}\\
+        $\bullet$ $\dot{V}$ : débit volumique \quad [\si{\metre\cubed\per\hour}]\\
+        $\bullet$ $\Delta P = P_1 - P_2$ : perte de charge \;[\si{\pascal}]\\
+        $\bullet$ $T_1$ : température d'eau \quad [\si{\degreeCelsius}]\\[2pt]
+        \textbf{Relation dimensionnelle :}\\
+        $P_{pompe} = \dfrac{\dot{V}\,[\si{\metre\cubed\per\second}] \times \Delta P\,[\si{\pascal}]}{\eta}$\\[2pt]
+        $\Rightarrow$ $[\si{\watt}]$ — équation homogène \checkmark%
+      };
+
+    % ---- Légende symboles ----
+    \node[draw=FedBlue!30, fill=FedBlue!3, rounded corners=4pt,
+          font=\sffamily\scriptsize, inner sep=4pt, align=left]
+      at (5.25,-3.8)
+      {%
+        \textcolor{FedGreen}{\rule{8pt}{2pt}} Sonde (T, P) \quad
+        \textcolor{FedBlue}{\rule{8pt}{2pt}} Circuit hydraulique \quad
+        \textcolor{FedOrange}{\rule{8pt}{2pt}} Organe mécanique%
+      };
+
+  \end{tikzpicture}
+  \caption{Tronçon hydraulique GCF — Grandeurs physiques et unités SI associées aux composants (symboles ISO)}
+  \label{fig:circuit-mesure-gcf}
+\end{figure}
+
 \finchapitre

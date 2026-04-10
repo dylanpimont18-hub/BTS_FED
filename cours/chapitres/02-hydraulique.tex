@@ -327,6 +327,97 @@ Une pompe trop puissante fonctionne à débit excessif, loin de son rendement op
 Le doublement du débit ou de la HMT n'est valable que pour des pompes identiques sur un réseau idéal. En pratique, l'augmentation réelle est moindre à cause de la courbe de réseau. Le montage en parallèle est utilisé pour la redondance (secours) et les périodes de pointe.
 \end{attention}
 
+\subsection{Schéma hydraulique d'un groupe moto-pompe — Symboles ISO GCF}
+
+La figure~\ref{fig:groupe-pompe-iso} présente le câblage hydraulique complet d'un circulateur
+en installation, avec les accessoires réglementaires : vannes d'isolement, clapet
+anti-retour, vase d'expansion et sondes de pression. Ce schéma utilise les symboles
+normalisés ISO tels qu'ils apparaissent sur les plans d'exécution GCF.
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+      tuyau/.style={draw=FedBlue, line width=1.5pt},
+      tuyau-dep/.style={draw=FedRed, line width=1.5pt},
+      etiq/.style={font=\sffamily\footnotesize, align=center},
+      bulle/.style={draw=FedBlue!40, fill=FedBlue!5, rounded corners=3pt,
+                    font=\sffamily\scriptsize, inner sep=3pt, align=center}
+    ]
+
+    % ---- Conduite principale (horizontale) ----
+    \draw[tuyau] (0,0) -- (12.5,0);
+
+    % ---- Vanne d'isolement amont ----
+    \pic at (0.8,0) {vanne-quart};
+    \node[etiq, below=0.5cm] at (0.8,0) {\textbf{Vanne}\\\textbf{isolement}};
+
+    % ---- Sonde pression amont ----
+    \pic at (2.2,0.6) {sonde-p};
+    \draw[FedGreen, thin] (2.2,0) -- (2.2,0.3);
+    \node[bulle, above=1.0cm] at (2.2,0) {$P_1$\,[\si{\pascal}]};
+
+    % ---- Filtre avant pompe ----
+    \pic at (3.5,0) {filtre};
+    \node[etiq, below=0.5cm] at (3.5,0) {\textbf{Filtre}\\\textbf{Y}};
+
+    % ---- Pompe de circulation ----
+    \pic at (5.2,0) {pompe};
+    \node[etiq, below=0.5cm] at (5.2,0) {\textbf{Pompe}\\\textbf{circ.}};
+
+    % ---- Clapet anti-retour ----
+    \pic at (6.8,0) {clapet};
+    \node[etiq, below=0.5cm] at (6.8,0) {\textbf{Clapet}\\\textbf{anti-ret.}};
+
+    % ---- Vase d'expansion (branché sur le réseau) ----
+    \pic at (8.2,0.9) {vase-expansion};
+    \draw[tuyau, thin] (8.2,0) -- (8.2,0.5);
+    \node[bulle, above=1.5cm] at (8.2,0)
+      {Vase\\\textbf{expansion}\\$[\si{\pascal}]$};
+
+    % ---- Sonde pression aval ----
+    \pic at (9.8,0.6) {sonde-p};
+    \draw[FedGreen, thin] (9.8,0) -- (9.8,0.3);
+    \node[bulle, above=1.0cm] at (9.8,0) {$P_2$\,[\si{\pascal}]};
+
+    % ---- Vanne d'équilibrage aval ----
+    \pic at (11.2,0) {vanne-equilibrage};
+    \node[etiq, below=0.75cm] at (11.2,0)
+      {\textbf{Vanne}\\\textbf{équilibrage}};
+
+    % ---- Sens du fluide ----
+    \draw[->, FedBlue!70, very thick] (0.1,0.35) -- (0.5,0.35)
+      node[right, font=\sffamily\scriptsize] {};
+    \node[font=\sffamily\scriptsize, FedBlue] at (6.0,0.5)
+      {$\dot{V}$ [\si{\metre\cubed\per\hour}]};
+
+    % ---- Annotation perte de charge différentielle ----
+    \node[draw=FedOrange!60, fill=FedOrange!6, rounded corners=4pt,
+          font=\sffamily\scriptsize, inner sep=4pt, align=left, text width=5.5cm]
+      at (6.0,-2.2)
+      {%
+        \textbf{Pression différentielle mesurée :}\\
+        $\Delta P = P_1 - P_2 \quad [\si{\pascal}]$\\[2pt]
+        \textbf{HMT de la pompe :}\\
+        $HMT = \dfrac{\Delta P}{\rho \cdot g} \quad [\si{\meter}~\text{CE}]$\\[2pt]
+        \textbf{Puissance hydraulique :}\\
+        $P_{hyd} = \rho \cdot g \cdot \dot{V} \cdot HMT \quad [\si{\watt}]$%
+      };
+
+    % ---- Légende ----
+    \node[draw=FedBlue!30, fill=white, rounded corners=3pt,
+          font=\sffamily\scriptsize, inner sep=4pt, align=left]
+      at (10.5,-2.1)
+      {%
+        \textcolor{FedBlue}{\rule{8pt}{2pt}} Circuit hydraulique\\
+        \textcolor{FedGreen}{\rule{8pt}{2pt}} Sondes / mesure\\
+        \textcolor{FedOrange}{\rule{8pt}{2pt}} Organe réglage%
+      };
+
+  \end{tikzpicture}
+  \caption{Groupe moto-pompe en installation GCF — Symboles ISO (vanne, filtre, pompe, clapet, vase, équilibrage, sondes)}
+  \label{fig:groupe-pompe-iso}
+\end{figure}
+
 % ============================================================
 \section{Équilibrage des réseaux hydrauliques}
 % ============================================================

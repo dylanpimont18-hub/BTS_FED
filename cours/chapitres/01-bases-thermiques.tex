@@ -994,6 +994,96 @@ thermiquement homogènes. Elle fixe notamment les valeurs des résistances super
   \label{fig:courbe_chauffe}
 \end{figure}
 
+% ------------------------------------------------------------
+% Schéma ISO GCF — Circuit d'émission thermique
+% ------------------------------------------------------------
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+      tuyau-dep/.style={draw=FedRed, line width=1.6pt},
+      tuyau-ret/.style={draw=FedBlue, line width=1.6pt},
+      etiq/.style={font=\sffamily\footnotesize, align=center},
+      bulle/.style={draw=FedBlue!40, fill=FedBlue!5, rounded corners=3pt,
+                    font=\sffamily\scriptsize, inner sep=3pt, align=center},
+      formule/.style={draw=FedOrange!60, fill=FedOrange!6, rounded corners=4pt,
+                      font=\sffamily\scriptsize, inner sep=4pt, align=left}
+    ]
+
+    % ---- Réseau départ (rouge, en haut) ----
+    \draw[tuyau-dep] (0,1.2) -- (11.5,1.2);
+
+    % ---- Réseau retour (bleu, en bas) ----
+    \draw[tuyau-ret] (0,-1.2) -- (11.5,-1.2);
+
+    % ---- Chaudière (source de chaleur) ----
+    \pic at (0.8,0) {chaudiere};
+    \node[etiq, below=0.5cm] at (0.8,0)
+      {\textbf{Chaudière}\\\textcolor{FedRed}{$T_{dep}$}};
+    % Connexions chaudière
+    \draw[tuyau-dep] (0.8,0.35) -- (0.8,1.2);
+    \draw[tuyau-ret] (0.8,-0.35) -- (0.8,-1.2);
+
+    % ---- Sonde température départ ----
+    \pic at (2.1,1.2) {sonde-t};
+    \node[bulle, above=0.7cm] at (2.1,1.2)
+      {$T_{dep}$\\\textcolor{FedRed}{[\si{\degreeCelsius}]}};
+    \draw[FedGreen, thin] (2.1,1.5) -- (2.1,1.75);
+
+    % ---- Pompe de circulation ----
+    \pic at (3.5,1.2) {pompe};
+    \node[etiq, above=0.45cm] at (3.5,1.2)
+      {\textbf{Pompe}\\\textbf{$\dot{V}$\,[m³/h]}};
+
+    % ---- Vanne d'équilibrage ----
+    \pic at (5.2,1.2) {vanne-equilibrage};
+    \node[etiq, above=0.75cm] at (5.2,1.2)
+      {\textbf{Équilibrage}};
+
+    % ---- Radiateur ----
+    \pic at (7.5,0) {radiateur};
+    \node[etiq, below=0.5cm] at (7.5,0)
+      {\textbf{Radiateur}\\$\dot{Q} = \dot{V} \times 1{,}163 \times \Delta T$};
+    % Connexions radiateur
+    \draw[tuyau-dep] (7.5,0.35) -- (7.5,1.2);
+    \draw[tuyau-ret] (7.5,-0.35) -- (7.5,-1.2);
+
+    % ---- Actionneur (vanne thermostatique) ----
+    \pic at (9.0,0.6) {actionneur};
+    \draw[FedGreen, thin] (9.0,0.25) -- (9.0,0.35);
+    \node[bulle, above=0.9cm] at (9.0,0.6)
+      {Vanne\\\textbf{thermo.}};
+
+    % ---- Sonde température retour ----
+    \pic at (10.3,-1.2) {sonde-t};
+    \node[bulle, below=0.85cm] at (10.3,-1.2)
+      {$T_{ret}$\\\textcolor{FedBlue}{[\si{\degreeCelsius}]}};
+    \draw[FedGreen, thin] (10.3,-1.5) -- (10.3,-1.75);
+
+    % ---- Annotation bilan thermique ----
+    \node[formule, text width=5.2cm] at (5.5,-3.0)
+      {%
+        \textbf{Bilan thermique (eau en circulation) :}\\[2pt]
+        $\dot{Q} = \dot{m} \cdot c_p \cdot (T_{dep} - T_{ret})$\\[2pt]
+        $\dot{Q}\,[\si{\watt}] = \dot{V}\,[\si{\liter\per\hour}] \times 1{,}163 \times \Delta T\,[\si{\kelvin}]$\\[2pt]
+        \textbf{Exemple :} $\dot{V} = 400$\,L/h, $\Delta T = 10$\,K\\
+        $\Rightarrow \dot{Q} = 400 \times 1{,}163 \times 10 = \SI{4\,652}{\watt}$%
+      };
+
+    % ---- Légende couleurs ----
+    \node[draw=FedBlue!30, fill=white, rounded corners=3pt,
+          font=\sffamily\scriptsize, inner sep=4pt, align=left]
+      at (9.2,-2.8)
+      {%
+        \textcolor{FedRed}{\rule{10pt}{2pt}} Départ (chaud)\\
+        \textcolor{FedBlue}{\rule{10pt}{2pt}} Retour (froid)\\
+        \textcolor{FedGreen}{\rule{10pt}{2pt}} Capteurs (T, régul.)%
+      };
+
+  \end{tikzpicture}
+  \caption{Circuit d'émission thermique GCF — Symboles ISO, bilan $\dot{Q} = \dot{m}\,c_p\,\Delta T$}
+  \label{fig:circuit-emission-thermique}
+\end{figure}
+
 \begin{tcolorbox}[
   enhanced, colback=FedBlue!3, colframe=FedBlue!50,
   fonttitle=\bfseries\sffamily, coltitle=FedBlue,

@@ -6,8 +6,13 @@ Mis à jour automatiquement par l'agent à chaque run.
 ---
 
 ## Dernier run
-- Date : 2026-04-09 (14ème run)
-- Action : **T17 — Environnement `fichememo` (tcolorbox FedBlue) ajouté dans cours/preamble.tex, après la définition de `methode` : permet d'utiliser `\begin{fichememo}[Titre]...\end{fichememo}` dans tous les chapitres pour encadrer les fiches mémo de formules**
+- Date : 2026-04-10 (15ème run)
+- Action : **Initialisation T18-T29 (schémas TikZ ISO GCF) + traitement T18/T19/T20**
+  - Création de `cours/tikz-gcf-symbols.tex` — bibliothèque de 18 symboles ISO GCF (`\pic{pompe}`, `\pic{vanne-quart}`, `\pic{clapet}`, `\pic{chaudiere}`, `\pic{radiateur}`, `\pic{vc}`, `\pic{sonde-t}`, `\pic{sonde-p}`, etc.)
+  - Mise à jour `cours/preamble.tex` : ajout `\input{tikz-gcf-symbols}` après `\usetikzlibrary`
+  - **T18** — `ch00-analyse-dimensionnelle.tex` : ajout figure `fig:circuit-mesure-gcf` — tronçon hydraulique GCF avec filtre, pompe, vanne d'équilibrage, sondes P et T, annotations unités SI
+  - **T19** — `ch01-bases-thermiques.tex` : ajout figure `fig:circuit-emission-thermique` — circuit émission chauffage (chaudière, pompe, équilibrage, radiateur, actionneur, sondes T départ/retour) avec bilan $\dot{Q} = \dot{m}\,c_p\,\Delta T$
+  - **T20** — `ch02-hydraulique.tex` : ajout figure `fig:groupe-pompe-iso` — groupe moto-pompe complet avec vanne isolement, filtre, pompe, clapet anti-retour, vase d'expansion, sondes P amont/aval, vanne équilibrage
 
 ---
 
@@ -34,6 +39,18 @@ Mis à jour automatiquement par l'agent à chaque run.
 | T15 | FAIBLE | **FAIT** | `cours/chapitres/00-analyse-dimensionnelle.tex` | Enrichir avec données terrain réelles (catalogues Grundfos, Daikin) |
 | T16 | FAIBLE | **FAIT** | `cours/chapitres/11-etudes-de-cas.tex` | Ajouter renvois inter-chapitres explicites |
 | T17 | FAIBLE | **FAIT** | `cours/preamble.tex` | Ajouter environnement `fichemémo` (tcolorbox récap formules) |
+| T18 | HAUTE | **FAIT** | `cours/chapitres/00-analyse-dimensionnelle.tex` | Remplacer formes génériques par symboles ISO GCF (tikz-gcf-symbols) |
+| T19 | HAUTE | **FAIT** | `cours/chapitres/01-bases-thermiques.tex` | Remplacer formes génériques par symboles ISO GCF (tikz-gcf-symbols) |
+| T20 | HAUTE | **FAIT** | `cours/chapitres/02-hydraulique.tex` | Remplacer formes génériques par symboles ISO GCF (tikz-gcf-symbols) |
+| T21 | HAUTE | TODO | `cours/chapitres/03-aeraulique.tex` | Remplacer formes génériques par symboles ISO GCF (tikz-gcf-symbols) |
+| T22 | HAUTE | TODO | `cours/chapitres/04-production-chaleur.tex` | Remplacer formes génériques par symboles ISO GCF (tikz-gcf-symbols) |
+| T23 | HAUTE | TODO | `cours/chapitres/05-distribution-emission.tex` | Remplacer formes génériques par symboles ISO GCF (tikz-gcf-symbols) |
+| T24 | HAUTE | TODO | `cours/chapitres/06-climatisation.tex` | Remplacer formes génériques par symboles ISO GCF (tikz-gcf-symbols) |
+| T25 | HAUTE | TODO | `cours/chapitres/07-regulation-gtb.tex` | Remplacer formes génériques par symboles ISO GCF (tikz-gcf-symbols) |
+| T26 | HAUTE | TODO | `cours/chapitres/08-efficacite-energetique.tex` | Remplacer formes génériques par symboles ISO GCF (tikz-gcf-symbols) |
+| T27 | HAUTE | TODO | `cours/chapitres/09-acoustique.tex` | Remplacer formes génériques par symboles ISO GCF (tikz-gcf-symbols) |
+| T28 | HAUTE | TODO | `cours/chapitres/10-electrotechnique.tex` | Remplacer formes génériques par symboles ISO GCF (tikz-gcf-symbols) |
+| T29 | HAUTE | TODO | `cours/chapitres/11-etudes-de-cas.tex` | Remplacer formes génériques par symboles ISO GCF (tikz-gcf-symbols) |
 
 ### Règles de sélection des tâches
 ```
