@@ -1,0 +1,244 @@
+% tikz-gcf-symbols.tex — Symboles ISO GCF pour TikZ
+% Utilisables via : \pic[draw=FedBlue, thick] at (x,y) {nom};
+% BTS FED option GCF
+% Créé le 2026-04-10 — agent automatisé
+
+% Bibliothèques complémentaires
+\usetikzlibrary{patterns, calc}
+
+\tikzset{
+  % -------------------------------------------------------
+  % POMPE DE CIRCULATION
+  % Symbole ISO : cercle avec triangle (sens de refoulement)
+  % Usage : \pic[draw=FedBlue, fill=FedBlue!10, thick] at (x,y) {pompe};
+  % -------------------------------------------------------
+  pompe/.pic={
+    \draw[pic actions] (0,0) circle (0.32cm);
+    \fill[pic actions]
+      (-0.16,-0.18) -- (0.18,0) -- (-0.16,0.18) -- cycle;
+  },
+
+  % -------------------------------------------------------
+  % VANNE QUART DE TOUR — papillon ISO
+  % Symbole : deux triangles se touchant à la pointe
+  % -------------------------------------------------------
+  vanne-quart/.pic={
+    % Ligne de passage (conduite)
+    \draw[pic actions] (-0.35,0) -- (-0.22,0);
+    \draw[pic actions] ( 0.22,0) -- ( 0.35,0);
+    % Corps papillon (deux triangles)
+    \draw[pic actions, fill=white]
+      (-0.22,-0.22) -- (0,0) -- (-0.22,0.22) -- cycle;
+    \draw[pic actions, fill=white]
+      ( 0.22,-0.22) -- (0,0) -- ( 0.22,0.22) -- cycle;
+  },
+
+  % -------------------------------------------------------
+  % VANNE MOTORISÉE — papillon + carré actuateur
+  % -------------------------------------------------------
+  vanne-motorisee/.pic={
+    \draw[pic actions] (-0.35,0) -- (-0.22,0);
+    \draw[pic actions] ( 0.22,0) -- ( 0.35,0);
+    \draw[pic actions, fill=white]
+      (-0.22,-0.22) -- (0,0) -- (-0.22,0.22) -- cycle;
+    \draw[pic actions, fill=white]
+      ( 0.22,-0.22) -- (0,0) -- ( 0.22,0.22) -- cycle;
+    % Actuateur (carré en haut)
+    \draw[pic actions] (-0.14,0.0) rectangle (0.14,0.32);
+    \draw[pic actions, dashed] (0,0) -- (0,0.08);
+  },
+
+  % -------------------------------------------------------
+  % VANNE D'ÉQUILIBRAGE — double triangle rempli ISO
+  % -------------------------------------------------------
+  vanne-equilibrage/.pic={
+    \draw[pic actions] (-0.35,0) -- (-0.22,0);
+    \draw[pic actions] ( 0.22,0) -- ( 0.35,0);
+    \fill[pic actions]
+      (-0.22,-0.22) -- (0,0) -- (-0.22,0.22) -- cycle;
+    \fill[pic actions]
+      ( 0.22,-0.22) -- (0,0) -- ( 0.22,0.22) -- cycle;
+    % Trait de réglage en pointillé
+    \draw[pic actions, dashed] (0,-0.22) -- (0,0.22);
+  },
+
+  % -------------------------------------------------------
+  % CLAPET ANTI-RETOUR
+  % Symbole ISO : triangle + barre perpendiculaire
+  % -------------------------------------------------------
+  clapet/.pic={
+    \draw[pic actions] (-0.35,0) -- (-0.22,0);
+    \draw[pic actions] ( 0.22,0) -- ( 0.35,0);
+    % Triangle (sens autorisé = droite)
+    \fill[pic actions]
+      (-0.22,-0.2) -- (0.22,0) -- (-0.22,0.2) -- cycle;
+    % Barre (blocage retour)
+    \draw[pic actions, very thick] (0.22,-0.22) -- (0.22,0.22);
+  },
+
+  % -------------------------------------------------------
+  % CHAUDIÈRE — rectangle arrondi + flamme stylisée
+  % -------------------------------------------------------
+  chaudiere/.pic={
+    \draw[pic actions, rounded corners=3pt]
+      (-0.42,-0.28) rectangle (0.42,0.28);
+    % Flamme centrale (courbe de Bézier)
+    \draw[pic actions, thick]
+      (-0.10,-0.08)
+      .. controls (-0.18,0.10) and (-0.02,0.04) .. (0,0.18)
+      .. controls (0.02,0.04) and (0.18,0.10) .. (0.10,-0.08);
+  },
+
+  % -------------------------------------------------------
+  % ÉCHANGEUR À PLAQUES — double rectangle + diagonales croisées
+  % -------------------------------------------------------
+  echangeur/.pic={
+    \draw[pic actions] (-0.38,-0.28) rectangle (0.38,0.28);
+    \draw[pic actions] (-0.38,-0.28) -- (0.38,0.28);
+    \draw[pic actions] (-0.38,0.28)  -- (0.38,-0.28);
+    % Séparateur central (plaques)
+    \draw[pic actions, dashed] (0,-0.28) -- (0,0.28);
+  },
+
+  % -------------------------------------------------------
+  % BALLON TAMPON / ECS — ellipse verticale + trait de niveau
+  % -------------------------------------------------------
+  ballon/.pic={
+    \draw[pic actions] (0,0) ellipse (0.22cm and 0.38cm);
+    % Trait de niveau d'eau
+    \draw[pic actions, dashed] (-0.22,0.08) -- (0.22,0.08);
+  },
+
+  % -------------------------------------------------------
+  % VASE D'EXPANSION — cercle + membrane horizontale + hachures gaz
+  % -------------------------------------------------------
+  vase-expansion/.pic={
+    \draw[pic actions] (0,0) circle (0.30cm);
+    % Membrane (séparation eau/gaz)
+    \draw[pic actions, thick] (-0.30,0) -- (0.30,0);
+    % Zone gaz (haut) : courtes lignes verticales
+    \foreach \xi in {-0.20,-0.08,0.04,0.18}
+      \draw[pic actions, thin] (\xi,0.04) -- (\xi,0.22);
+  },
+
+  % -------------------------------------------------------
+  % POMPE À CHALEUR — rectangle + label + flèche cycle
+  % -------------------------------------------------------
+  pac/.pic={
+    \draw[pic actions, rounded corners=3pt]
+      (-0.45,-0.28) rectangle (0.45,0.28);
+    \node[font=\sffamily\bfseries\scriptsize] at (0,0.06) {PAC};
+    % Flèche représentant le cycle frigorigène
+    \draw[pic actions, ->, >=Stealth, very thin]
+      (-0.28,-0.14) -- (-0.28,0.02) -- (0.28,0.02)
+      -- (0.28,-0.14) -- (-0.28,-0.14);
+  },
+
+  % -------------------------------------------------------
+  % CENTRALE DE TRAITEMENT D'AIR — CTA (rectangle 3 sections F/C/V)
+  % -------------------------------------------------------
+  cta/.pic={
+    \draw[pic actions, rounded corners=2pt]
+      (-0.55,-0.22) rectangle (0.55,0.22);
+    % Séparateurs internes
+    \draw[pic actions] (-0.18,-0.22) -- (-0.18,0.22);
+    \draw[pic actions] ( 0.18,-0.22) -- ( 0.18,0.22);
+    % Labels des sections
+    \node[font=\sffamily\tiny] at (-0.37,0) {F};
+    \node[font=\sffamily\tiny] at ( 0.00,0) {C};
+    \node[font=\sffamily\tiny] at ( 0.37,0) {V};
+  },
+
+  % -------------------------------------------------------
+  % VENTILATEUR — cercle + 3 pales + flèche de rotation
+  % -------------------------------------------------------
+  ventilateur/.pic={
+    \draw[pic actions] (0,0) circle (0.28cm);
+    % Trois pales à 120°
+    \draw[pic actions] (0,0) -- (0,0.25);
+    \draw[pic actions] (0,0) -- ({0.25*cos(210)},{0.25*sin(210)});
+    \draw[pic actions] (0,0) -- ({0.25*cos(330)},{0.25*sin(330)});
+    % Flèche de rotation
+    \draw[pic actions, ->, >=Stealth, thin]
+      ({0.28*cos(70)},{0.28*sin(70)})
+      arc[start angle=70, end angle=30, radius=0.28cm];
+  },
+
+  % -------------------------------------------------------
+  % REGISTRE DE RÉGLAGE — rectangle barré d'une diagonale
+  % -------------------------------------------------------
+  registre/.pic={
+    \draw[pic actions] (-0.32,-0.18) rectangle (0.32,0.18);
+    \draw[pic actions] (-0.32,-0.18) -- (0.32,0.18);
+  },
+
+  % -------------------------------------------------------
+  % FILTRE — losange hachuré ISO
+  % -------------------------------------------------------
+  filtre/.pic={
+    \draw[pic actions]
+      (0,0.28) -- (0.22,0) -- (0,-0.28) -- (-0.22,0) -- cycle;
+    % Hachures internes
+    \draw[pic actions, thin] (-0.14,0.14) -- (0.08,-0.14);
+    \draw[pic actions, thin] (-0.04,0.24) -- (0.18,-0.08);
+    \draw[pic actions, thin] (-0.18,0.04) -- (0.02,-0.22);
+  },
+
+  % -------------------------------------------------------
+  % RADIATEUR — rectangle à ailettes verticales
+  % -------------------------------------------------------
+  radiateur/.pic={
+    \draw[pic actions] (-0.40,-0.22) rectangle (0.40,0.22);
+    % Ailettes internes
+    \foreach \xi in {-0.25,-0.10,0.05,0.20}
+      \draw[pic actions] (\xi,-0.22) -- (\xi,0.22);
+    % Raccords hydrauliques
+    \draw[pic actions, ->, >=Stealth, thin] (-0.52,0.10) -- (-0.40,0.10);
+    \draw[pic actions, ->, >=Stealth, thin] (0.40,-0.10) -- (0.52,-0.10);
+  },
+
+  % -------------------------------------------------------
+  % VENTILO-CONVECTEUR — rectangle + ventilateur + échangeur
+  % -------------------------------------------------------
+  vc/.pic={
+    \draw[pic actions, rounded corners=2pt]
+      (-0.50,-0.22) rectangle (0.50,0.22);
+    % Ventilateur (gauche)
+    \draw[pic actions] (-0.24,0) circle (0.16cm);
+    \draw[pic actions] (-0.24,0) -- (-0.24,0.15);
+    \draw[pic actions] (-0.24,0) -- ({-0.24+0.15*cos(210)},{0.15*sin(210)});
+    \draw[pic actions] (-0.24,0) -- ({-0.24+0.15*cos(330)},{0.15*sin(330)});
+    % Échangeur (ailettes droite)
+    \foreach \xi in {0.15,0.28,0.41}
+      \draw[pic actions, thin] (\xi,-0.18) -- (\xi,0.18);
+  },
+
+  % -------------------------------------------------------
+  % SONDE DE TEMPÉRATURE — cercle + lettre T + tige de plongée
+  % -------------------------------------------------------
+  sonde-t/.pic={
+    \draw[pic actions] (0,0) circle (0.20cm);
+    \node[font=\sffamily\bfseries\tiny] at (0,0.02) {T};
+    % Tige de plongée
+    \draw[pic actions] (0,-0.20) -- (0,-0.42);
+  },
+
+  % -------------------------------------------------------
+  % SONDE DE PRESSION — cercle + lettre P + tige
+  % -------------------------------------------------------
+  sonde-p/.pic={
+    \draw[pic actions] (0,0) circle (0.20cm);
+    \node[font=\sffamily\bfseries\tiny] at (0,0.02) {P};
+    \draw[pic actions] (0,-0.20) -- (0,-0.42);
+  },
+
+  % -------------------------------------------------------
+  % ACTIONNEUR — carré + lettre M + flèche de commande
+  % -------------------------------------------------------
+  actionneur/.pic={
+    \draw[pic actions] (-0.18,-0.18) rectangle (0.18,0.18);
+    \node[font=\sffamily\bfseries\tiny] at (0,0) {M};
+    % Flèche de commande (vers le haut)
+    \draw[pic actions, ->, >=Stealth] (0,0.18) -- (0,0.42);
+  },
+}

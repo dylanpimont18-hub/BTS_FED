@@ -855,4 +855,72 @@ $< 6{,}0\,\mathrm{kW}$ requis. \textbf{Appoint électrique nécessaire} ou modè
   \end{itemize}
 \end{tcolorbox}
 
+% ------------------------------------------------------------
+% Schéma TikZ ISO GCF — Instruments de mesure sur conduite CVC
+% Ce schéma illustre, en contexte terrain, les grandeurs physiques
+% (température, pression, débit) mesurées dans une installation GCF.
+% Symboles ISO via tikz-gcf-symbols.tex.
+% ------------------------------------------------------------
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[>=Stealth, thick, font=\small]
+
+    % --- Conduite principale (départ eau chaude) ---
+    \draw[draw=FedRed, line width=2pt]
+      (0,0) -- (10.5,0);
+
+    % --- Pompe de circulation ---
+    \pic[draw=FedOrange, fill=FedOrange!15, thick] at (1.8,0) {pompe};
+    \node[below=0.55cm, font=\footnotesize\sffamily, text=FedOrange!80!black]
+      at (1.8,0) {Pompe $P$};
+    \node[below=0.90cm, font=\scriptsize, text=FedOrange!70!black]
+      at (1.8,0) {unité : \si{\watt}};
+
+    % --- Clapet anti-retour après la pompe ---
+    \pic[draw=FedBlue, fill=FedBlue!10, thick] at (3.5,0) {clapet};
+    \node[below=0.45cm, font=\footnotesize\sffamily, text=FedBlue!80!black]
+      at (3.5,0) {Clapet};
+
+    % --- Sonde de pression ---
+    \pic[draw=FedGreen, thick] at (5.5,0) {sonde-p};
+    \node[above=0.55cm, font=\footnotesize\sffamily, text=FedGreen!70!black]
+      at (5.5,0) {Sonde $P$};
+    \node[above=0.90cm, font=\scriptsize, text=FedGreen!60!black]
+      at (5.5,0) {unité : \si{\bar} ou \si{\pascal}};
+
+    % --- Sonde de température ---
+    \pic[draw=FedRed!80!black, thick] at (7.5,0) {sonde-t};
+    \node[above=0.55cm, font=\footnotesize\sffamily, text=FedRed!80!black]
+      at (7.5,0) {Sonde $T$};
+    \node[above=0.90cm, font=\scriptsize, text=FedRed!60!black]
+      at (7.5,0) {unité : \si{\degreeCelsius} ou \si{\kelvin}};
+
+    % --- Vanne d'équilibrage en fin de tronçon ---
+    \pic[draw=FedBlue, fill=FedBlue!8, thick] at (9.5,0) {vanne-equilibrage};
+    \node[below=0.45cm, font=\footnotesize\sffamily, text=FedBlue!80!black]
+      at (9.5,0) {Vanne d'équilibrage};
+
+    % --- Flèche de sens d'écoulement ---
+    \draw[->, FedRed, line width=1.5pt] (10.1,0.35) -- (10.5,0.35);
+    \node[right, font=\scriptsize, text=FedRed] at (10.5,0.35) {$q_v$ [\si{\cubic\metre\per\hour}]};
+
+    % --- Légende grandeurs / unités ---
+    \draw[draw=FedBlue!40, dashed, rounded corners=4pt]
+      (4.0,-1.6) rectangle (10.2,-0.1);
+    \node[anchor=north west, font=\scriptsize\sffamily, text=FedBlue]
+      at (4.0,-0.15) {Grandeurs mesurées sur le tronçon :};
+    \node[anchor=north west, font=\scriptsize, text=FedGreen!70!black]
+      at (4.1,-0.55) {$P$ = pression [\si{\bar}] \quad
+                      $T$ = température [\si{\degreeCelsius}] \quad
+                      $q_v$ = débit [\si{\cubic\metre\per\hour}]};
+    \node[anchor=north west, font=\scriptsize, text=FedBlue!70!black]
+      at (4.1,-0.95) {Homogénéité à vérifier : puissance $\Phi = \dot{m}\,c_p\,\Delta T$
+                      [\si{\watt}] = [\si{\kilogram\per\second}]·[\si{\joule\per\kilogram\per\kelvin}]·[\si{\kelvin}]};
+
+  \end{tikzpicture}
+  \caption{Instruments de mesure ISO GCF sur un tronçon de conduite CVC —
+           illustration des grandeurs et unités SI rencontrées en terrain.}
+  \label{fig:mesure-iso-gcf-ch00}
+\end{figure}
+
 \finchapitre

@@ -756,4 +756,140 @@ Règle GCF : cible $R$ entre \SI{100}{} et \SI{300}{\pascal\per\metre}
 \end{multicols}
 \end{tcolorbox}
 
+% ------------------------------------------------------------
+% Schéma TikZ ISO GCF — Réseau hydraulique bouclé complet
+% Ce schéma utilise les symboles ISO GCF (tikz-gcf-symbols.tex)
+% pour représenter un circuit bitubes conforme aux normes de
+% représentation des installations CVC.
+% ------------------------------------------------------------
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[>=Stealth, thick, font=\small,
+      depart/.style={draw=FedRed,    line width=2.0pt},
+      retour/.style={draw=FedBlue,   line width=2.0pt},
+      tronc/.style={draw=FedBlue!50, line width=1.2pt},
+    ]
+
+    % ===== PRODUCTION (gauche) =====
+
+    % Chaudière
+    \pic[draw=FedOrange, fill=FedOrange!8, thick, scale=1.4] at (0,1.8) {chaudiere};
+    \node[left=0.7cm, font=\footnotesize\sffamily, text=FedOrange!80!black]
+      at (0,1.8) {\shortstack{Chaudière\\$\Phi_{prod}$}};
+
+    % Vase d'expansion (raccordé sur le départ)
+    \pic[draw=FedGreen, fill=FedGreen!8, thick] at (1.6,2.9) {vase-expansion};
+    \node[above=0.4cm, font=\scriptsize\sffamily, text=FedGreen!70!black]
+      at (1.6,2.9) {Vase exp.};
+    \draw[draw=FedGreen, thin] (1.6,2.52) -- (1.6,1.8);
+
+    % Pompe de circulation
+    \pic[draw=FedOrange, fill=FedOrange!15, thick, scale=1.2] at (0,0) {pompe};
+    \node[left=0.55cm, font=\footnotesize\sffamily, text=FedOrange!80!black]
+      at (0,0) {Pompe};
+
+    % Clapet anti-retour
+    \pic[draw=FedBlue, fill=FedBlue!8, thick] at (0,0.9) {clapet};
+
+    % Liaison chaudière ↔ pompe
+    \draw[retour] (0,-0.32) -- (0,-0.80)
+      -- (-1.2,-0.80) -- (-1.2,1.8) -- (-0.58,1.8);
+    \draw[depart] (0.58,1.8) -- (3.0,1.8);
+
+    % Sonde de température départ
+    \pic[draw=FedRed!80!black, thick] at (2.0,1.8) {sonde-t};
+    \node[above=0.5cm, font=\scriptsize, text=FedRed!70!black] at (2.0,1.8)
+      {$T_{dep}$ \SI{70}{\degreeCelsius}};
+
+    % Sonde de pression départ
+    \pic[draw=FedGreen, thick] at (2.8,1.8) {sonde-p};
+    \node[above=0.5cm, font=\scriptsize, text=FedGreen!70!black] at (2.8,1.8)
+      {$P_{dep}$};
+
+    % ===== COLLECTEUR DÉPART (horizontal, y=1.8) =====
+    \draw[depart] (3.0,1.8) -- (9.5,1.8);
+
+    % ===== BRANCHES ÉMETTEURS =====
+
+    % --- Branche 1 : Radiateur ---
+    \draw[depart] (4.0,1.8) -- (4.0,0.3);
+    \pic[draw=FedBlue, fill=FedBlue!8, thick] at (4.0,0.3) {vanne-equilibrage};
+    \node[left=0.5cm, font=\scriptsize, text=FedBlue!80!black] at (4.0,0.3)
+      {$V_{eq,1}$};
+    \draw[depart] (4.0,0.0) -- (4.0,-0.8);
+    \pic[draw=FedRed, fill=FedRed!8, thick, scale=1.0] at (4.0,-0.8) {radiateur};
+    \node[below=0.5cm, font=\scriptsize\sffamily, text=FedRed!80!black] at (4.0,-0.8)
+      {Rad. 1};
+    \draw[retour] (4.0,-1.08) -- (4.0,-1.8);
+    \pic[draw=FedBlue, fill=FedBlue!8, thick] at (4.0,-1.8) {vanne-quart};
+    \draw[retour] (4.0,-2.15) -- (4.0,-2.9);
+
+    % --- Branche 2 : Ventilo-convecteur ---
+    \draw[depart] (6.5,1.8) -- (6.5,0.3);
+    \pic[draw=FedBlue, fill=FedBlue!8, thick] at (6.5,0.3) {vanne-equilibrage};
+    \node[left=0.5cm, font=\scriptsize, text=FedBlue!80!black] at (6.5,0.3)
+      {$V_{eq,2}$};
+    \draw[depart] (6.5,0.0) -- (6.5,-0.8);
+    \pic[draw=FedRed, fill=FedRed!8, thick] at (6.5,-0.8) {vc};
+    \node[below=0.5cm, font=\scriptsize\sffamily, text=FedRed!80!black] at (6.5,-0.8)
+      {VC};
+    \draw[retour] (6.5,-1.08) -- (6.5,-1.8);
+    \pic[draw=FedBlue, fill=FedBlue!8, thick] at (6.5,-1.8) {vanne-quart};
+    \draw[retour] (6.5,-2.15) -- (6.5,-2.9);
+
+    % --- Branche 3 : Radiateur avec vanne motorisée ---
+    \draw[depart] (9.0,1.8) -- (9.0,0.3);
+    \pic[draw=FedBlue, fill=FedBlue!8, thick] at (9.0,0.3) {vanne-motorisee};
+    \pic[draw=FedGreen, thick, scale=0.8] at (9.5,0.65) {actionneur};
+    \node[left=0.55cm, font=\scriptsize, text=FedBlue!80!black] at (9.0,0.3)
+      {$V_{mot,3}$};
+    \draw[depart] (9.0,0.0) -- (9.0,-0.8);
+    \pic[draw=FedRed, fill=FedRed!8, thick] at (9.0,-0.8) {radiateur};
+    \node[below=0.5cm, font=\scriptsize\sffamily, text=FedRed!80!black] at (9.0,-0.8)
+      {Rad. 3};
+    \draw[retour] (9.0,-1.08) -- (9.0,-1.8);
+    \pic[draw=FedBlue, fill=FedBlue!8, thick] at (9.0,-1.8) {vanne-quart};
+    \draw[retour] (9.0,-2.15) -- (9.0,-2.9);
+
+    % ===== COLLECTEUR RETOUR (horizontal, y=-2.9) =====
+    \draw[retour] (4.0,-2.9) -- (9.0,-2.9) -- (0.32,-2.9)
+      -- (0.32,-0.32);
+
+    % Sonde de température retour
+    \pic[draw=FedBlue, thick] at (2.5,-2.9) {sonde-t};
+    \node[below=0.5cm, font=\scriptsize, text=FedBlue!70!black] at (2.5,-2.9)
+      {$T_{ret}$ \SI{55}{\degreeCelsius}};
+
+    % ===== LÉGENDE =====
+    \begin{scope}[shift={(0,-4.6)}]
+      \draw[draw=FedBlue!30, rounded corners=3pt, dashed]
+        (-1.4,-0.1) rectangle (10.5,1.1);
+      % Ligne 1 : symboles hydrauliques
+      \pic[draw=FedOrange, fill=FedOrange!15, scale=0.8] at (0,0.7) {pompe};
+      \node[right=0.4cm, font=\scriptsize] at (0,0.7) {Pompe};
+      \pic[draw=FedOrange, fill=FedOrange!8, scale=0.8]  at (2.2,0.7) {chaudiere};
+      \node[right=0.5cm, font=\scriptsize] at (2.2,0.7) {Chaudière};
+      \pic[draw=FedBlue, fill=FedBlue!8, scale=0.8]  at (4.6,0.7) {vanne-equilibrage};
+      \node[right=0.4cm, font=\scriptsize] at (4.6,0.7) {V. équilibrage};
+      \pic[draw=FedBlue, fill=FedBlue!8, scale=0.8]  at (7.2,0.7) {vanne-motorisee};
+      \node[right=0.4cm, font=\scriptsize] at (7.2,0.7) {V. motorisée};
+      % Ligne 2 : symboles mesure
+      \pic[draw=FedRed!80!black, scale=0.8]  at (0,0.2) {sonde-t};
+      \node[right=0.4cm, font=\scriptsize] at (0,0.2) {Sonde $T$};
+      \pic[draw=FedGreen, scale=0.8]        at (2.2,0.2) {sonde-p};
+      \node[right=0.4cm, font=\scriptsize] at (2.2,0.2) {Sonde $P$};
+      \pic[draw=FedBlue, fill=FedBlue!8, scale=0.8] at (4.6,0.2) {clapet};
+      \node[right=0.4cm, font=\scriptsize] at (4.6,0.2) {Clapet A-R};
+      \pic[draw=FedGreen, fill=FedGreen!8, scale=0.8] at (7.2,0.2) {vase-expansion};
+      \node[right=0.4cm, font=\scriptsize] at (7.2,0.2) {Vase exp.};
+    \end{scope}
+
+  \end{tikzpicture}
+  \caption{Schéma ISO GCF d'un réseau hydraulique bitubes bouclé complet —
+           chaudière, pompe, clapet, vase d'expansion, vannes d'équilibrage,
+           radiateurs et ventilo-convecteur avec sondes de mesure $T$ et $P$.
+           Symboles conformes aux normes ISO 10628 / EN 1861.}
+  \label{fig:reseau-hydraulique-iso-gcf}
+\end{figure}
+
 \finchapitre

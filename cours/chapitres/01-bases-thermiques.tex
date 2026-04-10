@@ -1044,4 +1044,99 @@ avec $\sigma = \SI{5{,}67e-8}{\watt\per\metre\squared\per\kelvin\tothe{4}}$, $T$
 \end{multicols}
 \end{tcolorbox}
 
+% ------------------------------------------------------------
+% Schéma TikZ ISO GCF — Circuit de chauffage simple : émission thermique
+% Ce schéma relie la thermique théorique au terrain : on visualise
+% comment la chaleur produite par la chaudière est transportée par
+% l'eau (débit, ΔT) jusqu'au radiateur qui l'émet dans la pièce.
+% Symboles ISO via tikz-gcf-symbols.tex.
+% ------------------------------------------------------------
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[>=Stealth, thick, font=\small,
+      tuyau-chaud/.style={draw=FedRed, line width=2pt},
+      tuyau-froid/.style={draw=FedBlue, line width=2pt},
+    ]
+
+    % ---- Chaudière (gauche) ----
+    \pic[draw=FedOrange, fill=FedOrange!10, thick, scale=1.3] at (0,0) {chaudiere};
+    \node[below=0.7cm, font=\footnotesize\sffamily, text=FedOrange!80!black]
+      at (0,0) {Chaudière};
+    \node[below=1.05cm, font=\scriptsize, text=FedOrange!60!black]
+      at (0,0) {Production : $\Phi_{prod}$};
+
+    % ---- Pompe de circulation ----
+    \pic[draw=FedOrange, fill=FedOrange!15, thick] at (0,-2.5) {pompe};
+    \node[left=0.55cm, font=\footnotesize\sffamily, text=FedOrange!80!black]
+      at (0,-2.5) {Pompe};
+
+    % ---- Départ eau chaude (conduite rouge, haut) ----
+    \draw[tuyau-chaud] (0.42,0) -- (6.5,0);
+    \node[above=0.1cm, font=\scriptsize, text=FedRed] at (3.5,0)
+      {Départ : $T_{dep} = \SI{70}{\degreeCelsius}$};
+
+    % ---- Sonde de température départ ----
+    \pic[draw=FedRed!80!black, thick] at (2.2,0) {sonde-t};
+    \node[below=0.55cm, font=\scriptsize, text=FedRed!70!black] at (2.2,0)
+      {$T_{dep}$ [\si{\degreeCelsius}]};
+
+    % ---- Vanne quart de tour (isolement) ----
+    \pic[draw=FedBlue, fill=FedBlue!8, thick] at (4.5,0) {vanne-quart};
+    \node[above=0.5cm, font=\scriptsize, text=FedBlue!80!black] at (4.5,0)
+      {Vanne isolation};
+
+    % ---- Radiateur (droite) ----
+    \pic[draw=FedRed, fill=FedRed!8, thick, scale=1.1] at (7.2,0) {radiateur};
+    \node[above=0.5cm, font=\footnotesize\sffamily, text=FedRed!80!black]
+      at (7.2,0) {Radiateur};
+    \node[right=0.7cm, align=left, font=\scriptsize, text=FedRed!70!black]
+      at (7.2,0) {$\dot{Q}_{em} = U\!\cdot\!S\!\cdot\!\Delta T$\\unité : \si{\watt}};
+
+    % ---- Retour eau refroidie (conduite bleue, bas) ----
+    \draw[tuyau-froid] (6.78,-0.22) -- (6.78,-2.5) -- (0.32,-2.5);
+    \draw[tuyau-froid] (0.0,-2.18) -- (0.0,-0.28);
+    \node[below=0.1cm, font=\scriptsize, text=FedBlue] at (3.5,-2.5)
+      {Retour : $T_{ret} = \SI{55}{\degreeCelsius}$};
+
+    % ---- Sonde de température retour ----
+    \pic[draw=FedBlue, thick] at (5.0,-2.5) {sonde-t};
+    \node[below=0.55cm, font=\scriptsize, text=FedBlue!70!black] at (5.0,-2.5)
+      {$T_{ret}$ [\si{\degreeCelsius}]};
+
+    % ---- Annotation ΔT et puissance échangée ----
+    \draw[<->, FedBlue!60!FedRed, dashed, thin]
+      (8.5,-2.5) -- (8.5,0);
+    \node[right=0.1cm, align=left, font=\scriptsize]
+      at (8.5,-1.25)
+      {$\Delta T = T_{dep} - T_{ret}$\\
+       $= \SI{15}{\kelvin}$\\[3pt]
+       $\dot{Q} = \dot{m}\,c_p\,\Delta T$};
+
+    % ---- Flux thermique rayonnant / convectif vers la pièce ----
+    \foreach \ang in {70,90,110}
+      \draw[->, FedRed!60!white, thin]
+        ({7.2+0.5*cos(\ang)},{0.22+0.5*sin(\ang)})
+        -- ({7.2+1.0*cos(\ang)},{0.22+1.0*sin(\ang)});
+    \node[above=1.1cm, font=\scriptsize\itshape, text=FedRed!60!black]
+      at (7.2,0.22) {émission vers la pièce};
+
+    % ---- Légende symboles ----
+    \draw[draw=FedBlue!30, dashed, rounded corners=3pt]
+      (0.2,-4.0) rectangle (8.8,-3.2);
+    \node[font=\scriptsize\sffamily, text=FedBlue] at (4.5,-3.35)
+      {Légende :};
+    \pic[draw=FedOrange, thick, scale=0.75] at (1.2,-3.7) {chaudiere};
+    \node[right=0.5cm, font=\scriptsize] at (1.2,-3.7) {Chaudière};
+    \pic[draw=FedOrange, fill=FedOrange!15, thick, scale=0.75] at (3.5,-3.7) {pompe};
+    \node[right=0.5cm, font=\scriptsize] at (3.5,-3.7) {Pompe};
+    \pic[draw=FedRed, fill=FedRed!8, thick, scale=0.75] at (5.8,-3.7) {radiateur};
+    \node[right=0.7cm, font=\scriptsize] at (5.8,-3.7) {Radiateur};
+
+  \end{tikzpicture}
+  \caption{Schéma ISO GCF d'un circuit de chauffage simple — la chaleur produite par la
+           chaudière est transportée par le fluide caloporteur ($\dot{Q} = \dot{m}\,c_p\,\Delta T$)
+           jusqu'au radiateur qui l'émet par convection et rayonnement vers la pièce.}
+  \label{fig:circuit-thermique-iso-gcf}
+\end{figure}
+
 \finchapitre
