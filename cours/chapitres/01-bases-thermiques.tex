@@ -514,6 +514,70 @@ Dans les installations CVC, les échangeurs à plaques sont omniprésents (produ
   Un échangeur encrassé (tartre, biofilm) voit son coefficient d'échange $h$ diminuer fortement. Une augmentation de \SI{1}{\milli\metre} de tartre sur un échangeur cuivre réduit le flux de 20 à 30\,\%. La maintenance (détartrage annuel pour ECS) est essentielle.
 \end{attention}
 
+% ---------------------------------------------------------------
+%  Figure TikZ — Échangeur à plaques (schéma ISO GCF)
+%  Illustre la convection forcée et le bilan sur l'échangeur
+% ---------------------------------------------------------------
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+      thick, >=Latex,
+      lbl/.style={font=\sffamily\footnotesize, align=center},
+      temp/.style={font=\sffamily\small\bfseries, align=center}
+    ]
+
+    % ── Échangeur à plaques (symbole ISO GCF) ─────────────────────────────
+    \pic at (0, 0) {echangeur};
+
+    % ── Circuit CHAUD (FedRed) — côté gauche en entrée, contre-courant ────
+    % Entrée circuit chaud (gauche, haut)
+    \draw[FedRed, line width=2.2pt, ->]
+      (-2.0, 0.35) -- (-0.75, 0.35);
+    \node[temp, FedRed, above] at (-2.0, 0.35)
+      {$T_{ch,e}$};
+    \pic at (-2.0, -0.5) {sonde-t};
+    \node[lbl, FedGreen, below=0.5cm] at (-2.0, -0.5) {$T_{ch,s}$};
+    % Sortie circuit chaud (gauche, bas)
+    \draw[FedRed!60, line width=2.2pt, ->]
+      (-0.75, -0.35) -- (-2.0, -0.35);
+
+    % ── Circuit FROID (FedBlue) — côté droit, sens inverse ───────────────
+    % Entrée circuit froid (droite, bas)
+    \draw[FedBlue, line width=2.2pt, ->]
+      (2.0, -0.35) -- (0.75, -0.35);
+    \node[temp, FedBlue, below] at (2.0, -0.35)
+      {$T_{fr,e}$};
+    \pic at (2.0, 0.5) {sonde-t};
+    \node[lbl, FedGreen, above=0.5cm] at (2.0, 0.5) {$T_{fr,s}$};
+    % Sortie circuit froid (droite, haut)
+    \draw[FedBlue!60, line width=2.2pt, ->]
+      (0.75, 0.35) -- (2.0, 0.35);
+
+    % ── Annotations bilans ───────────────────────────────────────────────
+    \node[lbl, FedRed] at (-1.5, -1.2)
+      {Circuit chaud\\$\dot{Q}_{ch} = \dot{m}_{ch} c_p \Delta T_{ch}$};
+    \node[lbl, FedBlue] at (1.5, -1.2)
+      {Circuit froid\\$\dot{Q}_{fr} = \dot{m}_{fr} c_p \Delta T_{fr}$};
+
+    % ── Flèche bilan global ───────────────────────────────────────────────
+    \draw[<->, FedOrange, line width=1.4pt]
+      (-0.5, 0.7) -- (0.5, 0.7)
+      node[midway, above, font=\sffamily\tiny, FedOrange]
+        {$\varepsilon = \dot{Q}_{réel}/\dot{Q}_{max}$};
+
+    % ── Titre encadré ─────────────────────────────────────────────────────
+    \node[draw=FedBlue!30, fill=FedBlue!5, rounded corners=2pt,
+          font=\sffamily\scriptsize, align=center, inner sep=4pt]
+      at (0, -2.0)
+      {Contre-courant : $T_{fr,s} \approx T_{ch,e}$ \quad (efficacité maximale)};
+
+  \end{tikzpicture}
+  \caption{Échangeur à plaques en contre-courant — Convection forcée.
+           Les sondes T aux 4 piquages permettent de mesurer $\varepsilon$ in situ.
+           (symbole ISO GCF ; circuit chaud en rouge, circuit froid en bleu)}
+  \label{fig:echangeur-plaques-convection}
+\end{figure}
+
 % ============================================================
 \section{Rayonnement thermique}
 % ============================================================
@@ -667,6 +731,88 @@ La formule pratique avec le débit volumique en \si{\liter\per\hour} et \(c_p\) 
 
 Le facteur \num{1,163} est le produit \((\rho \cdot c_p) / 3600\) pour l'eau
 \(= 1000 \times 4186 / 3\,600\,000 \approx \num{1,163}\,\si{\watt\hour\per\liter\per\kelvin}\).
+
+% ---------------------------------------------------------------
+%  Figure TikZ — Boucle hydraulique de chauffage (symboles ISO GCF)
+%  Illustre la formule Q_dot = m_dot * cp * DeltaT en contexte réel
+% ---------------------------------------------------------------
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+      thick, >=Latex,
+      label_q/.style={font=\sffamily\small, align=center},
+      formula_box/.style={draw=FedBlue!40, fill=FedBlue!5, rounded corners=3pt,
+                          font=\sffamily\footnotesize, align=center, inner sep=5pt}
+    ]
+
+    % ── Organes (symboles ISO GCF) ────────────────────────────────────────
+    % Chaudière (gauche)
+    \pic at (0, 1.6) {chaudiere};
+    \node[label_q, left=1.1cm] at (0, 1.6)
+      {\textbf{Générateur}\\(Chaudière)};
+
+    % Pompe (gauche, au-dessus de la chaudière)
+    \pic at (0, 4.2) {pompe};
+    \node[label_q, left=1.1cm] at (0, 4.2)
+      {Pompe\\$\dot{V}$ [m³/h]};
+
+    % Sonde température départ
+    \pic at (3.5, 5.8) {sonde-t};
+    \node[label_q, FedGreen, above=0.6cm] at (3.5, 5.8)
+      {$T_{dép}$\\[\si{\degreeCelsius}]};
+
+    % Ventilo-convecteur / émetteur (droite)
+    \pic at (7.5, 4.0) {vc};
+    \node[label_q, right=1.1cm] at (7.5, 4.0)
+      {\textbf{Émetteur}\\(VC / Radiateur)\\$\dot{Q}_{émission}$ [W]};
+
+    % Sonde température retour
+    \pic at (3.5, 2.0) {sonde-t};
+    \node[label_q, FedGreen, below=0.6cm] at (3.5, 2.0)
+      {$T_{ret}$\\[\si{\degreeCelsius}]};
+
+    % ── Canalisations ────────────────────────────────────────────────────
+    % Aller chaud (FedRed) : pompe → sonde-T départ → VC
+    \draw[FedRed, line width=2.2pt]
+      (0, 4.6) -- (0, 5.8) -- (3.2, 5.8);         % monte et part à droite
+    \draw[FedRed, line width=2.2pt]
+      (3.8, 5.8) -- (7.5, 5.8) -- (7.5, 4.35);    % vers VC
+
+    % Retour froid (FedBlue) : VC → sonde-T retour → chaudière
+    \draw[FedBlue, line width=2.2pt]
+      (7.5, 3.65) -- (7.5, 2.0) -- (3.8, 2.0);    % descend depuis VC
+    \draw[FedBlue, line width=2.2pt]
+      (3.2, 2.0) -- (0, 2.0) -- (0, 1.2);          % vers chaudière
+
+    % Liaison chaudière → pompe (intérieur gauche)
+    \draw[FedRed, line width=2.2pt]
+      (0, 2.0) -- (0, 3.8);                         % retour chaudière vers pompe
+
+    % ── Flèches de sens de circulation ──────────────────────────────────
+    \draw[->, FedRed,  line width=1.6pt] (1.5, 5.8) -- (1.9, 5.8);
+    \draw[->, FedRed,  line width=1.6pt] (5.5, 5.8) -- (5.9, 5.8);
+    \draw[->, FedBlue, line width=1.6pt] (5.5, 2.0) -- (5.1, 2.0);
+    \draw[->, FedBlue, line width=1.6pt] (1.8, 2.0) -- (1.4, 2.0);
+
+    % ── Annotations ─────────────────────────────────────────────────────
+    \node[label_q, FedRed, above=0.1cm] at (5.5, 5.8)
+      {Aller $\approx 70\,\si{\degreeCelsius}$};
+    \node[label_q, FedBlue, below=0.1cm] at (5.5, 2.0)
+      {Retour $\approx 50\,\si{\degreeCelsius}$};
+
+    % ── Encadré formule centrale ─────────────────────────────────────────
+    \node[formula_box] at (3.75, 3.9) {
+      $\Delta T = T_{dép} - T_{ret}$\\[3pt]
+      $\dot{Q} = \dot{m} \cdot c_p \cdot \Delta T$\\[3pt]
+      $[\si{\watt}] = [\si{\kg\per\second}] \cdot [\si{\joule\per\kg\per\kelvin}] \cdot [\si{\kelvin}]$
+    };
+
+  \end{tikzpicture}
+  \caption{Boucle de chauffage hydraulique élémentaire — Application directe du bilan enthalpique
+           $\dot{Q} = \dot{m} \cdot c_p \cdot \Delta T$
+           (symboles ISO GCF ; aller en rouge, retour en bleu)}
+  \label{fig:boucle-chauffage-thermique}
+\end{figure}
 
 \subsection{Coefficient de déperdition thermique d'un bâtiment}
 

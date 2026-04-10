@@ -838,6 +838,109 @@ $< 6{,}0\,\mathrm{kW}$ requis. \textbf{Appoint électrique nécessaire} ou modè
 \end{exemple}
 
 % ============================================================
+\section{Schéma de mesure en circuit GCF — Contextualisation des unités}
+% ============================================================
+
+Le schéma ci-dessous représente un circuit hydraulique élémentaire (chauffage à eau chaude)
+en mettant en évidence les \textbf{points de mesure} et les \textbf{unités SI} associées.
+Chaque organe et chaque sonde met en jeu une ou plusieurs grandeurs physiques dont la
+maîtrise dimensionnelle est indispensable au dimensionnement.
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+      thick,
+      unit_label/.style = {font=\sffamily\tiny\bfseries, align=center},
+      organ_label/.style = {font=\sffamily\scriptsize, align=center},
+      >=Latex
+    ]
+
+    % ── Organes (symboles ISO GCF) ───────────────────────────────────────────
+    % Chaudière  (bas-gauche)
+    \pic at (0, 0) {chaudiere};
+    \node[organ_label, below=0.75cm] at (0,0) {Chaudière\\Gaz};
+    \node[unit_label, FedOrange, left=1.2cm] at (0,0)
+      {$\dot{Q}$ [\si{\kilo\watt}]\\$T_{alim}$ [\si{\degreeCelsius}]};
+
+    % Pompe  (bas-droite de la chaudière → 3 cm en haut)
+    \pic at (0, 3.2) {pompe};
+    \node[organ_label, left=0.75cm] at (0,3.2) {Pompe};
+    \node[unit_label, FedBlue, right=0.9cm] at (0,3.2)
+      {$\dot{V}$ [m³/h]\\$\Delta P$ [Pa]};
+
+    % Sonde de température départ
+    \pic at (3.0, 4.8) {sonde-t};
+    \node[organ_label, above=0.7cm] at (3.0,4.8) {$T_{dép}$};
+    \node[unit_label, FedGreen, right=0.5cm] at (3.0, 4.8)
+      {[\si{\degreeCelsius}]};
+
+    % Sonde de pression départ
+    \pic at (5.0, 4.8) {sonde-p};
+    \node[organ_label, above=0.7cm] at (5.0,4.8) {$P_{dép}$};
+    \node[unit_label, FedGreen, right=0.5cm] at (5.0, 4.8)
+      {[Pa / bar]};
+
+    % Radiateur  (droite)
+    \pic at (7.5, 2.4) {radiateur};
+    \node[organ_label, right=0.75cm] at (7.5,2.4) {Émetteur\\(Radiateur)};
+    \node[unit_label, FedOrange, left=1.3cm] at (7.5,2.4)
+      {$\Phi$ [\si{\watt}]};
+
+    % Sonde de température retour
+    \pic at (5.0, 0.0) {sonde-t};
+    \node[organ_label, below=0.7cm] at (5.0,0.0) {$T_{ret}$};
+    \node[unit_label, FedGreen, left=0.5cm] at (5.0, 0.0)
+      {[\si{\degreeCelsius}]};
+
+    % ── Canalisations ────────────────────────────────────────────────────────
+    % Aller (FedRed) : pompe → sonde-T → sonde-P → radiateur
+    \draw[FedRed, line width=2pt]
+      (0, 3.6)  -- (0, 4.8) -- (2.7, 4.8);          % monte et part à droite
+    \draw[FedRed, line width=2pt]
+      (3.3, 4.8) -- (4.7, 4.8);                       % entre sondes T et P
+    \draw[FedRed, line width=2pt]
+      (5.3, 4.8) -- (7.5, 4.8) -- (7.5, 2.75);       % vers radiateur (haut)
+
+    % Retour (FedBlue) : radiateur → sonde-T retour → chaudière
+    \draw[FedBlue, line width=2pt]
+      (7.5, 2.05) -- (7.5, 0.0) -- (5.3, 0.0);       % descend depuis radiateur
+    \draw[FedBlue, line width=2pt]
+      (4.7, 0.0) -- (0, 0.0) -- (0, -0.6);            % vers chaudière (retour)
+    % Connexion chaudière bas → haut
+    \draw[FedBlue, line width=2pt]
+      (0, -0.6) -- (0, -0.4);                         % entrée retour chaudière
+    \draw[FedRed, line width=2pt]
+      (0, 0.6) -- (0, 2.8);                           % sortie aller chaudière → pompe
+
+    % ── Flèches de sens de circulation ──────────────────────────────────────
+    \draw[->, FedRed, line width=1.5pt] (1.2, 4.8) -- (1.6, 4.8);
+    \draw[->, FedRed, line width=1.5pt] (6.5, 4.8) -- (6.9, 4.8);
+    \draw[->, FedBlue, line width=1.5pt] (6.0, 0.0) -- (5.6, 0.0);
+    \draw[->, FedBlue, line width=1.5pt] (2.5, 0.0) -- (2.1, 0.0);
+
+    % ── Annotations dimensionnelles ─────────────────────────────────────────
+    \node[unit_label, FedRed, above=0.05cm] at (4.0, 4.8)
+      {Aller chaud — $T_{dép} \approx 70\,\si{\degreeCelsius}$, $P \approx 3\,\mathrm{bar}$};
+    \node[unit_label, FedBlue, below=0.05cm] at (3.5, 0.0)
+      {Retour froid — $T_{ret} \approx 50\,\si{\degreeCelsius}$};
+    \node[unit_label, align=center] at (3.75, 2.4)
+      {$\dot{Q} = \dot{m} \cdot c_p \cdot \Delta T$\\$[\si{\watt}] = [\mathrm{kg/s}][\mathrm{J/(kg{\cdot}K)}][\mathrm{K}]$};
+
+  \end{tikzpicture}
+  \caption{Circuit hydraulique élémentaire — Points de mesure et unités SI associées
+           (symboles ISO GCF ; circuit aller en rouge, retour en bleu)}
+  \label{fig:circuit-mesure-gcf}
+\end{figure}
+
+\begin{methode}[Lire un schéma de circuit GCF]
+  Sur tout schéma hydraulique, identifier pour chaque organe :
+  (1) la \textbf{grandeur physique} principale mise en jeu (débit, pression, température, puissance) ;
+  (2) son \textbf{unité SI} de référence ;
+  (3) la \textbf{conversion} éventuellement nécessaire (m³/h $\to$ m³/s, Pa $\to$ bar…).
+  Toute incohérence d'unité dans un bilan thermique ou hydraulique révèle une erreur de calcul.
+\end{methode}
+
+% ============================================================
 \section{Synthèse et bonnes pratiques}
 % ============================================================
 

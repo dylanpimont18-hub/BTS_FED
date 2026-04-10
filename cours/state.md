@@ -6,8 +6,8 @@ Mis à jour automatiquement par l'agent à chaque run.
 ---
 
 ## Dernier run
-- Date : 2026-04-09 (14ème run)
-- Action : **T17 — Environnement `fichememo` (tcolorbox FedBlue) ajouté dans cours/preamble.tex, après la définition de `methode` : permet d'utiliser `\begin{fichememo}[Titre]...\end{fichememo}` dans tous les chapitres pour encadrer les fiches mémo de formules**
+- Date : 2026-04-10 (15ème run)
+- Action : **T18 — Création de `cours/tikz-gcf-symbols.tex` (19 symboles ISO GCF en TikZ pics : pompe, vanne-quart, vanne-motorisee, vanne-equilibrage, clapet, chaudiere, echangeur, ballon, vase-expansion, pac, cta, ventilateur, registre, filtre, radiateur, vc, sonde-t, sonde-p, actionneur) + intégration dans `preamble.tex` via `\input{tikz-gcf-symbols}` ; T19 — Ajout d'un schéma ISO GCF (circuit hydraulique de mesure : chaudière, pompe, sonde-T×2, sonde-P, radiateur) dans `chapitres/00-analyse-dimensionnelle.tex`, section "Schéma de mesure en circuit GCF" ; T20 — Ajout de deux schémas ISO GCF dans `chapitres/01-bases-thermiques.tex` : (a) boucle de chauffage hydraulique (chaudière + pompe + sonde-T×2 + VC) illustrant $\dot{Q}=\dot{m}c_p\Delta T$, (b) échangeur à plaques en contre-courant avec sondes T sur les 4 piquages**
 
 ---
 
@@ -34,6 +34,19 @@ Mis à jour automatiquement par l'agent à chaque run.
 | T15 | FAIBLE | **FAIT** | `cours/chapitres/00-analyse-dimensionnelle.tex` | Enrichir avec données terrain réelles (catalogues Grundfos, Daikin) |
 | T16 | FAIBLE | **FAIT** | `cours/chapitres/11-etudes-de-cas.tex` | Ajouter renvois inter-chapitres explicites |
 | T17 | FAIBLE | **FAIT** | `cours/preamble.tex` | Ajouter environnement `fichemémo` (tcolorbox récap formules) |
+| T18 | HAUTE | **FAIT** | `cours/tikz-gcf-symbols.tex` | Créer la bibliothèque de symboles ISO GCF (pics TikZ) et l'intégrer dans preamble.tex |
+| T19 | HAUTE | **FAIT** | `cours/chapitres/00-analyse-dimensionnelle.tex` | Ajouter/améliorer schémas TikZ avec symboles ISO GCF |
+| T20 | HAUTE | **FAIT** | `cours/chapitres/01-bases-thermiques.tex` | Ajouter/améliorer schémas TikZ avec symboles ISO GCF |
+| T21 | HAUTE | **TODO** | `cours/chapitres/02-hydraulique.tex` | Ajouter/améliorer schémas TikZ avec symboles ISO GCF |
+| T22 | HAUTE | **TODO** | `cours/chapitres/03-aeraulique.tex` | Ajouter/améliorer schémas TikZ avec symboles ISO GCF |
+| T23 | HAUTE | **TODO** | `cours/chapitres/04-production-chaleur.tex` | Ajouter/améliorer schémas TikZ avec symboles ISO GCF |
+| T24 | HAUTE | **TODO** | `cours/chapitres/05-distribution-emission.tex` | Ajouter/améliorer schémas TikZ avec symboles ISO GCF |
+| T25 | HAUTE | **TODO** | `cours/chapitres/06-climatisation.tex` | Ajouter/améliorer schémas TikZ avec symboles ISO GCF |
+| T26 | HAUTE | **TODO** | `cours/chapitres/07-regulation-gtb.tex` | Ajouter/améliorer schémas TikZ avec symboles ISO GCF |
+| T27 | HAUTE | **TODO** | `cours/chapitres/08-efficacite-energetique.tex` | Ajouter/améliorer schémas TikZ avec symboles ISO GCF |
+| T28 | HAUTE | **TODO** | `cours/chapitres/09-acoustique.tex` | Ajouter/améliorer schémas TikZ avec symboles ISO GCF |
+| T29 | HAUTE | **TODO** | `cours/chapitres/10-electrotechnique.tex` | Ajouter/améliorer schémas TikZ avec symboles ISO GCF |
+| T30 | HAUTE | **TODO** | `cours/chapitres/11-etudes-de-cas.tex` | Ajouter/améliorer schémas TikZ avec symboles ISO GCF |
 
 ### Règles de sélection des tâches
 ```

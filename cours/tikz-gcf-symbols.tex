@@ -1,0 +1,387 @@
+% tikz-gcf-symbols.tex — Bibliothèque de symboles ISO GCF pour TikZ
+% BTS FED — Option GCF
+% Usage : \pic at (coord) {nom};  ou  \pic{nom}  dans un chemin TikZ
+%
+% Chargé automatiquement par preamble.tex via \input{tikz-gcf-symbols}
+%
+% Bibliothèques TikZ requises (déjà chargées dans preamble.tex) :
+%   \usetikzlibrary{shapes.geometric, arrows.meta, positioning, patterns, calc}
+
+\usetikzlibrary{patterns, calc}
+
+% =========================================================
+%  POMPE DE CIRCULATION  (cercle + flèche ISO 1219)
+%  Usage : \pic{pompe}   taille ≈ 0.8 × 0.8
+% =========================================================
+\tikzset{
+  pompe/.pic={
+    \draw[thick] (0,0) circle (0.4);
+    % Flèche ISO : du centre vers le haut-droite
+    \draw[-{Latex[length=3pt,width=2.5pt]}, thick]
+      (-0.25,-0.10) -- (0.25, 0.10);
+    % Ligne de séparation inclinée (symbole ISO pompe centrifuge)
+    \draw[thick] (-0.28, 0.28) -- (0.28,-0.28);
+  }
+}
+
+% =========================================================
+%  VANNE QUART DE TOUR — PAPILLON  (deux triangles ISO)
+%  Usage : \pic{vanne-quart}   taille ≈ 0.6 × 0.6
+% =========================================================
+\tikzset{
+  vanne-quart/.pic={
+    % Triangle gauche (pointant à droite)
+    \fill[black!80]
+      (-0.35, 0.30) -- (-0.35,-0.30) -- (0,0) -- cycle;
+    % Triangle droit (pointant à gauche)
+    \fill[black!80]
+      ( 0.35, 0.30) -- ( 0.35,-0.30) -- (0,0) -- cycle;
+    % Tiges de connexion
+    \draw[thick] (-0.6, 0) -- (-0.35, 0);
+    \draw[thick] ( 0.35, 0) -- ( 0.6, 0);
+  }
+}
+
+% =========================================================
+%  VANNE MOTORISÉE  (papillon + carré actuateur en haut)
+%  Usage : \pic{vanne-motorisee}
+% =========================================================
+\tikzset{
+  vanne-motorisee/.pic={
+    % Corps papillon
+    \fill[black!80]
+      (-0.30, 0.25) -- (-0.30,-0.25) -- (0,0) -- cycle;
+    \fill[black!80]
+      ( 0.30, 0.25) -- ( 0.30,-0.25) -- (0,0) -- cycle;
+    % Tige actuateur verticale
+    \draw[thick] (0, 0) -- (0, 0.50);
+    % Carré actuateur
+    \draw[thick, fill=white] (-0.18, 0.50) rectangle (0.18, 0.86);
+    % Tiges de connexion horizontales
+    \draw[thick] (-0.55, 0) -- (-0.30, 0);
+    \draw[thick] ( 0.30, 0) -- ( 0.55, 0);
+  }
+}
+
+% =========================================================
+%  VANNE D'ÉQUILIBRAGE  (double triangle + marques ISO)
+%  Usage : \pic{vanne-equilibrage}
+% =========================================================
+\tikzset{
+  vanne-equilibrage/.pic={
+    % Triangles
+    \fill[black!80]
+      (-0.35, 0.28) -- (-0.35,-0.28) -- (0,0) -- cycle;
+    \fill[black!80]
+      ( 0.35, 0.28) -- ( 0.35,-0.28) -- (0,0) -- cycle;
+    % Marque d'équilibrage (deux traits parallèles en haut)
+    \draw[thick] (-0.12, 0.42) -- (0.12, 0.42);
+    \draw[thick] (-0.12, 0.58) -- (0.12, 0.58);
+    \draw[thick] (0, 0.28) -- (0, 0.42);
+    % Tiges
+    \draw[thick] (-0.60, 0) -- (-0.35, 0);
+    \draw[thick] ( 0.35, 0) -- ( 0.60, 0);
+  }
+}
+
+% =========================================================
+%  CLAPET ANTI-RETOUR  (cercle + triangle directionnel ISO)
+%  Usage : \pic{clapet}
+% =========================================================
+\tikzset{
+  clapet/.pic={
+    % Barre perpendiculaire (arrêt)
+    \draw[very thick] (0,-0.35) -- (0, 0.35);
+    % Triangle indiquant le sens de passage
+    \fill[black!80] (-0.32, 0.25) -- (-0.32,-0.25) -- (0,0) -- cycle;
+    % Tiges
+    \draw[thick] (-0.55, 0) -- (-0.32, 0);
+    \draw[thick] ( 0,    0) -- ( 0.55, 0);
+  }
+}
+
+% =========================================================
+%  CHAUDIÈRE  (rectangle + flamme stylisée ISO 7-4)
+%  Usage : \pic{chaudiere}
+% =========================================================
+\tikzset{
+  chaudiere/.pic={
+    % Corps de la chaudière
+    \draw[thick, fill=FedOrange!10]
+      (-0.50,-0.40) rectangle (0.50, 0.40);
+    % Flamme stylisée (courbe de Bézier)
+    \draw[thick, FedRed]
+      (-0.15,-0.15)
+      .. controls (-0.25, 0.10) and (-0.05, 0.05) .. (0, 0.20)
+      .. controls ( 0.05, 0.05) and ( 0.20, 0.10) .. (0.15,-0.15);
+    % Connexions haut et bas
+    \draw[thick] (0, 0.40) -- (0, 0.60);
+    \draw[thick] (0,-0.60) -- (0,-0.40);
+  }
+}
+
+% =========================================================
+%  ÉCHANGEUR À PLAQUES  (double rectangle croisé ISO)
+%  Usage : \pic{echangeur}
+% =========================================================
+\tikzset{
+  echangeur/.pic={
+    % Rectangle extérieur
+    \draw[thick] (-0.55,-0.35) rectangle (0.55, 0.35);
+    % Ligne de séparation verticale centrale
+    \draw[thick] (0,-0.35) -- (0, 0.35);
+    % Diagonales croisées dans chaque demi-rectangle
+    \draw[thick, FedBlue]
+      (-0.55, 0.35) -- (0,-0.35);
+    \draw[thick, FedRed]
+      (0, 0.35) -- (0.55,-0.35);
+    % 4 connexions (2 côté froid, 2 côté chaud)
+    \draw[thick, FedBlue] (-0.55, 0.15) -- (-0.75, 0.15);
+    \draw[thick, FedBlue] (-0.55,-0.15) -- (-0.75,-0.15);
+    \draw[thick, FedRed]  ( 0.55, 0.15) -- ( 0.75, 0.15);
+    \draw[thick, FedRed]  ( 0.55,-0.15) -- ( 0.75,-0.15);
+  }
+}
+
+% =========================================================
+%  BALLON TAMPON / ECS  (ellipse verticale)
+%  Usage : \pic{ballon}
+% =========================================================
+\tikzset{
+  ballon/.pic={
+    % Corps cylindrique (rectangle + ellipses aux extrémités)
+    \draw[thick, fill=FedBlue!8]
+      (-0.35,-0.50) -- (-0.35, 0.50)
+      arc (180:0:0.35 and 0.15)
+      -- (0.35,-0.50)
+      arc (0:-180:0.35 and 0.15)
+      -- cycle;
+    \draw[thick] (-0.35, 0.50) arc (180:0:0.35 and 0.15);
+    % Connexion départ (haut) et retour (bas)
+    \draw[thick] (0, 0.65) -- (0, 0.50);
+    \draw[thick] (0,-0.65) -- (0,-0.50);
+  }
+}
+
+% =========================================================
+%  VASE D'EXPANSION  (cercle + membrane horizontale)
+%  Usage : \pic{vase-expansion}
+% =========================================================
+\tikzset{
+  vase-expansion/.pic={
+    % Cercle
+    \draw[thick] (0,0) circle (0.40);
+    % Membrane horizontale (diaphragme)
+    \draw[very thick] (-0.40, 0) -- (0.40, 0);
+    % Hachures zone pression gaz (haut)
+    \pattern[pattern=north east lines, pattern color=black!30]
+      (-0.40, 0) arc (180:0:0.40) -- cycle;
+    % Connexion eau (bas)
+    \draw[thick] (0,-0.40) -- (0,-0.60);
+  }
+}
+
+% =========================================================
+%  POMPE À CHALEUR  (rectangle + cycle frigorigène schématique)
+%  Usage : \pic{pac}
+% =========================================================
+\tikzset{
+  pac/.pic={
+    % Rectangle principal
+    \draw[thick, fill=FedGreen!8]
+      (-0.65,-0.45) rectangle (0.65, 0.45);
+    % Étiquette PAC
+    \node[font=\sffamily\bfseries\tiny, text=FedGreen] at (0, 0) {PAC};
+    % Connexion départ chaud (haut gauche)
+    \draw[thick, FedRed]    (-0.30, 0.45) -- (-0.30, 0.65);
+    % Connexion retour froid (bas gauche)
+    \draw[thick, FedBlue]   (-0.30,-0.65) -- (-0.30,-0.45);
+    % Connexion source froide droite (haut)
+    \draw[thick, FedOrange] ( 0.30, 0.45) -- ( 0.30, 0.65);
+    % Connexion source froide droite (bas)
+    \draw[thick, FedOrange] ( 0.30,-0.65) -- ( 0.30,-0.45);
+  }
+}
+
+% =========================================================
+%  CENTRALE DE TRAITEMENT D'AIR  (rectangle multi-sections)
+%  Usage : \pic{cta}
+% =========================================================
+\tikzset{
+  cta/.pic={
+    % Enveloppe
+    \draw[thick, fill=FedBlue!5]
+      (-1.00,-0.40) rectangle (1.00, 0.40);
+    % Section filtre (gauche)
+    \draw[thick] (-0.60,-0.40) -- (-0.60, 0.40);
+    % Section batterie (centre-gauche)
+    \draw[thick] (-0.20,-0.40) -- (-0.20, 0.40);
+    % Section ventilateur (centre-droit)
+    \draw[thick] ( 0.35,-0.40) -- ( 0.35, 0.40);
+    % Symbole filtre (losange)
+    \draw[thick] (-0.82, 0) -- (-0.70, 0.20) -- (-0.60, 0) -- (-0.70,-0.20) -- cycle;
+    % Symbole batterie (traits parallèles)
+    \foreach \y in {-0.20, 0, 0.20}{
+      \draw[thick, FedBlue] (-0.50,\y) -- (-0.30,\y);
+    }
+    % Symbole ventilateur (cercle + flèche)
+    \draw[thick] (0.68, 0) circle (0.22);
+    \draw[-{Latex[length=2pt]}, thick] (0.55, 0.12) arc (150:30:0.18);
+    % Entrée/sortie air
+    \draw[thick, -{Latex[length=3pt]}] (-1.25, 0) -- (-1.00, 0);
+    \draw[thick, -{Latex[length=3pt]}] ( 1.00, 0) -- ( 1.25, 0);
+  }
+}
+
+% =========================================================
+%  VENTILATEUR  (cercle + pales ISO)
+%  Usage : \pic{ventilateur}
+% =========================================================
+\tikzset{
+  ventilateur/.pic={
+    % Cercle
+    \draw[thick] (0,0) circle (0.40);
+    % Point central
+    \fill (0,0) circle (0.04);
+    % Pale 1 (en arc)
+    \draw[thick]
+      (0,0) .. controls (0.10, 0.20) and (0.30, 0.25) .. (0.35, 0.15);
+    % Pale 2 (décalée 120°)
+    \draw[thick]
+      (0,0) .. controls (-0.22, 0.08) and (-0.35,-0.10) .. (-0.25,-0.28);
+    % Pale 3 (décalée 240°)
+    \draw[thick]
+      (0,0) .. controls ( 0.12,-0.22) and ( 0.10,-0.38) .. (-0.10,-0.38);
+    % Connexion au réseau
+    \draw[thick] (-0.40, 0) -- (-0.65, 0);
+    \draw[thick] ( 0.40, 0) -- ( 0.65, 0);
+  }
+}
+
+% =========================================================
+%  REGISTRE DE RÉGLAGE  (rectangle barré diagonal)
+%  Usage : \pic{registre}
+% =========================================================
+\tikzset{
+  registre/.pic={
+    % Cadre
+    \draw[thick] (-0.40,-0.25) rectangle (0.40, 0.25);
+    % Barre diagonale ISO (registre fermé = X, ouvert = /)
+    \draw[very thick] (-0.30,-0.20) -- (0.30, 0.20);
+    % Tiges
+    \draw[thick] (-0.65, 0) -- (-0.40, 0);
+    \draw[thick] ( 0.40, 0) -- ( 0.65, 0);
+  }
+}
+
+% =========================================================
+%  FILTRE  (losange hachuré ISO)
+%  Usage : \pic{filtre}
+% =========================================================
+\tikzset{
+  filtre/.pic={
+    % Losange
+    \draw[thick, fill=black!10]
+      (0, 0.35) -- (0.45, 0) -- (0,-0.35) -- (-0.45, 0) -- cycle;
+    % Hachures internes (représentation ISO filtre)
+    \foreach \x in {-0.25,-0.10,0.05,0.20}{
+      \draw[thin] (\x, 0.20) -- (\x+0.20,-0.20);
+    }
+    % Tiges
+    \draw[thick] (-0.70, 0) -- (-0.45, 0);
+    \draw[thick] ( 0.45, 0) -- ( 0.70, 0);
+  }
+}
+
+% =========================================================
+%  RADIATEUR  (rectangle à ailettes)
+%  Usage : \pic{radiateur}
+% =========================================================
+\tikzset{
+  radiateur/.pic={
+    % Corps
+    \draw[thick, fill=FedOrange!8]
+      (-0.60,-0.35) rectangle (0.60, 0.35);
+    % Ailettes verticales
+    \foreach \x in {-0.40,-0.20,0,0.20,0.40}{
+      \draw[thick, FedOrange] (\x,-0.35) -- (\x, 0.35);
+    }
+    % Connexions (entrée bas-gauche, sortie bas-droite)
+    \draw[thick, FedRed]  (-0.35,-0.35) -- (-0.35,-0.55);
+    \draw[thick, FedBlue] ( 0.35,-0.35) -- ( 0.35,-0.55);
+  }
+}
+
+% =========================================================
+%  VENTILO-CONVECTEUR  (rectangle + ventilateur intégré)
+%  Usage : \pic{vc}
+% =========================================================
+\tikzset{
+  vc/.pic={
+    % Boîtier
+    \draw[thick, fill=FedBlue!5]
+      (-0.65,-0.35) rectangle (0.65, 0.35);
+    % Batterie eau (à gauche)
+    \foreach \y in {-0.15, 0, 0.15}{
+      \draw[thick, FedBlue] (-0.50,\y) -- (-0.25,\y);
+    }
+    % Ventilateur (à droite)
+    \draw[thick] (0.30, 0) circle (0.22);
+    \draw[-{Latex[length=2pt]}, thick] (0.17, 0.12) arc (150:30:0.18);
+    % Séparation interne
+    \draw[dashed] (-0.10,-0.35) -- (-0.10, 0.35);
+    % Connexions eau
+    \draw[thick, FedRed]  (-0.40, 0.35) -- (-0.40, 0.52);
+    \draw[thick, FedBlue] (-0.40,-0.52) -- (-0.40,-0.35);
+    % Flux d'air
+    \draw[thick, -{Latex[length=3pt]}] ( 0.65, 0) -- ( 0.85, 0);
+  }
+}
+
+% =========================================================
+%  SONDE DE TEMPÉRATURE  (cercle + lettre T)
+%  Usage : \pic{sonde-t}
+% =========================================================
+\tikzset{
+  sonde-t/.pic={
+    % Cercle vert (capteur/régulation)
+    \draw[thick, FedGreen, fill=FedGreen!10] (0,0) circle (0.30);
+    % Lettre T
+    \node[font=\sffamily\bfseries\scriptsize, text=FedGreen] at (0,0) {T};
+    % Tige de connexion vers le circuit
+    \draw[thick, FedGreen, dashed] (0,-0.30) -- (0,-0.55);
+  }
+}
+
+% =========================================================
+%  SONDE DE PRESSION  (cercle + lettre P)
+%  Usage : \pic{sonde-p}
+% =========================================================
+\tikzset{
+  sonde-p/.pic={
+    % Cercle vert (capteur/régulation)
+    \draw[thick, FedGreen, fill=FedGreen!10] (0,0) circle (0.30);
+    % Lettre P
+    \node[font=\sffamily\bfseries\scriptsize, text=FedGreen] at (0,0) {P};
+    % Tige de connexion vers le circuit
+    \draw[thick, FedGreen, dashed] (0,-0.30) -- (0,-0.55);
+  }
+}
+
+% =========================================================
+%  ACTIONNEUR  (carré + flèche de commande)
+%  Usage : \pic{actionneur}
+% =========================================================
+\tikzset{
+  actionneur/.pic={
+    % Carré
+    \draw[thick, fill=FedGreen!10]
+      (-0.28,-0.28) rectangle (0.28, 0.28);
+    % Flèche de commande (entrée par le haut)
+    \draw[thick, FedGreen, -{Latex[length=3pt]}]
+      (0, 0.55) -- (0, 0.28);
+    % Flèche de sortie (vers la vanne)
+    \draw[thick, FedOrange, -{Latex[length=3pt]}]
+      (0.28, 0) -- (0.55, 0);
+  }
+}
