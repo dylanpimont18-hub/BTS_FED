@@ -6,8 +6,8 @@ Mis à jour automatiquement par l'agent à chaque run.
 ---
 
 ## Dernier run
-- Date : 2026-04-09 (14ème run)
-- Action : **T17 — Environnement `fichememo` (tcolorbox FedBlue) ajouté dans cours/preamble.tex, après la définition de `methode` : permet d'utiliser `\begin{fichememo}[Titre]...\end{fichememo}` dans tous les chapitres pour encadrer les fiches mémo de formules**
+- Date : 2026-04-11 (15ème run)
+- Action : **T18/T19/T20 — Schémas TikZ ISO GCF ajoutés : (T18) circuit de chauffage bitubes avec symboles chaudière/pompe/vase/radiateur dans ch00 ; (T19) échangeur à plaques contre-courant avec bilan thermique dans ch01 ; (T20) remplacement du circuit hydraulique bouclé générique par symboles ISO GCF (impulseur pompe, flamme chaudière, membrane vase, ailettes radiateur) dans ch02**
 
 ---
 
@@ -34,6 +34,18 @@ Mis à jour automatiquement par l'agent à chaque run.
 | T15 | FAIBLE | **FAIT** | `cours/chapitres/00-analyse-dimensionnelle.tex` | Enrichir avec données terrain réelles (catalogues Grundfos, Daikin) |
 | T16 | FAIBLE | **FAIT** | `cours/chapitres/11-etudes-de-cas.tex` | Ajouter renvois inter-chapitres explicites |
 | T17 | FAIBLE | **FAIT** | `cours/preamble.tex` | Ajouter environnement `fichemémo` (tcolorbox récap formules) |
+| T18 | HAUTE | **FAIT** | `cours/chapitres/00-analyse-dimensionnelle.tex` | Schémas TikZ ISO GCF — remplacer formes génériques, ajouter symboles normalisés |
+| T19 | HAUTE | **FAIT** | `cours/chapitres/01-bases-thermiques.tex` | Schémas TikZ ISO GCF — remplacer formes génériques, ajouter symboles normalisés |
+| T20 | HAUTE | **FAIT** | `cours/chapitres/02-hydraulique.tex` | Schémas TikZ ISO GCF — remplacer formes génériques, ajouter symboles normalisés |
+| T21 | HAUTE | **TODO** | `cours/chapitres/03-aeraulique.tex` | Schémas TikZ ISO GCF — remplacer formes génériques, ajouter symboles normalisés |
+| T22 | HAUTE | **TODO** | `cours/chapitres/04-production-chaleur.tex` | Schémas TikZ ISO GCF — remplacer formes génériques, ajouter symboles normalisés |
+| T23 | HAUTE | **TODO** | `cours/chapitres/05-distribution-emission.tex` | Schémas TikZ ISO GCF — remplacer formes génériques, ajouter symboles normalisés |
+| T24 | HAUTE | **TODO** | `cours/chapitres/06-climatisation.tex` | Schémas TikZ ISO GCF — remplacer formes génériques, ajouter symboles normalisés |
+| T25 | HAUTE | **TODO** | `cours/chapitres/07-regulation-gtb.tex` | Schémas TikZ ISO GCF — remplacer formes génériques, ajouter symboles normalisés |
+| T26 | HAUTE | **TODO** | `cours/chapitres/08-efficacite-energetique.tex` | Schémas TikZ ISO GCF — remplacer formes génériques, ajouter symboles normalisés |
+| T27 | HAUTE | **TODO** | `cours/chapitres/09-acoustique.tex` | Schémas TikZ ISO GCF — remplacer formes génériques, ajouter symboles normalisés |
+| T28 | HAUTE | **TODO** | `cours/chapitres/10-electrotechnique.tex` | Schémas TikZ ISO GCF — remplacer formes génériques, ajouter symboles normalisés |
+| T29 | HAUTE | **TODO** | `cours/chapitres/11-etudes-de-cas.tex` | Schémas TikZ ISO GCF — remplacer formes génériques, ajouter symboles normalisés |
 
 ### Règles de sélection des tâches
 ```

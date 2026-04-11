@@ -994,6 +994,76 @@ thermiquement homogènes. Elle fixe notamment les valeurs des résistances super
   \label{fig:courbe_chauffe}
 \end{figure}
 
+\subsection*{Application — Échangeur de chaleur et bilan thermique}
+
+La figure~\ref{fig:echangeur-bilan} représente le schéma ISO GCF d'un échangeur
+à plaques en contre-courant, application directe des formules de chaleur sensible
+présentées dans ce chapitre.
+
+\tikzset{
+  pics/echangeur/.code={
+    \draw[FedBlue, thick] (-0.85,-0.55) rectangle (0.85,0.55);
+    \draw[FedBlue!45, thin] (-0.85,-0.18)--(0.85,-0.18);
+    \draw[FedBlue!45, thin] (-0.85, 0.18)--(0.85, 0.18);
+    \draw[FedRed!55, thin]  (-0.65,-0.50)--(0.65,0.50);
+    \draw[FedBlue!55, thin] (-0.65, 0.50)--(0.65,-0.50);
+  },
+}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[thick, >=Stealth, font=\small]
+
+    % ---- Échangeur à plaques ISO GCF ----
+    \pic at (0,0) {echangeur};
+    \node[font=\scriptsize\bfseries, text=FedBlue!80!black] at (0,-0.85)
+      {Échangeur à plaques};
+
+    % ---- Circuit chaud : gauche → droite (contre-courant) ----
+    \draw[->, FedRed, very thick]
+      (-3.0, 0.35) -- node[above, font=\scriptsize, text=FedRed]
+        {$T_{c,e}=80^\circ$C \quad $\dot{m}_c$}
+      (-0.85, 0.35);
+    \draw[->, FedRed, very thick]
+      (0.85, 0.35) -- node[above, font=\scriptsize, text=FedRed]
+        {$T_{c,s}=60^\circ$C}
+      (3.0, 0.35);
+
+    % ---- Circuit froid : droite → gauche ----
+    \draw[->, FedBlue, very thick]
+      (3.0,-0.35) -- node[below, font=\scriptsize, text=FedBlue]
+        {$T_{f,e}=20^\circ$C \quad $\dot{m}_f$}
+      (0.85,-0.35);
+    \draw[->, FedBlue, very thick]
+      (-0.85,-0.35) -- node[below, font=\scriptsize, text=FedBlue]
+        {$T_{f,s}=45^\circ$C}
+      (-3.0,-0.35);
+
+    % ---- Bilans thermiques ----
+    \node[draw=FedBlue!30, fill=FedBlue!4, rounded corners=3pt,
+          font=\scriptsize, inner sep=6pt, align=center]
+      at (0,-2.2) {
+        $\dot{Q}_c=\dot{m}_c\cdot c_p\cdot(T_{c,e}-T_{c,s})$
+        \quad\textbullet\quad
+        $\dot{Q}_f=\dot{m}_f\cdot c_p\cdot(T_{f,s}-T_{f,e})$\\[4pt]
+        \textbf{Conservation :} $\dot{Q}_c=\dot{Q}_f$
+      };
+    \draw[->, thin, FedBlue!50] (0,-1.72)--(0,-0.55);
+
+    % ---- Légende sens de circulation ----
+    \draw[FedRed,  very thick, ->] (-3.0,-3.0)--++(0.7,0);
+    \node[right, font=\scriptsize, text=FedRed]  at (-2.2,-3.0) {Fluide chaud};
+    \draw[FedBlue, very thick, ->] (-3.0,-3.4)--++(0.7,0);
+    \node[right, font=\scriptsize, text=FedBlue] at (-2.2,-3.4) {Fluide froid};
+    \node[font=\scriptsize, text=FedBlue!70!black] at (2.0,-3.2)
+      {Contre-courant : $\Delta T_{log}$ optimal};
+
+  \end{tikzpicture}
+  \caption{Échangeur de chaleur à plaques en contre-courant — symbole ISO GCF et
+           bilan de chaleur sensible}
+  \label{fig:echangeur-bilan}
+\end{figure}
+
 \begin{tcolorbox}[
   enhanced, colback=FedBlue!3, colframe=FedBlue!50,
   fonttitle=\bfseries\sffamily, coltitle=FedBlue,
